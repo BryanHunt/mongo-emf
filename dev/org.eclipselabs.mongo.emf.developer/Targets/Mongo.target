@@ -6,6 +6,6 @@
 <location path="${targets}/EMF 2.6.1" type="Directory"/>
 <location path="${targets}/equinox-SDK-3.6.1" type="Directory"/>
 <location path="${targets}/MongoDB" type="Directory"/>
-<location path="${targets}/Eclipse SDK 2.6.1" type="Directory"/>
+<location path="${targets}/Eclipse SDK 3.6.1" type="Directory"/>
 </locations>
 </target>
