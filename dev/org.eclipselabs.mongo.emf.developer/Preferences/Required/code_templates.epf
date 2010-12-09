@@ -1,0 +1,10 @@
+# @title Code Templates
+# @description Java code templates
+# @audit_type LASTMOD
+#
+# Created by the Workspace Mechanic Preference Recorder
+#Fri Jun 25 23:10:51 CDT 2010
+file_export_version=3.0
+/instance/org.eclipse.jdt.ui/org.eclipse.jdt.ui.text.custom_code_templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates><template autoinsert\="false" context\="filecomment_context" deleted\="false" description\="Comment for created Java files" enabled\="true" id\="org.eclipse.jdt.ui.text.codetemplates.filecomment" name\="filecomment">/*******************************************************************************\n * Copyright (c) ${year} Bryan Hunt.\n * All rights reserved. This program and the accompanying materials\n * are made available under the terms of the Eclipse Public License v1.0\n * which accompanies this distribution, and is available at\n * http\://www.eclipse.org/legal/epl-v10.html\n *\n * Contributors\:\n *    Bryan Hunt - initial API and implementation\n *******************************************************************************/\n</template></templates>
+/instance/org.eclipse.jdt.ui/org.eclipse.jdt.ui.javadoc=true
+/instance/org.eclipse.jdt.ui/org.eclipse.jdt.ui.text.code_templates_migrated=true

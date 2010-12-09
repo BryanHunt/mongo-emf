@@ -1,0 +1,9 @@
+# @title Java Editor
+# @description Java Editor Settings
+# @audit_type LASTMOD
+#
+# Created by the Workspace Mechanic Preference Recorder
+#Sun Jun 27 13:21:38 CDT 2010
+file_export_version=3.0
+/instance/org.eclipse.jdt.ui/smart_semicolon=true
+/instance/org.eclipse.jdt.ui/smart_opening_brace=true

@@ -1,0 +1,9 @@
+# @title Occurrences Appearance
+# @description Mark occurrences colors
+# @audit_type LASTMOD
+#
+# Created by the Workspace Mechanic Preference Recorder
+#Tue Jun 29 17:18:04 CDT 2010
+/instance/org.eclipse.ui.editors/occurrenceIndicationColor=98,202,98
+file_export_version=3.0
+/instance/org.eclipse.ui.editors/writeOccurrenceIndicationColor=236,133,67

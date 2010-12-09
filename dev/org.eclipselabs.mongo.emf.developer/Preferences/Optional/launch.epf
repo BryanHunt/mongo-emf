@@ -1,0 +1,8 @@
+# @title Always use last launch
+# @description Always run/debug using the previous launch
+# @audit_type LASTMOD
+#
+# Created by the Workspace Mechanic Preference Recorder
+#Tue Jul 20 13:23:10 CDT 2010
+/instance/org.eclipse.debug.ui/org.eclipse.debug.ui.UseContextualLaunch=false
+file_export_version=3.0

@@ -1,0 +1,10 @@
+# @title General Appearance
+# @description General appearance settings
+# @audit_type LASTMOD
+#
+# Created by the Workspace Mechanic Preference Recorder
+#Sat Jun 26 21:45:56 CDT 2010
+file_export_version=3.0
+/instance/org.eclipse.ui/SHOW_TEXT_ON_PERSPECTIVE_BAR=false
+/instance/org.eclipse.ui.workbench/overridepresentation=true
+/instance/org.eclipse.ui.editors/currentLine=false

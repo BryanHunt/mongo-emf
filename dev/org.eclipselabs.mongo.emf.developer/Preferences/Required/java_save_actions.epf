@@ -1,0 +1,11 @@
+# @title Java Save Actions
+# @description Java save actions
+# @audit_type LASTMOD
+#
+# Created by the Workspace Mechanic Preference Recorder
+#Tue Jun 29 17:24:51 CDT 2010
+/instance/org.eclipse.jdt.ui/sp_cleanup.format_source_code=true
+file_export_version=3.0
+/instance/org.eclipse.jdt.ui/editor_save_participant_org.eclipse.jdt.ui.postsavelistener.cleanup=true
+/instance/org.eclipse.jdt.ui/sp_cleanup.format_source_code_changes_only=false
+/instance/org.eclipse.jdt.ui/sp_cleanup.organize_imports=true

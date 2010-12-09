@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.6"?>
+
+<target name="Mongo">
+<locations>
+<location path="${targets}/EMF 2.6.1" type="Directory"/>
+<location path="${targets}/equinox-SDK-3.6.1" type="Directory"/>
+<location path="${targets}/MongoDB" type="Directory"/>
+<location path="${targets}/Eclipse SDK 2.6.1" type="Directory"/>
+</locations>
+</target>

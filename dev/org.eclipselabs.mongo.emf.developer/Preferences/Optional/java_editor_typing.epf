@@ -1,0 +1,9 @@
+# @title Java Editor Typing
+# @description Java Editor smart open brace and semicolon
+# @audit_type LASTMOD
+#
+# Created by the Workspace Mechanic Preference Recorder
+#Tue Jun 29 17:06:01 CDT 2010
+file_export_version=3.0
+/instance/org.eclipse.jdt.ui/smart_semicolon=true
+/instance/org.eclipse.jdt.ui/smart_opening_brace=true

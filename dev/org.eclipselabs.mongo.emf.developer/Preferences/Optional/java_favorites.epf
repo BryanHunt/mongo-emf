@@ -1,0 +1,8 @@
+# @title Java Content Assist Favorites
+# @description Java content assist favorites
+# @audit_type LASTMOD
+#
+# Created by the Workspace Mechanic Preference Recorder
+#Tue Jun 29 17:33:08 CDT 2010
+file_export_version=3.0
+/instance/org.eclipse.jdt.ui/content_assist_favorite_static_members=org.hamcrest.CoreMatchers.*;org.junit.Assert.*;org.junit.matchers.JUnitMatchers.*

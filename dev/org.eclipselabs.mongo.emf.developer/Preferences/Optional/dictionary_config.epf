@@ -1,0 +1,19 @@
+# @title Spelling Dictionary
+# @description Custom spelling dictionary
+# @audit_type LASTMOD
+#
+# Created by the Workspace Mechanic Preference Recorder
+#Fri Jun 25 23:13:55 CDT 2010
+/instance/org.eclipse.jdt.ui/spelling_ignore_sentence=true
+/instance/org.eclipse.jdt.ui/spelling_user_dictionary=/Users/bhunt/Documents/Programming/Setup/dictionary.txt
+/instance/org.eclipse.jdt.ui/spelling_user_dictionary_encoding=
+/instance/org.eclipse.jdt.ui/spelling_ignore_single_letters=true
+/instance/org.eclipse.ui.editors/spellingEngine=org.eclipse.jdt.internal.ui.text.spelling.DefaultSpellingEngine
+file_export_version=3.0
+/instance/org.eclipse.jdt.ui/spelling_ignore_mixed=true
+/instance/org.eclipse.jdt.ui/spelling_ignore_upper=true
+/instance/org.eclipse.jdt.ui/spelling_ignore_urls=true
+/instance/org.eclipse.jdt.ui/spelling_ignore_non_letters=true
+/instance/org.eclipse.jdt.ui/spelling_ignore_java_strings=true
+/instance/org.eclipse.jdt.ui/spelling_ignore_digits=true
+/instance/org.eclipse.jdt.ui/spelling_ignore_ampersand_in_properties=true
