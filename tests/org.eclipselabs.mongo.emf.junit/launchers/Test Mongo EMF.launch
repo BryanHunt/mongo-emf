@@ -20,7 +20,7 @@
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="4"/>
 </listAttribute>
-<stringAttribute key="org.eclipse.jdt.junit.CONTAINER" value="=org.eclipselabs.emf.mongo.junit"/>
+<stringAttribute key="org.eclipse.jdt.junit.CONTAINER" value="=org.eclipselabs.mongo.emf.junit"/>
 <booleanAttribute key="org.eclipse.jdt.junit.KEEPRUNNING_ATTR" value="false"/>
 <stringAttribute key="org.eclipse.jdt.junit.TESTNAME" value=""/>
 <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit4"/>
@@ -31,8 +31,8 @@
 <stringAttribute key="pde.version" value="3.3"/>
 <stringAttribute key="product" value="org.eclipse.equinox.p2.director.app.product"/>
 <booleanAttribute key="run_in_ui_thread" value="true"/>
-<stringAttribute key="selected_target_plugins" value="org.eclipse.equinox.ds*1.2.1.R36x_v20100803@default:true,org.eclipse.team.core@default:default,org.eclipse.equinox.registry@default:default,org.eclipse.core.jobs*3.5.100.v20100823@default:default,org.eclipse.core.resources@default:default,org.eclipse.osgi.services@default:default,org.eclipse.core.filesystem.macosx@default:false,org.eclipse.equinox.servletbridge.extensionbundle@default:false,org.eclipse.equinox.weaving.hook@default:false,org.eclipse.core.expressions@default:default,org.eclipse.core.runtime.compatibility.registry@default:false,org.eclipse.equinox.preferences@default:default,org.hamcrest.core@default:default,org.eclipse.osgi*3.7.0.v20100910@-1:true,org.junit*4.8.1.v4_8_1_v20100427-1100@default:default,org.eclipse.equinox.app*1.3.100.v20100803@default:default,org.eclipse.equinox.util@default:default,org.eclipse.core.runtime@default:true,org.eclipse.equinox.transforms.hook@default:false,org.eclipse.core.filesystem@default:default,org.eclipse.core.contenttype@default:default,org.eclipse.equinox.common@2:true"/>
-<stringAttribute key="selected_workspace_plugins" value="org.eclipselabs.emf.mongo@default:default,org.eclipselabs.emf.mongo.junit@default:default,org.eclipse.emf.ecore@default:default,org.eclipse.emf.common@default:default,org.eclipselabs.mongo@default:default,com.mongodb@default:default,org.eclipse.emf.ecore.xmi@default:default"/>
+<stringAttribute key="selected_target_plugins" value="org.eclipse.core.runtime@default:true,org.eclipse.equinox.servletbridge.extensionbundle@default:false,com.mongodb@default:default,org.eclipse.equinox.weaving.hook@default:false,org.eclipse.equinox.registry@default:default,org.eclipse.core.resources@default:default,org.eclipse.core.expressions@default:default,org.hamcrest.core@default:default,org.eclipse.osgi@-1:true,org.eclipse.equinox.common@2:true,org.eclipse.core.variables@default:default,org.eclipse.osgi.services@default:default,org.eclipse.equinox.app@default:default,org.eclipse.core.jobs@default:default,org.eclipse.equinox.preferences@default:default,org.eclipse.core.filesystem@default:default,org.eclipse.core.runtime.compatibility.registry@default:false,org.eclipse.core.contenttype@default:default,org.eclipse.ant.core@default:default,org.junit*4.8.1.v4_8_1_v20100427-1100@default:default,org.eclipse.core.filesystem.macosx@default:false,org.eclipse.team.core@default:default,org.eclipse.equinox.transforms.hook@default:false,org.eclipse.equinox.util@default:default,org.eclipse.equinox.ds@default:true"/>
+<stringAttribute key="selected_workspace_plugins" value="org.eclipse.emf.ecore@default:default,org.eclipselabs.mongo.emf@default:default,org.eclipse.emf.common@default:default,org.eclipse.emf.ecore.xmi@default:default,org.eclipselabs.mongo@default:default,org.eclipselabs.mongo.emf.junit@default:default"/>
 <booleanAttribute key="show_selected_only" value="false"/>
 <stringAttribute key="templateConfig" value="${target_home}/configuration/config.ini"/>
 <booleanAttribute key="tracing" value="false"/>
