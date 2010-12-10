@@ -86,7 +86,15 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 					collection.insert(dbObject);
 					id = (ObjectId) dbObject.get(ID_KEY);
 					Map<Object, Object> response = getResponse(options);
-					response.put(URIConverter.RESPONSE_URI, uri.appendSegment(id.toString()));
+
+					URI newURI = null;
+
+					if (resource.getURI().hasTrailingPathSeparator())
+						newURI = resource.getURI().trimSegments(1).appendSegment(id.toString());
+					else
+						newURI = resource.getURI().appendSegment(id.toString());
+
+					response.put(URIConverter.RESPONSE_URI, newURI);
 				}
 				else
 				{
@@ -135,7 +143,12 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 	private ObjectId getID(URI uri)
 	{
-		return uri.segmentCount() == 3 ? new ObjectId(uri.segment(2)) : null;
+		if (uri.segmentCount() != 3)
+			return null;
+
+		String id = uri.segment(2);
+
+		return id.isEmpty() ? null : new ObjectId(uri.segment(2));
 	}
 
 	private DBCollection getCollection(URI uri) throws UnknownHostException, IOException
@@ -216,19 +229,20 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		{
 			// Cross-document containment, or non-containment reference - build a proxy
 
-			URI targetURI = EcoreUtil.getURI(targetObject);
+			Resource resource = targetObject.eResource();
 
-			if (internalEObject.eDirectResource() == null || !canHandle(targetURI))
+			if (internalEObject.eDirectResource() == null || !canHandle(resource.getResourceSet().getURIConverter().normalize(resource.getURI())))
 			{
 				BasicDBObject dbObject = new BasicDBObject(2);
-				dbObject.put(PROXY_KEY, targetURI.toString());
+				dbObject.put(PROXY_KEY, EcoreUtil.getURI(targetObject).toString());
 				dbObject.put(EPACKAGE_KEY, targetObject.eClass().getEPackage().getNsURI());
 				dbObject.put(ECLASS_KEY, targetObject.eClass().getName());
 				return dbObject;
 			}
 			else
 			{
-				return new DBRef(db, getCollection(targetURI).getName(), getID(targetURI));
+				URI normalizedTargetURI = resource.getResourceSet().getURIConverter().normalize(resource.getURI());
+				return new DBRef(db, getCollection(normalizedTargetURI).getName(), getID(normalizedTargetURI));
 			}
 		}
 		else
