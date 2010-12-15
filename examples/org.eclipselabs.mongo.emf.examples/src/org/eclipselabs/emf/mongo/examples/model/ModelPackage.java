@@ -1,16 +1,20 @@
-/**
- * <copyright>
- * </copyright>
+/*******************************************************************************
+ * Copyright (c) 2010 Bryan Hunt.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  *
- * $Id$
- */
+ * Contributors:
+ *    Bryan Hunt - initial API and implementation
+ *******************************************************************************/
+
 package org.eclipselabs.emf.mongo.examples.model;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -18,12 +22,13 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  * The <b>Package</b> for the model.
  * It contains accessors for the meta objects to represent
  * <ul>
- *   <li>each class,</li>
- *   <li>each feature of each class,</li>
- *   <li>each enum,</li>
- *   <li>and each data type</li>
+ * <li>each class,</li>
+ * <li>each feature of each class,</li>
+ * <li>each enum,</li>
+ * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
+ * 
  * @see org.eclipselabs.emf.mongo.examples.model.ModelFactory
  * @model kind="package"
  * @generated
@@ -34,6 +39,7 @@ public class ModelPackage extends EPackageImpl
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static final String eNAME = "model";
@@ -42,6 +48,7 @@ public class ModelPackage extends EPackageImpl
 	 * The package namespace URI.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static final String eNS_URI = "http://code.google.com/a/eclipselabs.org/p/mongo-emf/examples/model";
@@ -50,6 +57,7 @@ public class ModelPackage extends EPackageImpl
 	 * The package namespace name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static final String eNS_PREFIX = "org.eclipselabs.emf.mongo.examples.model";
@@ -58,14 +66,17 @@ public class ModelPackage extends EPackageImpl
 	 * The singleton instance of the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public static final ModelPackage eINSTANCE = org.eclipselabs.emf.mongo.examples.model.ModelPackage.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipselabs.emf.mongo.examples.model.Parent <em>Parent</em>}' class.
+	 * The meta object id for the '{@link org.eclipselabs.emf.mongo.examples.model.Parent
+	 * <em>Parent</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see org.eclipselabs.emf.mongo.examples.model.Parent
 	 * @see org.eclipselabs.emf.mongo.examples.model.ModelPackage#getParent()
 	 * @generated
@@ -76,6 +87,7 @@ public class ModelPackage extends EPackageImpl
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -85,6 +97,7 @@ public class ModelPackage extends EPackageImpl
 	 * The feature id for the '<em><b>Children</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -94,15 +107,18 @@ public class ModelPackage extends EPackageImpl
 	 * The number of structural features of the '<em>Parent</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
 	public static final int PARENT_FEATURE_COUNT = 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipselabs.emf.mongo.examples.model.Child <em>Child</em>}' class.
+	 * The meta object id for the '{@link org.eclipselabs.emf.mongo.examples.model.Child
+	 * <em>Child</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see org.eclipselabs.emf.mongo.examples.model.Child
 	 * @see org.eclipselabs.emf.mongo.examples.model.ModelPackage#getChild()
 	 * @generated
@@ -113,6 +129,7 @@ public class ModelPackage extends EPackageImpl
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -122,6 +139,7 @@ public class ModelPackage extends EPackageImpl
 	 * The number of structural features of the '<em>Child</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 * @ordered
 	 */
@@ -130,6 +148,7 @@ public class ModelPackage extends EPackageImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	private EClass parentEClass = null;
@@ -137,6 +156,7 @@ public class ModelPackage extends EPackageImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	private EClass childEClass = null;
@@ -145,12 +165,11 @@ public class ModelPackage extends EPackageImpl
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
-	 * <p>Note: the correct way to create the package is via the static
-	 * factory method {@link #init init()}, which also performs
-	 * initialization of the package, or returns the registered package,
-	 * if one already exists.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <p>
+	 * Note: the correct way to create the package is via the static factory method {@link #init
+	 * init()}, which also performs initialization of the package, or returns the registered package,
+	 * if one already exists. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
 	 * @see org.eclipselabs.emf.mongo.examples.model.ModelPackage#eNS_URI
 	 * @see #init()
@@ -164,17 +183,20 @@ public class ModelPackage extends EPackageImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	private static boolean isInited = false;
 
 	/**
-	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon
+	 * which it depends.
 	 * 
-	 * <p>This method is used to initialize {@link ModelPackage#eINSTANCE} when that field is accessed.
-	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
+	 * <p>
+	 * This method is used to initialize {@link ModelPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain
+	 * the package. <!-- begin-user-doc --> <!-- end-user-doc -->
+	 * 
 	 * @see #eNS_URI
 	 * @see #createPackageContents()
 	 * @see #initializePackageContents()
@@ -182,10 +204,11 @@ public class ModelPackage extends EPackageImpl
 	 */
 	public static ModelPackage init()
 	{
-		if (isInited) return (ModelPackage)EPackage.Registry.INSTANCE.getEPackage(ModelPackage.eNS_URI);
+		if (isInited)
+			return (ModelPackage) EPackage.Registry.INSTANCE.getEPackage(ModelPackage.eNS_URI);
 
 		// Obtain or create and register package
-		ModelPackage theModelPackage = (ModelPackage)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ModelPackage ? EPackage.Registry.INSTANCE.get(eNS_URI) : new ModelPackage());
+		ModelPackage theModelPackage = (ModelPackage) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ModelPackage ? EPackage.Registry.INSTANCE.get(eNS_URI) : new ModelPackage());
 
 		isInited = true;
 
@@ -198,17 +221,17 @@ public class ModelPackage extends EPackageImpl
 		// Mark meta-data to indicate it can't be changed
 		theModelPackage.freeze();
 
-  
 		// Update the registry and return the package
 		EPackage.Registry.INSTANCE.put(ModelPackage.eNS_URI, theModelPackage);
 		return theModelPackage;
 	}
 
-
 	/**
-	 * Returns the meta object for class '{@link org.eclipselabs.emf.mongo.examples.model.Parent <em>Parent</em>}'.
+	 * Returns the meta object for class '{@link org.eclipselabs.emf.mongo.examples.model.Parent
+	 * <em>Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for class '<em>Parent</em>'.
 	 * @see org.eclipselabs.emf.mongo.examples.model.Parent
 	 * @generated
@@ -219,9 +242,11 @@ public class ModelPackage extends EPackageImpl
 	}
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipselabs.emf.mongo.examples.model.Parent#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipselabs.emf.mongo.examples.model.Parent#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Name</em>'.
 	 * @see org.eclipselabs.emf.mongo.examples.model.Parent#getName()
 	 * @see #getParent()
@@ -229,13 +254,15 @@ public class ModelPackage extends EPackageImpl
 	 */
 	public EAttribute getParent_Name()
 	{
-		return (EAttribute)parentEClass.getEStructuralFeatures().get(0);
+		return (EAttribute) parentEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.eclipselabs.emf.mongo.examples.model.Parent#getChildren <em>Children</em>}'.
+	 * Returns the meta object for the reference list '
+	 * {@link org.eclipselabs.emf.mongo.examples.model.Parent#getChildren <em>Children</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the reference list '<em>Children</em>'.
 	 * @see org.eclipselabs.emf.mongo.examples.model.Parent#getChildren()
 	 * @see #getParent()
@@ -243,13 +270,15 @@ public class ModelPackage extends EPackageImpl
 	 */
 	public EReference getParent_Children()
 	{
-		return (EReference)parentEClass.getEStructuralFeatures().get(1);
+		return (EReference) parentEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipselabs.emf.mongo.examples.model.Child <em>Child</em>}'.
+	 * Returns the meta object for class '{@link org.eclipselabs.emf.mongo.examples.model.Child
+	 * <em>Child</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for class '<em>Child</em>'.
 	 * @see org.eclipselabs.emf.mongo.examples.model.Child
 	 * @generated
@@ -260,9 +289,11 @@ public class ModelPackage extends EPackageImpl
 	}
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipselabs.emf.mongo.examples.model.Child#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '
+	 * {@link org.eclipselabs.emf.mongo.examples.model.Child#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the meta object for the attribute '<em>Name</em>'.
 	 * @see org.eclipselabs.emf.mongo.examples.model.Child#getName()
 	 * @see #getChild()
@@ -270,38 +301,42 @@ public class ModelPackage extends EPackageImpl
 	 */
 	public EAttribute getChild_Name()
 	{
-		return (EAttribute)childEClass.getEStructuralFeatures().get(0);
+		return (EAttribute) childEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
 	public ModelFactory getModelFactory()
 	{
-		return (ModelFactory)getEFactoryInstance();
+		return (ModelFactory) getEFactoryInstance();
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	private boolean isCreated = false;
 
 	/**
-	 * Creates the meta-model objects for the package.  This method is
+	 * Creates the meta-model objects for the package. This method is
 	 * guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void createPackageContents()
 	{
-		if (isCreated) return;
+		if (isCreated)
+			return;
 		isCreated = true;
 
 		// Create classes and their features
@@ -316,20 +351,23 @@ public class ModelPackage extends EPackageImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	private boolean isInitialized = false;
 
 	/**
-	 * Complete the initialization of the package and its meta-model.  This
+	 * Complete the initialization of the package and its meta-model. This
 	 * method is guarded to have no affect on any invocation but its first.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void initializePackageContents()
 	{
-		if (isInitialized) return;
+		if (isInitialized)
+			return;
 		isInitialized = true;
 
 		// Initialize package
@@ -345,8 +383,10 @@ public class ModelPackage extends EPackageImpl
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(parentEClass, Parent.class, "Parent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getParent_Name(), ecorePackage.getEString(), "name", null, 0, 1, Parent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getParent_Children(), this.getChild(), null, "children", null, 0, -1, Parent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getParent_Name(), ecorePackage.getEString(), "name", null, 0, 1, Parent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+				IS_ORDERED);
+		initEReference(getParent_Children(), this.getChild(), null, "children", null, 0, -1, Parent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+				IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(childEClass, Child.class, "Child", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getChild_Name(), ecorePackage.getEString(), "name", null, 0, 1, Child.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -359,20 +399,23 @@ public class ModelPackage extends EPackageImpl
 	 * <!-- begin-user-doc -->
 	 * Defines literals for the meta objects that represent
 	 * <ul>
-	 *   <li>each class,</li>
-	 *   <li>each feature of each class,</li>
-	 *   <li>each enum,</li>
-	 *   <li>and each data type</li>
+	 * <li>each class,</li>
+	 * <li>each feature of each class,</li>
+	 * <li>each enum,</li>
+	 * <li>and each data type</li>
 	 * </ul>
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public interface Literals
 	{
 		/**
-		 * The meta object literal for the '{@link org.eclipselabs.emf.mongo.examples.model.Parent <em>Parent</em>}' class.
+		 * The meta object literal for the '{@link org.eclipselabs.emf.mongo.examples.model.Parent
+		 * <em>Parent</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @see org.eclipselabs.emf.mongo.examples.model.Parent
 		 * @see org.eclipselabs.emf.mongo.examples.model.ModelPackage#getParent()
 		 * @generated
@@ -383,6 +426,7 @@ public class ModelPackage extends EPackageImpl
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		public static final EAttribute PARENT__NAME = eINSTANCE.getParent_Name();
@@ -391,14 +435,17 @@ public class ModelPackage extends EPackageImpl
 		 * The meta object literal for the '<em><b>Children</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		public static final EReference PARENT__CHILDREN = eINSTANCE.getParent_Children();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipselabs.emf.mongo.examples.model.Child <em>Child</em>}' class.
+		 * The meta object literal for the '{@link org.eclipselabs.emf.mongo.examples.model.Child
+		 * <em>Child</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @see org.eclipselabs.emf.mongo.examples.model.Child
 		 * @see org.eclipselabs.emf.mongo.examples.model.ModelPackage#getChild()
 		 * @generated
@@ -409,10 +456,11 @@ public class ModelPackage extends EPackageImpl
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
+		 * 
 		 * @generated
 		 */
 		public static final EAttribute CHILD__NAME = eINSTANCE.getChild_Name();
 
 	}
 
-} //ModelPackage
+} // ModelPackage
