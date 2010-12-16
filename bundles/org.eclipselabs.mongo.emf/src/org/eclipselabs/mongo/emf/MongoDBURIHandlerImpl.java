@@ -148,7 +148,9 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 				DBCollection collection = getCollection(uri);
 				DBObject dbObject = collection.findOne(new BasicDBObject(ID_KEY, getID(uri)));
-				resource.getContents().add(buildObject(collection, dbObject, resource, uriHandler));
+
+				if (dbObject != null)
+					resource.getContents().add(buildObject(collection, dbObject, resource, uriHandler));
 			}
 		};
 	}

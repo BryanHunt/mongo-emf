@@ -488,6 +488,18 @@ public class TestEmfMongoDB
 		assertThat(targetBook.getTitle(), is(book.getTitle()));
 	}
 
+	@Test
+	public void testGetNonexistentResource()
+	{
+		ResourceSet resourceSet = new ResourceSetImpl();
+		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
+		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+
+		Resource resource = resourceSet.getResource(createObjectURI(ModelPackage.Literals.LIBRARY, new ObjectId()), true);
+		assertThat(resource, is(notNullValue()));
+		assertThat(resource.getContents().size(), is(0));
+	}
+
 	@Ignore
 	@Test
 	public void testLargeDatabase() throws IOException
