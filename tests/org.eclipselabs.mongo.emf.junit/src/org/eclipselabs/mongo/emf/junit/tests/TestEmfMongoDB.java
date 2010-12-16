@@ -49,7 +49,6 @@ import org.eclipselabs.mongo.emf.junit.model.Location;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.Person;
-import org.eclipselabs.mongo.internal.emf.MongoDBResourceFactoryImpl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -196,11 +195,19 @@ public class TestEmfMongoDB
 		{
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			libraryResource.save(out, null);
+
+			ResourceSet testResourceSet = new ResourceSetImpl();
+			uriHandlers = testResourceSet.getURIConverter().getURIHandlers();
+			uriHandlers.add(0, new MongoDBURIHandlerImpl());
+
+			testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Person/"), personResource.getURI().trimSegments(1).appendSegment(""));
+			testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Location/"), locationResource.getURI().trimSegments(1).appendSegment(""));
 			Resource libraryXMI = new XMIResourceFactoryImpl().createResource(URI.createURI("library.xmi"));
+			testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../../Library").appendSegment(libraryResource.getURI().lastSegment()), libraryXMI.getURI());
+			testResourceSet.getResources().add(libraryXMI);
+
 			libraryXMI.load(new ByteArrayInputStream(out.toByteArray()), null);
-			Resource libraryMongo = new MongoDBResourceFactoryImpl().createResource(URI.createURI("library.mongo.xmi"));
-			libraryMongo.load(new ByteArrayInputStream(out.toByteArray()), null);
-			assertThat(EcoreUtil.equals(libraryXMI.getContents().get(0), libraryMongo.getContents().get(0)), is(true));
+			assertThat(EcoreUtil.equals(libraryXMI.getContents().get(0), libraryResource.getContents().get(0)), is(true));
 		}
 
 		{
@@ -208,11 +215,39 @@ public class TestEmfMongoDB
 			Map<Object, Object> options = new HashMap<Object, Object>();
 			options.put(XMLResource.OPTION_BINARY, Boolean.TRUE);
 			libraryResource.save(out, options);
-			Resource libraryBinary = new BinaryResourceImpl(URI.createURI("library.binary"));
-			libraryBinary.load(new ByteArrayInputStream(out.toByteArray()), null);
-			Resource libraryMongo = new MongoDBResourceFactoryImpl().createResource(URI.createURI("library.mongo.binary"));
-			libraryMongo.load(new ByteArrayInputStream(out.toByteArray()), options);
-			assertThat(EcoreUtil.equals(libraryBinary.getContents().get(0), libraryMongo.getContents().get(0)), is(true));
+
+			{
+
+				ResourceSet testResourceSet = new ResourceSetImpl();
+				uriHandlers = testResourceSet.getURIConverter().getURIHandlers();
+				uriHandlers.add(0, new MongoDBURIHandlerImpl());
+
+				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Person/"), personResource.getURI().trimSegments(1).appendSegment(""));
+				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Location/"), locationResource.getURI().trimSegments(1).appendSegment(""));
+
+				Resource libraryBinary = new BinaryResourceImpl(URI.createURI("library.binary"));
+				testResourceSet.getResources().add(libraryBinary);
+				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../../Library").appendSegment(libraryResource.getURI().lastSegment()), libraryBinary.getURI());
+
+				libraryBinary.load(new ByteArrayInputStream(out.toByteArray()), null);
+				assertThat(EcoreUtil.equals(libraryBinary.getContents().get(0), libraryResource.getContents().get(0)), is(true));
+			}
+			{
+
+				ResourceSet testResourceSet = new ResourceSetImpl();
+				uriHandlers = testResourceSet.getURIConverter().getURIHandlers();
+				uriHandlers.add(0, new MongoDBURIHandlerImpl());
+
+				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Person/"), personResource.getURI().trimSegments(1).appendSegment(""));
+				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Location/"), locationResource.getURI().trimSegments(1).appendSegment(""));
+
+				Resource libraryXMI = new XMIResourceFactoryImpl().createResource(URI.createURI("library.mongo.binary"));
+				testResourceSet.getResources().add(libraryXMI);
+				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../../Library").appendSegment(libraryResource.getURI().lastSegment()), libraryXMI.getURI());
+
+				libraryXMI.load(new ByteArrayInputStream(out.toByteArray()), options);
+				assertThat(EcoreUtil.equals(libraryXMI.getContents().get(0), libraryResource.getContents().get(0)), is(true));
+			}
 		}
 
 		{
@@ -220,11 +255,37 @@ public class TestEmfMongoDB
 			Map<Object, Object> options = new HashMap<Object, Object>();
 			options.put(XMIResource.OPTION_SUPPRESS_XMI, Boolean.TRUE);
 			libraryResource.save(out, options);
-			Resource libraryXML = new XMLResourceFactoryImpl().createResource(URI.createURI("library.xml"));
-			libraryXML.load(new ByteArrayInputStream(out.toByteArray()), null);
-			Resource libraryMongo = new MongoDBResourceFactoryImpl().createResource(URI.createURI("library.mongo.xml"));
-			libraryMongo.load(new ByteArrayInputStream(out.toByteArray()), options);
-			assertThat(EcoreUtil.equals(libraryXML.getContents().get(0), libraryMongo.getContents().get(0)), is(true));
+
+			{
+				ResourceSet testResourceSet = new ResourceSetImpl();
+				uriHandlers = testResourceSet.getURIConverter().getURIHandlers();
+				uriHandlers.add(0, new MongoDBURIHandlerImpl());
+
+				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Person/"), personResource.getURI().trimSegments(1).appendSegment(""));
+				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Location/"), locationResource.getURI().trimSegments(1).appendSegment(""));
+
+				Resource libraryXML = new XMLResourceFactoryImpl().createResource(URI.createURI("library.xml"));
+				testResourceSet.getResources().add(libraryXML);
+				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../../Library").appendSegment(libraryResource.getURI().lastSegment()), libraryXML.getURI());
+
+				libraryXML.load(new ByteArrayInputStream(out.toByteArray()), null);
+				assertThat(EcoreUtil.equals(libraryXML.getContents().get(0), libraryResource.getContents().get(0)), is(true));
+			}
+			{
+				ResourceSet testResourceSet = new ResourceSetImpl();
+				uriHandlers = testResourceSet.getURIConverter().getURIHandlers();
+				uriHandlers.add(0, new MongoDBURIHandlerImpl());
+
+				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Person/"), personResource.getURI().trimSegments(1).appendSegment(""));
+				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Location/"), locationResource.getURI().trimSegments(1).appendSegment(""));
+
+				Resource libraryXMI = new XMIResourceFactoryImpl().createResource(URI.createURI("library.mongo.xml"));
+				testResourceSet.getResources().add(libraryXMI);
+				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../../Library").appendSegment(libraryResource.getURI().lastSegment()), libraryXMI.getURI());
+
+				libraryXMI.load(new ByteArrayInputStream(out.toByteArray()), options);
+				assertThat(EcoreUtil.equals(libraryXMI.getContents().get(0), libraryResource.getContents().get(0)), is(true));
+			}
 		}
 
 		assertThat(libraryCollection.getCount(), is(1L));
@@ -516,7 +577,7 @@ public class TestEmfMongoDB
 			}
 
 			BasicDBObject proxy = new BasicDBObject();
-			proxy.put("_eProxyURI", "mongo://localhost/test/Library/" + library.get("_id") + "#//@books." + (bookReferences.size()));
+			proxy.put("_eProxyURI", "../../../test/Library/" + library.get("_id") + "#//@books." + (bookReferences.size()));
 			proxy.put("_ePackage", ModelPackage.eINSTANCE.getNsURI());
 			proxy.put("_eClass", ModelPackage.Literals.BOOK.getName());
 			bookReferences.add(proxy);

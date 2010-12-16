@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipselabs.mongo.IMongoDB;
 import org.eclipselabs.mongo.internal.emf.Activator;
 
@@ -78,7 +79,18 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 				super.close();
 				EObject root = resource.getContents().get(0);
 				DBCollection collection = getCollection(uri);
-				DBObject dbObject = buildDBObject(collection.getDB(), root);
+
+				XMLResource.URIHandler uriHandler = (XMLResource.URIHandler) options.get(XMLResource.OPTION_URI_HANDLER);
+
+				if (uriHandler == null)
+					uriHandler = new org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl();
+
+				if (resource.getURI().hasTrailingPathSeparator())
+					uriHandler.setBaseURI(resource.getURI());
+				else
+					uriHandler.setBaseURI(resource.getURI().appendSegment(""));
+
+				DBObject dbObject = buildDBObject(collection.getDB(), root, uriHandler);
 				ObjectId id = getID(uri);
 
 				if (id == null)
@@ -105,10 +117,11 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		};
 	}
 
-	public static class MongoDBOutputStream extends ByteArrayOutputStream
+	public static class MongoDBOutputStream extends ByteArrayOutputStream implements URIConverter.Savable
 	{
 		protected Resource resource;
 
+		@Override
 		public void saveResource(Resource resource)
 		{
 			this.resource = resource;
@@ -116,29 +129,37 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	}
 
 	@Override
-	public InputStream createInputStream(final URI uri, Map<?, ?> options) throws IOException
+	public InputStream createInputStream(final URI uri, final Map<?, ?> options) throws IOException
 	{
 		return new MongoDBInputStream()
 		{
 			@Override
-			public void load(Resource resource) throws IOException
+			public void loadResource(Resource resource) throws IOException
 			{
+				XMLResource.URIHandler uriHandler = (XMLResource.URIHandler) options.get(XMLResource.OPTION_URI_HANDLER);
+
+				if (uriHandler == null)
+					uriHandler = new org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl();
+
+				if (resource.getURI().hasTrailingPathSeparator())
+					uriHandler.setBaseURI(resource.getURI());
+				else
+					uriHandler.setBaseURI(resource.getURI().appendSegment(""));
+
 				DBCollection collection = getCollection(uri);
 				DBObject dbObject = collection.findOne(new BasicDBObject(ID_KEY, getID(uri)));
-				resource.getContents().add(buildObject(collection, dbObject, resource));
+				resource.getContents().add(buildObject(collection, dbObject, resource, uriHandler));
 			}
 		};
 	}
 
-	public abstract static class MongoDBInputStream extends InputStream
+	public abstract static class MongoDBInputStream extends InputStream implements URIConverter.Loadable
 	{
 		@Override
 		public int read() throws IOException
 		{
 			return 0;
 		}
-
-		public abstract void load(Resource resource) throws IOException;
 	}
 
 	private ObjectId getID(URI uri)
@@ -174,7 +195,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		return collection;
 	}
 
-	private DBObject buildDBObject(DB db, EObject eObject) throws UnknownHostException, IOException
+	private DBObject buildDBObject(DB db, EObject eObject, XMLResource.URIHandler uriHandler) throws UnknownHostException, IOException
 	{
 		BasicDBObject dbObject = new BasicDBObject();
 		EClass eClass = eObject.eClass();
@@ -203,7 +224,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 				ArrayList<Object> dbReferences = new ArrayList<Object>(targetObjects.size());
 
 				for (EObject targetObject : targetObjects)
-					dbReferences.add(buildDBReference(db, reference, targetObject));
+					dbReferences.add(buildDBReference(db, reference, targetObject, uriHandler));
 
 				dbObject.put(reference.getName(), dbReferences);
 			}
@@ -214,14 +235,14 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 				if (targetObject == null)
 					continue;
 
-				dbObject.put(reference.getName(), buildDBReference(db, reference, targetObject));
+				dbObject.put(reference.getName(), buildDBReference(db, reference, targetObject, uriHandler));
 			}
 		}
 
 		return dbObject;
 	}
 
-	private Object buildDBReference(DB db, EReference eReference, EObject targetObject) throws UnknownHostException, IOException
+	private Object buildDBReference(DB db, EReference eReference, EObject targetObject, XMLResource.URIHandler uriHandler) throws UnknownHostException, IOException
 	{
 		InternalEObject internalEObject = (InternalEObject) targetObject;
 
@@ -234,7 +255,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 			if (internalEObject.eDirectResource() == null || !canHandle(resource.getResourceSet().getURIConverter().normalize(resource.getURI())))
 			{
 				BasicDBObject dbObject = new BasicDBObject(2);
-				dbObject.put(PROXY_KEY, EcoreUtil.getURI(targetObject).toString());
+				dbObject.put(PROXY_KEY, uriHandler.deresolve(EcoreUtil.getURI(targetObject)).toString());
 				dbObject.put(EPACKAGE_KEY, targetObject.eClass().getEPackage().getNsURI());
 				dbObject.put(ECLASS_KEY, targetObject.eClass().getName());
 				return dbObject;
@@ -248,11 +269,11 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		else
 		{
 			// Non cross-document containment reference - build a MongoDB embedded object
-			return buildDBObject(db, targetObject);
+			return buildDBObject(db, targetObject, uriHandler);
 		}
 	}
 
-	private EObject buildObject(DBCollection collection, DBObject dbObject, Resource resource)
+	private EObject buildObject(DBCollection collection, DBObject dbObject, Resource resource, XMLResource.URIHandler uriHandler)
 	{
 		EObject eObject = buildObject(dbObject);
 
@@ -278,45 +299,44 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 					EList<EObject> eObjects = (EList<EObject>) eObject.eGet(reference);
 
 					for (Object dbReference : dbReferences)
-						eObjects.add(buildObjectReference(collection, dbReference, resource));
+						eObjects.add(buildObjectReference(collection, dbReference, resource, uriHandler));
 				}
 			}
 			else
-				eObject.eSet(reference, buildObjectReference(collection, dbObject.get(reference.getName()), resource));
+				eObject.eSet(reference, buildObjectReference(collection, dbObject.get(reference.getName()), resource, uriHandler));
 		}
 
 		return eObject;
 	}
 
-	private EObject buildObjectReference(DBCollection collection, Object dbReference, Resource resource)
+	private EObject buildObjectReference(DBCollection collection, Object dbReference, Resource resource, XMLResource.URIHandler uriHandler)
 	{
 		if (dbReference instanceof DBRef)
-			return buildProxy((DBRef) dbReference, resource);
+			return buildProxy((DBRef) dbReference, resource, uriHandler);
 		else
 		{
 			DBObject dbObject = (DBObject) dbReference;
 			String proxy = (String) dbObject.get(PROXY_KEY);
 
 			if (proxy == null)
-				return buildObject(collection, dbObject, resource);
+				return buildObject(collection, dbObject, resource, uriHandler);
 			else
-				return buildProxy(dbObject);
+				return buildProxy(dbObject, uriHandler);
 		}
 	}
 
-	private EObject buildProxy(DBObject dbObject)
+	private EObject buildProxy(DBObject dbObject, XMLResource.URIHandler uriHandler)
 	{
 		EObject eObject = buildObject(dbObject);
-		((InternalEObject) eObject).eSetProxyURI(URI.createURI((String) dbObject.get(PROXY_KEY)));
+		((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(URI.createURI((String) dbObject.get(PROXY_KEY))));
 		return eObject;
 	}
 
-	private EObject buildProxy(DBRef dbReference, Resource resource)
+	private EObject buildProxy(DBRef dbReference, Resource resource, XMLResource.URIHandler uriHandler)
 	{
-		URI uri = resource.getURI();
 		EObject eObject = buildObject(dbReference.fetch());
-		URI proxyURI = URI.createURI(uri.scheme() + "://" + uri.host() + "/" + dbReference.getDB().getName() + "/" + dbReference.getRef() + "/" + dbReference.getId() + "#/0");
-		((InternalEObject) eObject).eSetProxyURI(proxyURI);
+		URI proxyURI = URI.createURI("../../../" + dbReference.getDB().getName() + "/" + dbReference.getRef() + "/" + dbReference.getId() + "#/0");
+		((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(proxyURI));
 		return eObject;
 	}
 
