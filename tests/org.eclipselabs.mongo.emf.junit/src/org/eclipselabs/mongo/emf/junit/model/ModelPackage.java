@@ -47,7 +47,7 @@ public interface ModelPackage extends EPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.eclipselabs.org/emf/mongo/junit";
+	String eNS_URI = "http://www.eclipselabs.org/mongo/emf/junit";
 
 	/**
 	 * The package namespace name.
@@ -55,7 +55,7 @@ public interface ModelPackage extends EPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "org.eclipselabs.emf.mongo.junit";
+	String eNS_PREFIX = "org.eclipselabs.mongo.emf.junit";
 
 	/**
 	 * The singleton instance of the package.
@@ -205,6 +205,142 @@ public interface ModelPackage extends EPackage
 	int LOCATION_FEATURE_COUNT = 1;
 
 	/**
+	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl <em>ETypes</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl
+	 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getETypes()
+	 * @generated
+	 */
+	int ETYPES = 4;
+
+	/**
+	 * The feature id for the '<em><b>EBig Decimal</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ETYPES__EBIG_DECIMAL = 0;
+
+	/**
+	 * The feature id for the '<em><b>EBig Integer</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ETYPES__EBIG_INTEGER = 1;
+
+	/**
+	 * The feature id for the '<em><b>EBoolean</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ETYPES__EBOOLEAN = 2;
+
+	/**
+	 * The feature id for the '<em><b>EByte</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ETYPES__EBYTE = 3;
+
+	/**
+	 * The feature id for the '<em><b>EByte Array</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ETYPES__EBYTE_ARRAY = 4;
+
+	/**
+	 * The feature id for the '<em><b>EChar</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ETYPES__ECHAR = 5;
+
+	/**
+	 * The feature id for the '<em><b>EDate</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ETYPES__EDATE = 6;
+
+	/**
+	 * The feature id for the '<em><b>EDouble</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ETYPES__EDOUBLE = 7;
+
+	/**
+	 * The feature id for the '<em><b>EFloat</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ETYPES__EFLOAT = 8;
+
+	/**
+	 * The feature id for the '<em><b>EInt</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ETYPES__EINT = 9;
+
+	/**
+	 * The feature id for the '<em><b>ELong</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ETYPES__ELONG = 10;
+
+	/**
+	 * The feature id for the '<em><b>EShort</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ETYPES__ESHORT = 11;
+
+	/**
+	 * The feature id for the '<em><b>EString</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ETYPES__ESTRING = 12;
+
+	/**
+	 * The number of structural features of the '<em>ETypes</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ETYPES_FEATURE_COUNT = 13;
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.junit.model.Person <em>Person</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -320,6 +456,159 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 */
 	EAttribute getLocation_Address();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.junit.model.ETypes <em>ETypes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>ETypes</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ETypes
+	 * @generated
+	 */
+	EClass getETypes();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEBigDecimal <em>EBig Decimal</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>EBig Decimal</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ETypes#getEBigDecimal()
+	 * @see #getETypes()
+	 * @generated
+	 */
+	EAttribute getETypes_EBigDecimal();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEBigInteger <em>EBig Integer</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>EBig Integer</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ETypes#getEBigInteger()
+	 * @see #getETypes()
+	 * @generated
+	 */
+	EAttribute getETypes_EBigInteger();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#isEBoolean <em>EBoolean</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>EBoolean</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ETypes#isEBoolean()
+	 * @see #getETypes()
+	 * @generated
+	 */
+	EAttribute getETypes_EBoolean();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEByte <em>EByte</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>EByte</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ETypes#getEByte()
+	 * @see #getETypes()
+	 * @generated
+	 */
+	EAttribute getETypes_EByte();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEByteArray <em>EByte Array</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>EByte Array</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ETypes#getEByteArray()
+	 * @see #getETypes()
+	 * @generated
+	 */
+	EAttribute getETypes_EByteArray();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEChar <em>EChar</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>EChar</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ETypes#getEChar()
+	 * @see #getETypes()
+	 * @generated
+	 */
+	EAttribute getETypes_EChar();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEDate <em>EDate</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>EDate</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ETypes#getEDate()
+	 * @see #getETypes()
+	 * @generated
+	 */
+	EAttribute getETypes_EDate();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEDouble <em>EDouble</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>EDouble</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ETypes#getEDouble()
+	 * @see #getETypes()
+	 * @generated
+	 */
+	EAttribute getETypes_EDouble();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEFloat <em>EFloat</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>EFloat</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ETypes#getEFloat()
+	 * @see #getETypes()
+	 * @generated
+	 */
+	EAttribute getETypes_EFloat();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEInt <em>EInt</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>EInt</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ETypes#getEInt()
+	 * @see #getETypes()
+	 * @generated
+	 */
+	EAttribute getETypes_EInt();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getELong <em>ELong</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>ELong</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ETypes#getELong()
+	 * @see #getETypes()
+	 * @generated
+	 */
+	EAttribute getETypes_ELong();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEShort <em>EShort</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>EShort</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ETypes#getEShort()
+	 * @see #getETypes()
+	 * @generated
+	 */
+	EAttribute getETypes_EShort();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEString <em>EString</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>EString</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ETypes#getEString()
+	 * @see #getETypes()
+	 * @generated
+	 */
+	EAttribute getETypes_EString();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -439,6 +728,120 @@ public interface ModelPackage extends EPackage
 		 * @generated
 		 */
 		EAttribute LOCATION__ADDRESS = eINSTANCE.getLocation_Address();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl <em>ETypes</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl
+		 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getETypes()
+		 * @generated
+		 */
+		EClass ETYPES = eINSTANCE.getETypes();
+
+		/**
+		 * The meta object literal for the '<em><b>EBig Decimal</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ETYPES__EBIG_DECIMAL = eINSTANCE.getETypes_EBigDecimal();
+
+		/**
+		 * The meta object literal for the '<em><b>EBig Integer</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ETYPES__EBIG_INTEGER = eINSTANCE.getETypes_EBigInteger();
+
+		/**
+		 * The meta object literal for the '<em><b>EBoolean</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ETYPES__EBOOLEAN = eINSTANCE.getETypes_EBoolean();
+
+		/**
+		 * The meta object literal for the '<em><b>EByte</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ETYPES__EBYTE = eINSTANCE.getETypes_EByte();
+
+		/**
+		 * The meta object literal for the '<em><b>EByte Array</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ETYPES__EBYTE_ARRAY = eINSTANCE.getETypes_EByteArray();
+
+		/**
+		 * The meta object literal for the '<em><b>EChar</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ETYPES__ECHAR = eINSTANCE.getETypes_EChar();
+
+		/**
+		 * The meta object literal for the '<em><b>EDate</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ETYPES__EDATE = eINSTANCE.getETypes_EDate();
+
+		/**
+		 * The meta object literal for the '<em><b>EDouble</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ETYPES__EDOUBLE = eINSTANCE.getETypes_EDouble();
+
+		/**
+		 * The meta object literal for the '<em><b>EFloat</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ETYPES__EFLOAT = eINSTANCE.getETypes_EFloat();
+
+		/**
+		 * The meta object literal for the '<em><b>EInt</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ETYPES__EINT = eINSTANCE.getETypes_EInt();
+
+		/**
+		 * The meta object literal for the '<em><b>ELong</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ETYPES__ELONG = eINSTANCE.getETypes_ELong();
+
+		/**
+		 * The meta object literal for the '<em><b>EShort</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ETYPES__ESHORT = eINSTANCE.getETypes_EShort();
+
+		/**
+		 * The meta object literal for the '<em><b>EString</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ETYPES__ESTRING = eINSTANCE.getETypes_EString();
 
 	}
 

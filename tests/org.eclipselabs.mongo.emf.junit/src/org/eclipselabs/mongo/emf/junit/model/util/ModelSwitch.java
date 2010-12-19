@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipselabs.mongo.emf.junit.model.*;
 import org.eclipselabs.mongo.emf.junit.model.Book;
 import org.eclipselabs.mongo.emf.junit.model.Library;
 import org.eclipselabs.mongo.emf.junit.model.Location;
@@ -132,6 +133,13 @@ public class ModelSwitch<T>
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ModelPackage.ETYPES:
+			{
+				ETypes eTypes = (ETypes)theEObject;
+				T result = caseETypes(eTypes);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -196,6 +204,22 @@ public class ModelSwitch<T>
 	 * @generated
 	 */
 	public T caseLocation(Location object)
+	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>ETypes</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>ETypes</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseETypes(ETypes object)
 	{
 		return null;
 	}

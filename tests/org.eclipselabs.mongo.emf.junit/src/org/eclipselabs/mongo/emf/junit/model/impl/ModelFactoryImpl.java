@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipselabs.mongo.emf.junit.model.*;
 import org.eclipselabs.mongo.emf.junit.model.Book;
 import org.eclipselabs.mongo.emf.junit.model.Library;
 import org.eclipselabs.mongo.emf.junit.model.Location;
@@ -41,7 +42,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	{
 		try
 		{
-			ModelFactory theModelFactory = (ModelFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipselabs.org/emf/mongo/junit"); 
+			ModelFactory theModelFactory = (ModelFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipselabs.org/mongo/emf/junit"); 
 			if (theModelFactory != null)
 			{
 				return theModelFactory;
@@ -79,6 +80,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 			case ModelPackage.BOOK: return createBook();
 			case ModelPackage.LIBRARY: return createLibrary();
 			case ModelPackage.LOCATION: return createLocation();
+			case ModelPackage.ETYPES: return createETypes();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -126,6 +128,17 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	{
 		LocationImpl location = new LocationImpl();
 		return location;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ETypes createETypes()
+	{
+		ETypesImpl eTypes = new ETypesImpl();
+		return eTypes;
 	}
 
 	/**

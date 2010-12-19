@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -25,9 +26,11 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
@@ -275,7 +278,15 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		for (EAttribute attribute : eClass.getEAllAttributes())
 		{
 			if (!attribute.isTransient())
-				dbObject.put(attribute.getName(), eObject.eGet(attribute));
+			{
+
+				Object value = eObject.eGet(attribute);
+
+				if (!nativeTypes.contains(attribute.getEAttributeType()))
+					value = EcoreUtil.convertToString(attribute.getEAttributeType(), value);
+
+				dbObject.put(attribute.getName(), value);
+			}
 		}
 
 		// All references are mapped as key / value pairs with the key being the reference name.
@@ -357,7 +368,18 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		for (EAttribute attribute : eObject.eClass().getEAllAttributes())
 		{
 			if (!attribute.isTransient())
-				eObject.eSet(attribute, dbObject.get(attribute.getName()));
+			{
+				Object value = dbObject.get(attribute.getName());
+
+				if (!nativeTypes.contains(attribute.getEAttributeType()))
+					value = EcoreUtil.createFromString(attribute.getEAttributeType(), (String) value);
+				else if (EcorePackage.Literals.EBYTE.equals(attribute.getEAttributeType()) || EcorePackage.Literals.EBYTE_OBJECT.equals(attribute.getEAttributeType()))
+					value = ((Integer) value).byteValue();
+				else if (EcorePackage.Literals.EFLOAT.equals(attribute.getEAttributeType()) || EcorePackage.Literals.EFLOAT_OBJECT.equals(attribute.getEAttributeType()))
+					value = ((Double) value).floatValue();
+
+				eObject.eSet(attribute, value);
+			}
 		}
 
 		// All references are mapped as key / value pairs with the key being the reference name.
@@ -426,5 +448,26 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		EPackage ePackage = EPackage.Registry.INSTANCE.getEPackage((String) dbObject.get(EPACKAGE_KEY));
 		EClass eClass = (EClass) ePackage.getEClassifier((String) dbObject.get(ECLASS_KEY));
 		return EcoreUtil.create(eClass);
+	}
+
+	private static HashSet<EDataType> nativeTypes = new HashSet<EDataType>();
+
+	static
+	{
+		nativeTypes.add(EcorePackage.Literals.EBOOLEAN);
+		nativeTypes.add(EcorePackage.Literals.EBOOLEAN_OBJECT);
+		nativeTypes.add(EcorePackage.Literals.EBYTE);
+		nativeTypes.add(EcorePackage.Literals.EBYTE_OBJECT);
+		nativeTypes.add(EcorePackage.Literals.EBYTE_ARRAY);
+		nativeTypes.add(EcorePackage.Literals.EINT);
+		nativeTypes.add(EcorePackage.Literals.EINTEGER_OBJECT);
+		nativeTypes.add(EcorePackage.Literals.ELONG);
+		nativeTypes.add(EcorePackage.Literals.ELONG_OBJECT);
+		nativeTypes.add(EcorePackage.Literals.EDOUBLE);
+		nativeTypes.add(EcorePackage.Literals.EDOUBLE_OBJECT);
+		nativeTypes.add(EcorePackage.Literals.EFLOAT);
+		nativeTypes.add(EcorePackage.Literals.EFLOAT_OBJECT);
+		nativeTypes.add(EcorePackage.Literals.EDATE);
+		nativeTypes.add(EcorePackage.Literals.ESTRING);
 	}
 }

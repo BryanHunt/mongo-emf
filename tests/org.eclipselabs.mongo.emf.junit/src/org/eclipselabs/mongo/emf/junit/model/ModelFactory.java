@@ -68,6 +68,15 @@ public interface ModelFactory extends EFactory
 	Location createLocation();
 
 	/**
+	 * Returns a new object of class '<em>ETypes</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>ETypes</em>'.
+	 * @generated
+	 */
+	ETypes createETypes();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

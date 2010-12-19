@@ -16,16 +16,20 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.bson.types.ObjectId;
 import org.eclipse.emf.common.util.EList;
@@ -45,6 +49,7 @@ import org.eclipselabs.mongo.IMongoDB;
 import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 import org.eclipselabs.mongo.emf.junit.internal.Activator;
 import org.eclipselabs.mongo.emf.junit.model.Book;
+import org.eclipselabs.mongo.emf.junit.model.ETypes;
 import org.eclipselabs.mongo.emf.junit.model.Library;
 import org.eclipselabs.mongo.emf.junit.model.Location;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
@@ -87,6 +92,7 @@ public class TestEmfMongoDB
 		db = mongo.getDB("test");
 		assertThat(db, is(notNullValue()));
 
+		typesCollection = db.getCollection(ModelPackage.Literals.ETYPES.getName());
 		personCollection = db.getCollection(ModelPackage.Literals.PERSON.getName());
 		libraryCollection = db.getCollection(ModelPackage.Literals.LIBRARY.getName());
 		locationCollection = db.getCollection(ModelPackage.Literals.LOCATION.getName());
@@ -97,6 +103,9 @@ public class TestEmfMongoDB
 	@After
 	public void tearDown()
 	{
+		if (typesCollection != null)
+			typesCollection.drop();
+
 		if (libraryCollection != null)
 			libraryCollection.drop();
 
@@ -108,21 +117,78 @@ public class TestEmfMongoDB
 	}
 
 	@Test
-	public void testSaveAuthor() throws IOException
+	public void testSaveTypes() throws IOException
 	{
-		Person author = ModelFactory.eINSTANCE.createPerson();
-		author.setName("Stephen King");
+		ETypes eTypes = ModelFactory.eINSTANCE.createETypes();
+		eTypes.setEBigDecimal(new BigDecimal(1));
+		eTypes.setEBigInteger(new BigInteger(2, new Random()));
+		eTypes.setEBoolean(true);
+		eTypes.setEByte((byte) 3);
+		eTypes.setEByteArray(new byte[] { 1, 2 });
+		eTypes.setEChar('j');
+		eTypes.setEDate(new Date());
+		eTypes.setEDouble(1.0);
+		eTypes.setEFloat(1.0f);
+		eTypes.setEInt(1);
+		eTypes.setELong(1L);
+		eTypes.setEShort((short) 1);
+		eTypes.setEString("j");
 
 		ResourceSet resourceSet = new ResourceSetImpl();
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
 		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-		Resource resource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.PERSON));
-		resource.getContents().add(author);
+		Resource resource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.ETYPES));
+		resource.getContents().add(eTypes);
 		resource.save(null);
 
-		assertThat(personCollection.getCount(), is(1L));
+		assertThat(typesCollection.getCount(), is(1L));
 		assertThat(resource.getURI().segmentCount(), is(3));
 		assertThat(resource.getURI().segment(2), is(notNullValue()));
+	}
+
+	@Test
+	public void testLoadTypes()
+	{
+		BasicDBObject object = new BasicDBObject();
+		object.put("_ePackage", ModelPackage.eINSTANCE.getNsURI());
+		object.put("_eClass", ModelPackage.Literals.ETYPES.getName());
+
+		BigDecimal bigDecimal = new BigDecimal(1);
+		BigInteger bigInteger = new BigInteger(2, new Random());
+
+		object.put(ModelPackage.Literals.ETYPES__EBIG_DECIMAL.getName(), bigDecimal.toString());
+		object.put(ModelPackage.Literals.ETYPES__EBIG_INTEGER.getName(), bigInteger.toString());
+		object.put(ModelPackage.Literals.ETYPES__EBOOLEAN.getName(), true);
+		object.put(ModelPackage.Literals.ETYPES__EBYTE.getName(), new Byte((byte) 1));
+		object.put(ModelPackage.Literals.ETYPES__EBYTE_ARRAY.getName(), new byte[] { 1, 2 });
+		object.put(ModelPackage.Literals.ETYPES__ECHAR.getName(), new Character('j').toString());
+		object.put(ModelPackage.Literals.ETYPES__EDATE.getName(), new Date());
+		object.put(ModelPackage.Literals.ETYPES__EDOUBLE.getName(), new Double(1.0));
+		object.put(ModelPackage.Literals.ETYPES__EFLOAT.getName(), new Float(1.0));
+		object.put(ModelPackage.Literals.ETYPES__EINT.getName(), new Integer(1));
+		object.put(ModelPackage.Literals.ETYPES__ELONG.getName(), new Long(1L));
+		object.put(ModelPackage.Literals.ETYPES__ESHORT.getName(), new Short((short) 1).toString());
+		object.put(ModelPackage.Literals.ETYPES__ESTRING.getName(), "j");
+
+		typesCollection.insert(object);
+
+		ResourceSet resourceSet = new ResourceSetImpl();
+		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
+		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		Resource resource = resourceSet.getResource(createObjectURI(ModelPackage.Literals.ETYPES, (ObjectId) object.get(ID_KEY)), true);
+		assertThat(resource, is(notNullValue()));
+		assertThat(resource.getContents().size(), is(1));
+		assertThat(resource.getContents().get(0), is(instanceOf(ETypes.class)));
+		ETypes eTypes = (ETypes) resource.getContents().get(0);
+		assertThat(eTypes.getEBigDecimal(), is(bigDecimal));
+		assertThat(eTypes.getEBigInteger(), is(bigInteger));
+		assertTrue(eTypes.isEBoolean());
+		assertThat(eTypes.getEByte(), is((byte) 1));
+		assertThat(eTypes.getEChar(), is('j'));
+		assertThat(eTypes.getEInt(), is(1));
+		assertThat(eTypes.getELong(), is(1L));
+		assertThat(eTypes.getEShort(), is((short) 1));
+		assertThat(eTypes.getEString(), is("j"));
 	}
 
 	@Test
@@ -685,6 +751,7 @@ public class TestEmfMongoDB
 
 	private static final String ID_KEY = "_id";
 
+	private DBCollection typesCollection;
 	private DBCollection personCollection;
 	private DBCollection libraryCollection;
 	private DBCollection locationCollection;
