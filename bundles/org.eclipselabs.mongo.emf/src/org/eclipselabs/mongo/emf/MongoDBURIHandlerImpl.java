@@ -47,6 +47,8 @@ import com.mongodb.MongoURI;
 
 public class MongoDBURIHandlerImpl extends URIHandlerImpl
 {
+	public static final String OPTION_GENERATE_ID = "org.eclipselabs.mongo.emf.genId";
+
 	static final String ID_KEY = "_id";
 
 	static final String EPACKAGE_KEY = "_ePackage";
@@ -110,8 +112,14 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 				}
 				else
 				{
+					Boolean genId = (Boolean) options.get(OPTION_GENERATE_ID);
+
 					dbObject.put(ID_KEY, id);
-					collection.findAndModify(new BasicDBObject(ID_KEY, id), dbObject);
+
+					if (genId != null && !genId)
+						collection.insert(dbObject);
+					else
+						collection.findAndModify(new BasicDBObject(ID_KEY, id), dbObject);
 				}
 			}
 		};

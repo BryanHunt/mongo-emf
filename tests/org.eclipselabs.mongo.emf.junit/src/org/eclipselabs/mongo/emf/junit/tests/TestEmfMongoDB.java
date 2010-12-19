@@ -22,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -122,6 +123,28 @@ public class TestEmfMongoDB
 		assertThat(personCollection.getCount(), is(1L));
 		assertThat(resource.getURI().segmentCount(), is(3));
 		assertThat(resource.getURI().segment(2), is(notNullValue()));
+	}
+
+	@Test
+	public void testSaveAuthorWithID() throws IOException
+	{
+		Person author = ModelFactory.eINSTANCE.createPerson();
+		author.setName("Stephen King");
+
+		ResourceSet resourceSet = new ResourceSetImpl();
+		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
+		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		ObjectId id = new ObjectId(new Date());
+		Resource resource = resourceSet.createResource(createObjectURI(ModelPackage.Literals.PERSON, id));
+		resource.getContents().add(author);
+		HashMap<String, Object> options = new HashMap<String, Object>();
+		options.put(MongoDBURIHandlerImpl.OPTION_GENERATE_ID, Boolean.FALSE);
+		resource.save(options);
+
+		assertThat(personCollection.getCount(), is(1L));
+		assertThat(resource.getURI().segmentCount(), is(3));
+		assertThat(resource.getURI().segment(2), is(notNullValue()));
+
 	}
 
 	@Test
