@@ -147,6 +147,34 @@ public class TestEmfMongoDB
 
 	}
 
+	@Test(expected = IOException.class)
+	public void testSaveWithShortURI() throws IOException
+	{
+		Person author = ModelFactory.eINSTANCE.createPerson();
+		author.setName("Stephen King");
+
+		ResourceSet resourceSet = new ResourceSetImpl();
+		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
+		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		Resource resource = resourceSet.createResource(URI.createURI("mongo://localhost/collection"));
+		resource.getContents().add(author);
+		resource.save(null);
+	}
+
+	@Test(expected = IOException.class)
+	public void testSaveWithLongURI() throws IOException
+	{
+		Person author = ModelFactory.eINSTANCE.createPerson();
+		author.setName("Stephen King");
+
+		ResourceSet resourceSet = new ResourceSetImpl();
+		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
+		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		Resource resource = resourceSet.createResource(URI.createURI("mongo://localhost/resources/junit/collection/id"));
+		resource.getContents().add(author);
+		resource.save(null);
+	}
+
 	@Test
 	public void tesetLoadAuthor()
 	{
