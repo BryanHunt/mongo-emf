@@ -540,7 +540,7 @@ public class TestEmfMongoDB
 	}
 
 	@Test
-	public void testGetNonexistentResource()
+	public void testLoadNonexistentResource()
 	{
 		ResourceSet resourceSet = new ResourceSetImpl();
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
