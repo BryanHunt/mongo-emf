@@ -257,6 +257,10 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 			throw new IOException("Could not find Mongo database: " + uri.segment(0));
 
 		DBCollection collection = db.getCollection(uri.segment(1));
+
+		if (collection == null)
+			throw new IOException("Could not find collection: " + uri.segment(1));
+
 		return collection;
 	}
 
