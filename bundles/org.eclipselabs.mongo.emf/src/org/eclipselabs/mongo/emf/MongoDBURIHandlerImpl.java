@@ -416,6 +416,9 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 	private EObject buildObjectReference(DBCollection collection, Object dbReference, Resource resource, XMLResource.URIHandler uriHandler)
 	{
+		if (dbReference == null)
+			return null;
+
 		// Build an EMF reference from the data in MongoDB.
 
 		if (dbReference instanceof DBRef)
