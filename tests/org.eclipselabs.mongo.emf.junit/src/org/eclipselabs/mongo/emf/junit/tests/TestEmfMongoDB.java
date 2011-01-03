@@ -617,6 +617,41 @@ public class TestEmfMongoDB
 		assertThat(resource.getContents().size(), is(0));
 	}
 
+	@Test
+	public void testQueryLibraryID()
+	{
+		DBObject libraryObject = createLibrary("Wastelands");
+
+		ResourceSet resourceSet = new ResourceSetImpl();
+		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
+		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+
+		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.LIBRARY, "_id=='" + libraryObject.get(ID_KEY) + "'"), true);
+		assertThat(resource, is(notNullValue()));
+		assertThat(resource.getContents().size(), is(1));
+		Library library = (Library) resource.getContents().get(0);
+
+		assertThat(library.getLocation(), is(notNullValue()));
+		assertThat(library.getLocation().getAddress(), is("Wastelands"));
+	}
+
+	@Test
+	public void testQueryPerson()
+	{
+		createAuthor("Stephen King");
+
+		ResourceSet resourceSet = new ResourceSetImpl();
+		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
+		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+
+		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.PERSON, "name=='Stephen King'"), true);
+		assertThat(resource, is(notNullValue()));
+		assertThat(resource.getContents().size(), is(1));
+
+		Person author = (Person) resource.getContents().get(0);
+		assertThat(author.getName(), is("Stephen King"));
+	}
+
 	@Ignore
 	@Test
 	public void testLargeDatabase() throws IOException
@@ -746,7 +781,12 @@ public class TestEmfMongoDB
 
 	private URI createObjectURI(EClass eClass, ObjectId id)
 	{
-		return URI.createURI("mongo://localhost/test/" + eClass.getName() + "/" + id);
+		return createCollectionURI(eClass).appendSegment(id.toString());
+	}
+
+	private URI createQueryURI(EClass eClass, String query)
+	{
+		return createCollectionURI(eClass).appendSegment("").appendQuery(URI.encodeQuery(query, false));
 	}
 
 	private static final String ID_KEY = "_id";

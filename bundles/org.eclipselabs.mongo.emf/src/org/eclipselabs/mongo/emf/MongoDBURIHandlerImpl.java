@@ -37,6 +37,11 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipselabs.emf.query.BinaryOperation;
+import org.eclipselabs.emf.query.Expression;
+import org.eclipselabs.emf.query.Literal;
+import org.eclipselabs.emf.query.util.ExpressionBuilder;
+import org.eclipselabs.emf.query.util.QuerySwitch;
 import org.eclipselabs.mongo.IMongoDB;
 import org.eclipselabs.mongo.internal.emf.Activator;
 
@@ -192,17 +197,33 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 				// The base URI of the handler must have a trailing path seperator "/".
 
 				if (resource.getURI().hasTrailingPathSeparator())
-					uriHandler.setBaseURI(resource.getURI());
+				{
+					if (resource.getURI().hasQuery())
+						uriHandler.setBaseURI(resource.getURI().trimSegments(1).appendSegment("-1").appendSegment(""));
+					else
+						uriHandler.setBaseURI(resource.getURI());
+				}
 				else
 					uriHandler.setBaseURI(resource.getURI().appendSegment(""));
 
-				// Simply get the object from MongoDB using the id and build an EMF object.
+				// If the URI contains a query string, use it to locate a collection of objects from
+				// MongoDB, otherwise simply get the object from MongoDB using the id.
 
+				String query = uri.query();
 				DBCollection collection = getCollection(uri);
-				DBObject dbObject = collection.findOne(new BasicDBObject(ID_KEY, getID(uri)));
 
-				if (dbObject != null)
-					resource.getContents().add(buildObject(collection, dbObject, resource, uriHandler));
+				if (query != null)
+				{
+					for (DBObject dbObject : collection.find(buildDBObject(collection, new ExpressionBuilder(URI.decode(query)).parseExpression())))
+						resource.getContents().add(buildObject(collection, dbObject, resource, uriHandler));
+				}
+				else
+				{
+					DBObject dbObject = collection.findOne(new BasicDBObject(ID_KEY, getID(uri)));
+
+					if (dbObject != null)
+						resource.getContents().add(buildObject(collection, dbObject, resource, uriHandler));
+				}
 			}
 		};
 	}
@@ -262,6 +283,40 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 			throw new IOException("Could not find collection: " + uri.segment(1));
 
 		return collection;
+	}
+
+	private DBObject buildDBObject(DBCollection dbCollection, Expression expression)
+	{
+		final DBObject dbObject = new BasicDBObject();
+
+		new QuerySwitch<Object>()
+		{
+			@Override
+			public Object caseBinaryOperation(BinaryOperation binaryOperation)
+			{
+				Expression leftOperand = binaryOperation.getLeftOperand();
+				String operator = binaryOperation.getOperator();
+
+				if ("==".equals(operator))
+				{
+					Expression rightOperand = binaryOperation.getRightOperand();
+					String property = ExpressionBuilder.toString(leftOperand);
+
+					if (ID_KEY.equals(property))
+					{
+						dbObject.put(property, new ObjectId(((Literal) rightOperand).getLiteralValue()));
+					}
+					else
+					{
+						dbObject.put(property, ((Literal) rightOperand).getLiteralValue());
+					}
+				}
+
+				return null;
+			}
+		}.doSwitch(expression);
+
+		return dbObject;
 	}
 
 	private DBObject buildDBObject(DB db, EObject eObject, XMLResource.URIHandler uriHandler) throws UnknownHostException, IOException

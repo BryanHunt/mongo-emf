@@ -11,7 +11,8 @@ Import-Package: com.mongodb,
 Require-Bundle: org.eclipse.emf.ecore,
  org.eclipse.emf.ecore.xmi,
  org.eclipselabs.mongo,
- org.eclipse.osgi
+ org.eclipse.osgi,
+ org.eclipselabs.emf.query;bundle-version="1.0.0"
 Export-Package: org.eclipselabs.mongo.emf,
  org.eclipselabs.mongo.internal.emf;x-friends:="org.eclipselabs.mongo.emf.junit"
 Bundle-Activator: org.eclipselabs.mongo.internal.emf.Activator
