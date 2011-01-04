@@ -19,9 +19,16 @@ import com.mongodb.MongoURI;
 
 /**
  * @author bhunt
- *
+ * 
  */
 public interface IMongoDB
 {
+	/**
+	 * 
+	 * @param uri the base URI of the MongoDB
+	 * @return the Mongo instance for accessing the database
+	 * @throws MongoException if there is an internal error
+	 * @throws UnknownHostException if the host of the URI is unknown
+	 */
 	Mongo getMongo(MongoURI uri) throws MongoException, UnknownHostException;
 }
