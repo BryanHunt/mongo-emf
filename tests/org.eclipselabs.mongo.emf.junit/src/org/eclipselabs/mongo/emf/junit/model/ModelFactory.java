@@ -77,6 +77,15 @@ public interface ModelFactory extends EFactory
 	ETypes createETypes();
 
 	/**
+	 * Returns a new object of class '<em>Mapped Library</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Mapped Library</em>'.
+	 * @generated
+	 */
+	MappedLibrary createMappedLibrary();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

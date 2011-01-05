@@ -8,16 +8,12 @@ package org.eclipselabs.mongo.emf.junit.model.impl;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-
 import java.util.Date;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipselabs.mongo.emf.junit.model.ETypes;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 

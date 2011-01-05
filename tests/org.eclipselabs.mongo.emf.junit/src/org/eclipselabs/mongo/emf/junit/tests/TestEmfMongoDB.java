@@ -52,6 +52,7 @@ import org.eclipselabs.mongo.emf.junit.model.Book;
 import org.eclipselabs.mongo.emf.junit.model.ETypes;
 import org.eclipselabs.mongo.emf.junit.model.Library;
 import org.eclipselabs.mongo.emf.junit.model.Location;
+import org.eclipselabs.mongo.emf.junit.model.MappedLibrary;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.Person;
@@ -89,7 +90,7 @@ public class TestEmfMongoDB
 		mongo = mongoService.getMongo(new MongoURI("mongodb://localhost"));
 		assertThat(mongo, is(notNullValue()));
 
-		db = mongo.getDB("test");
+		db = mongo.getDB("junit");
 		assertThat(db, is(notNullValue()));
 
 		typesCollection = db.getCollection(ModelPackage.Literals.ETYPES.getName());
@@ -652,6 +653,90 @@ public class TestEmfMongoDB
 		assertThat(author.getName(), is("Stephen King"));
 	}
 
+	@Test
+	public void testFeatureMap() throws IOException
+	{
+		ResourceSet resourceSet = new ResourceSetImpl();
+		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
+		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+
+		MappedLibrary library = ModelFactory.eINSTANCE.createMappedLibrary();
+		Resource libraryResource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.LIBRARY));
+		libraryResource.getContents().add(library);
+
+		Location location = ModelFactory.eINSTANCE.createLocation();
+		location.setAddress("Austin, TX");
+		Resource locationResource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.LOCATION));
+		locationResource.getContents().add(location);
+		locationResource.save(null);
+		library.setLocation(location);
+
+		Person author = ModelFactory.eINSTANCE.createPerson();
+		author.setName("Tom Clancy");
+		Resource authorResource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.PERSON));
+		authorResource.getContents().add(author);
+		authorResource.save(null);
+
+		Book book1 = ModelFactory.eINSTANCE.createBook();
+		book1.setTitle("The Hunt for Red October");
+		book1.getAuthors().add(author);
+		library.getRegularBooks().add(book1);
+
+		Book book2 = ModelFactory.eINSTANCE.createBook();
+		book2.setTitle("The Cardinal of the Kremlin");
+		book2.getAuthors().add(author);
+		library.getRareBooks().add(book2);
+
+		Book book3 = ModelFactory.eINSTANCE.createBook();
+		book3.setTitle("Without Remorse");
+		book3.getAuthors().add(author);
+		library.getRareBooks().add(book3);
+
+		libraryResource.save(null);
+		assertThat(libraryCollection.getCount(), is(1L));
+		authorResource.save(null);
+
+		ObjectId libraryID = new ObjectId(libraryResource.getURI().segment(2));
+		ResourceSet targetResourceSet = new ResourceSetImpl();
+		uriHandlers = targetResourceSet.getURIConverter().getURIHandlers();
+		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		Resource targetLibraryResource = targetResourceSet.getResource(createObjectURI(ModelPackage.Literals.LIBRARY, libraryID), true);
+
+		assertThat(targetLibraryResource, is(notNullValue()));
+		assertThat(targetLibraryResource.getContents().size(), is(1));
+		MappedLibrary targetLibrary = (MappedLibrary) targetLibraryResource.getContents().get(0);
+
+		assertThat(targetLibrary.getLocation(), is(notNullValue()));
+		assertThat(targetLibrary.getLocation().getAddress(), is(location.getAddress()));
+
+		assertThat(targetLibrary.getBooks().size(), is(3));
+
+		assertThat(targetLibrary.getRegularBooks().size(), is(1));
+		assertThat(targetLibrary.getRegularBooks().get(0).getTitle(), is(book1.getTitle()));
+		assertThat(targetLibrary.getRegularBooks().get(0).getAuthors().size(), is(1));
+		assertThat(targetLibrary.getRegularBooks().get(0).getAuthors().get(0).getName(), is(author.getName()));
+
+		assertThat(targetLibrary.getRareBooks().size(), is(2));
+		assertThat(targetLibrary.getRareBooks().get(0).getTitle(), is(book2.getTitle()));
+		assertThat(targetLibrary.getRareBooks().get(0).getAuthors().size(), is(1));
+		assertThat(targetLibrary.getRareBooks().get(0).getAuthors().get(0).getName(), is(author.getName()));
+
+		assertThat(targetLibrary.getRareBooks().get(1).getTitle(), is(book3.getTitle()));
+		assertThat(targetLibrary.getRareBooks().get(1).getAuthors().size(), is(1));
+		assertThat(targetLibrary.getRareBooks().get(1).getAuthors().get(0).getName(), is(author.getName()));
+
+		ObjectId authorID = new ObjectId(authorResource.getURI().segment(2));
+		Resource targetPersonResource = targetResourceSet.getResource(createObjectURI(ModelPackage.Literals.PERSON, authorID), true);
+		assertThat(targetPersonResource, is(notNullValue()));
+		assertThat(targetPersonResource.getContents().size(), is(1));
+		Person targetAuthor = (Person) targetPersonResource.getContents().get(0);
+		assertThat(targetAuthor.getBooks().size(), is(3));
+		assertThat(targetAuthor.getBooks().get(0), is(sameInstance(targetLibrary.getRegularBooks().get(0))));
+		assertThat(targetAuthor.getBooks().get(1), is(sameInstance(targetLibrary.getRareBooks().get(0))));
+		assertThat(targetAuthor.getBooks().get(2), is(sameInstance(targetLibrary.getRareBooks().get(1))));
+
+	}
+
 	@Ignore
 	@Test
 	public void testLargeDatabase() throws IOException
@@ -741,7 +826,7 @@ public class TestEmfMongoDB
 			}
 
 			BasicDBObject proxy = new BasicDBObject();
-			proxy.put("_eProxyURI", "../../../test/Library/" + library.get("_id") + "#//@books." + (bookReferences.size()));
+			proxy.put("_eProxyURI", "../../../junit/Library/" + library.get("_id") + "#//@books." + (bookReferences.size()));
 			proxy.put("_ePackage", ModelPackage.eINSTANCE.getNsURI());
 			proxy.put("_eClass", ModelPackage.Literals.BOOK.getName());
 			bookReferences.add(proxy);
@@ -776,7 +861,7 @@ public class TestEmfMongoDB
 
 	private URI createCollectionURI(EClass eClass)
 	{
-		return URI.createURI("mongo://localhost/test/" + eClass.getName());
+		return URI.createURI("mongo://localhost/junit/" + eClass.getName());
 	}
 
 	private URI createObjectURI(EClass eClass, ObjectId id)

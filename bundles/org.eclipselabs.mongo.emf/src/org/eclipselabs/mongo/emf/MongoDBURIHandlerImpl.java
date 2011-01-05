@@ -18,6 +18,7 @@ import java.io.OutputStream;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -30,12 +31,16 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.FeatureMap;
+import org.eclipse.emf.ecore.util.FeatureMap.Entry;
+import org.eclipse.emf.ecore.util.FeatureMap.Internal;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipselabs.emf.query.BinaryOperation;
 import org.eclipselabs.emf.query.Expression;
@@ -338,11 +343,33 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		{
 			if (!attribute.isTransient())
 			{
+				Object value = null;
 
-				Object value = eObject.eGet(attribute);
+				if (EcorePackage.Literals.EFEATURE_MAP_ENTRY.equals(attribute.getEAttributeType()))
+				{
+					FeatureMap.Internal featureMap = (Internal) eObject.eGet(attribute);
+					Iterator<Entry> iterator = featureMap.iterator();
+					ArrayList<DBObject> dbFeatureMap = new ArrayList<DBObject>();
 
-				if (!nativeTypes.contains(attribute.getEAttributeType()))
-					value = EcoreUtil.convertToString(attribute.getEAttributeType(), value);
+					while (iterator.hasNext())
+					{
+						DBObject dbEntry = new BasicDBObject();
+						Entry entry = iterator.next();
+						EStructuralFeature feature = entry.getEStructuralFeature();
+						dbEntry.put("key", feature.getName());
+
+						if (feature instanceof EAttribute)
+							dbEntry.put("value", getDBAttributeValue((EAttribute) feature, entry.getValue()));
+						else
+							dbEntry.put("value", buildDBReference(db, (EReference) feature, (EObject) entry.getValue(), uriHandler));
+
+						dbFeatureMap.add(dbEntry);
+					}
+
+					value = dbFeatureMap;
+				}
+				else
+					value = getDBAttributeValue(attribute, eObject.eGet(attribute));
 
 				dbObject.put(attribute.getName(), value);
 			}
@@ -355,6 +382,8 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 			if (reference.isTransient())
 				continue;
 
+			Object value = null;
+
 			if (reference.isMany())
 			{
 				// One to many reference
@@ -366,7 +395,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 				for (EObject targetObject : targetObjects)
 					dbReferences.add(buildDBReference(db, reference, targetObject, uriHandler));
 
-				dbObject.put(reference.getName(), dbReferences);
+				value = dbReferences;
 			}
 			else
 			{
@@ -377,11 +406,21 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 				if (targetObject == null)
 					continue;
 
-				dbObject.put(reference.getName(), buildDBReference(db, reference, targetObject, uriHandler));
+				value = buildDBReference(db, reference, targetObject, uriHandler);
 			}
+
+			dbObject.put(reference.getName(), value);
 		}
 
 		return dbObject;
+	}
+
+	private Object getDBAttributeValue(EAttribute attribute, Object rawValue)
+	{
+		if (!nativeTypes.contains(attribute.getEAttributeType()))
+			return EcoreUtil.convertToString(attribute.getEAttributeType(), rawValue);
+
+		return rawValue;
 	}
 
 	private Object buildDBReference(DB db, EReference eReference, EObject targetObject, XMLResource.URIHandler uriHandler) throws UnknownHostException, IOException
@@ -396,7 +435,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 			if (internalEObject.eDirectResource() == null || !canHandle(resource.getResourceSet().getURIConverter().normalize(resource.getURI())))
 			{
-				BasicDBObject dbObject = new BasicDBObject(2);
+				BasicDBObject dbObject = new BasicDBObject(3);
 				dbObject.put(PROXY_KEY, uriHandler.deresolve(EcoreUtil.getURI(targetObject)).toString());
 				dbObject.put(EPACKAGE_KEY, targetObject.eClass().getEPackage().getNsURI());
 				dbObject.put(ECLASS_KEY, targetObject.eClass().getName());
@@ -416,6 +455,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private EObject buildObject(DBCollection collection, DBObject dbObject, Resource resource, XMLResource.URIHandler uriHandler)
 	{
 		// Build an EMF object from the MongodDB object
@@ -430,14 +470,24 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 			{
 				Object value = dbObject.get(attribute.getName());
 
-				if (!nativeTypes.contains(attribute.getEAttributeType()))
-					value = EcoreUtil.createFromString(attribute.getEAttributeType(), (String) value);
-				else if (EcorePackage.Literals.EBYTE.equals(attribute.getEAttributeType()) || EcorePackage.Literals.EBYTE_OBJECT.equals(attribute.getEAttributeType()))
-					value = ((Integer) value).byteValue();
-				else if (EcorePackage.Literals.EFLOAT.equals(attribute.getEAttributeType()) || EcorePackage.Literals.EFLOAT_OBJECT.equals(attribute.getEAttributeType()))
-					value = ((Double) value).floatValue();
+				if (EcorePackage.Literals.EFEATURE_MAP_ENTRY.equals(attribute.getEAttributeType()))
+				{
+					FeatureMap.Internal featureMap = (Internal) eObject.eGet(attribute);
 
-				eObject.eSet(attribute, value);
+					for (DBObject entry : (ArrayList<DBObject>) value)
+					{
+						EStructuralFeature feature = eObject.eClass().getEStructuralFeature((String) entry.get("key"));
+
+						if (feature instanceof EAttribute)
+							featureMap.add(feature, getObjectAttributeValue(attribute, entry.get("value")));
+						else
+							featureMap.add(feature, buildObjectReference(collection, entry.get("value"), resource, uriHandler));
+					}
+
+					continue;
+				}
+
+				eObject.eSet(attribute, getObjectAttributeValue(attribute, value));
 			}
 		}
 
@@ -467,6 +517,22 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		}
 
 		return eObject;
+	}
+
+	/**
+	 * @param attribute
+	 * @param value
+	 * @return
+	 */
+	private Object getObjectAttributeValue(EAttribute attribute, Object value)
+	{
+		if (!nativeTypes.contains(attribute.getEAttributeType()))
+			value = EcoreUtil.createFromString(attribute.getEAttributeType(), (String) value);
+		else if (EcorePackage.Literals.EBYTE.equals(attribute.getEAttributeType()) || EcorePackage.Literals.EBYTE_OBJECT.equals(attribute.getEAttributeType()))
+			value = ((Integer) value).byteValue();
+		else if (EcorePackage.Literals.EFLOAT.equals(attribute.getEAttributeType()) || EcorePackage.Literals.EFLOAT_OBJECT.equals(attribute.getEAttributeType()))
+			value = ((Double) value).floatValue();
+		return value;
 	}
 
 	private EObject buildObjectReference(DBCollection collection, Object dbReference, Resource resource, XMLResource.URIHandler uriHandler)

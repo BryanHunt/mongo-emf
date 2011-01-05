@@ -341,6 +341,61 @@ public interface ModelPackage extends EPackage
 	int ETYPES_FEATURE_COUNT = 13;
 
 	/**
+	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.MappedLibraryImpl <em>Mapped Library</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipselabs.mongo.emf.junit.model.impl.MappedLibraryImpl
+	 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getMappedLibrary()
+	 * @generated
+	 */
+	int MAPPED_LIBRARY = 5;
+
+	/**
+	 * The feature id for the '<em><b>Location</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPED_LIBRARY__LOCATION = 0;
+
+	/**
+	 * The feature id for the '<em><b>Rare Books</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPED_LIBRARY__RARE_BOOKS = 1;
+
+	/**
+	 * The feature id for the '<em><b>Regular Books</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPED_LIBRARY__REGULAR_BOOKS = 2;
+
+	/**
+	 * The feature id for the '<em><b>Books</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPED_LIBRARY__BOOKS = 3;
+
+	/**
+	 * The number of structural features of the '<em>Mapped Library</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MAPPED_LIBRARY_FEATURE_COUNT = 4;
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.junit.model.Person <em>Person</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -611,6 +666,60 @@ public interface ModelPackage extends EPackage
 	EAttribute getETypes_EString();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.junit.model.MappedLibrary <em>Mapped Library</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Mapped Library</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.MappedLibrary
+	 * @generated
+	 */
+	EClass getMappedLibrary();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipselabs.mongo.emf.junit.model.MappedLibrary#getLocation <em>Location</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Location</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.MappedLibrary#getLocation()
+	 * @see #getMappedLibrary()
+	 * @generated
+	 */
+	EReference getMappedLibrary_Location();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipselabs.mongo.emf.junit.model.MappedLibrary#getBooks <em>Books</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Books</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.MappedLibrary#getBooks()
+	 * @see #getMappedLibrary()
+	 * @generated
+	 */
+	EAttribute getMappedLibrary_Books();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.junit.model.MappedLibrary#getRareBooks <em>Rare Books</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Rare Books</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.MappedLibrary#getRareBooks()
+	 * @see #getMappedLibrary()
+	 * @generated
+	 */
+	EReference getMappedLibrary_RareBooks();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.junit.model.MappedLibrary#getRegularBooks <em>Regular Books</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Regular Books</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.MappedLibrary#getRegularBooks()
+	 * @see #getMappedLibrary()
+	 * @generated
+	 */
+	EReference getMappedLibrary_RegularBooks();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -842,6 +951,48 @@ public interface ModelPackage extends EPackage
 		 * @generated
 		 */
 		EAttribute ETYPES__ESTRING = eINSTANCE.getETypes_EString();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.MappedLibraryImpl <em>Mapped Library</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipselabs.mongo.emf.junit.model.impl.MappedLibraryImpl
+		 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getMappedLibrary()
+		 * @generated
+		 */
+		EClass MAPPED_LIBRARY = eINSTANCE.getMappedLibrary();
+
+		/**
+		 * The meta object literal for the '<em><b>Location</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MAPPED_LIBRARY__LOCATION = eINSTANCE.getMappedLibrary_Location();
+
+		/**
+		 * The meta object literal for the '<em><b>Books</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MAPPED_LIBRARY__BOOKS = eINSTANCE.getMappedLibrary_Books();
+
+		/**
+		 * The meta object literal for the '<em><b>Rare Books</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MAPPED_LIBRARY__RARE_BOOKS = eINSTANCE.getMappedLibrary_RareBooks();
+
+		/**
+		 * The meta object literal for the '<em><b>Regular Books</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MAPPED_LIBRARY__REGULAR_BOOKS = eINSTANCE.getMappedLibrary_RegularBooks();
 
 	}
 

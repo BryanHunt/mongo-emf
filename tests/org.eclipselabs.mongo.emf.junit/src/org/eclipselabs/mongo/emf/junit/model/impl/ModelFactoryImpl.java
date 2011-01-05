@@ -18,8 +18,10 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipselabs.mongo.emf.junit.model.*;
 import org.eclipselabs.mongo.emf.junit.model.Book;
+import org.eclipselabs.mongo.emf.junit.model.ETypes;
 import org.eclipselabs.mongo.emf.junit.model.Library;
 import org.eclipselabs.mongo.emf.junit.model.Location;
+import org.eclipselabs.mongo.emf.junit.model.MappedLibrary;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.Person;
@@ -81,6 +83,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 			case ModelPackage.LIBRARY: return createLibrary();
 			case ModelPackage.LOCATION: return createLocation();
 			case ModelPackage.ETYPES: return createETypes();
+			case ModelPackage.MAPPED_LIBRARY: return createMappedLibrary();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -139,6 +142,17 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	{
 		ETypesImpl eTypes = new ETypesImpl();
 		return eTypes;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public MappedLibrary createMappedLibrary()
+	{
+		MappedLibraryImpl mappedLibrary = new MappedLibraryImpl();
+		return mappedLibrary;
 	}
 
 	/**
