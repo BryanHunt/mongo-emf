@@ -25,6 +25,8 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.Book#getTitle <em>Title</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.Book#getAuthors <em>Authors</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.Book#getTags <em>Tags</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.Book#getData <em>Data</em>}</li>
  * </ul>
  * </p>
  *
@@ -77,5 +79,37 @@ public interface Book extends EObject
 	 * @generated
 	 */
 	EList<Person> getAuthors();
+
+	/**
+	 * Returns the value of the '<em><b>Tags</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Tags</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Tags</em>' attribute list.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getBook_Tags()
+	 * @model
+	 * @generated
+	 */
+	EList<String> getTags();
+
+	/**
+	 * Returns the value of the '<em><b>Data</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.Character}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Data</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Data</em>' attribute list.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getBook_Data()
+	 * @model
+	 * @generated
+	 */
+	EList<Character> getData();
 
 } // Book

@@ -148,6 +148,40 @@ public class TestEmfMongoDB
 	}
 
 	@Test
+	public void testSaveMultiplicityManyAttribute() throws IOException
+	{
+		ResourceSet resourceSet = new ResourceSetImpl();
+		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
+		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+
+		Book book = ModelFactory.eINSTANCE.createBook();
+		book.setTitle("Title");
+		book.getTags().add("tag1");
+		book.getTags().add("tag2");
+		book.getData().add('1');
+		book.getData().add('2');
+
+		Resource resource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.BOOK));
+		resource.getContents().add(book);
+		resource.save(null);
+
+		ResourceSet testResourceSet = new ResourceSetImpl();
+		uriHandlers = testResourceSet.getURIConverter().getURIHandlers();
+		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		URI uri = createCollectionURI(ModelPackage.Literals.BOOK).trimSegments(1).appendSegment(resource.getURI().segment(2));
+		Resource targetResource = testResourceSet.getResource(uri, true);
+		assertThat(targetResource, is(notNullValue()));
+		assertThat(targetResource.getContents().size(), is(1));
+		Book actualBook = (Book) targetResource.getContents().get(0);
+		assertThat(actualBook.getTags().size(), is(2));
+		assertThat(actualBook.getTags().get(0), is(book.getTags().get(0)));
+		assertThat(actualBook.getTags().get(1), is(book.getTags().get(1)));
+		assertThat(actualBook.getData().size(), is(2));
+		assertThat(actualBook.getData().get(0), is(book.getData().get(0)));
+		assertThat(actualBook.getData().get(1), is(book.getData().get(1)));
+	}
+
+	@Test
 	public void testLoadTypes()
 	{
 		BasicDBObject object = new BasicDBObject();
@@ -805,6 +839,8 @@ public class TestEmfMongoDB
 		BasicDBObject object = new BasicDBObject();
 		object.put("_eClass", EcoreUtil.getURI(ModelPackage.Literals.BOOK).toString());
 		object.put(ModelPackage.Literals.BOOK__TITLE.getName(), title);
+		object.put(ModelPackage.Literals.BOOK__TAGS.getName(), new ArrayList<String>());
+		object.put(ModelPackage.Literals.BOOK__DATA.getName(), new ArrayList<String>());
 
 		ArrayList<DBRef> authorsReferences = new ArrayList<DBRef>();
 

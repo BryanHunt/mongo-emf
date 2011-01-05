@@ -373,6 +373,17 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 					value = dbFeatureMap;
 				}
+				else if (attribute.isMany() && !nativeTypes.contains(attribute.getEAttributeType()))
+				{
+					@SuppressWarnings("unchecked")
+					EList<Object> rawValues = (EList<Object>) eObject.eGet(attribute);
+					ArrayList<String> values = new ArrayList<String>(rawValues.size());
+
+					for (Object rawValue : rawValues)
+						values.add(EcoreUtil.convertToString(attribute.getEAttributeType(), rawValue));
+
+					value = values;
+				}
 				else
 					value = getDBAttributeValue(attribute, eObject.eGet(attribute));
 
@@ -543,11 +554,20 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 						featureMap.add(feature, buildObjectReference(collection, entry.get("value"), resource, uriHandler, reference.isResolveProxies()));
 					}
 				}
-
-				return;
 			}
 
-			eObject.eSet(attribute, getObjectAttributeValue(attribute, value));
+			else if (attribute.isMany() && !nativeTypes.contains(attribute.getEAttributeType()))
+			{
+				ArrayList<Object> values = new ArrayList<Object>();
+				ArrayList<String> rawValues = (ArrayList<String>) value;
+
+				for (String rawValue : rawValues)
+					values.add(EcoreUtil.createFromString(attribute.getEAttributeType(), rawValue));
+
+				eObject.eSet(attribute, values);
+			}
+			else
+				eObject.eSet(attribute, getObjectAttributeValue(attribute, value));
 		}
 	}
 

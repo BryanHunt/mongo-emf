@@ -131,13 +131,31 @@ public interface ModelPackage extends EPackage
 	int BOOK__AUTHORS = 1;
 
 	/**
+	 * The feature id for the '<em><b>Tags</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOOK__TAGS = 2;
+
+	/**
+	 * The feature id for the '<em><b>Data</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BOOK__DATA = 3;
+
+	/**
 	 * The number of structural features of the '<em>Book</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BOOK_FEATURE_COUNT = 2;
+	int BOOK_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.LibraryImpl <em>Library</em>}' class.
@@ -467,6 +485,28 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 */
 	EReference getBook_Authors();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipselabs.mongo.emf.junit.model.Book#getTags <em>Tags</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Tags</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.Book#getTags()
+	 * @see #getBook()
+	 * @generated
+	 */
+	EAttribute getBook_Tags();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipselabs.mongo.emf.junit.model.Book#getData <em>Data</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Data</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.Book#getData()
+	 * @see #getBook()
+	 * @generated
+	 */
+	EAttribute getBook_Data();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.junit.model.Library <em>Library</em>}'.
@@ -813,6 +853,22 @@ public interface ModelPackage extends EPackage
 		 * @generated
 		 */
 		EReference BOOK__AUTHORS = eINSTANCE.getBook_Authors();
+
+		/**
+		 * The meta object literal for the '<em><b>Tags</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BOOK__TAGS = eINSTANCE.getBook_Tags();
+
+		/**
+		 * The meta object literal for the '<em><b>Data</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute BOOK__DATA = eINSTANCE.getBook_Data();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.LibraryImpl <em>Library</em>}' class.

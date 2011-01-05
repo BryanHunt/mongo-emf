@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipselabs.mongo.emf.junit.model.Book;
@@ -35,6 +36,8 @@ import org.eclipselabs.mongo.emf.junit.model.Person;
  * <ul>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.BookImpl#getTitle <em>Title</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.BookImpl#getAuthors <em>Authors</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.BookImpl#getTags <em>Tags</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.BookImpl#getData <em>Data</em>}</li>
  * </ul>
  * </p>
  *
@@ -71,6 +74,26 @@ public class BookImpl extends EObjectImpl implements Book
 	 * @ordered
 	 */
 	protected EList<Person> authors;
+
+	/**
+	 * The cached value of the '{@link #getTags() <em>Tags</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTags()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<String> tags;
+
+	/**
+	 * The cached value of the '{@link #getData() <em>Data</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getData()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Character> data;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -135,6 +158,34 @@ public class BookImpl extends EObjectImpl implements Book
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<String> getTags()
+	{
+		if (tags == null)
+		{
+			tags = new EDataTypeUniqueEList<String>(String.class, this, ModelPackage.BOOK__TAGS);
+		}
+		return tags;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Character> getData()
+	{
+		if (data == null)
+		{
+			data = new EDataTypeUniqueEList<Character>(Character.class, this, ModelPackage.BOOK__DATA);
+		}
+		return data;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
@@ -177,6 +228,10 @@ public class BookImpl extends EObjectImpl implements Book
 				return getTitle();
 			case ModelPackage.BOOK__AUTHORS:
 				return getAuthors();
+			case ModelPackage.BOOK__TAGS:
+				return getTags();
+			case ModelPackage.BOOK__DATA:
+				return getData();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -199,6 +254,14 @@ public class BookImpl extends EObjectImpl implements Book
 				getAuthors().clear();
 				getAuthors().addAll((Collection<? extends Person>)newValue);
 				return;
+			case ModelPackage.BOOK__TAGS:
+				getTags().clear();
+				getTags().addAll((Collection<? extends String>)newValue);
+				return;
+			case ModelPackage.BOOK__DATA:
+				getData().clear();
+				getData().addAll((Collection<? extends Character>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -219,6 +282,12 @@ public class BookImpl extends EObjectImpl implements Book
 			case ModelPackage.BOOK__AUTHORS:
 				getAuthors().clear();
 				return;
+			case ModelPackage.BOOK__TAGS:
+				getTags().clear();
+				return;
+			case ModelPackage.BOOK__DATA:
+				getData().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -237,6 +306,10 @@ public class BookImpl extends EObjectImpl implements Book
 				return TITLE_EDEFAULT == null ? title != null : !TITLE_EDEFAULT.equals(title);
 			case ModelPackage.BOOK__AUTHORS:
 				return authors != null && !authors.isEmpty();
+			case ModelPackage.BOOK__TAGS:
+				return tags != null && !tags.isEmpty();
+			case ModelPackage.BOOK__DATA:
+				return data != null && !data.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -254,6 +327,10 @@ public class BookImpl extends EObjectImpl implements Book
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (title: ");
 		result.append(title);
+		result.append(", tags: ");
+		result.append(tags);
+		result.append(", data: ");
+		result.append(data);
 		result.append(')');
 		return result.toString();
 	}
