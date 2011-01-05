@@ -13,8 +13,10 @@ package org.eclipselabs.mongo.emf.junit.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipselabs.mongo.emf.junit.model.Book;
 import org.eclipselabs.mongo.emf.junit.model.Location;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 
@@ -26,6 +28,7 @@ import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.LocationImpl#getAddress <em>Address</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.LocationImpl#getFeaturedBook <em>Featured Book</em>}</li>
  * </ul>
  * </p>
  *
@@ -52,6 +55,16 @@ public class LocationImpl extends EObjectImpl implements Location
 	 * @ordered
 	 */
 	protected String address = ADDRESS_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getFeaturedBook() <em>Featured Book</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFeaturedBook()
+	 * @generated
+	 * @ordered
+	 */
+	protected Book featuredBook;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -102,6 +115,49 @@ public class LocationImpl extends EObjectImpl implements Location
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Book getFeaturedBook()
+	{
+		if (featuredBook != null && featuredBook.eIsProxy())
+		{
+			InternalEObject oldFeaturedBook = (InternalEObject)featuredBook;
+			featuredBook = (Book)eResolveProxy(oldFeaturedBook);
+			if (featuredBook != oldFeaturedBook)
+			{
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.LOCATION__FEATURED_BOOK, oldFeaturedBook, featuredBook));
+			}
+		}
+		return featuredBook;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Book basicGetFeaturedBook()
+	{
+		return featuredBook;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFeaturedBook(Book newFeaturedBook)
+	{
+		Book oldFeaturedBook = featuredBook;
+		featuredBook = newFeaturedBook;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.LOCATION__FEATURED_BOOK, oldFeaturedBook, featuredBook));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType)
 	{
@@ -109,6 +165,9 @@ public class LocationImpl extends EObjectImpl implements Location
 		{
 			case ModelPackage.LOCATION__ADDRESS:
 				return getAddress();
+			case ModelPackage.LOCATION__FEATURED_BOOK:
+				if (resolve) return getFeaturedBook();
+				return basicGetFeaturedBook();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -125,6 +184,9 @@ public class LocationImpl extends EObjectImpl implements Location
 		{
 			case ModelPackage.LOCATION__ADDRESS:
 				setAddress((String)newValue);
+				return;
+			case ModelPackage.LOCATION__FEATURED_BOOK:
+				setFeaturedBook((Book)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -143,6 +205,9 @@ public class LocationImpl extends EObjectImpl implements Location
 			case ModelPackage.LOCATION__ADDRESS:
 				setAddress(ADDRESS_EDEFAULT);
 				return;
+			case ModelPackage.LOCATION__FEATURED_BOOK:
+				setFeaturedBook((Book)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -159,6 +224,8 @@ public class LocationImpl extends EObjectImpl implements Location
 		{
 			case ModelPackage.LOCATION__ADDRESS:
 				return ADDRESS_EDEFAULT == null ? address != null : !ADDRESS_EDEFAULT.equals(address);
+			case ModelPackage.LOCATION__FEATURED_BOOK:
+				return featuredBook != null;
 		}
 		return super.eIsSet(featureID);
 	}

@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.Location#getAddress <em>Address</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.Location#getFeaturedBook <em>Featured Book</em>}</li>
  * </ul>
  * </p>
  *
@@ -56,5 +57,31 @@ public interface Location extends EObject
 	 * @generated
 	 */
 	void setAddress(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Featured Book</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Featured Book</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Featured Book</em>' reference.
+	 * @see #setFeaturedBook(Book)
+	 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getLocation_FeaturedBook()
+	 * @model
+	 * @generated
+	 */
+	Book getFeaturedBook();
+
+	/**
+	 * Sets the value of the '{@link org.eclipselabs.mongo.emf.junit.model.Location#getFeaturedBook <em>Featured Book</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Featured Book</em>' reference.
+	 * @see #getFeaturedBook()
+	 * @generated
+	 */
+	void setFeaturedBook(Book value);
 
 } // Location

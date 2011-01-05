@@ -12,7 +12,7 @@
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
-            uri="http://www.eclipselabs.org/emf/mongo/junit"
+            uri="http://www.eclipselabs.org/mongo/emf/junit"
             class="org.eclipselabs.mongo.emf.junit.model.ModelPackage"
             genModel="model/junit.genmodel"/>
    </extension>

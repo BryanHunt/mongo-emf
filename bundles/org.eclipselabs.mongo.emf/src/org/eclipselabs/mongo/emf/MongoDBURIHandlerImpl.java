@@ -29,18 +29,19 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMap.Entry;
 import org.eclipse.emf.ecore.util.FeatureMap.Internal;
+import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipselabs.emf.query.BinaryOperation;
 import org.eclipselabs.emf.query.Expression;
@@ -77,7 +78,6 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	public static final String OPTION_GENERATE_ID = "org.eclipselabs.mongo.emf.genId";
 
 	static final String ID_KEY = "_id";
-	static final String EPACKAGE_KEY = "_ePackage";
 	static final String ECLASS_KEY = "_eClass";
 	static final String PROXY_KEY = "_eProxyURI";
 
@@ -120,15 +120,21 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 				if (uriHandler == null)
 					uriHandler = new org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl();
 
+				ObjectId id = getID(uri);
+
 				if (resource.getURI().hasTrailingPathSeparator())
-					uriHandler.setBaseURI(resource.getURI());
+				{
+					if (id == null)
+						uriHandler.setBaseURI(resource.getURI().trimSegments(1).appendSegment("-1").appendSegment(""));
+					else
+						uriHandler.setBaseURI(resource.getURI());
+				}
 				else
 					uriHandler.setBaseURI(resource.getURI().appendSegment(""));
 
 				// Build a MongoDB object from the EMF object.
 
 				DBObject dbObject = buildDBObject(collection.getDB(), root, uriHandler);
-				ObjectId id = getID(uri);
 
 				if (id == null)
 				{
@@ -334,8 +340,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		// We have to add the package namespace URI and eclass name to the object so that we can
 		// reconstruct the EMF object when we read it back out of MongoDB.
 
-		dbObject.put(EPACKAGE_KEY, eClass.getEPackage().getNsURI());
-		dbObject.put(ECLASS_KEY, eClass.getName());
+		dbObject.put(ECLASS_KEY, EcoreUtil.getURI(eClass).toString());
 
 		// All attributes are mapped as key / value pairs with the key being the attribute name.
 
@@ -345,7 +350,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 			{
 				Object value = null;
 
-				if (EcorePackage.Literals.EFEATURE_MAP_ENTRY.equals(attribute.getEAttributeType()))
+				if (FeatureMapUtil.isFeatureMap(attribute))
 				{
 					FeatureMap.Internal featureMap = (Internal) eObject.eGet(attribute);
 					Iterator<Entry> iterator = featureMap.iterator();
@@ -356,7 +361,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 						DBObject dbEntry = new BasicDBObject();
 						Entry entry = iterator.next();
 						EStructuralFeature feature = entry.getEStructuralFeature();
-						dbEntry.put("key", feature.getName());
+						dbEntry.put("key", EcoreUtil.getURI(feature).toString());
 
 						if (feature instanceof EAttribute)
 							dbEntry.put("value", getDBAttributeValue((EAttribute) feature, entry.getValue()));
@@ -427,7 +432,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	{
 		InternalEObject internalEObject = (InternalEObject) targetObject;
 
-		if (eReference.isResolveProxies())
+		if (eReference.isResolveProxies() || !eReference.isContainment())
 		{
 			// Cross-document containment, or non-containment reference - build a proxy
 
@@ -437,8 +442,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 			{
 				BasicDBObject dbObject = new BasicDBObject(3);
 				dbObject.put(PROXY_KEY, uriHandler.deresolve(EcoreUtil.getURI(targetObject)).toString());
-				dbObject.put(EPACKAGE_KEY, targetObject.eClass().getEPackage().getNsURI());
-				dbObject.put(ECLASS_KEY, targetObject.eClass().getName());
+				dbObject.put(ECLASS_KEY, EcoreUtil.getURI(targetObject.eClass()).toString());
 				return dbObject;
 			}
 			else
@@ -455,68 +459,96 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	private EObject buildObject(DBCollection collection, DBObject dbObject, Resource resource, XMLResource.URIHandler uriHandler)
 	{
+		ResourceSet resourceSet = resource.getResourceSet();
+
 		// Build an EMF object from the MongodDB object
 
-		EObject eObject = buildObject(dbObject);
+		EObject eObject = buildObject(dbObject, resource.getResourceSet());
 
 		// All attributes are mapped as key / value pairs with the key being the attribute name.
 
-		for (EAttribute attribute : eObject.eClass().getEAllAttributes())
+		for (EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures())
 		{
-			if (!attribute.isTransient())
-			{
-				Object value = dbObject.get(attribute.getName());
-
-				if (EcorePackage.Literals.EFEATURE_MAP_ENTRY.equals(attribute.getEAttributeType()))
-				{
-					FeatureMap.Internal featureMap = (Internal) eObject.eGet(attribute);
-
-					for (DBObject entry : (ArrayList<DBObject>) value)
-					{
-						EStructuralFeature feature = eObject.eClass().getEStructuralFeature((String) entry.get("key"));
-
-						if (feature instanceof EAttribute)
-							featureMap.add(feature, getObjectAttributeValue(attribute, entry.get("value")));
-						else
-							featureMap.add(feature, buildObjectReference(collection, entry.get("value"), resource, uriHandler));
-					}
-
-					continue;
-				}
-
-				eObject.eSet(attribute, getObjectAttributeValue(attribute, value));
-			}
-		}
-
-		// All references are mapped as key / value pairs with the key being the reference name.
-
-		for (EReference reference : eObject.eClass().getEAllReferences())
-		{
-			if (reference.isTransient())
-				continue;
-
-			if (reference.isMany())
-			{
-				@SuppressWarnings("unchecked")
-				List<Object> dbReferences = (List<Object>) dbObject.get(reference.getName());
-
-				if (dbReferences != null)
-				{
-					@SuppressWarnings("unchecked")
-					EList<EObject> eObjects = (EList<EObject>) eObject.eGet(reference);
-
-					for (Object dbReference : dbReferences)
-						eObjects.add(buildObjectReference(collection, dbReference, resource, uriHandler));
-				}
-			}
+			if (feature instanceof EAttribute)
+				buildObjectAttribute(collection, dbObject, resource, uriHandler, resourceSet, eObject, (EAttribute) feature);
 			else
-				eObject.eSet(reference, buildObjectReference(collection, dbObject.get(reference.getName()), resource, uriHandler));
+				buildObjectReference(collection, dbObject, resource, uriHandler, eObject, (EReference) feature);
 		}
 
 		return eObject;
+	}
+
+	/**
+	 * @param collection
+	 * @param dbObject
+	 * @param resource
+	 * @param uriHandler
+	 * @param eObject
+	 * @param reference
+	 */
+	private void buildObjectReference(DBCollection collection, DBObject dbObject, Resource resource, XMLResource.URIHandler uriHandler, EObject eObject, EReference reference)
+	{
+		if (reference.isTransient())
+			return;
+
+		if (reference.isMany())
+		{
+			@SuppressWarnings("unchecked")
+			List<Object> dbReferences = (List<Object>) dbObject.get(reference.getName());
+
+			if (dbReferences != null)
+			{
+				@SuppressWarnings("unchecked")
+				EList<EObject> eObjects = (EList<EObject>) eObject.eGet(reference);
+
+				for (Object dbReference : dbReferences)
+					eObjects.add(buildObjectReference(collection, dbReference, resource, uriHandler, reference.isResolveProxies()));
+			}
+		}
+		else
+			eObject.eSet(reference, buildObjectReference(collection, dbObject.get(reference.getName()), resource, uriHandler, reference.isResolveProxies()));
+	}
+
+	/**
+	 * @param collection
+	 * @param dbObject
+	 * @param resource
+	 * @param uriHandler
+	 * @param resourceSet
+	 * @param eObject
+	 * @param attribute
+	 */
+	@SuppressWarnings("unchecked")
+	private void buildObjectAttribute(DBCollection collection, DBObject dbObject, Resource resource, XMLResource.URIHandler uriHandler, ResourceSet resourceSet, EObject eObject, EAttribute attribute)
+	{
+		if (!attribute.isTransient())
+		{
+			Object value = dbObject.get(attribute.getName());
+
+			if (FeatureMapUtil.isFeatureMap(attribute))
+			{
+				FeatureMap.Internal featureMap = (Internal) eObject.eGet(attribute);
+
+				for (DBObject entry : (ArrayList<DBObject>) value)
+				{
+					EStructuralFeature feature = (EStructuralFeature) resourceSet.getEObject(URI.createURI((String) entry.get("key")), true);
+
+					if (feature instanceof EAttribute)
+						featureMap.add(feature, getObjectAttributeValue((EAttribute) feature, entry.get("value")));
+					else
+					{
+						EReference reference = (EReference) feature;
+						featureMap.add(feature, buildObjectReference(collection, entry.get("value"), resource, uriHandler, reference.isResolveProxies()));
+					}
+				}
+
+				return;
+			}
+
+			eObject.eSet(attribute, getObjectAttributeValue(attribute, value));
+		}
 	}
 
 	/**
@@ -535,7 +567,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		return value;
 	}
 
-	private EObject buildObjectReference(DBCollection collection, Object dbReference, Resource resource, XMLResource.URIHandler uriHandler)
+	private EObject buildObjectReference(DBCollection collection, Object dbReference, Resource resource, XMLResource.URIHandler uriHandler, boolean referenceResolvesProxies)
 	{
 		if (dbReference == null)
 			return null;
@@ -552,29 +584,37 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 			if (proxy == null)
 				return buildObject(collection, dbObject, resource, uriHandler);
 			else
-				return buildProxy(dbObject, uriHandler);
+				return buildProxy(dbObject, resource.getResourceSet(), uriHandler, referenceResolvesProxies);
 		}
 	}
 
-	private EObject buildProxy(DBObject dbObject, XMLResource.URIHandler uriHandler)
+	private EObject buildProxy(DBObject dbObject, ResourceSet resourceSet, XMLResource.URIHandler uriHandler, boolean referenceResolvedProxies)
 	{
-		EObject eObject = buildObject(dbObject);
-		((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(URI.createURI((String) dbObject.get(PROXY_KEY))));
+		EObject eObject = null;
+		URI proxyURI = uriHandler.resolve(URI.createURI((String) dbObject.get(PROXY_KEY)));
+
+		if (!referenceResolvedProxies)
+			eObject = resourceSet.getEObject(proxyURI, true);
+		else
+		{
+			eObject = buildObject(dbObject, resourceSet);
+			((InternalEObject) eObject).eSetProxyURI(proxyURI);
+		}
+
 		return eObject;
 	}
 
 	private EObject buildProxy(DBRef dbReference, Resource resource, XMLResource.URIHandler uriHandler)
 	{
-		EObject eObject = buildObject(dbReference.fetch());
+		EObject eObject = buildObject(dbReference.fetch(), resource.getResourceSet());
 		URI proxyURI = URI.createURI("../../../" + dbReference.getDB().getName() + "/" + dbReference.getRef() + "/" + dbReference.getId() + "#/0");
 		((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(proxyURI));
 		return eObject;
 	}
 
-	private EObject buildObject(DBObject dbObject)
+	private EObject buildObject(DBObject dbObject, ResourceSet resourceSet)
 	{
-		EPackage ePackage = EPackage.Registry.INSTANCE.getEPackage((String) dbObject.get(EPACKAGE_KEY));
-		EClass eClass = (EClass) ePackage.getEClassifier((String) dbObject.get(ECLASS_KEY));
+		EClass eClass = (EClass) resourceSet.getEObject(URI.createURI((String) dbObject.get(ECLASS_KEY)), true);
 		return EcoreUtil.create(eClass);
 	}
 

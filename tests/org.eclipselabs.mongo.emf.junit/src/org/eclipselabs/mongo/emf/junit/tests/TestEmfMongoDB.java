@@ -151,8 +151,7 @@ public class TestEmfMongoDB
 	public void testLoadTypes()
 	{
 		BasicDBObject object = new BasicDBObject();
-		object.put("_ePackage", ModelPackage.eINSTANCE.getNsURI());
-		object.put("_eClass", ModelPackage.Literals.ETYPES.getName());
+		object.put("_eClass", EcoreUtil.getURI(ModelPackage.Literals.ETYPES).toString());
 
 		BigDecimal bigDecimal = new BigDecimal(1);
 		BigInteger bigInteger = new BigInteger(2, new Random());
@@ -288,10 +287,6 @@ public class TestEmfMongoDB
 		location.setAddress("Wastelands");
 		library.setLocation(location);
 
-		Resource locationResource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.LOCATION));
-		locationResource.getContents().add(location);
-		locationResource.save(null);
-
 		Person person = ModelFactory.eINSTANCE.createPerson();
 		person.setName("Stephen King");
 
@@ -303,11 +298,17 @@ public class TestEmfMongoDB
 		book.setTitle("The Gunslinger");
 		library.getBooks().add(book);
 		book.getAuthors().add(person);
+		location.setFeaturedBook(book);
 
 		Resource libraryResource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.LIBRARY));
 		libraryResource.getContents().add(library);
 		libraryResource.save(null);
 
+		Resource locationResource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.LOCATION));
+		locationResource.getContents().add(location);
+		locationResource.save(null);
+
+		libraryResource.save(null);
 		personResource.save(null);
 
 		{
@@ -431,6 +432,17 @@ public class TestEmfMongoDB
 		List<DBObject> bookReferences = (List<DBObject>) dbPerson.get(ModelPackage.Literals.PERSON__BOOKS.getName());
 		assertThat(bookReferences, is(notNullValue()));
 		assertThat(bookReferences.size(), is(1));
+
+		ResourceSet testResourceSet = new ResourceSetImpl();
+		uriHandlers = testResourceSet.getURIConverter().getURIHandlers();
+		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+
+		Resource testResource = testResourceSet.getResource(libraryResource.getURI(), true);
+		assertThat(testResource.getContents().size(), is(1));
+		Library actualLibrary = (Library) testResource.getContents().get(0);
+		assertThat(actualLibrary.getLocation(), is(notNullValue()));
+		assertThat(actualLibrary.getLocation().getAddress(), is(location.getAddress()));
+		assertThat(actualLibrary.getLocation().getFeaturedBook().getTitle(), is(book.getTitle()));
 	}
 
 	@Test
@@ -780,7 +792,7 @@ public class TestEmfMongoDB
 
 		BasicDBObject object = new BasicDBObject();
 		object.put("_ePackage", ModelPackage.eINSTANCE.getNsURI());
-		object.put("_eClass", ModelPackage.Literals.PERSON.getName());
+		object.put("_eClass", EcoreUtil.getURI(ModelPackage.Literals.PERSON).toString());
 		object.put(ModelPackage.Literals.PERSON__NAME.getName(), name);
 
 		personCollection.insert(object);
@@ -791,8 +803,7 @@ public class TestEmfMongoDB
 	private DBObject createBook(DBObject library, String title, List<DBObject> authors)
 	{
 		BasicDBObject object = new BasicDBObject();
-		object.put("_ePackage", ModelPackage.eINSTANCE.getNsURI());
-		object.put("_eClass", ModelPackage.Literals.BOOK.getName());
+		object.put("_eClass", EcoreUtil.getURI(ModelPackage.Literals.BOOK).toString());
 		object.put(ModelPackage.Literals.BOOK__TITLE.getName(), title);
 
 		ArrayList<DBRef> authorsReferences = new ArrayList<DBRef>();
@@ -827,8 +838,7 @@ public class TestEmfMongoDB
 
 			BasicDBObject proxy = new BasicDBObject();
 			proxy.put("_eProxyURI", "../../../junit/Library/" + library.get("_id") + "#//@books." + (bookReferences.size()));
-			proxy.put("_ePackage", ModelPackage.eINSTANCE.getNsURI());
-			proxy.put("_eClass", ModelPackage.Literals.BOOK.getName());
+			proxy.put("_eClass", EcoreUtil.getURI(ModelPackage.Literals.BOOK).toString());
 			bookReferences.add(proxy);
 			personCollection.update(new BasicDBObject(ID_KEY, author.get(ID_KEY)), author);
 		}
@@ -842,16 +852,14 @@ public class TestEmfMongoDB
 		long libraryCount = libraryCollection.count();
 
 		BasicDBObject locationObject = new BasicDBObject();
-		locationObject.put("_ePackage", ModelPackage.eINSTANCE.getNsURI());
-		locationObject.put("_eClass", ModelPackage.Literals.LOCATION.getName());
+		locationObject.put("_eClass", EcoreUtil.getURI(ModelPackage.Literals.LOCATION).toString());
 		locationObject.put(ModelPackage.Literals.LOCATION__ADDRESS.getName(), location);
 
 		locationCollection.insert(locationObject);
 		assertThat(locationCollection.getCount(), is(locationCount + 1));
 
 		BasicDBObject libraryObject = new BasicDBObject();
-		libraryObject.put("_ePackage", ModelPackage.eINSTANCE.getNsURI());
-		libraryObject.put("_eClass", ModelPackage.Literals.LIBRARY.getName());
+		libraryObject.put("_eClass", EcoreUtil.getURI(ModelPackage.Literals.LIBRARY).toString());
 		libraryObject.put(ModelPackage.Literals.LIBRARY__LOCATION.getName(), new DBRef(db, ModelPackage.Literals.LOCATION.getName(), locationObject.get(ID_KEY)));
 
 		libraryCollection.insert(libraryObject);
@@ -861,17 +869,17 @@ public class TestEmfMongoDB
 
 	private URI createCollectionURI(EClass eClass)
 	{
-		return URI.createURI("mongo://localhost/junit/" + eClass.getName());
+		return URI.createURI("mongo://localhost/junit/" + eClass.getName() + "/");
 	}
 
 	private URI createObjectURI(EClass eClass, ObjectId id)
 	{
-		return createCollectionURI(eClass).appendSegment(id.toString());
+		return createCollectionURI(eClass).trimSegments(1).appendSegment(id.toString());
 	}
 
 	private URI createQueryURI(EClass eClass, String query)
 	{
-		return createCollectionURI(eClass).appendSegment("").appendQuery(URI.encodeQuery(query, false));
+		return createCollectionURI(eClass).appendQuery(URI.encodeQuery(query, false));
 	}
 
 	private static final String ID_KEY = "_id";
