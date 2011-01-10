@@ -34,6 +34,7 @@ import java.util.Random;
 import org.bson.types.ObjectId;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -45,6 +46,7 @@ import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
+import org.eclipselabs.emf.query.Result;
 import org.eclipselabs.mongo.IMongoDB;
 import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 import org.eclipselabs.mongo.emf.junit.internal.Activator;
@@ -452,7 +454,7 @@ public class TestEmfMongoDB
 		List<DBObject> books = (List<DBObject>) libraryCollection.findOne().get(ModelPackage.Literals.LIBRARY__BOOKS.getName());
 		assertThat(books, is(notNullValue()));
 		assertThat(books.size(), is(1));
-		DBObject dbBook = (DBObject) books.get(0);
+		DBObject dbBook = books.get(0);
 		assertThat(dbBook, is(notNullValue()));
 		assertThat((String) dbBook.get(ModelPackage.Literals.BOOK__TITLE.getName()), is(book.getTitle()));
 		@SuppressWarnings("unchecked")
@@ -676,7 +678,10 @@ public class TestEmfMongoDB
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.LIBRARY, "_id=='" + libraryObject.get(ID_KEY) + "'"), true);
 		assertThat(resource, is(notNullValue()));
 		assertThat(resource.getContents().size(), is(1));
-		Library library = (Library) resource.getContents().get(0);
+
+		Result result = (Result) resource.getContents().get(0);
+		assertThat(result.getValues().size(), is(1));
+		Library library = (Library) result.getValues().get(0);
 
 		assertThat(library.getLocation(), is(notNullValue()));
 		assertThat(library.getLocation().getAddress(), is("Wastelands"));
@@ -695,7 +700,10 @@ public class TestEmfMongoDB
 		assertThat(resource, is(notNullValue()));
 		assertThat(resource.getContents().size(), is(1));
 
-		Person author = (Person) resource.getContents().get(0);
+		Result result = (Result) resource.getContents().get(0);
+		assertThat(result.getValues().size(), is(1));
+		Person author = (Person) result.getValues().get(0);
+
 		assertThat(author.getName(), is("Stephen King"));
 	}
 

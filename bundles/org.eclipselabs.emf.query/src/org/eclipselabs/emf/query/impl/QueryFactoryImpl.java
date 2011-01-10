@@ -71,6 +71,7 @@ public class QueryFactoryImpl extends EFactoryImpl implements QueryFactory
       case QueryPackage.FEATURE_ACCESSOR: return createFeatureAccessor();
       case QueryPackage.LITERAL: return createLiteral();
       case QueryPackage.BINARY_OPERATION: return createBinaryOperation();
+      case QueryPackage.RESULT: return createResult();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -107,6 +108,17 @@ public class QueryFactoryImpl extends EFactoryImpl implements QueryFactory
   {
     BinaryOperationImpl binaryOperation = new BinaryOperationImpl();
     return binaryOperation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Result createResult()
+  {
+    ResultImpl result = new ResultImpl();
+    return result;
   }
 
   /**

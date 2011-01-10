@@ -127,6 +127,13 @@ public class QuerySwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case QueryPackage.RESULT:
+      {
+        Result result = (Result)theEObject;
+        T theResult = caseResult(result);
+        if (theResult == null) theResult = defaultCase(theEObject);
+        return theResult;
+      }
       default: return defaultCase(theEObject);
     }
   }
@@ -191,6 +198,22 @@ public class QuerySwitch<T>
    * @generated
    */
   public T caseBinaryOperation(BinaryOperation object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Result</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Result</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseResult(Result object)
   {
     return null;
   }

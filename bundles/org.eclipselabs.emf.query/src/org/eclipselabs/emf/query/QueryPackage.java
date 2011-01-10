@@ -210,6 +210,35 @@ public interface QueryPackage extends EPackage
 
 
   /**
+   * The meta object id for the '{@link org.eclipselabs.emf.query.impl.ResultImpl <em>Result</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipselabs.emf.query.impl.ResultImpl
+   * @see org.eclipselabs.emf.query.impl.QueryPackageImpl#getResult()
+   * @generated
+   */
+  int RESULT = 4;
+
+  /**
+   * The feature id for the '<em><b>Values</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESULT__VALUES = 0;
+
+  /**
+   * The number of structural features of the '<em>Result</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESULT_FEATURE_COUNT = 1;
+
+
+  /**
    * Returns the meta object for class '{@link org.eclipselabs.emf.query.Expression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -338,6 +367,27 @@ public interface QueryPackage extends EPackage
   EReference getBinaryOperation_RightOperand();
 
   /**
+   * Returns the meta object for class '{@link org.eclipselabs.emf.query.Result <em>Result</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Result</em>'.
+   * @see org.eclipselabs.emf.query.Result
+   * @generated
+   */
+  EClass getResult();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.eclipselabs.emf.query.Result#getValues <em>Values</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Values</em>'.
+   * @see org.eclipselabs.emf.query.Result#getValues()
+   * @see #getResult()
+   * @generated
+   */
+  EReference getResult_Values();
+
+  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -463,6 +513,24 @@ public interface QueryPackage extends EPackage
      * @generated
      */
     EReference BINARY_OPERATION__RIGHT_OPERAND = eINSTANCE.getBinaryOperation_RightOperand();
+
+    /**
+     * The meta object literal for the '{@link org.eclipselabs.emf.query.impl.ResultImpl <em>Result</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipselabs.emf.query.impl.ResultImpl
+     * @see org.eclipselabs.emf.query.impl.QueryPackageImpl#getResult()
+     * @generated
+     */
+    EClass RESULT = eINSTANCE.getResult();
+
+    /**
+     * The meta object literal for the '<em><b>Values</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference RESULT__VALUES = eINSTANCE.getResult_Values();
 
   }
 

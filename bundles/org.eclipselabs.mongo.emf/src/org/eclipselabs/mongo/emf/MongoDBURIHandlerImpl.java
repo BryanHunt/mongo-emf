@@ -46,6 +46,8 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipselabs.emf.query.BinaryOperation;
 import org.eclipselabs.emf.query.Expression;
 import org.eclipselabs.emf.query.Literal;
+import org.eclipselabs.emf.query.QueryFactory;
+import org.eclipselabs.emf.query.Result;
 import org.eclipselabs.emf.query.util.ExpressionBuilder;
 import org.eclipselabs.emf.query.util.QuerySwitch;
 import org.eclipselabs.mongo.IMongoDB;
@@ -66,7 +68,6 @@ import com.mongodb.MongoURI;
  * saved, MongoDB will assign the id and the URI of the EMF Resource will be modified to include the
  * id in the URI. Examples of valid URIs:
  * 
- * mongo://localhost/data/people
  * mongo://localhost/data/people/
  * mongo://localhost/data/people/4d0a3e259095b5b334a59df0
  * 
@@ -225,8 +226,11 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 				if (query != null)
 				{
+					Result result = QueryFactory.eINSTANCE.createResult();
+					EList<EObject> values = result.getValues();
 					for (DBObject dbObject : collection.find(buildDBObject(collection, new ExpressionBuilder(URI.decode(query)).parseExpression())))
-						resource.getContents().add(buildObject(collection, dbObject, resource, uriHandler));
+						values.add(buildObject(collection, dbObject, resource, uriHandler, true));
+					resource.getContents().add(result);
 				}
 				else
 				{
@@ -472,19 +476,37 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 	private EObject buildObject(DBCollection collection, DBObject dbObject, Resource resource, XMLResource.URIHandler uriHandler)
 	{
+		EObject eObject = buildObject(collection, dbObject, resource, uriHandler, false);
+		return eObject;
+	}
+
+	private EObject buildObject(DBCollection collection, DBObject dbObject, Resource resource, XMLResource.URIHandler uriHandler, boolean isProxy)
+	{
 		ResourceSet resourceSet = resource.getResourceSet();
 
 		// Build an EMF object from the MongodDB object
 
 		EObject eObject = buildObject(dbObject, resource.getResourceSet());
 
+		if (isProxy)
+		{
+			URI proxyURI = URI.createURI("../../../" + collection.getDB().getName() + "/" + collection.getName() + "/" + dbObject.get(ID_KEY) + "#/0");
+			((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(proxyURI));
+		}
+
 		// All attributes are mapped as key / value pairs with the key being the attribute name.
 
 		for (EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures())
 		{
 			if (feature instanceof EAttribute)
-				buildObjectAttribute(collection, dbObject, resource, uriHandler, resourceSet, eObject, (EAttribute) feature);
-			else
+			{
+				EAttribute attribute = (EAttribute) feature;
+				if (!isProxy || !FeatureMapUtil.isFeatureMap(attribute))
+				{
+					buildObjectAttribute(collection, dbObject, resource, uriHandler, resourceSet, eObject, attribute);
+				}
+			}
+			else if (!isProxy)
 				buildObjectReference(collection, dbObject, resource, uriHandler, eObject, (EReference) feature);
 		}
 

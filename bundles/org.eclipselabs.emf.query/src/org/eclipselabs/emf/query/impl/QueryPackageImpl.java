@@ -20,6 +20,7 @@ import org.eclipselabs.emf.query.FeatureAccessor;
 import org.eclipselabs.emf.query.Literal;
 import org.eclipselabs.emf.query.QueryFactory;
 import org.eclipselabs.emf.query.QueryPackage;
+import org.eclipselabs.emf.query.Result;
 
 /**
  * <!-- begin-user-doc -->
@@ -56,6 +57,13 @@ public class QueryPackageImpl extends EPackageImpl implements QueryPackage
    * @generated
    */
   private EClass binaryOperationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass resultEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -248,6 +256,26 @@ public class QueryPackageImpl extends EPackageImpl implements QueryPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getResult()
+  {
+    return resultEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getResult_Values()
+  {
+    return (EReference)resultEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public QueryFactory getQueryFactory()
   {
     return (QueryFactory)getEFactoryInstance();
@@ -288,6 +316,9 @@ public class QueryPackageImpl extends EPackageImpl implements QueryPackage
     createEReference(binaryOperationEClass, BINARY_OPERATION__LEFT_OPERAND);
     createEAttribute(binaryOperationEClass, BINARY_OPERATION__OPERATOR);
     createEReference(binaryOperationEClass, BINARY_OPERATION__RIGHT_OPERAND);
+
+    resultEClass = createEClass(RESULT);
+    createEReference(resultEClass, RESULT__VALUES);
   }
 
   /**
@@ -342,6 +373,9 @@ public class QueryPackageImpl extends EPackageImpl implements QueryPackage
     initEReference(getBinaryOperation_LeftOperand(), this.getExpression(), null, "leftOperand", null, 1, 1, BinaryOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getBinaryOperation_Operator(), theEcorePackage.getEString(), "operator", null, 1, 1, BinaryOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getBinaryOperation_RightOperand(), this.getExpression(), null, "rightOperand", null, 1, 1, BinaryOperation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(resultEClass, Result.class, "Result", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getResult_Values(), theEcorePackage.getEObject(), null, "values", null, 0, -1, Result.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);
