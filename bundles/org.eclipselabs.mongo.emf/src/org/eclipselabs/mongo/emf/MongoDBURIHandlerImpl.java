@@ -490,7 +490,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 		if (isProxy)
 		{
-			URI proxyURI = URI.createURI("../../../" + collection.getDB().getName() + "/" + collection.getName() + "/" + dbObject.get(ID_KEY) + "#/0");
+			URI proxyURI = URI.createURI("../../" + collection.getName() + "/" + dbObject.get(ID_KEY) + "#/0");
 			((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(proxyURI));
 		}
 
@@ -649,7 +649,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	private EObject buildProxy(DBRef dbReference, Resource resource, XMLResource.URIHandler uriHandler)
 	{
 		EObject eObject = buildObject(dbReference.fetch(), resource.getResourceSet());
-		URI proxyURI = URI.createURI("../../../" + dbReference.getDB().getName() + "/" + dbReference.getRef() + "/" + dbReference.getId() + "#/0");
+		URI proxyURI = URI.createURI("../../" + dbReference.getRef() + "/" + dbReference.getId() + "#/0");
 		((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(proxyURI));
 		return eObject;
 	}
