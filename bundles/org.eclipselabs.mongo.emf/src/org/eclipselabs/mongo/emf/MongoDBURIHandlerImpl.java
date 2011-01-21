@@ -63,21 +63,22 @@ import com.mongodb.MongoURI;
 
 /**
  * This EMF URI handler interfaces to MongoDB. This URI handler can handle URIs with the "mongo"
- * scheme. The URI path must be of the form /database/collection/{id} where id is optional the first
+ * scheme. The URI path must be of the form /database/collection/{id}/ where id is optional the first
  * time the EMF object is saved. Note that if the id is not specified when the object is first
  * saved, MongoDB will assign the id and the URI of the EMF Resource will be modified to include the
  * id in the URI. Examples of valid URIs:
- * 
+ *
  * mongo://localhost/data/people/
- * mongo://localhost/data/people/4d0a3e259095b5b334a59df0
- * 
+ * mongo://localhost/data/people/4d0a3e259095b5b334a59df0/
+ *
  * @author bhunt
- * 
+ *
  */
 public class MongoDBURIHandlerImpl extends URIHandlerImpl
 {
 	public static final String OPTION_GENERATE_ID = "org.eclipselabs.mongo.emf.genId";
 
+	static final String TIME_STAMP_KEY = "_timeStamp";
 	static final String ID_KEY = "_id";
 	static final String ECLASS_KEY = "_eClass";
 	static final String PROXY_KEY = "_eProxyURI";
@@ -137,13 +138,17 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 				DBObject dbObject = buildDBObject(collection.getDB(), root, uriHandler);
 
+				Map<Object, Object> response = getResponse(options);
+				long timeStamp = System.currentTimeMillis();
+				dbObject.put(TIME_STAMP_KEY, timeStamp);
+				response.put(URIConverter.RESPONSE_TIME_STAMP_PROPERTY, timeStamp);
+
 				if (id == null)
 				{
 					// The id was not specified in the URI, so we are creating an object for the first time.
 
 					collection.insert(dbObject);
 					id = (ObjectId) dbObject.get(ID_KEY);
-					Map<Object, Object> response = getResponse(options);
 
 					// Since MongoDB assigns an id to the inserted object, we need to modify the EMF Resource
 					// URI to include the generated id.
@@ -237,7 +242,12 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 					DBObject dbObject = collection.findOne(new BasicDBObject(ID_KEY, getID(uri)));
 
 					if (dbObject != null)
+					{
 						resource.getContents().add(buildObject(collection, dbObject, resource, uriHandler));
+
+				        Map<Object, Object> response = getResponse(options);
+				        response.put(URIConverter.RESPONSE_TIME_STAMP_PROPERTY, dbObject.get(TIME_STAMP_KEY));
+					}
 				}
 			}
 		};
@@ -304,32 +314,35 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	{
 		final DBObject dbObject = new BasicDBObject();
 
-		new QuerySwitch<Object>()
+		if (expression != null)
 		{
-			@Override
-			public Object caseBinaryOperation(BinaryOperation binaryOperation)
+			new QuerySwitch<Object>()
 			{
-				Expression leftOperand = binaryOperation.getLeftOperand();
-				String operator = binaryOperation.getOperator();
-
-				if ("==".equals(operator))
+				@Override
+				public Object caseBinaryOperation(BinaryOperation binaryOperation)
 				{
-					Expression rightOperand = binaryOperation.getRightOperand();
-					String property = ExpressionBuilder.toString(leftOperand);
+					Expression leftOperand = binaryOperation.getLeftOperand();
+					String operator = binaryOperation.getOperator();
 
-					if (ID_KEY.equals(property))
+					if ("==".equals(operator))
 					{
-						dbObject.put(property, new ObjectId(((Literal) rightOperand).getLiteralValue()));
+						Expression rightOperand = binaryOperation.getRightOperand();
+						String property = ExpressionBuilder.toString(leftOperand);
+
+						if (ID_KEY.equals(property))
+						{
+							dbObject.put(property, new ObjectId(((Literal) rightOperand).getLiteralValue()));
+						}
+						else
+						{
+							dbObject.put(property, ((Literal) rightOperand).getLiteralValue());
+						}
 					}
-					else
-					{
-						dbObject.put(property, ((Literal) rightOperand).getLiteralValue());
-					}
+
+					return null;
 				}
-
-				return null;
-			}
-		}.doSwitch(expression);
+			}.doSwitch(expression);
+		}
 
 		return dbObject;
 	}

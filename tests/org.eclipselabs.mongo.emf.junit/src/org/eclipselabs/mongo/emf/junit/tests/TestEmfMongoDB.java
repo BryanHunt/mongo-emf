@@ -34,7 +34,6 @@ import java.util.Random;
 import org.bson.types.ObjectId;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -187,6 +186,7 @@ public class TestEmfMongoDB
 	public void testLoadTypes()
 	{
 		BasicDBObject object = new BasicDBObject();
+		object.put("_timeStamp", System.currentTimeMillis());
 		object.put("_eClass", EcoreUtil.getURI(ModelPackage.Literals.ETYPES).toString());
 
 		BigDecimal bigDecimal = new BigDecimal(1);
@@ -241,8 +241,11 @@ public class TestEmfMongoDB
 		resource.getContents().add(author);
 		HashMap<String, Object> options = new HashMap<String, Object>();
 		options.put(MongoDBURIHandlerImpl.OPTION_GENERATE_ID, Boolean.FALSE);
+		long initialTimeStamp = resource.getTimeStamp();
 		resource.save(options);
+		long finalTimeStamp = resource.getTimeStamp();
 
+		assertThat(initialTimeStamp < finalTimeStamp, is(true));
 		assertThat(personCollection.getCount(), is(1L));
 		assertThat(resource.getURI().segmentCount(), is(3));
 		assertThat(resource.getURI().segment(2), is(notNullValue()));
@@ -286,6 +289,8 @@ public class TestEmfMongoDB
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
 		uriHandlers.add(0, new MongoDBURIHandlerImpl());
 		Resource resource = resourceSet.getResource(createObjectURI(ModelPackage.Literals.PERSON, (ObjectId) object.get(ID_KEY)), true);
+		assertThat(resource.getTimeStamp() > 0, is(true));
+		assertThat(resource.getTimeStamp() <= System.currentTimeMillis(), is(true));
 		assertThat(resource, is(notNullValue()));
 		assertThat(resource.getContents().size(), is(1));
 		assertThat(resource.getContents().get(0), is(instanceOf(Person.class)));
@@ -667,6 +672,32 @@ public class TestEmfMongoDB
 	}
 
 	@Test
+	public void testQueryAllLibraries()
+	{
+		createLibrary("Wastelands");
+		createLibrary("Badlands");
+
+		ResourceSet resourceSet = new ResourceSetImpl();
+		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
+		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+
+		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.LIBRARY, ""), true);
+		assertThat(resource, is(notNullValue()));
+		assertThat(resource.getContents().size(), is(1));
+
+		Result result = (Result) resource.getContents().get(0);
+		assertThat(result.getValues().size(), is(2));
+		Library library1 = (Library) result.getValues().get(0);
+		Library library2 = (Library) result.getValues().get(1);
+
+		assertThat(library1.getLocation(), is(notNullValue()));
+		assertThat(library1.getLocation().getAddress(), is("Wastelands"));
+		
+		assertThat(library2.getLocation(), is(notNullValue()));
+		assertThat(library2.getLocation().getAddress(), is("Badlands"));
+	}
+
+	@Test
 	public void testQueryLibraryID()
 	{
 		DBObject libraryObject = createLibrary("Wastelands");
@@ -833,7 +864,7 @@ public class TestEmfMongoDB
 		long count = personCollection.count();
 
 		BasicDBObject object = new BasicDBObject();
-		object.put("_ePackage", ModelPackage.eINSTANCE.getNsURI());
+		object.put("_timeStamp", System.currentTimeMillis());
 		object.put("_eClass", EcoreUtil.getURI(ModelPackage.Literals.PERSON).toString());
 		object.put(ModelPackage.Literals.PERSON__NAME.getName(), name);
 
@@ -845,6 +876,7 @@ public class TestEmfMongoDB
 	private DBObject createBook(DBObject library, String title, List<DBObject> authors)
 	{
 		BasicDBObject object = new BasicDBObject();
+		object.put("_timeStamp", System.currentTimeMillis());
 		object.put("_eClass", EcoreUtil.getURI(ModelPackage.Literals.BOOK).toString());
 		object.put(ModelPackage.Literals.BOOK__TITLE.getName(), title);
 		object.put(ModelPackage.Literals.BOOK__TAGS.getName(), new ArrayList<String>());
@@ -896,6 +928,7 @@ public class TestEmfMongoDB
 		long libraryCount = libraryCollection.count();
 
 		BasicDBObject locationObject = new BasicDBObject();
+		locationObject.put("_timeStamp", System.currentTimeMillis());
 		locationObject.put("_eClass", EcoreUtil.getURI(ModelPackage.Literals.LOCATION).toString());
 		locationObject.put(ModelPackage.Literals.LOCATION__ADDRESS.getName(), location);
 
@@ -903,6 +936,7 @@ public class TestEmfMongoDB
 		assertThat(locationCollection.getCount(), is(locationCount + 1));
 
 		BasicDBObject libraryObject = new BasicDBObject();
+		libraryObject.put("_timeStamp", System.currentTimeMillis());
 		libraryObject.put("_eClass", EcoreUtil.getURI(ModelPackage.Literals.LIBRARY).toString());
 		libraryObject.put(ModelPackage.Literals.LIBRARY__LOCATION.getName(), new DBRef(db, ModelPackage.Literals.LOCATION.getName(), locationObject.get(ID_KEY)));
 
