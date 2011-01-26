@@ -21,9 +21,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import org.bson.BSONObject;
 import org.bson.types.ObjectId;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -65,16 +63,17 @@ import com.mongodb.MongoURI;
 
 /**
  * This EMF URI handler interfaces to MongoDB. This URI handler can handle URIs with the "mongo"
- * scheme. The URI path must be of the form /database/collection/{id}/ where id is optional the first
+ * scheme. The URI path must be of the form /database/collection/{id}/ where id is optional the
+ * first
  * time the EMF object is saved. Note that if the id is not specified when the object is first
  * saved, MongoDB will assign the id and the URI of the EMF Resource will be modified to include the
  * id in the URI. Examples of valid URIs:
- *
+ * 
  * mongo://localhost/data/people/
  * mongo://localhost/data/people/4d0a3e259095b5b334a59df0/
- *
+ * 
  * @author bhunt
- *
+ * 
  */
 public class MongoDBURIHandlerImpl extends URIHandlerImpl
 {
@@ -233,7 +232,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 				if (query != null)
 				{
-				  System.err.println(URI.decode(query));
+					System.err.println(URI.decode(query));
 					Result result = QueryFactory.eINSTANCE.createResult();
 					EList<EObject> values = result.getValues();
 					for (DBObject dbObject : collection.find(buildDBObject(collection, new ExpressionBuilder(URI.decode(query)).parseExpression())))
@@ -248,8 +247,8 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 					{
 						resource.getContents().add(buildObject(collection, dbObject, resource, uriHandler));
 
-				        Map<Object, Object> response = getResponse(options);
-				        response.put(URIConverter.RESPONSE_TIME_STAMP_PROPERTY, dbObject.get(TIME_STAMP_KEY));
+						Map<Object, Object> response = getResponse(options);
+						response.put(URIConverter.RESPONSE_TIME_STAMP_PROPERTY, dbObject.get(TIME_STAMP_KEY));
 					}
 				}
 			}
@@ -277,7 +276,14 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 		String id = uri.segment(2);
 
-		return id.isEmpty() ? null : new ObjectId(uri.segment(2));
+		try
+		{
+			return id.isEmpty() ? null : new ObjectId(uri.segment(2));
+		}
+		catch (Throwable t)
+		{
+			return null;
+		}
 	}
 
 	private DBCollection getCollection(URI uri) throws UnknownHostException, IOException
@@ -348,7 +354,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 						}
 						else
 						{
-						  // TODO: What to do?
+							// TODO: What to do?
 						}
 					}
 					else if ("!=".equals(operator))
@@ -369,113 +375,113 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 						}
 						else
 						{
-						  // TODO: What to do?
+							// TODO: What to do?
 						}
 					}
 					else if ("||".equals(operator))
 					{
-					  DBObject leftObject = buildDBObject(dbCollection, leftOperand);
-					  DBObject rightObject = buildDBObject(dbCollection, binaryOperation.getRightOperand());
-					  @SuppressWarnings("unchecked")
-                      List<Object> or = (List<Object>)leftObject.get("$or");
-					  if (or != null)
-					  {
-					    or.add(rightObject);
-					    dbObject.putAll(leftObject);
-					  }
-					  else
-					  {
-					    or = new ArrayList<Object>();
-					    or.add(leftObject);
-					    or.add(rightObject);
-					    dbObject.put("$or", or);
-					  }
+						DBObject leftObject = buildDBObject(dbCollection, leftOperand);
+						DBObject rightObject = buildDBObject(dbCollection, binaryOperation.getRightOperand());
+						@SuppressWarnings("unchecked")
+						List<Object> or = (List<Object>) leftObject.get("$or");
+						if (or != null)
+						{
+							or.add(rightObject);
+							dbObject.putAll(leftObject);
+						}
+						else
+						{
+							or = new ArrayList<Object>();
+							or.add(leftObject);
+							or.add(rightObject);
+							dbObject.put("$or", or);
+						}
 					}
 					else if ("&&".equals(operator))
 					{
-					  dbObject.putAll(buildDBObject(dbCollection, leftOperand));
-					  DBObject rightObject = buildDBObject(dbCollection, binaryOperation.getRightOperand());
-					  for (String field : rightObject.keySet())
-					  {
-				        Object rightValue = rightObject.get(field);
-					    Object leftValue = dbObject.get(field);
-					    if (leftValue instanceof DBObject)
-					    {
-				          DBObject leftDBObject = (DBObject)leftValue;
-					      if (rightValue instanceof DBObject)
-					      {
-				            DBObject rightDBObject = (DBObject)rightValue;
-					        if (leftDBObject.containsField("$nin") && rightDBObject.containsField("$ne"))
-					        {
-					          @SuppressWarnings("unchecked")
-                              List<Object> values = (List<Object>)leftDBObject.get("$nin");
-					          values.add(rightDBObject.get("$ne"));
-					        }
-					        else if (leftDBObject.containsField("$ne") && rightDBObject.containsField("$ne"))
-					        {
-					          DBObject nin = new BasicDBObject();
-					          List<Object> values = new ArrayList<Object>();
-					          values.add(leftDBObject.get("$ne"));
-					          values.add(rightDBObject.get("$ne"));
-					          nin.put("$nin", values);
-					          dbObject.put(field, nin);
-					        }
-					        else
-					        {
-                              leftDBObject.putAll(rightDBObject);
-					        }
-					      }
-					      else 
-					      {
-					        Object all = leftDBObject.get("$all");
-					        if (all instanceof List<?>)
-					        {
-					          @SuppressWarnings("unchecked")
-                              List<Object> allList = (List<Object>)all;
-					          allList.add(rightValue);
-					        }
-					        else
-					        {
-					          // What to do?
-					        }
-					      }
-					    }
-					    else if (leftValue instanceof List<?>)
-					    {
-				          @SuppressWarnings("unchecked")
-                          List<Object> leftListValue = (List<Object>)leftValue;
-					      if (rightValue instanceof List<?>)
-					      {
-                            leftListValue.addAll((List<?>)rightValue);
-					      }
-					      else
-					      {
-					        leftListValue.add(rightValue);
-					      }
-					    }
-					    else if (leftValue != null)
-					    {
-					      if (rightValue instanceof List<?>)
-					      {
-				            @SuppressWarnings("unchecked")
-                            List<Object> rightListValue = (List<Object>)rightValue;
-                            rightListValue.add(0, leftValue);
-                            dbObject.put(field, rightListValue);
-					      }
-					      else
-					      {
-                            List<Object> listValue = new ArrayList<Object>();
-                            listValue.add(leftValue);
-                            listValue.add(rightValue);
-                            DBObject in = new BasicDBObject("$all", listValue);
-                            dbObject.put(field, in);
-					      }
-					    }
-					    else
-					    {
-					      dbObject.put(field, rightValue);
-					    }
-					  }
+						dbObject.putAll(buildDBObject(dbCollection, leftOperand));
+						DBObject rightObject = buildDBObject(dbCollection, binaryOperation.getRightOperand());
+						for (String field : rightObject.keySet())
+						{
+							Object rightValue = rightObject.get(field);
+							Object leftValue = dbObject.get(field);
+							if (leftValue instanceof DBObject)
+							{
+								DBObject leftDBObject = (DBObject) leftValue;
+								if (rightValue instanceof DBObject)
+								{
+									DBObject rightDBObject = (DBObject) rightValue;
+									if (leftDBObject.containsField("$nin") && rightDBObject.containsField("$ne"))
+									{
+										@SuppressWarnings("unchecked")
+										List<Object> values = (List<Object>) leftDBObject.get("$nin");
+										values.add(rightDBObject.get("$ne"));
+									}
+									else if (leftDBObject.containsField("$ne") && rightDBObject.containsField("$ne"))
+									{
+										DBObject nin = new BasicDBObject();
+										List<Object> values = new ArrayList<Object>();
+										values.add(leftDBObject.get("$ne"));
+										values.add(rightDBObject.get("$ne"));
+										nin.put("$nin", values);
+										dbObject.put(field, nin);
+									}
+									else
+									{
+										leftDBObject.putAll(rightDBObject);
+									}
+								}
+								else
+								{
+									Object all = leftDBObject.get("$all");
+									if (all instanceof List<?>)
+									{
+										@SuppressWarnings("unchecked")
+										List<Object> allList = (List<Object>) all;
+										allList.add(rightValue);
+									}
+									else
+									{
+										// What to do?
+									}
+								}
+							}
+							else if (leftValue instanceof List<?>)
+							{
+								@SuppressWarnings("unchecked")
+								List<Object> leftListValue = (List<Object>) leftValue;
+								if (rightValue instanceof List<?>)
+								{
+									leftListValue.addAll((List<?>) rightValue);
+								}
+								else
+								{
+									leftListValue.add(rightValue);
+								}
+							}
+							else if (leftValue != null)
+							{
+								if (rightValue instanceof List<?>)
+								{
+									@SuppressWarnings("unchecked")
+									List<Object> rightListValue = (List<Object>) rightValue;
+									rightListValue.add(0, leftValue);
+									dbObject.put(field, rightListValue);
+								}
+								else
+								{
+									List<Object> listValue = new ArrayList<Object>();
+									listValue.add(leftValue);
+									listValue.add(rightValue);
+									DBObject in = new BasicDBObject("$all", listValue);
+									dbObject.put(field, in);
+								}
+							}
+							else
+							{
+								dbObject.put(field, rightValue);
+							}
+						}
 					}
 
 					return null;
