@@ -21,7 +21,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.bson.BSONObject;
 import org.bson.types.ObjectId;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -231,6 +233,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 				if (query != null)
 				{
+				  System.err.println(URI.decode(query));
 					Result result = QueryFactory.eINSTANCE.createResult();
 					EList<EObject> values = result.getValues();
 					for (DBObject dbObject : collection.find(buildDBObject(collection, new ExpressionBuilder(URI.decode(query)).parseExpression())))
@@ -310,7 +313,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		return collection;
 	}
 
-	private DBObject buildDBObject(DBCollection dbCollection, Expression expression)
+	private DBObject buildDBObject(final DBCollection dbCollection, Expression expression)
 	{
 		final DBObject dbObject = new BasicDBObject();
 
@@ -333,10 +336,146 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 						{
 							dbObject.put(property, new ObjectId(((Literal) rightOperand).getLiteralValue()));
 						}
-						else
+						else if (rightOperand instanceof Literal)
 						{
 							dbObject.put(property, ((Literal) rightOperand).getLiteralValue());
 						}
+						else if ("null".equals(ExpressionBuilder.toString(rightOperand)))
+						{
+							DBObject notExists = new BasicDBObject();
+							notExists.put("$exists", Boolean.FALSE);
+							dbObject.put(property, notExists);
+						}
+						else
+						{
+						  // TODO: What to do?
+						}
+					}
+					else if ("!=".equals(operator))
+					{
+						Expression rightOperand = binaryOperation.getRightOperand();
+						String property = ExpressionBuilder.toString(leftOperand);
+						if (rightOperand instanceof Literal)
+						{
+							DBObject notEqual = new BasicDBObject();
+							notEqual.put("$ne", ((Literal) rightOperand).getLiteralValue());
+							dbObject.put(property, notEqual);
+						}
+						else if ("null".equals(ExpressionBuilder.toString(rightOperand)))
+						{
+							DBObject exists = new BasicDBObject();
+							exists.put("$exists", Boolean.TRUE);
+							dbObject.put(property, exists);
+						}
+						else
+						{
+						  // TODO: What to do?
+						}
+					}
+					else if ("||".equals(operator))
+					{
+					  DBObject leftObject = buildDBObject(dbCollection, leftOperand);
+					  DBObject rightObject = buildDBObject(dbCollection, binaryOperation.getRightOperand());
+					  @SuppressWarnings("unchecked")
+                      List<Object> or = (List<Object>)leftObject.get("$or");
+					  if (or != null)
+					  {
+					    or.add(rightObject);
+					    dbObject.putAll(leftObject);
+					  }
+					  else
+					  {
+					    or = new ArrayList<Object>();
+					    or.add(leftObject);
+					    or.add(rightObject);
+					    dbObject.put("$or", or);
+					  }
+					}
+					else if ("&&".equals(operator))
+					{
+					  dbObject.putAll(buildDBObject(dbCollection, leftOperand));
+					  DBObject rightObject = buildDBObject(dbCollection, binaryOperation.getRightOperand());
+					  for (String field : rightObject.keySet())
+					  {
+				        Object rightValue = rightObject.get(field);
+					    Object leftValue = dbObject.get(field);
+					    if (leftValue instanceof DBObject)
+					    {
+				          DBObject leftDBObject = (DBObject)leftValue;
+					      if (rightValue instanceof DBObject)
+					      {
+				            DBObject rightDBObject = (DBObject)rightValue;
+					        if (leftDBObject.containsField("$nin") && rightDBObject.containsField("$ne"))
+					        {
+					          @SuppressWarnings("unchecked")
+                              List<Object> values = (List<Object>)leftDBObject.get("$nin");
+					          values.add(rightDBObject.get("$ne"));
+					        }
+					        else if (leftDBObject.containsField("$ne") && rightDBObject.containsField("$ne"))
+					        {
+					          DBObject nin = new BasicDBObject();
+					          List<Object> values = new ArrayList<Object>();
+					          values.add(leftDBObject.get("$ne"));
+					          values.add(rightDBObject.get("$ne"));
+					          nin.put("$nin", values);
+					          dbObject.put(field, nin);
+					        }
+					        else
+					        {
+                              leftDBObject.putAll(rightDBObject);
+					        }
+					      }
+					      else 
+					      {
+					        Object all = leftDBObject.get("$all");
+					        if (all instanceof List<?>)
+					        {
+					          @SuppressWarnings("unchecked")
+                              List<Object> allList = (List<Object>)all;
+					          allList.add(rightValue);
+					        }
+					        else
+					        {
+					          // What to do?
+					        }
+					      }
+					    }
+					    else if (leftValue instanceof List<?>)
+					    {
+				          @SuppressWarnings("unchecked")
+                          List<Object> leftListValue = (List<Object>)leftValue;
+					      if (rightValue instanceof List<?>)
+					      {
+                            leftListValue.addAll((List<?>)rightValue);
+					      }
+					      else
+					      {
+					        leftListValue.add(rightValue);
+					      }
+					    }
+					    else if (leftValue != null)
+					    {
+					      if (rightValue instanceof List<?>)
+					      {
+				            @SuppressWarnings("unchecked")
+                            List<Object> rightListValue = (List<Object>)rightValue;
+                            rightListValue.add(0, leftValue);
+                            dbObject.put(field, rightListValue);
+					      }
+					      else
+					      {
+                            List<Object> listValue = new ArrayList<Object>();
+                            listValue.add(leftValue);
+                            listValue.add(rightValue);
+                            DBObject in = new BasicDBObject("$all", listValue);
+                            dbObject.put(field, in);
+					      }
+					    }
+					    else
+					    {
+					      dbObject.put(field, rightValue);
+					    }
+					  }
 					}
 
 					return null;
