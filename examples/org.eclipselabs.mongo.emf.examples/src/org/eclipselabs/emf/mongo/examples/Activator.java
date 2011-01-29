@@ -39,13 +39,17 @@ public class Activator implements BundleActivator
 	public void start(BundleContext context) throws Exception
 	{
 		System.out.println("Starting Mongo EMF example");
-
+		System.out.print("Writing data to MongoDB");
 		URI firstParent = null;
 
 		long startTime = System.currentTimeMillis();
 
-		for (int i = 0; i < 1000; i++)
+		for (int i = 0; i < PARENT_COUNT; i++)
 		{
+			if (i % 100 == 0)
+				System.out.println();
+
+			System.out.print(".");
 			ResourceSet resourceSet = new ResourceSetImpl();
 			EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
 			uriHandlers.add(0, new MongoDBURIHandlerImpl());
@@ -53,7 +57,7 @@ public class Activator implements BundleActivator
 			Parent parent = ModelFactory.eINSTANCE.createParent();
 			parent.setName("Parent " + i);
 
-			for (int j = 0; j < 1000; j++)
+			for (int j = 0; j < CHILD_COUNT; j++)
 			{
 				Child child = ModelFactory.eINSTANCE.createChild();
 				child.setName("Child " + i + " " + j);
@@ -72,8 +76,9 @@ public class Activator implements BundleActivator
 				firstParent = resource.getURI();
 		}
 
+		System.out.println();
 		long endTime = System.currentTimeMillis();
-		System.out.println("Time to create objects: " + ((endTime - startTime) / 1000.0) + " sec");
+		System.out.println("Time to create " + (PARENT_COUNT * CHILD_COUNT) + " objects: " + ((endTime - startTime) / 1000.0) + " sec");
 
 		ResourceSet resourceSet = new ResourceSetImpl();
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
@@ -92,7 +97,7 @@ public class Activator implements BundleActivator
 			child.getName();
 
 		endTime = System.currentTimeMillis();
-		System.out.println("Time to walk children: " + (endTime - startTime) + " ms");
+		System.out.println("Time to walk " + CHILD_COUNT + " children of first parent: " + (endTime - startTime) + " ms");
 	}
 
 	/*
@@ -103,4 +108,8 @@ public class Activator implements BundleActivator
 	@Override
 	public void stop(BundleContext context) throws Exception
 	{}
+
+	private static final int CHILD_COUNT = 1000;
+	private static final int PARENT_COUNT = 1000;
+
 }

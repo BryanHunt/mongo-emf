@@ -58,7 +58,6 @@ import org.eclipselabs.mongo.emf.junit.model.MappedLibrary;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.Person;
-import org.hamcrest.core.IsNull;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -694,7 +693,7 @@ public class TestEmfMongoDB
 
 		assertThat(library1.getLocation(), is(notNullValue()));
 		assertThat(library1.getLocation().getAddress(), is("Wastelands"));
-		
+
 		assertThat(library2.getLocation(), is(notNullValue()));
 		assertThat(library2.getLocation().getAddress(), is("Badlands"));
 	}
@@ -703,11 +702,10 @@ public class TestEmfMongoDB
 	public void testQueryLibraryBooks()
 	{
 		BasicDBObject wastelands = createLibrary("Wastelands");
-		createBook(wastelands, "Gunslinger", Collections.<DBObject>emptyList());
+		createBook(wastelands, "Gunslinger", Collections.<DBObject> emptyList());
 		BasicDBObject badlands = createLibrary("Badlands");
-		createBook(badlands, "Gunslinger", Collections.<DBObject>emptyList());
+		createBook(badlands, "Gunslinger", Collections.<DBObject> emptyList());
 		createLibrary("Wetlands");
-
 
 		ResourceSet resourceSet = new ResourceSetImpl();
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
@@ -724,7 +722,7 @@ public class TestEmfMongoDB
 
 		assertThat(library1.getLocation(), is(notNullValue()));
 		assertThat(library1.getLocation().getAddress(), is("Wastelands"));
-		
+
 		assertThat(library2.getLocation(), is(notNullValue()));
 		assertThat(library2.getLocation().getAddress(), is("Badlands"));
 	}
@@ -733,22 +731,17 @@ public class TestEmfMongoDB
 	public void testQueryLibraryOr()
 	{
 		BasicDBObject wastelands = createLibrary("Wastelands");
-		createBook(wastelands, "Gunslinger", Collections.<DBObject>emptyList());
+		createBook(wastelands, "Gunslinger", Collections.<DBObject> emptyList());
 		BasicDBObject badlands = createLibrary("Badlands");
-		createBook(badlands, "The Shining", Collections.<DBObject>emptyList());
+		createBook(badlands, "The Shining", Collections.<DBObject> emptyList());
 		BasicDBObject wetlands = createLibrary("Wetlands");
-		createBook(wetlands, "Thinner", Collections.<DBObject>emptyList());
-
+		createBook(wetlands, "Thinner", Collections.<DBObject> emptyList());
 
 		ResourceSet resourceSet = new ResourceSetImpl();
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
 		uriHandlers.add(0, new MongoDBURIHandlerImpl());
 
-		Resource resource = 
-		  resourceSet.getResource
-		    (createQueryURI
-		      (ModelPackage.Literals.LIBRARY, "(books.title == 'Gunslinger') || (books.title == 'The Shining') || (books.title == 'Thinner')"), 
-		     true);
+		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.LIBRARY, "(books.title == 'Gunslinger') || (books.title == 'The Shining') || (books.title == 'Thinner')"), true);
 		assertThat(resource, is(notNullValue()));
 		assertThat(resource.getContents().size(), is(1));
 
@@ -760,7 +753,7 @@ public class TestEmfMongoDB
 
 		assertThat(library1.getLocation(), is(notNullValue()));
 		assertThat(library1.getLocation().getAddress(), is("Wastelands"));
-		
+
 		assertThat(library2.getLocation(), is(notNullValue()));
 		assertThat(library2.getLocation().getAddress(), is("Badlands"));
 
@@ -772,32 +765,27 @@ public class TestEmfMongoDB
 	public void testQueryLibraryAnd()
 	{
 		BasicDBObject wastelands = createLibrary("Wastelands");
-		createBook(wastelands, "Gunslinger", Collections.<DBObject>emptyList());
+		createBook(wastelands, "Gunslinger", Collections.<DBObject> emptyList());
 		BasicDBObject badlands = createLibrary("Badlands");
-		createBook(badlands, "Gunslinger", Collections.<DBObject>emptyList());
-		createBook(badlands, "The Shining", Collections.<DBObject>emptyList());
+		createBook(badlands, "Gunslinger", Collections.<DBObject> emptyList());
+		createBook(badlands, "The Shining", Collections.<DBObject> emptyList());
 		BasicDBObject wetlands = createLibrary("Wetlands");
-		createBook(wetlands, "Thinner", Collections.<DBObject>emptyList());
-		createBook(wetlands, "Gunslinger", Collections.<DBObject>emptyList());
-		createBook(wetlands, "The Shining", Collections.<DBObject>emptyList());
-
+		createBook(wetlands, "Thinner", Collections.<DBObject> emptyList());
+		createBook(wetlands, "Gunslinger", Collections.<DBObject> emptyList());
+		createBook(wetlands, "The Shining", Collections.<DBObject> emptyList());
 
 		ResourceSet resourceSet = new ResourceSetImpl();
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
 		uriHandlers.add(0, new MongoDBURIHandlerImpl());
 
-		Resource resource = 
-		  resourceSet.getResource
-		    (createQueryURI
-		      (ModelPackage.Literals.LIBRARY, "(books.title == 'Gunslinger') && (books.title == 'The Shining') && (books.title == 'Thinner')"), 
-		     true);
+		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.LIBRARY, "(books.title == 'Gunslinger') && (books.title == 'The Shining') && (books.title == 'Thinner')"), true);
 		assertThat(resource, is(notNullValue()));
 		assertThat(resource.getContents().size(), is(1));
 
 		Result result = (Result) resource.getContents().get(0);
 		assertThat(result.getValues().size(), is(1));
 		Library library1 = (Library) result.getValues().get(0);
-		
+
 		assertThat(library1.getLocation(), is(notNullValue()));
 		assertThat(library1.getLocation().getAddress(), is("Wetlands"));
 	}
@@ -805,9 +793,9 @@ public class TestEmfMongoDB
 	@Test
 	public void testQueryPersonNullName()
 	{
-	    createAuthor(null);
-	    createAuthor("Stephen King");
-	  
+		createAuthor(null);
+		createAuthor("Stephen King");
+
 		ResourceSet resourceSet = new ResourceSetImpl();
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
 		uriHandlers.add(0, new MongoDBURIHandlerImpl());
@@ -815,19 +803,19 @@ public class TestEmfMongoDB
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.PERSON, "name == null"), true);
 		assertThat(resource, is(notNullValue()));
 		assertThat(resource.getContents().size(), is(1));
-		
+
 		Result result = (Result) resource.getContents().get(0);
 		assertThat(result.getValues().size(), is(1));
 		Person person = (Person) result.getValues().get(0);
-		assertThat(person.getName(), is((String)null));
+		assertThat(person.getName(), is((String) null));
 	}
 
 	@Test
 	public void testQueryPersonNonNullName()
 	{
-	    createAuthor(null);
-	    createAuthor("Stephen King");
-	  
+		createAuthor(null);
+		createAuthor("Stephen King");
+
 		ResourceSet resourceSet = new ResourceSetImpl();
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
 		uriHandlers.add(0, new MongoDBURIHandlerImpl());
@@ -835,21 +823,21 @@ public class TestEmfMongoDB
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.PERSON, "name != null"), true);
 		assertThat(resource, is(notNullValue()));
 		assertThat(resource.getContents().size(), is(1));
-		
+
 		Result result = (Result) resource.getContents().get(0);
 		assertThat(result.getValues().size(), is(1));
 		Person person = (Person) result.getValues().get(0);
 		assertThat(person.getName(), is("Stephen King"));
 	}
-	
+
 	@Test
 	public void testQueryPersonNotEqual()
 	{
-	    createAuthor("Bryan Hunt");
-	    createAuthor("Dean Kontz");
-	    createAuthor("Ed Merks");
-	    createAuthor("Stephen King");
-	  
+		createAuthor("Bryan Hunt");
+		createAuthor("Dean Kontz");
+		createAuthor("Ed Merks");
+		createAuthor("Stephen King");
+
 		ResourceSet resourceSet = new ResourceSetImpl();
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
 		uriHandlers.add(0, new MongoDBURIHandlerImpl());
@@ -857,7 +845,7 @@ public class TestEmfMongoDB
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.PERSON, "(name != 'Dean Kontz') && (name != 'Stephen King') && (name != 'Bryan Hunt')"), true);
 		assertThat(resource, is(notNullValue()));
 		assertThat(resource.getContents().size(), is(1));
-		
+
 		Result result = (Result) resource.getContents().get(0);
 		assertThat(result.getValues().size(), is(1));
 		Person person = (Person) result.getValues().get(0);
@@ -1035,7 +1023,7 @@ public class TestEmfMongoDB
 		object.put("_eClass", EcoreUtil.getURI(ModelPackage.Literals.PERSON).toString());
 		if (name != null)
 		{
-		  object.put(ModelPackage.Literals.PERSON__NAME.getName(), name);
+			object.put(ModelPackage.Literals.PERSON__NAME.getName(), name);
 		}
 
 		personCollection.insert(object);
