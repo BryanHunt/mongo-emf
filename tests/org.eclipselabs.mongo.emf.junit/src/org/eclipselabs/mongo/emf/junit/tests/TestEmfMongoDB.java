@@ -340,6 +340,8 @@ public class TestEmfMongoDB
 		libraryResource.save(null);
 		personResource.save(null);
 
+		assertThat(location.getId(), is(notNullValue()));
+
 		{
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			libraryResource.save(out, null);
@@ -470,6 +472,7 @@ public class TestEmfMongoDB
 		assertThat(testResource.getContents().size(), is(1));
 		Library actualLibrary = (Library) testResource.getContents().get(0);
 		assertThat(actualLibrary.getLocation(), is(notNullValue()));
+		assertThat(actualLibrary.getLocation().getId(), is(location.getId()));
 		assertThat(actualLibrary.getLocation().getAddress(), is(location.getAddress()));
 		assertThat(actualLibrary.getLocation().getFeaturedBook().getTitle(), is(book.getTitle()));
 	}

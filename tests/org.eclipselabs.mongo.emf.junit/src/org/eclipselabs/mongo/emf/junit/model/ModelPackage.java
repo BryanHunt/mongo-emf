@@ -223,13 +223,22 @@ public interface ModelPackage extends EPackage
 	int LOCATION__FEATURED_BOOK = 1;
 
 	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LOCATION__ID = 2;
+
+	/**
 	 * The number of structural features of the '<em>Location</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LOCATION_FEATURE_COUNT = 2;
+	int LOCATION_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl <em>ETypes</em>}' class.
@@ -571,6 +580,17 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 */
 	EReference getLocation_FeaturedBook();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.Location#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.Location#getId()
+	 * @see #getLocation()
+	 * @generated
+	 */
+	EAttribute getLocation_Id();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.junit.model.ETypes <em>ETypes</em>}'.
@@ -921,6 +941,14 @@ public interface ModelPackage extends EPackage
 		 * @generated
 		 */
 		EReference LOCATION__FEATURED_BOOK = eINSTANCE.getLocation_FeaturedBook();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute LOCATION__ID = eINSTANCE.getLocation_Id();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl <em>ETypes</em>}' class.

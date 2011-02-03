@@ -283,6 +283,16 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getLocation_Id()
+	{
+		return (EAttribute)locationEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getETypes()
 	{
 		return eTypesEClass;
@@ -515,6 +525,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 		locationEClass = createEClass(LOCATION);
 		createEAttribute(locationEClass, LOCATION__ADDRESS);
 		createEReference(locationEClass, LOCATION__FEATURED_BOOK);
+		createEAttribute(locationEClass, LOCATION__ID);
 
 		eTypesEClass = createEClass(ETYPES);
 		createEAttribute(eTypesEClass, ETYPES__EBIG_DECIMAL);
@@ -586,6 +597,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 		initEClass(locationEClass, Location.class, "Location", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getLocation_Address(), ecorePackage.getEString(), "address", null, 0, 1, Location.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getLocation_FeaturedBook(), this.getBook(), null, "featuredBook", null, 0, 1, Location.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getLocation_Id(), ecorePackage.getEJavaObject(), "id", null, 0, 1, Location.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(eTypesEClass, ETypes.class, "ETypes", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getETypes_EBigDecimal(), ecorePackage.getEBigDecimal(), "eBigDecimal", null, 0, 1, ETypes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -152,7 +152,10 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 					id = (ObjectId) dbObject.get(ID_KEY);
 
 					// Since MongoDB assigns an id to the inserted object, we need to modify the EMF Resource
-					// URI to include the generated id.
+					// URI to include the generated id, and if the EObject contains an ID attribute that is
+					// derived and transient, set that id as well.
+
+					setEID(dbObject, root);
 
 					URI newURI = null;
 
@@ -652,17 +655,18 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 			((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(proxyURI));
 		}
 
-		// All attributes are mapped as key / value pairs with the key being the attribute name.
+		setEID(dbObject, eObject);
+
+		// All features are mapped as key / value pairs with the key being the attribute name.
 
 		for (EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures())
 		{
 			if (feature instanceof EAttribute)
 			{
 				EAttribute attribute = (EAttribute) feature;
+
 				if (!isProxy || !FeatureMapUtil.isFeatureMap(attribute))
-				{
 					buildObjectAttribute(collection, dbObject, resource, uriHandler, resourceSet, eObject, attribute);
-				}
 			}
 			else if (!isProxy)
 				buildObjectReference(collection, dbObject, resource, uriHandler, eObject, (EReference) feature);
@@ -735,7 +739,6 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 					}
 				}
 			}
-
 			else if (attribute.isMany() && !nativeTypes.contains(attribute.getEAttributeType()))
 			{
 				ArrayList<Object> values = new ArrayList<Object>();
@@ -816,6 +819,24 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	{
 		EClass eClass = (EClass) resourceSet.getEObject(URI.createURI((String) dbObject.get(ECLASS_KEY)), true);
 		return EcoreUtil.create(eClass);
+	}
+
+	private void setEID(DBObject dbObject, EObject eObject)
+	{
+		// If the model contains an ID attribute that is derived and transient, we should attempt to set
+		// its value to the MongoDB ID from the DBObject
+
+		EAttribute idAttribute = eObject.eClass().getEIDAttribute();
+
+		if (idAttribute != null && idAttribute.isDerived() && idAttribute.isTransient())
+		{
+			try
+			{
+				eObject.eSet(idAttribute, dbObject.get(ID_KEY));
+			}
+			catch (Throwable t)
+			{}
+		}
 	}
 
 	private static HashSet<EDataType> nativeTypes = new HashSet<EDataType>();

@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.Location#getAddress <em>Address</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.Location#getFeaturedBook <em>Featured Book</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.Location#getId <em>Id</em>}</li>
  * </ul>
  * </p>
  *
@@ -83,5 +84,31 @@ public interface Location extends EObject
 	 * @generated
 	 */
 	void setFeaturedBook(Book value);
+
+	/**
+	 * Returns the value of the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Id</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Id</em>' attribute.
+	 * @see #setId(Object)
+	 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getLocation_Id()
+	 * @model id="true" transient="true" derived="true"
+	 * @generated
+	 */
+	Object getId();
+
+	/**
+	 * Sets the value of the '{@link org.eclipselabs.mongo.emf.junit.model.Location#getId <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Id</em>' attribute.
+	 * @see #getId()
+	 * @generated
+	 */
+	void setId(Object value);
 
 } // Location

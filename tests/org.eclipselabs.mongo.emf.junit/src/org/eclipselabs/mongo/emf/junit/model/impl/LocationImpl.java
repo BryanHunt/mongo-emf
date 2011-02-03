@@ -29,6 +29,7 @@ import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
  * <ul>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.LocationImpl#getAddress <em>Address</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.LocationImpl#getFeaturedBook <em>Featured Book</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.LocationImpl#getId <em>Id</em>}</li>
  * </ul>
  * </p>
  *
@@ -65,6 +66,26 @@ public class LocationImpl extends EObjectImpl implements Location
 	 * @ordered
 	 */
 	protected Book featuredBook;
+
+	/**
+	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getId()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Object ID_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getId()
+	 * @generated
+	 * @ordered
+	 */
+	protected Object id = ID_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -158,6 +179,29 @@ public class LocationImpl extends EObjectImpl implements Location
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Object getId()
+	{
+		return id;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setId(Object newId)
+	{
+		Object oldId = id;
+		id = newId;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.LOCATION__ID, oldId, id));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType)
 	{
@@ -168,6 +212,8 @@ public class LocationImpl extends EObjectImpl implements Location
 			case ModelPackage.LOCATION__FEATURED_BOOK:
 				if (resolve) return getFeaturedBook();
 				return basicGetFeaturedBook();
+			case ModelPackage.LOCATION__ID:
+				return getId();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -187,6 +233,9 @@ public class LocationImpl extends EObjectImpl implements Location
 				return;
 			case ModelPackage.LOCATION__FEATURED_BOOK:
 				setFeaturedBook((Book)newValue);
+				return;
+			case ModelPackage.LOCATION__ID:
+				setId(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -208,6 +257,9 @@ public class LocationImpl extends EObjectImpl implements Location
 			case ModelPackage.LOCATION__FEATURED_BOOK:
 				setFeaturedBook((Book)null);
 				return;
+			case ModelPackage.LOCATION__ID:
+				setId(ID_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -226,6 +278,8 @@ public class LocationImpl extends EObjectImpl implements Location
 				return ADDRESS_EDEFAULT == null ? address != null : !ADDRESS_EDEFAULT.equals(address);
 			case ModelPackage.LOCATION__FEATURED_BOOK:
 				return featuredBook != null;
+			case ModelPackage.LOCATION__ID:
+				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -243,6 +297,8 @@ public class LocationImpl extends EObjectImpl implements Location
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (address: ");
 		result.append(address);
+		result.append(", id: ");
+		result.append(id);
 		result.append(')');
 		return result.toString();
 	}
