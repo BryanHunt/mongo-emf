@@ -58,7 +58,7 @@ import org.eclipselabs.mongo.emf.junit.model.MappedLibrary;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.Person;
-import org.junit.After;
+import org.eclipselabs.mongo.junit.MongoDatabase;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -81,6 +81,9 @@ import com.mongodb.MongoURI;
 public class TestEmfMongoDB
 {
 	@Rule
+	public MongoDatabase database = new MongoDatabase(Activator.getInstance().getContext(), "junit");
+
+	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 	@Before
@@ -101,22 +104,6 @@ public class TestEmfMongoDB
 		locationCollection = db.getCollection(ModelPackage.Literals.LOCATION.getName());
 
 		personCollection.ensureIndex(ModelPackage.Literals.PERSON__NAME.getName());
-	}
-
-	@After
-	public void tearDown()
-	{
-		if (typesCollection != null)
-			typesCollection.drop();
-
-		if (libraryCollection != null)
-			libraryCollection.drop();
-
-		if (personCollection != null)
-			personCollection.drop();
-
-		if (locationCollection != null)
-			locationCollection.drop();
 	}
 
 	@Test
