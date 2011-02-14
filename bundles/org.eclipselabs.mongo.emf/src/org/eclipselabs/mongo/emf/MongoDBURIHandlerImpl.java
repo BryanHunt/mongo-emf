@@ -511,7 +511,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 		for (EAttribute attribute : eClass.getEAllAttributes())
 		{
-			if (!attribute.isTransient())
+			if (!attribute.isTransient() && !(attribute.isID() && attribute.isDerived()))
 			{
 				Object value = null;
 
@@ -718,7 +718,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	@SuppressWarnings("unchecked")
 	private void buildObjectAttribute(DBCollection collection, DBObject dbObject, Resource resource, XMLResource.URIHandler uriHandler, ResourceSet resourceSet, EObject eObject, EAttribute attribute)
 	{
-		if (!attribute.isTransient())
+		if (!attribute.isTransient() && !(attribute.isID() && attribute.isDerived()))
 		{
 			Object value = dbObject.get(attribute.getName());
 
@@ -828,7 +828,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 		EAttribute idAttribute = eObject.eClass().getEIDAttribute();
 
-		if (idAttribute != null && idAttribute.isDerived() && idAttribute.isTransient())
+		if (idAttribute != null && idAttribute.isDerived())
 		{
 			try
 			{
