@@ -36,6 +36,7 @@ import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
  * <ul>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.LibraryImpl#getBooks <em>Books</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.LibraryImpl#getLocation <em>Location</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.LibraryImpl#getLatestBook <em>Latest Book</em>}</li>
  * </ul>
  * </p>
  *
@@ -62,6 +63,16 @@ public class LibraryImpl extends EObjectImpl implements Library
 	 * @ordered
 	 */
 	protected Location location;
+
+	/**
+	 * The cached value of the '{@link #getLatestBook() <em>Latest Book</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLatestBook()
+	 * @generated
+	 * @ordered
+	 */
+	protected Book latestBook;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -178,6 +189,49 @@ public class LibraryImpl extends EObjectImpl implements Library
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Book getLatestBook()
+	{
+		if (latestBook != null && latestBook.eIsProxy())
+		{
+			InternalEObject oldLatestBook = (InternalEObject)latestBook;
+			latestBook = (Book)eResolveProxy(oldLatestBook);
+			if (latestBook != oldLatestBook)
+			{
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.LIBRARY__LATEST_BOOK, oldLatestBook, latestBook));
+			}
+		}
+		return latestBook;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Book basicGetLatestBook()
+	{
+		return latestBook;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setLatestBook(Book newLatestBook)
+	{
+		Book oldLatestBook = latestBook;
+		latestBook = newLatestBook;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.LIBRARY__LATEST_BOOK, oldLatestBook, latestBook));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
 	{
@@ -206,6 +260,9 @@ public class LibraryImpl extends EObjectImpl implements Library
 			case ModelPackage.LIBRARY__LOCATION:
 				if (resolve) return getLocation();
 				return basicGetLocation();
+			case ModelPackage.LIBRARY__LATEST_BOOK:
+				if (resolve) return getLatestBook();
+				return basicGetLatestBook();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -228,6 +285,9 @@ public class LibraryImpl extends EObjectImpl implements Library
 			case ModelPackage.LIBRARY__LOCATION:
 				setLocation((Location)newValue);
 				return;
+			case ModelPackage.LIBRARY__LATEST_BOOK:
+				setLatestBook((Book)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -248,6 +308,9 @@ public class LibraryImpl extends EObjectImpl implements Library
 			case ModelPackage.LIBRARY__LOCATION:
 				setLocation((Location)null);
 				return;
+			case ModelPackage.LIBRARY__LATEST_BOOK:
+				setLatestBook((Book)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -266,6 +329,8 @@ public class LibraryImpl extends EObjectImpl implements Library
 				return books != null && !books.isEmpty();
 			case ModelPackage.LIBRARY__LOCATION:
 				return location != null;
+			case ModelPackage.LIBRARY__LATEST_BOOK:
+				return latestBook != null;
 		}
 		return super.eIsSet(featureID);
 	}

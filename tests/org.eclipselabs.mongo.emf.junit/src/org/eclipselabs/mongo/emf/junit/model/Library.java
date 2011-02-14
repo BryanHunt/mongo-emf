@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.Library#getBooks <em>Books</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.Library#getLocation <em>Location</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.Library#getLatestBook <em>Latest Book</em>}</li>
  * </ul>
  * </p>
  *
@@ -74,5 +75,31 @@ public interface Library extends EObject
 	 * @generated
 	 */
 	void setLocation(Location value);
+
+	/**
+	 * Returns the value of the '<em><b>Latest Book</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Latest Book</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Latest Book</em>' reference.
+	 * @see #setLatestBook(Book)
+	 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getLibrary_LatestBook()
+	 * @model
+	 * @generated
+	 */
+	Book getLatestBook();
+
+	/**
+	 * Sets the value of the '{@link org.eclipselabs.mongo.emf.junit.model.Library#getLatestBook <em>Latest Book</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Latest Book</em>' reference.
+	 * @see #getLatestBook()
+	 * @generated
+	 */
+	void setLatestBook(Book value);
 
 } // Library

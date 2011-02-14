@@ -524,7 +524,6 @@ public class TestEmfMongoDB
 		assertThat(personCollection.getCount(), is(1L));
 		DBObject testObject = personCollection.findOne();
 		assertThat((String) testObject.get(ModelPackage.Literals.PERSON__NAME.getName()), is(author.getName()));
-
 	}
 
 	@Test
@@ -648,6 +647,35 @@ public class TestEmfMongoDB
 		assertThat(targetAuthor.getBooks().size(), is(1));
 		Book targetBook = targetAuthor.getBooks().get(0);
 		assertThat(targetBook.getTitle(), is(book.getTitle()));
+	}
+
+	@Test
+	public void testInternalReference() throws IOException
+	{
+		ResourceSet resourceSet = new ResourceSetImpl();
+		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
+		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		Library library = ModelFactory.eINSTANCE.createLibrary();
+
+		Book book = ModelFactory.eINSTANCE.createBook();
+		book.setTitle("The Gunslinger");
+		library.getBooks().add(book);
+		library.setLatestBook(book);
+
+		Resource libraryResource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.LIBRARY));
+		libraryResource.getContents().add(library);
+		libraryResource.save(null);
+
+		resourceSet = new ResourceSetImpl();
+		uriHandlers = resourceSet.getURIConverter().getURIHandlers();
+		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		Resource resource = resourceSet.getResource(library.eResource().getURI(), true);
+		assertThat(resource, is(notNullValue()));
+		assertThat(resource.getContents().size(), is(1));
+
+		Library actualLibrary = (Library) resource.getContents().get(0);
+		assertThat(actualLibrary.getLatestBook(), is(notNullValue()));
+		assertThat(actualLibrary.getLatestBook().getTitle(), is(book.getTitle()));
 	}
 
 	@Test

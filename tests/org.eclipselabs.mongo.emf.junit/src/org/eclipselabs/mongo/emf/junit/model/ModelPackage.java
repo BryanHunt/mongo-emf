@@ -186,13 +186,22 @@ public interface ModelPackage extends EPackage
 	int LIBRARY__LOCATION = 1;
 
 	/**
+	 * The feature id for the '<em><b>Latest Book</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int LIBRARY__LATEST_BOOK = 2;
+
+	/**
 	 * The number of structural features of the '<em>Library</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int LIBRARY_FEATURE_COUNT = 2;
+	int LIBRARY_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.LocationImpl <em>Location</em>}' class.
@@ -548,6 +557,17 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 */
 	EReference getLibrary_Location();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipselabs.mongo.emf.junit.model.Library#getLatestBook <em>Latest Book</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Latest Book</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.Library#getLatestBook()
+	 * @see #getLibrary()
+	 * @generated
+	 */
+	EReference getLibrary_LatestBook();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.junit.model.Location <em>Location</em>}'.
@@ -915,6 +935,14 @@ public interface ModelPackage extends EPackage
 		 * @generated
 		 */
 		EReference LIBRARY__LOCATION = eINSTANCE.getLibrary_Location();
+
+		/**
+		 * The meta object literal for the '<em><b>Latest Book</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference LIBRARY__LATEST_BOOK = eINSTANCE.getLibrary_LatestBook();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.LocationImpl <em>Location</em>}' class.
