@@ -79,10 +79,25 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 {
 	public static final String OPTION_GENERATE_ID = "org.eclipselabs.mongo.emf.genId";
 
-	static final String TIME_STAMP_KEY = "_timeStamp";
-	static final String ID_KEY = "_id";
-	static final String ECLASS_KEY = "_eClass";
-	static final String PROXY_KEY = "_eProxyURI";
+	/**
+	 * This constructor can be used in an OSGi environment and will get the IMongoDB service from the
+	 * bundle activator.
+	 */
+	public MongoDBURIHandlerImpl()
+	{
+		this(Activator.getInstance().getMongoDB());
+	}
+
+	/**
+	 * This constructor can be used in a standalone EMF environment. The user must supply an instance
+	 * of IMongoDB.
+	 * 
+	 * @param mongoDB the MongoDB service
+	 */
+	public MongoDBURIHandlerImpl(IMongoDB mongoDB)
+	{
+		this.mongoDB = mongoDB;
+	}
 
 	@Override
 	public boolean canHandle(URI uri)
@@ -287,8 +302,6 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 		if (uri.segmentCount() < 2 || uri.segmentCount() > 3)
 			throw new IOException("The URI is not of the form 'mongo:/database/collection/{id}");
-
-		IMongoDB mongoDB = Activator.getInstance().getMongoDB();
 
 		if (mongoDB == null)
 			throw new IOException("MongoDB service is unavailable");
@@ -830,7 +843,14 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		}
 	}
 
+	static final String TIME_STAMP_KEY = "_timeStamp";
+	static final String ID_KEY = "_id";
+	static final String ECLASS_KEY = "_eClass";
+	static final String PROXY_KEY = "_eProxyURI";
+
 	private static HashSet<EDataType> nativeTypes = new HashSet<EDataType>();
+
+	private IMongoDB mongoDB;
 
 	static
 	{
