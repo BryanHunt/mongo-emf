@@ -353,7 +353,7 @@ public class TestEmfMongoDB
 			testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Person/"), personResource.getURI().trimSegments(1).appendSegment(""));
 			testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Location/"), locationResource.getURI().trimSegments(1).appendSegment(""));
 			Resource libraryXMI = new XMIResourceFactoryImpl().createResource(URI.createURI("library.xmi"));
-			testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../../Library").appendSegment(libraryResource.getURI().lastSegment()), libraryXMI.getURI());
+			testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Library").appendSegment(libraryResource.getURI().lastSegment()), libraryXMI.getURI());
 			testResourceSet.getResources().add(libraryXMI);
 
 			libraryXMI.load(new ByteArrayInputStream(out.toByteArray()), null);
@@ -377,7 +377,7 @@ public class TestEmfMongoDB
 
 				Resource libraryBinary = new BinaryResourceImpl(URI.createURI("library.binary"));
 				testResourceSet.getResources().add(libraryBinary);
-				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../../Library").appendSegment(libraryResource.getURI().lastSegment()), libraryBinary.getURI());
+				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Library").appendSegment(libraryResource.getURI().lastSegment()), libraryBinary.getURI());
 
 				libraryBinary.load(new ByteArrayInputStream(out.toByteArray()), null);
 				assertThat(EcoreUtil.equals(libraryBinary.getContents().get(0), libraryResource.getContents().get(0)), is(true));
@@ -393,7 +393,7 @@ public class TestEmfMongoDB
 
 				Resource libraryXMI = new XMIResourceFactoryImpl().createResource(URI.createURI("library.mongo.binary"));
 				testResourceSet.getResources().add(libraryXMI);
-				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../../Library").appendSegment(libraryResource.getURI().lastSegment()), libraryXMI.getURI());
+				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Library").appendSegment(libraryResource.getURI().lastSegment()), libraryXMI.getURI());
 
 				libraryXMI.load(new ByteArrayInputStream(out.toByteArray()), options);
 				assertThat(EcoreUtil.equals(libraryXMI.getContents().get(0), libraryResource.getContents().get(0)), is(true));
@@ -416,7 +416,7 @@ public class TestEmfMongoDB
 
 				Resource libraryXML = new XMLResourceFactoryImpl().createResource(URI.createURI("library.xml"));
 				testResourceSet.getResources().add(libraryXML);
-				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../../Library").appendSegment(libraryResource.getURI().lastSegment()), libraryXML.getURI());
+				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Library").appendSegment(libraryResource.getURI().lastSegment()), libraryXML.getURI());
 
 				libraryXML.load(new ByteArrayInputStream(out.toByteArray()), null);
 				assertThat(EcoreUtil.equals(libraryXML.getContents().get(0), libraryResource.getContents().get(0)), is(true));
@@ -431,7 +431,7 @@ public class TestEmfMongoDB
 
 				Resource libraryXMI = new XMIResourceFactoryImpl().createResource(URI.createURI("library.mongo.xml"));
 				testResourceSet.getResources().add(libraryXMI);
-				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../../Library").appendSegment(libraryResource.getURI().lastSegment()), libraryXMI.getURI());
+				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Library").appendSegment(libraryResource.getURI().lastSegment()), libraryXMI.getURI());
 
 				libraryXMI.load(new ByteArrayInputStream(out.toByteArray()), options);
 				assertThat(EcoreUtil.equals(libraryXMI.getContents().get(0), libraryResource.getContents().get(0)), is(true));
@@ -1089,7 +1089,7 @@ public class TestEmfMongoDB
 			}
 
 			BasicDBObject proxy = new BasicDBObject();
-			proxy.put("_eProxyURI", "../../../junit/Library/" + library.get("_id") + "#//@books." + (bookReferences.size()));
+			proxy.put("_eProxyURI", "../Library/" + library.get("_id") + "#//@books." + (bookReferences.size()));
 			proxy.put("_eClass", EcoreUtil.getURI(ModelPackage.Literals.BOOK).toString());
 			bookReferences.add(proxy);
 			personCollection.update(new BasicDBObject(ID_KEY, author.get(ID_KEY)), author);

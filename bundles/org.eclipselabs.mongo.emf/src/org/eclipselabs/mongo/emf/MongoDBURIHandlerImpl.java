@@ -125,15 +125,13 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 				ObjectId id = getID(uri);
 
-				if (resource.getURI().hasTrailingPathSeparator())
+				if (id == null)
 				{
-					if (id == null)
-						uriHandler.setBaseURI(resource.getURI().trimSegments(1).appendSegment("-1").appendSegment(""));
-					else
-						uriHandler.setBaseURI(resource.getURI());
+					resource.setURI(resource.getURI().trimSegments(1).appendSegment("-1"));
+					uriHandler.setBaseURI(resource.getURI());
 				}
 				else
-					uriHandler.setBaseURI(resource.getURI().appendSegment(""));
+					uriHandler.setBaseURI(resource.getURI());
 
 				// Build a MongoDB object from the EMF object.
 
@@ -162,7 +160,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 					if (resource.getURI().hasTrailingPathSeparator())
 						newURI = resource.getURI().trimSegments(1).appendSegment(id.toString());
 					else
-						newURI = resource.getURI().appendSegment(id.toString());
+						newURI = resource.getURI().trimSegments(1).appendSegment(id.toString());
 
 					// The EMF framework will do the actual modification of the Resource URI if the new URI is
 					// set in the response options.
@@ -215,17 +213,10 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 				if (uriHandler == null)
 					uriHandler = new org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl();
 
-				// The base URI of the handler must have a trailing path seperator "/".
-
-				if (resource.getURI().hasTrailingPathSeparator())
-				{
-					if (resource.getURI().hasQuery())
-						uriHandler.setBaseURI(resource.getURI().trimSegments(1).appendSegment("-1").appendSegment(""));
-					else
-						uriHandler.setBaseURI(resource.getURI());
-				}
+				if (resource.getURI().hasQuery())
+					uriHandler.setBaseURI(resource.getURI().trimSegments(1).appendSegment("-1"));
 				else
-					uriHandler.setBaseURI(resource.getURI().appendSegment(""));
+					uriHandler.setBaseURI(resource.getURI());
 
 				// If the URI contains a query string, use it to locate a collection of objects from
 				// MongoDB, otherwise simply get the object from MongoDB using the id.
@@ -651,7 +642,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 		if (isProxy)
 		{
-			URI proxyURI = URI.createURI("../../" + collection.getName() + "/" + dbObject.get(ID_KEY) + "#/0");
+			URI proxyURI = URI.createURI("../" + collection.getName() + "/" + dbObject.get(ID_KEY) + "#/0");
 			((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(proxyURI));
 		}
 
@@ -810,7 +801,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	private EObject buildProxy(DBRef dbReference, Resource resource, XMLResource.URIHandler uriHandler)
 	{
 		EObject eObject = buildObject(dbReference.fetch(), resource.getResourceSet());
-		URI proxyURI = URI.createURI("../../" + dbReference.getRef() + "/" + dbReference.getId() + "#/0");
+		URI proxyURI = URI.createURI("../" + dbReference.getRef() + "/" + dbReference.getId() + "#/0");
 		((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(proxyURI));
 		return eObject;
 	}
