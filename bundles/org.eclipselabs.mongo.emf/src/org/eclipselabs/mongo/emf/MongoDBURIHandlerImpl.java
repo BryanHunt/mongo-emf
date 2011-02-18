@@ -254,7 +254,10 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 					if (dbObject != null)
 					{
-						resource.getContents().add(buildObject(collection, dbObject, resource, uriHandler));
+						EObject eObject = buildObject(collection, dbObject, resource, uriHandler);
+
+						if (eObject != null)
+							resource.getContents().add(eObject);
 
 						Map<Object, Object> response = getResponse(options);
 						response.put(URIConverter.RESPONSE_TIME_STAMP_PROPERTY, dbObject.get(TIME_STAMP_KEY));
@@ -641,8 +644,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 	private EObject buildObject(DBCollection collection, DBObject dbObject, Resource resource, XMLResource.URIHandler uriHandler)
 	{
-		EObject eObject = buildObject(collection, dbObject, resource, uriHandler, false);
-		return eObject;
+		return buildObject(collection, dbObject, resource, uriHandler, false);
 	}
 
 	private EObject buildObject(DBCollection collection, DBObject dbObject, Resource resource, XMLResource.URIHandler uriHandler, boolean isProxy)
@@ -653,29 +655,31 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 		EObject eObject = buildObject(dbObject, resource.getResourceSet());
 
-		if (isProxy)
+		if (eObject != null)
 		{
-			URI proxyURI = URI.createURI("../" + collection.getName() + "/" + dbObject.get(ID_KEY) + "#/0");
-			((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(proxyURI));
-		}
-
-		setEID(dbObject, eObject);
-
-		// All features are mapped as key / value pairs with the key being the attribute name.
-
-		for (EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures())
-		{
-			if (feature instanceof EAttribute)
+			if (isProxy)
 			{
-				EAttribute attribute = (EAttribute) feature;
-
-				if (!isProxy || !FeatureMapUtil.isFeatureMap(attribute))
-					buildObjectAttribute(collection, dbObject, resource, uriHandler, resourceSet, eObject, attribute);
+				URI proxyURI = URI.createURI("../" + collection.getName() + "/" + dbObject.get(ID_KEY) + "#/0");
+				((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(proxyURI));
 			}
-			else if (!isProxy)
-				buildObjectReference(collection, dbObject, resource, uriHandler, eObject, (EReference) feature);
-		}
 
+			setEID(dbObject, eObject);
+
+			// All features are mapped as key / value pairs with the key being the attribute name.
+
+			for (EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures())
+			{
+				if (feature instanceof EAttribute)
+				{
+					EAttribute attribute = (EAttribute) feature;
+
+					if (!isProxy || !FeatureMapUtil.isFeatureMap(attribute))
+						buildObjectAttribute(collection, dbObject, resource, uriHandler, resourceSet, eObject, attribute);
+				}
+				else if (!isProxy)
+					buildObjectReference(collection, dbObject, resource, uriHandler, eObject, (EReference) feature);
+			}
+		}
 		return eObject;
 	}
 
@@ -703,11 +707,21 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 				EList<EObject> eObjects = (EList<EObject>) eObject.eGet(reference);
 
 				for (Object dbReference : dbReferences)
-					eObjects.add(buildObjectReference(collection, dbReference, resource, uriHandler, reference.isResolveProxies()));
+				{
+					EObject target = buildObjectReference(collection, dbReference, resource, uriHandler, reference.isResolveProxies());
+
+					if (target != null)
+						eObjects.add(target);
+				}
 			}
 		}
 		else
-			eObject.eSet(reference, buildObjectReference(collection, dbObject.get(reference.getName()), resource, uriHandler, reference.isResolveProxies()));
+		{
+			EObject target = buildObjectReference(collection, dbObject.get(reference.getName()), resource, uriHandler, reference.isResolveProxies());
+
+			if (target != null)
+				eObject.eSet(reference, target);
+		}
 	}
 
 	/**
@@ -739,7 +753,10 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 					else
 					{
 						EReference reference = (EReference) feature;
-						featureMap.add(feature, buildObjectReference(collection, entry.get("value"), resource, uriHandler, reference.isResolveProxies()));
+						EObject target = buildObjectReference(collection, entry.get("value"), resource, uriHandler, reference.isResolveProxies());
+
+						if (target != null)
+							featureMap.add(feature, target);
 					}
 				}
 			}
@@ -805,7 +822,9 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		else
 		{
 			eObject = buildObject(dbObject, resourceSet);
-			((InternalEObject) eObject).eSetProxyURI(proxyURI);
+
+			if (eObject != null)
+				((InternalEObject) eObject).eSetProxyURI(proxyURI);
 		}
 
 		return eObject;
@@ -814,13 +833,21 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	private EObject buildProxy(DBRef dbReference, Resource resource, XMLResource.URIHandler uriHandler)
 	{
 		EObject eObject = buildObject(dbReference.fetch(), resource.getResourceSet());
-		URI proxyURI = URI.createURI("../" + dbReference.getRef() + "/" + dbReference.getId() + "#/0");
-		((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(proxyURI));
+
+		if (eObject != null)
+		{
+			URI proxyURI = URI.createURI("../" + dbReference.getRef() + "/" + dbReference.getId() + "#/0");
+			((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(proxyURI));
+		}
+
 		return eObject;
 	}
 
 	private EObject buildObject(DBObject dbObject, ResourceSet resourceSet)
 	{
+		if (dbObject == null)
+			return null;
+
 		EClass eClass = (EClass) resourceSet.getEObject(URI.createURI((String) dbObject.get(ECLASS_KEY)), true);
 		return EcoreUtil.create(eClass);
 	}

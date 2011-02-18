@@ -301,7 +301,25 @@ public class TestEmfMongoDB
 		resource.delete(null);
 
 		assertThat(personCollection.getCount(), is(0L));
+	}
 
+	@Test
+	public void testDeleteLocation() throws IOException
+	{
+		DBObject library = createLibrary("junit");
+		DBRef locationRef = (DBRef) library.get(ModelPackage.Literals.LIBRARY__LOCATION.getName());
+		DBObject location = locationRef.fetch();
+
+		ResourceSet resourceSet = new ResourceSetImpl();
+		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
+		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		Resource locationResource = resourceSet.getResource(createObjectURI(ModelPackage.Literals.LOCATION, (ObjectId) location.get(ID_KEY)), true);
+
+		locationResource.delete(null);
+
+		Resource libraryResource = resourceSet.getResource(createObjectURI(ModelPackage.Literals.LIBRARY, (ObjectId) library.get(ID_KEY)), true);
+		assertThat(libraryResource, is(notNullValue()));
+		assertThat(libraryResource.getContents().size(), is(1));
 	}
 
 	@Test
