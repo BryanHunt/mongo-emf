@@ -63,12 +63,12 @@ public class Activator implements BundleActivator
 				child.setName("Child " + i + " " + j);
 				parent.getChildren().add(child);
 
-				Resource resource = resourceSet.createResource(URI.createURI("mongo://localhost/test/Child"));
+				Resource resource = resourceSet.createResource(URI.createURI("mongo://localhost/test/Child/"));
 				resource.getContents().add(child);
 				resource.save(null);
 			}
 
-			Resource resource = resourceSet.createResource(URI.createURI("mongo://localhost/test/Parent"));
+			Resource resource = resourceSet.createResource(URI.createURI("mongo://localhost/test/Parent/"));
 			resource.getContents().add(parent);
 			resource.save(null);
 
