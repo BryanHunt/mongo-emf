@@ -7,4 +7,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Service-Component: OSGI-INF/mongo.xml
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipselabs.mongo
-Require-Bundle: com.mongodb;bundle-version="2.1.0"
+Import-Package: com.mongodb
