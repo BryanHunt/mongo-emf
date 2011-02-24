@@ -615,7 +615,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	{
 		InternalEObject internalEObject = (InternalEObject) targetObject;
 
-		if (eReference.isResolveProxies() || !eReference.isContainment())
+		if (!eReference.isContainment() || (eReference.isResolveProxies() && internalEObject.eDirectResource() != null))
 		{
 			// Cross-document containment, or non-containment reference - build a proxy
 
@@ -696,31 +696,28 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		if (reference.isTransient())
 			return;
 
-		if (reference.isMany())
+		String field = reference.getName();
+		if (dbObject.containsField(field))
 		{
-			@SuppressWarnings("unchecked")
-			List<Object> dbReferences = (List<Object>) dbObject.get(reference.getName());
-
-			if (dbReferences != null)
+			if (reference.isMany())
 			{
+				@SuppressWarnings("unchecked")
+				List<Object> dbReferences = (List<Object>) dbObject.get(field);
+	
 				@SuppressWarnings("unchecked")
 				EList<EObject> eObjects = (EList<EObject>) eObject.eGet(reference);
 
 				for (Object dbReference : dbReferences)
 				{
 					EObject target = buildObjectReference(collection, dbReference, resource, uriHandler, reference.isResolveProxies());
-
-					if (target != null)
-						eObjects.add(target);
+					eObjects.add(target);
 				}
 			}
-		}
-		else
-		{
-			EObject target = buildObjectReference(collection, dbObject.get(reference.getName()), resource, uriHandler, reference.isResolveProxies());
-
-			if (target != null)
+			else
+			{
+				EObject target = buildObjectReference(collection, dbObject.get(field), resource, uriHandler, reference.isResolveProxies());
 				eObject.eSet(reference, target);
+			}
 		}
 	}
 
@@ -736,7 +733,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	@SuppressWarnings("unchecked")
 	private void buildObjectAttribute(DBCollection collection, DBObject dbObject, Resource resource, XMLResource.URIHandler uriHandler, ResourceSet resourceSet, EObject eObject, EAttribute attribute)
 	{
-		if (!attribute.isTransient() && !(attribute.isID() && attribute.isDerived()))
+		if (!attribute.isTransient() && !(attribute.isID() && attribute.isDerived()) && dbObject.containsField(attribute.getName()))
 		{
 			Object value = dbObject.get(attribute.getName());
 
