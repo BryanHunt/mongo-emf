@@ -63,20 +63,27 @@ import com.mongodb.MongoURI;
 
 /**
  * This EMF URI handler interfaces to MongoDB. This URI handler can handle URIs with the "mongo"
- * scheme. The URI path must be of the form /database/collection/{id}/ where id is optional the
- * first
- * time the EMF object is saved. Note that if the id is not specified when the object is first
- * saved, MongoDB will assign the id and the URI of the EMF Resource will be modified to include the
- * id in the URI. Examples of valid URIs:
+ * scheme. The URI path must have exactly 3 segments. The URI path must be of the form
+ * /database/collection/{id} where id is optional the first time the EMF object is saved. When
+ * building queries, do not specify an id, but make sure path has 3 segments by placing a "/" after
+ * the collection.
+ * 
+ * Note that if the id is not specified when the object is first saved, MongoDB will assign the id
+ * and the URI of the EMF Resource will be modified to include the id in the URI. Examples of valid
+ * URIs:
  * 
  * mongo://localhost/data/people/
- * mongo://localhost/data/people/4d0a3e259095b5b334a59df0/
+ * mongo://localhost/data/people/4d0a3e259095b5b334a59df0
  * 
  * @author bhunt
  * 
  */
 public class MongoDBURIHandlerImpl extends URIHandlerImpl
 {
+	/**
+	 * This option can be used when saving an object the first time to indicate that the client is
+	 * generating the ID by setting the value to Boolean.FALSE.
+	 */
 	public static final String OPTION_GENERATE_ID = "org.eclipselabs.mongo.emf.genId";
 
 	/**
@@ -140,13 +147,13 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 				ObjectId id = getID(uri);
 
+				// If the id was not specified, we append a dummy id to the resource URI so that all of the
+				// relative proxies will be generated correctly.
+
 				if (id == null)
-				{
 					resource.setURI(resource.getURI().trimSegments(1).appendSegment("-1"));
-					uriHandler.setBaseURI(resource.getURI());
-				}
-				else
-					uriHandler.setBaseURI(resource.getURI());
+
+				uriHandler.setBaseURI(resource.getURI());
 
 				// Build a MongoDB object from the EMF object.
 
@@ -168,14 +175,12 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 					// URI to include the generated id, and if the EObject contains an ID attribute that is
 					// derived and transient, set that id as well.
 
-					setEID(dbObject, root);
+					setEObjectID(dbObject, root);
 
-					URI newURI = null;
+					// Generate the new resource URI by removing the dummy id and appending the id generated
+					// by MongoDB.
 
-					if (resource.getURI().hasTrailingPathSeparator())
-						newURI = resource.getURI().trimSegments(1).appendSegment(id.toString());
-					else
-						newURI = resource.getURI().trimSegments(1).appendSegment(id.toString());
+					URI newURI = resource.getURI().trimSegments(1).appendSegment(id.toString());
 
 					// The EMF framework will do the actual modification of the Resource URI if the new URI is
 					// set in the response options.
@@ -241,11 +246,13 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 				if (query != null)
 				{
-					System.err.println(URI.decode(query));
+					System.err.println(URI.decode(query)); // TODO : remove debugging printout
 					Result result = QueryFactory.eINSTANCE.createResult();
 					EList<EObject> values = result.getValues();
-					for (DBObject dbObject : collection.find(buildDBObject(collection, new ExpressionBuilder(URI.decode(query)).parseExpression())))
-						values.add(buildObject(collection, dbObject, resource, uriHandler, true));
+
+					for (DBObject dbObject : collection.find(buildDBObjectQuery(collection, new ExpressionBuilder(URI.decode(query)).parseExpression())))
+						values.add(buildEObject(collection, dbObject, resource, uriHandler, true));
+
 					resource.getContents().add(result);
 				}
 				else
@@ -254,7 +261,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 					if (dbObject != null)
 					{
-						EObject eObject = buildObject(collection, dbObject, resource, uriHandler);
+						EObject eObject = buildEObject(collection, dbObject, resource, uriHandler);
 
 						if (eObject != null)
 							resource.getContents().add(eObject);
@@ -278,13 +285,10 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 	private ObjectId getID(URI uri) throws IOException
 	{
-		// We assume that the URI path has the form /database/collection/{id} making the id segment # 2.
+		// Require that the URI path has the form /database/collection/{id} making the id segment # 2.
 
-		if (uri.segmentCount() < 2 || uri.segmentCount() > 3)
+		if (uri.segmentCount() != 3)
 			throw new IOException("The URI is not of the form 'mongo:/database/collection/{id}");
-
-		if (uri.segmentCount() == 2)
-			return null;
 
 		String id = uri.segment(2);
 
@@ -300,10 +304,10 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 	private DBCollection getCollection(URI uri) throws UnknownHostException, IOException
 	{
-		// We assume that the URI path has the form hostname:port/database/collection/{id} making the
+		// We assume that the URI path has the form /database/collection/{id} making the
 		// collection segment # 1.
 
-		if (uri.segmentCount() < 2 || uri.segmentCount() > 3)
+		if (uri.segmentCount() != 3)
 			throw new IOException("The URI is not of the form 'mongo:/database/collection/{id}");
 
 		if (mongoDB == null)
@@ -329,8 +333,10 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		return collection;
 	}
 
-	private DBObject buildDBObject(final DBCollection dbCollection, Expression expression)
+	private DBObject buildDBObjectQuery(final DBCollection dbCollection, Expression expression)
 	{
+		// This function builds a DBObject to be used as a query to MongoDB from the EMF Expression
+
 		final DBObject dbObject = new BasicDBObject();
 
 		if (expression != null)
@@ -390,8 +396,8 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 					}
 					else if ("||".equals(operator))
 					{
-						DBObject leftObject = buildDBObject(dbCollection, leftOperand);
-						DBObject rightObject = buildDBObject(dbCollection, binaryOperation.getRightOperand());
+						DBObject leftObject = buildDBObjectQuery(dbCollection, leftOperand);
+						DBObject rightObject = buildDBObjectQuery(dbCollection, binaryOperation.getRightOperand());
 						@SuppressWarnings("unchecked")
 						List<Object> or = (List<Object>) leftObject.get("$or");
 						if (or != null)
@@ -409,8 +415,8 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 					}
 					else if ("&&".equals(operator))
 					{
-						dbObject.putAll(buildDBObject(dbCollection, leftOperand));
-						DBObject rightObject = buildDBObject(dbCollection, binaryOperation.getRightOperand());
+						dbObject.putAll(buildDBObjectQuery(dbCollection, leftOperand));
+						DBObject rightObject = buildDBObjectQuery(dbCollection, binaryOperation.getRightOperand());
 						for (String field : rightObject.keySet())
 						{
 							Object rightValue = rightObject.get(field);
@@ -515,13 +521,13 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		dbObject.put(ECLASS_KEY, EcoreUtil.getURI(eClass).toString());
 
 		// Save the XML extrinsic id if necessary
-		
+
 		Resource resource = eObject.eResource();
-		
+
 		if (resource instanceof XMLResource)
 		{
 			String id = ((XMLResource) resource).getID(eObject);
-		
+
 			if (id != null)
 				dbObject.put(EXTRINSIC_ID_KEY, id);
 		}
@@ -615,14 +621,6 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		return dbObject;
 	}
 
-	private Object getDBAttributeValue(EAttribute attribute, Object rawValue)
-	{
-		if (!nativeTypes.contains(attribute.getEAttributeType()))
-			return EcoreUtil.convertToString(attribute.getEAttributeType(), rawValue);
-
-		return rawValue;
-	}
-
 	private Object buildDBReference(DB db, EReference eReference, EObject targetObject, XMLResource.URIHandler uriHandler) throws UnknownHostException, IOException
 	{
 		InternalEObject internalEObject = (InternalEObject) targetObject;
@@ -654,18 +652,18 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		}
 	}
 
-	private EObject buildObject(DBCollection collection, DBObject dbObject, Resource resource, XMLResource.URIHandler uriHandler)
+	private EObject buildEObject(DBCollection collection, DBObject dbObject, Resource resource, XMLResource.URIHandler uriHandler)
 	{
-		return buildObject(collection, dbObject, resource, uriHandler, false);
+		return buildEObject(collection, dbObject, resource, uriHandler, false);
 	}
 
-	private EObject buildObject(DBCollection collection, DBObject dbObject, Resource resource, XMLResource.URIHandler uriHandler, boolean isProxy)
+	private EObject buildEObject(DBCollection collection, DBObject dbObject, Resource resource, XMLResource.URIHandler uriHandler, boolean isProxy)
 	{
 		ResourceSet resourceSet = resource.getResourceSet();
 
 		// Build an EMF object from the MongodDB object
 
-		EObject eObject = buildObject(dbObject, resource.getResourceSet());
+		EObject eObject = createEObject(dbObject, resource.getResourceSet());
 
 		if (eObject != null)
 		{
@@ -675,14 +673,14 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 				((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(proxyURI));
 			}
 
-			setEID(dbObject, eObject);
+			setEObjectID(dbObject, eObject);
 
 			// Load the XML extrinsic id if necessary
-			
+
 			String id = (String) dbObject.get(EXTRINSIC_ID_KEY);
-			
+
 			if (id != null && resource instanceof XMLResource)
-					((XMLResource) resource).setID(eObject, id);
+				((XMLResource) resource).setID(eObject, id);
 
 			// All features are mapped as key / value pairs with the key being the attribute name.
 
@@ -693,51 +691,13 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 					EAttribute attribute = (EAttribute) feature;
 
 					if (!isProxy || !FeatureMapUtil.isFeatureMap(attribute))
-						buildObjectAttribute(collection, dbObject, resource, uriHandler, resourceSet, eObject, attribute);
+						buildEObjectAttribute(collection, dbObject, resource, uriHandler, resourceSet, eObject, attribute);
 				}
 				else if (!isProxy)
-					buildObjectReference(collection, dbObject, resource, uriHandler, eObject, (EReference) feature);
+					buildEObjectReference(collection, dbObject, resource, uriHandler, eObject, (EReference) feature);
 			}
 		}
 		return eObject;
-	}
-
-	/**
-	 * @param collection
-	 * @param dbObject
-	 * @param resource
-	 * @param uriHandler
-	 * @param eObject
-	 * @param reference
-	 */
-	private void buildObjectReference(DBCollection collection, DBObject dbObject, Resource resource, XMLResource.URIHandler uriHandler, EObject eObject, EReference reference)
-	{
-		if (reference.isTransient())
-			return;
-
-		String field = reference.getName();
-		if (dbObject.containsField(field))
-		{
-			if (reference.isMany())
-			{
-				@SuppressWarnings("unchecked")
-				List<Object> dbReferences = (List<Object>) dbObject.get(field);
-	
-				@SuppressWarnings("unchecked")
-				EList<EObject> eObjects = (EList<EObject>) eObject.eGet(reference);
-
-				for (Object dbReference : dbReferences)
-				{
-					EObject target = buildObjectReference(collection, dbReference, resource, uriHandler, reference.isResolveProxies());
-					eObjects.add(target);
-				}
-			}
-			else
-			{
-				EObject target = buildObjectReference(collection, dbObject.get(field), resource, uriHandler, reference.isResolveProxies());
-				eObject.eSet(reference, target);
-			}
-		}
 	}
 
 	/**
@@ -750,7 +710,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	 * @param attribute
 	 */
 	@SuppressWarnings("unchecked")
-	private void buildObjectAttribute(DBCollection collection, DBObject dbObject, Resource resource, XMLResource.URIHandler uriHandler, ResourceSet resourceSet, EObject eObject, EAttribute attribute)
+	private void buildEObjectAttribute(DBCollection collection, DBObject dbObject, Resource resource, XMLResource.URIHandler uriHandler, ResourceSet resourceSet, EObject eObject, EAttribute attribute)
 	{
 		if (!attribute.isTransient() && !(attribute.isID() && attribute.isDerived()) && dbObject.containsField(attribute.getName()))
 		{
@@ -765,11 +725,11 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 					EStructuralFeature feature = (EStructuralFeature) resourceSet.getEObject(URI.createURI((String) entry.get("key")), true);
 
 					if (feature instanceof EAttribute)
-						featureMap.add(feature, getObjectAttributeValue((EAttribute) feature, entry.get("value")));
+						featureMap.add(feature, getEObjectAttributeValue((EAttribute) feature, entry.get("value")));
 					else
 					{
 						EReference reference = (EReference) feature;
-						EObject target = buildObjectReference(collection, entry.get("value"), resource, uriHandler, reference.isResolveProxies());
+						EObject target = buildEObjectReference(collection, entry.get("value"), resource, uriHandler, reference.isResolveProxies());
 
 						if (target != null)
 							featureMap.add(feature, target);
@@ -787,8 +747,114 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 				eObject.eSet(attribute, values);
 			}
 			else
-				eObject.eSet(attribute, getObjectAttributeValue(attribute, value));
+				eObject.eSet(attribute, getEObjectAttributeValue(attribute, value));
 		}
+	}
+
+	/**
+	 * @param collection
+	 * @param dbObject
+	 * @param resource
+	 * @param uriHandler
+	 * @param eObject
+	 * @param reference
+	 */
+	private void buildEObjectReference(DBCollection collection, DBObject dbObject, Resource resource, XMLResource.URIHandler uriHandler, EObject eObject, EReference reference)
+	{
+		if (reference.isTransient())
+			return;
+	
+		String field = reference.getName();
+	
+		if (dbObject.containsField(field))
+		{
+			if (reference.isMany())
+			{
+				@SuppressWarnings("unchecked")
+				List<Object> dbReferences = (List<Object>) dbObject.get(field);
+	
+				@SuppressWarnings("unchecked")
+				EList<EObject> eObjects = (EList<EObject>) eObject.eGet(reference);
+	
+				for (Object dbReference : dbReferences)
+				{
+					EObject target = buildEObjectReference(collection, dbReference, resource, uriHandler, reference.isResolveProxies());
+					eObjects.add(target);
+				}
+			}
+			else
+			{
+				EObject target = buildEObjectReference(collection, dbObject.get(field), resource, uriHandler, reference.isResolveProxies());
+				eObject.eSet(reference, target);
+			}
+		}
+	}
+
+	private EObject buildEObjectReference(DBCollection collection, Object dbReference, Resource resource, XMLResource.URIHandler uriHandler, boolean referenceResolvesProxies)
+	{
+		if (dbReference == null)
+			return null;
+	
+		// Build an EMF reference from the data in MongoDB.
+	
+		if (dbReference instanceof DBRef)
+			return buildProxy((DBRef) dbReference, resource, uriHandler);
+	
+		DBObject dbObject = (DBObject) dbReference;
+		String proxy = (String) dbObject.get(PROXY_KEY);
+	
+		if (proxy == null)
+			return buildEObject(collection, dbObject, resource, uriHandler);
+		else
+			return buildProxy(dbObject, resource.getResourceSet(), uriHandler, referenceResolvesProxies);
+	}
+
+	private EObject buildProxy(DBObject dbObject, ResourceSet resourceSet, XMLResource.URIHandler uriHandler, boolean referenceResolvedProxies)
+	{
+		EObject eObject = null;
+		URI proxyURI = uriHandler.resolve(URI.createURI((String) dbObject.get(PROXY_KEY)));
+	
+		if (!referenceResolvedProxies)
+			eObject = resourceSet.getEObject(proxyURI, true);
+		else
+		{
+			eObject = createEObject(dbObject, resourceSet);
+	
+			if (eObject != null)
+				((InternalEObject) eObject).eSetProxyURI(proxyURI);
+		}
+	
+		return eObject;
+	}
+
+	private EObject buildProxy(DBRef dbReference, Resource resource, XMLResource.URIHandler uriHandler)
+	{
+		EObject eObject = createEObject(dbReference.fetch(), resource.getResourceSet());
+	
+		if (eObject != null)
+		{
+			URI proxyURI = URI.createURI("../" + dbReference.getRef() + "/" + dbReference.getId() + "#/0");
+			((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(proxyURI));
+		}
+	
+		return eObject;
+	}
+
+	private EObject createEObject(DBObject dbObject, ResourceSet resourceSet)
+	{
+		if (dbObject == null)
+			return null;
+	
+		EClass eClass = (EClass) resourceSet.getEObject(URI.createURI((String) dbObject.get(ECLASS_KEY)), true);
+		return EcoreUtil.create(eClass);
+	}
+
+	private Object getDBAttributeValue(EAttribute attribute, Object rawValue)
+	{
+		if (!nativeTypes.contains(attribute.getEAttributeType()))
+			return EcoreUtil.convertToString(attribute.getEAttributeType(), rawValue);
+	
+		return rawValue;
 	}
 
 	/**
@@ -796,7 +862,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	 * @param value
 	 * @return
 	 */
-	private Object getObjectAttributeValue(EAttribute attribute, Object value)
+	private Object getEObjectAttributeValue(EAttribute attribute, Object value)
 	{
 		if (!nativeTypes.contains(attribute.getEAttributeType()))
 			value = EcoreUtil.createFromString(attribute.getEAttributeType(), (String) value);
@@ -804,71 +870,11 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 			value = ((Integer) value).byteValue();
 		else if (EcorePackage.Literals.EFLOAT.equals(attribute.getEAttributeType()) || EcorePackage.Literals.EFLOAT_OBJECT.equals(attribute.getEAttributeType()))
 			value = ((Double) value).floatValue();
+
 		return value;
 	}
 
-	private EObject buildObjectReference(DBCollection collection, Object dbReference, Resource resource, XMLResource.URIHandler uriHandler, boolean referenceResolvesProxies)
-	{
-		if (dbReference == null)
-			return null;
-
-		// Build an EMF reference from the data in MongoDB.
-
-		if (dbReference instanceof DBRef)
-			return buildProxy((DBRef) dbReference, resource, uriHandler);
-		else
-		{
-			DBObject dbObject = (DBObject) dbReference;
-			String proxy = (String) dbObject.get(PROXY_KEY);
-
-			if (proxy == null)
-				return buildObject(collection, dbObject, resource, uriHandler);
-			else
-				return buildProxy(dbObject, resource.getResourceSet(), uriHandler, referenceResolvesProxies);
-		}
-	}
-
-	private EObject buildProxy(DBObject dbObject, ResourceSet resourceSet, XMLResource.URIHandler uriHandler, boolean referenceResolvedProxies)
-	{
-		EObject eObject = null;
-		URI proxyURI = uriHandler.resolve(URI.createURI((String) dbObject.get(PROXY_KEY)));
-
-		if (!referenceResolvedProxies)
-			eObject = resourceSet.getEObject(proxyURI, true);
-		else
-		{
-			eObject = buildObject(dbObject, resourceSet);
-
-			if (eObject != null)
-				((InternalEObject) eObject).eSetProxyURI(proxyURI);
-		}
-
-		return eObject;
-	}
-
-	private EObject buildProxy(DBRef dbReference, Resource resource, XMLResource.URIHandler uriHandler)
-	{
-		EObject eObject = buildObject(dbReference.fetch(), resource.getResourceSet());
-
-		if (eObject != null)
-		{
-			URI proxyURI = URI.createURI("../" + dbReference.getRef() + "/" + dbReference.getId() + "#/0");
-			((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(proxyURI));
-		}
-
-		return eObject;
-	}
-
-	private EObject buildObject(DBObject dbObject, ResourceSet resourceSet)
-	{
-		if (dbObject == null)
-			return null;
-
-		EClass eClass = (EClass) resourceSet.getEObject(URI.createURI((String) dbObject.get(ECLASS_KEY)), true);
-		return EcoreUtil.create(eClass);
-	}
-
-	private void setEID(DBObject dbObject, EObject eObject)
+	private void setEObjectID(DBObject dbObject, EObject eObject)
 	{
 		// If the model contains an ID attribute that is derived and transient, we should attempt to set
 		// its value to the MongoDB ID from the DBObject
@@ -882,7 +888,9 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 				eObject.eSet(idAttribute, dbObject.get(ID_KEY));
 			}
 			catch (Throwable t)
-			{}
+			{
+				// Intentionally left empty
+			}
 		}
 	}
 
@@ -895,6 +903,8 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	private static HashSet<EDataType> nativeTypes = new HashSet<EDataType>();
 
 	private IMongoDB mongoDB;
+
+	// These are the EMF types natively supported by MongoDB. All other types are stored as a string.
 
 	static
 	{
