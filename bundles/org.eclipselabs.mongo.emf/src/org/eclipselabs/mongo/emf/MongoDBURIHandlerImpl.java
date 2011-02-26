@@ -514,6 +514,18 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 		dbObject.put(ECLASS_KEY, EcoreUtil.getURI(eClass).toString());
 
+		// Save the XML extrinsic id if necessary
+		
+		Resource resource = eObject.eResource();
+		
+		if (resource instanceof XMLResource)
+		{
+			String id = ((XMLResource) resource).getID(eObject);
+		
+			if (id != null)
+				dbObject.put(EXTRINSIC_ID_KEY, id);
+		}
+
 		// All attributes are mapped as key / value pairs with the key being the attribute name.
 
 		for (EAttribute attribute : eClass.getEAllAttributes())
@@ -664,6 +676,13 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 			}
 
 			setEID(dbObject, eObject);
+
+			// Load the XML extrinsic id if necessary
+			
+			String id = (String) dbObject.get(EXTRINSIC_ID_KEY);
+			
+			if (id != null && resource instanceof XMLResource)
+					((XMLResource) resource).setID(eObject, id);
 
 			// All features are mapped as key / value pairs with the key being the attribute name.
 
@@ -871,6 +890,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	static final String ID_KEY = "_id";
 	static final String ECLASS_KEY = "_eClass";
 	static final String PROXY_KEY = "_eProxyURI";
+	static final String EXTRINSIC_ID_KEY = "_eId";
 
 	private static HashSet<EDataType> nativeTypes = new HashSet<EDataType>();
 

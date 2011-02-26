@@ -11,6 +11,7 @@
 
 package org.eclipselabs.mongo.emf.junit.tests;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -36,6 +37,7 @@ import org.bson.types.ObjectId;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
@@ -45,6 +47,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.eclipselabs.emf.query.Result;
 import org.eclipselabs.mongo.IMongoDB;
@@ -1011,6 +1014,46 @@ public class TestEmfMongoDB
 		assertThat(targetAuthor.getBooks().get(1), is(sameInstance(targetLibrary.getRareBooks().get(0))));
 		assertThat(targetAuthor.getBooks().get(2), is(sameInstance(targetLibrary.getRareBooks().get(1))));
 
+	}
+
+	@Test
+	public void testExtrinsicIDs() throws IOException
+	{
+		ResourceSet resourceSet = new ResourceSetImpl();
+		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl()
+		{
+			@Override
+			public Resource createResource(URI uri)
+			{
+				return new XMIResourceImpl(uri)
+				{
+					@Override
+					protected boolean useUUIDs()
+					{
+						return true;
+					}
+				};
+			}
+		});
+
+		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
+		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+
+		Resource resource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.PERSON));
+
+		Person author = ModelFactory.eINSTANCE.createPerson();
+		author.setName("Stephen King");
+		resource.getContents().add(author);
+		String authorID = ((XMLResource) resource).getID(author);
+
+		resource.save(null);
+		resource.unload();
+
+		resource.load(null);
+		EObject obj = resource.getContents().get(0);
+		String id = ((XMLResource) resource).getID(obj);
+
+		assertThat(id, equalTo(authorID));
 	}
 
 	@Ignore
