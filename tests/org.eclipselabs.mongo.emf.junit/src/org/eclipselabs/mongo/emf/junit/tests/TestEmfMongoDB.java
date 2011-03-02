@@ -361,8 +361,6 @@ public class TestEmfMongoDB
 		libraryResource.save(null);
 		personResource.save(null);
 
-		assertThat(location.getId(), is(notNullValue()));
-
 		{
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			libraryResource.save(out, null);

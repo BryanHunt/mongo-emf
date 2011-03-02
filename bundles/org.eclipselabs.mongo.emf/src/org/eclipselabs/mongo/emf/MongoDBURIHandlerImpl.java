@@ -172,12 +172,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 					id = (ObjectId) dbObject.get(ID_KEY);
 
 					// Since MongoDB assigns an id to the inserted object, we need to modify the EMF Resource
-					// URI to include the generated id, and if the EObject contains an ID attribute that is
-					// derived and transient, set that id as well.
-
-					setEObjectID(dbObject, root);
-
-					// Generate the new resource URI by removing the dummy id and appending the id generated
+					// URI to include the generated id by removing the dummy id and appending the id generated
 					// by MongoDB.
 
 					URI newURI = resource.getURI().trimSegments(1).appendSegment(id.toString());
@@ -673,8 +668,6 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 				((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(proxyURI));
 			}
 
-			setEObjectID(dbObject, eObject);
-
 			// Load the XML extrinsic id if necessary
 
 			String id = (String) dbObject.get(EXTRINSIC_ID_KEY);
@@ -763,19 +756,19 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	{
 		if (reference.isTransient())
 			return;
-	
+
 		String field = reference.getName();
-	
+
 		if (dbObject.containsField(field))
 		{
 			if (reference.isMany())
 			{
 				@SuppressWarnings("unchecked")
 				List<Object> dbReferences = (List<Object>) dbObject.get(field);
-	
+
 				@SuppressWarnings("unchecked")
 				EList<EObject> eObjects = (EList<EObject>) eObject.eGet(reference);
-	
+
 				for (Object dbReference : dbReferences)
 				{
 					EObject target = buildEObjectReference(collection, dbReference, resource, uriHandler, reference.isResolveProxies());
@@ -794,15 +787,15 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	{
 		if (dbReference == null)
 			return null;
-	
+
 		// Build an EMF reference from the data in MongoDB.
-	
+
 		if (dbReference instanceof DBRef)
 			return buildProxy((DBRef) dbReference, resource, uriHandler);
-	
+
 		DBObject dbObject = (DBObject) dbReference;
 		String proxy = (String) dbObject.get(PROXY_KEY);
-	
+
 		if (proxy == null)
 			return buildEObject(collection, dbObject, resource, uriHandler);
 		else
@@ -813,30 +806,30 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	{
 		EObject eObject = null;
 		URI proxyURI = uriHandler.resolve(URI.createURI((String) dbObject.get(PROXY_KEY)));
-	
+
 		if (!referenceResolvedProxies)
 			eObject = resourceSet.getEObject(proxyURI, true);
 		else
 		{
 			eObject = createEObject(dbObject, resourceSet);
-	
+
 			if (eObject != null)
 				((InternalEObject) eObject).eSetProxyURI(proxyURI);
 		}
-	
+
 		return eObject;
 	}
 
 	private EObject buildProxy(DBRef dbReference, Resource resource, XMLResource.URIHandler uriHandler)
 	{
 		EObject eObject = createEObject(dbReference.fetch(), resource.getResourceSet());
-	
+
 		if (eObject != null)
 		{
 			URI proxyURI = URI.createURI("../" + dbReference.getRef() + "/" + dbReference.getId() + "#/0");
 			((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(proxyURI));
 		}
-	
+
 		return eObject;
 	}
 
@@ -844,7 +837,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	{
 		if (dbObject == null)
 			return null;
-	
+
 		EClass eClass = (EClass) resourceSet.getEObject(URI.createURI((String) dbObject.get(ECLASS_KEY)), true);
 		return EcoreUtil.create(eClass);
 	}
@@ -853,7 +846,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	{
 		if (!nativeTypes.contains(attribute.getEAttributeType()))
 			return EcoreUtil.convertToString(attribute.getEAttributeType(), rawValue);
-	
+
 		return rawValue;
 	}
 
@@ -872,26 +865,6 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 			value = ((Double) value).floatValue();
 
 		return value;
-	}
-
-	private void setEObjectID(DBObject dbObject, EObject eObject)
-	{
-		// If the model contains an ID attribute that is derived and transient, we should attempt to set
-		// its value to the MongoDB ID from the DBObject
-
-		EAttribute idAttribute = eObject.eClass().getEIDAttribute();
-
-		if (idAttribute != null && idAttribute.isDerived())
-		{
-			try
-			{
-				eObject.eSet(idAttribute, dbObject.get(ID_KEY));
-			}
-			catch (Throwable t)
-			{
-				// Intentionally left empty
-			}
-		}
 	}
 
 	static final String TIME_STAMP_KEY = "_timeStamp";
