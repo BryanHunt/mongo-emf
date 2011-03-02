@@ -623,8 +623,6 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		{
 			// Cross-document containment, or non-containment reference - build a proxy
 
-			Resource resource = targetObject.eResource();
-
 			BasicDBObject dbObject = new BasicDBObject(2);
 			dbObject.put(PROXY_KEY, uriHandler.deresolve(EcoreUtil.getURI(targetObject)).toString());
 			dbObject.put(ECLASS_KEY, EcoreUtil.getURI(targetObject.eClass()).toString());
