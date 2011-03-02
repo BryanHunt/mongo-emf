@@ -57,7 +57,6 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
-import com.mongodb.DBRef;
 import com.mongodb.Mongo;
 import com.mongodb.MongoURI;
 
@@ -626,18 +625,10 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 			Resource resource = targetObject.eResource();
 
-			if (internalEObject.eDirectResource() == null || !canHandle(resource.getResourceSet().getURIConverter().normalize(resource.getURI())))
-			{
-				BasicDBObject dbObject = new BasicDBObject(3);
-				dbObject.put(PROXY_KEY, uriHandler.deresolve(EcoreUtil.getURI(targetObject)).toString());
-				dbObject.put(ECLASS_KEY, EcoreUtil.getURI(targetObject.eClass()).toString());
-				return dbObject;
-			}
-			else
-			{
-				URI normalizedTargetURI = resource.getResourceSet().getURIConverter().normalize(resource.getURI());
-				return new DBRef(db, getCollection(normalizedTargetURI).getName(), getID(normalizedTargetURI));
-			}
+			BasicDBObject dbObject = new BasicDBObject(2);
+			dbObject.put(PROXY_KEY, uriHandler.deresolve(EcoreUtil.getURI(targetObject)).toString());
+			dbObject.put(ECLASS_KEY, EcoreUtil.getURI(targetObject.eClass()).toString());
+			return dbObject;
 		}
 		else
 		{
@@ -790,9 +781,6 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 		// Build an EMF reference from the data in MongoDB.
 
-		if (dbReference instanceof DBRef)
-			return buildProxy((DBRef) dbReference, resource, uriHandler);
-
 		DBObject dbObject = (DBObject) dbReference;
 		String proxy = (String) dbObject.get(PROXY_KEY);
 
@@ -815,19 +803,6 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 			if (eObject != null)
 				((InternalEObject) eObject).eSetProxyURI(proxyURI);
-		}
-
-		return eObject;
-	}
-
-	private EObject buildProxy(DBRef dbReference, Resource resource, XMLResource.URIHandler uriHandler)
-	{
-		EObject eObject = createEObject(dbReference.fetch(), resource.getResourceSet());
-
-		if (eObject != null)
-		{
-			URI proxyURI = URI.createURI("../" + dbReference.getRef() + "/" + dbReference.getId() + "#/0");
-			((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(proxyURI));
 		}
 
 		return eObject;

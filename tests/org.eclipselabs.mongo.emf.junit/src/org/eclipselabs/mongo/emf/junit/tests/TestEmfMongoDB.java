@@ -72,7 +72,6 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
-import com.mongodb.DBRef;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 import com.mongodb.MongoURI;
@@ -310,13 +309,13 @@ public class TestEmfMongoDB
 	public void testDeleteLocation() throws IOException
 	{
 		DBObject library = createLibrary("junit");
-		DBRef locationRef = (DBRef) library.get(ModelPackage.Literals.LIBRARY__LOCATION.getName());
-		DBObject location = locationRef.fetch();
+		DBObject locationRef = (DBObject) library.get(ModelPackage.Literals.LIBRARY__LOCATION.getName());
 
 		ResourceSet resourceSet = new ResourceSetImpl();
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
 		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-		Resource locationResource = resourceSet.getResource(createObjectURI(ModelPackage.Literals.LOCATION, (ObjectId) location.get(ID_KEY)), true);
+		URI locationURI = URI.createURI((String) locationRef.get("_eProxyURI"));
+		Resource locationResource = resourceSet.getResource(createObjectURI(ModelPackage.Literals.LOCATION, new ObjectId(locationURI.lastSegment())), true);
 
 		locationResource.delete(null);
 
@@ -462,7 +461,7 @@ public class TestEmfMongoDB
 		assertThat(libraryResource.getURI().segment(2), is(notNullValue()));
 
 		DBObject dbLibrary = libraryCollection.findOne();
-		DBRef dbLocation = (DBRef) dbLibrary.get(ModelPackage.Literals.LIBRARY__LOCATION.getName());
+		DBObject dbLocation = (DBObject) dbLibrary.get(ModelPackage.Literals.LIBRARY__LOCATION.getName());
 		assertThat(dbLocation, is(notNullValue()));
 		@SuppressWarnings("unchecked")
 		List<DBObject> books = (List<DBObject>) libraryCollection.findOne().get(ModelPackage.Literals.LIBRARY__BOOKS.getName());
@@ -472,7 +471,7 @@ public class TestEmfMongoDB
 		assertThat(dbBook, is(notNullValue()));
 		assertThat((String) dbBook.get(ModelPackage.Literals.BOOK__TITLE.getName()), is(book.getTitle()));
 		@SuppressWarnings("unchecked")
-		List<DBRef> authors = (List<DBRef>) dbBook.get(ModelPackage.Literals.BOOK__AUTHORS.getName());
+		List<DBObject> authors = (List<DBObject>) dbBook.get(ModelPackage.Literals.BOOK__AUTHORS.getName());
 		assertThat(authors, is(notNullValue()));
 		assertThat(authors.size(), is(1));
 
@@ -1117,10 +1116,13 @@ public class TestEmfMongoDB
 		object.put(ModelPackage.Literals.BOOK__TAGS.getName(), new ArrayList<String>());
 		object.put(ModelPackage.Literals.BOOK__DATA.getName(), new ArrayList<String>());
 
-		ArrayList<DBRef> authorsReferences = new ArrayList<DBRef>();
+		ArrayList<DBObject> authorsReferences = new ArrayList<DBObject>();
 
 		for (DBObject author : authors)
-			authorsReferences.add(new DBRef(db, ModelPackage.Literals.PERSON.getName(), author.get(ID_KEY)));
+		{
+			ObjectId authorId = (ObjectId) author.get(ID_KEY);
+			authorsReferences.add(createProxy(ModelPackage.Literals.PERSON, "../" + personCollection.getName() + "/" + authorId + "#/"));
+		}
 
 		object.put(ModelPackage.Literals.BOOK__AUTHORS.getName(), authorsReferences);
 
@@ -1173,11 +1175,20 @@ public class TestEmfMongoDB
 		BasicDBObject libraryObject = new BasicDBObject();
 		libraryObject.put("_timeStamp", System.currentTimeMillis());
 		libraryObject.put("_eClass", EcoreUtil.getURI(ModelPackage.Literals.LIBRARY).toString());
-		libraryObject.put(ModelPackage.Literals.LIBRARY__LOCATION.getName(), new DBRef(db, ModelPackage.Literals.LOCATION.getName(), locationObject.get(ID_KEY)));
+		ObjectId locationId = (ObjectId) locationObject.get(ID_KEY);
+		libraryObject.put(ModelPackage.Literals.LIBRARY__LOCATION.getName(), createProxy(ModelPackage.Literals.LOCATION, "../" + locationCollection.getName() + "/" + locationId + "#/"));
 
 		libraryCollection.insert(libraryObject);
 		assertThat(libraryCollection.getCount(), is(libraryCount + 1));
 		return libraryObject;
+	}
+
+	private DBObject createProxy(EClass eClass, String proxy)
+	{
+		BasicDBObject proxyObject = new BasicDBObject();
+		proxyObject.put("_eProxyURI", proxy);
+		proxyObject.put("_eClass", EcoreUtil.getURI(eClass).toString());
+		return proxyObject;
 	}
 
 	private URI createCollectionURI(EClass eClass)
