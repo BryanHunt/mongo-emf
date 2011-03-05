@@ -19,3 +19,5 @@ Import-Package: com.mongodb,
  org.osgi.util.tracker;version="1.5.0"
 Export-Package: org.eclipselabs.mongo.junit
 Require-Bundle: org.hamcrest.core;bundle-version="1.1.0"
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: org.eclipselabs.mongo.junit.bundle.Activator
