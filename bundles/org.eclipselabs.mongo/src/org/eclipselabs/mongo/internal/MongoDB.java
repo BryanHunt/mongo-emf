@@ -26,12 +26,6 @@ import com.mongodb.MongoURI;
  */
 public class MongoDB implements IMongoDB
 {
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.eclipselabs.mongo.IMongoDB#connect(java.net.URI)
-	 */
 	@Override
 	public Mongo getMongo(MongoURI uri) throws MongoException, UnknownHostException
 	{
