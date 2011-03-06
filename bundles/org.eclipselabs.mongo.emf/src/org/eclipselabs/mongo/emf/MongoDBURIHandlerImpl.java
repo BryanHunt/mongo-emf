@@ -144,7 +144,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 				if (uriHandler == null)
 					uriHandler = new org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl();
 
-				ObjectId id = getID(uri);
+				Object id = getID(uri);
 
 				// If the id was not specified, we append a dummy id to the resource URI so that all of the
 				// relative proxies will be generated correctly.
@@ -277,7 +277,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		}
 	}
 
-	private ObjectId getID(URI uri) throws IOException
+	private Object getID(URI uri) throws IOException
 	{
 		// Require that the URI path has the form /database/collection/{id} making the id segment # 2.
 
@@ -286,13 +286,19 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 		String id = uri.segment(2);
 
+		if (id.isEmpty())
+			return null;
+
+		// If the ID was specified in the URI, we first attempt to create a MongoDB ObjectId. If
+		// that fails, we assume that the client has specified a non ObjectId and return the raw data.
+
 		try
 		{
 			return id.isEmpty() ? null : new ObjectId(uri.segment(2));
 		}
 		catch (Throwable t)
 		{
-			return null;
+			return id;
 		}
 	}
 
