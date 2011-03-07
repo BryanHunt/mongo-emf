@@ -66,4 +66,43 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PrimaryObject">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="singleNonContainmentReference"
+        eType="#//TargetObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="multipleNonContainmentReference"
+        upperBound="-1" eType="#//TargetObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="singleContainmentReferenceNoProxies"
+        eType="#//TargetObject" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="multipleContainmentReferenceNoProxies"
+        upperBound="-1" eType="#//TargetObject" containment="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="singleContainmentReferenceProxies"
+        eType="#//TargetObject" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="multipleContainmentReferenceProxies"
+        upperBound="-1" eType="#//TargetObject" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="featureMapType2" upperBound="-1"
+        eType="#//TargetObject" volatile="true" transient="true" derived="true" containment="true"
+        resolveProxies="false">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="group" value="#featureMapCollection"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="featureMapType1" upperBound="-1"
+        eType="#//TargetObject" volatile="true" transient="true" derived="true" containment="true"
+        resolveProxies="false">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="group" value="#featureMapCollection"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="featureMapCollection" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="group"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TargetObject">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="singleAttribute" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="arrayAttribute" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
 </ecore:EPackage>

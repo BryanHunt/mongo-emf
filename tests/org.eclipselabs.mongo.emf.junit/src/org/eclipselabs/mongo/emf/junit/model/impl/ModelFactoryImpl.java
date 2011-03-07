@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipselabs.mongo.emf.junit.model.*;
 import org.eclipselabs.mongo.emf.junit.model.Book;
 import org.eclipselabs.mongo.emf.junit.model.ETypes;
 import org.eclipselabs.mongo.emf.junit.model.Library;
@@ -24,6 +25,8 @@ import org.eclipselabs.mongo.emf.junit.model.MappedLibrary;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.Person;
+import org.eclipselabs.mongo.emf.junit.model.PrimaryObject;
+import org.eclipselabs.mongo.emf.junit.model.TargetObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -83,6 +86,8 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 			case ModelPackage.LOCATION: return createLocation();
 			case ModelPackage.ETYPES: return createETypes();
 			case ModelPackage.MAPPED_LIBRARY: return createMappedLibrary();
+			case ModelPackage.PRIMARY_OBJECT: return createPrimaryObject();
+			case ModelPackage.TARGET_OBJECT: return createTargetObject();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -152,6 +157,28 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	{
 		MappedLibraryImpl mappedLibrary = new MappedLibraryImpl();
 		return mappedLibrary;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PrimaryObject createPrimaryObject()
+	{
+		PrimaryObjectImpl primaryObject = new PrimaryObjectImpl();
+		return primaryObject;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TargetObject createTargetObject()
+	{
+		TargetObjectImpl targetObject = new TargetObjectImpl();
+		return targetObject;
 	}
 
 	/**

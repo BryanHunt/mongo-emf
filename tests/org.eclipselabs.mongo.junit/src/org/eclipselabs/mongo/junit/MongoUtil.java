@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
@@ -47,13 +48,45 @@ public class MongoUtil
 	 * This function will compare two EMF objects by walking all of the features (attributes and
 	 * references) of the expected object and comparing against the corresponding features in the
 	 * actual object. The algorithm is recursive so that the entire reference hierarchy is checked.
+	 * The acutual object is loaded in it's own resource set using the URI from the expected object.
+	 * 
+	 * @param expected The reference or expected EMF object instance.
+	 */
+	public static <T> T checkObject(EObject expected)
+	{
+		return checkObject(expected, new HashSet<EStructuralFeature>());
+	}
+
+	/**
+	 * This function will compare two EMF objects by walking all of the features (attributes and
+	 * references) of the expected object and comparing against the corresponding features in the
+	 * actual object. The algorithm is recursive so that the entire reference hierarchy is checked.
+	 * The acutual object is loaded in it's own resource set using the URI from the expected object.
+	 * 
+	 * @param expected The reference or expected EMF object instance.
+	 * @param excludedFeatures The set of features to exclude from checking.
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T checkObject(EObject expected, Set<EStructuralFeature> excludedFeatures)
+	{
+		ResourceSet actualResourceSet = MongoUtil.createResourceSet();
+		Resource actualResource = actualResourceSet.getResource(expected.eResource().getURI(), true);
+		EObject actual = actualResource.getContents().get(0);
+		MongoUtil.checkObject(expected, actual, excludedFeatures);
+		return (T) actual;
+	}
+
+	/**
+	 * This function will compare two EMF objects by walking all of the features (attributes and
+	 * references) of the expected object and comparing against the corresponding features in the
+	 * actual object. The algorithm is recursive so that the entire reference hierarchy is checked.
 	 * 
 	 * @param expected The reference or expected EMF object instance.
 	 * @param actual The actual object to compare against the expected.
 	 */
 	public static void checkObject(EObject expected, EObject actual)
 	{
-		checkObject(expected, actual, new HashSet<EReference>(), new HashSet<EObject>());
+		checkObject(expected, actual, new HashSet<EStructuralFeature>(), new HashSet<EObject>());
 	}
 
 	/**
@@ -64,11 +97,11 @@ public class MongoUtil
 	 * 
 	 * @param expected The reference or expected EMF object instance.
 	 * @param actual The actual object to compare against the expected.
-	 * @param excludedReferences The set of references to exclude from checking.
+	 * @param excludedFeatures The set of features to exclude from checking.
 	 */
-	public static void checkObject(EObject expected, EObject actual, Set<EReference> excludedReferences)
+	public static void checkObject(EObject expected, EObject actual, Set<EStructuralFeature> excludedFeatures)
 	{
-		checkObject(expected, actual, excludedReferences, new HashSet<EObject>());
+		checkObject(expected, actual, excludedFeatures, new HashSet<EObject>());
 	}
 
 	/**
@@ -189,7 +222,7 @@ public class MongoUtil
 		Activator.getBundleContext().registerService(IMongoDB.class.getName(), new MongoDB(), null);
 	}
 
-	private static void checkObject(EObject expected, EObject actual, Set<EReference> excludeReferences, Set<EObject> visited)
+	private static void checkObject(EObject expected, EObject actual, Set<EStructuralFeature> excludeFeatures, Set<EObject> visited)
 	{
 		if (expected == null)
 		{
@@ -205,11 +238,14 @@ public class MongoUtil
 		assertThat("Actual instance for type '" + expected.eClass().getName() + "' must not be null", actual, is(notNullValue()));
 
 		for (EAttribute attribute : expected.eClass().getEAllAttributes())
-			assertThat("Attribute '" + attribute.getName() + "' on class '" + expected.eClass().getName() + "' did not match", actual.eGet(attribute), is(expected.eGet(attribute)));
+		{
+			if (!excludeFeatures.contains(attribute))
+				assertThat("Attribute '" + attribute.getName() + "' on class '" + expected.eClass().getName() + "' did not match", actual.eGet(attribute), is(expected.eGet(attribute)));
+		}
 
 		for (EReference reference : expected.eClass().getEAllReferences())
 		{
-			if (excludeReferences.contains(reference))
+			if (excludeFeatures.contains(reference))
 				continue;
 
 			if (reference.isMany())
@@ -221,10 +257,10 @@ public class MongoUtil
 				assertThat("Reference size for '" + reference.getName() + "' does not match", actualObjects.size(), is(expectedObjects.size()));
 
 				for (int i = 0; i < expectedObjects.size(); i++)
-					checkObject(expectedObjects.get(i), actualObjects.get(i), excludeReferences, visited);
+					checkObject(expectedObjects.get(i), actualObjects.get(i), excludeFeatures, visited);
 			}
 			else
-				checkObject((EObject) expected.eGet(reference), (EObject) actual.eGet(reference), excludeReferences, visited);
+				checkObject((EObject) expected.eGet(reference), (EObject) actual.eGet(reference), excludeFeatures, visited);
 		}
 	}
 

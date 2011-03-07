@@ -86,6 +86,24 @@ public interface ModelFactory extends EFactory
 	MappedLibrary createMappedLibrary();
 
 	/**
+	 * Returns a new object of class '<em>Primary Object</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Primary Object</em>'.
+	 * @generated
+	 */
+	PrimaryObject createPrimaryObject();
+
+	/**
+	 * Returns a new object of class '<em>Target Object</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Target Object</em>'.
+	 * @generated
+	 */
+	TargetObject createTargetObject();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

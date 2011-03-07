@@ -12,12 +12,9 @@
 package org.eclipselabs.mongo.emf.junit.tests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -25,11 +22,9 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
 
@@ -38,40 +33,36 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.BinaryResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
-import org.eclipselabs.emf.query.Result;
 import org.eclipselabs.mongo.IMongoDB;
 import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 import org.eclipselabs.mongo.emf.junit.internal.Activator;
-import org.eclipselabs.mongo.emf.junit.model.Book;
 import org.eclipselabs.mongo.emf.junit.model.ETypes;
-import org.eclipselabs.mongo.emf.junit.model.Library;
-import org.eclipselabs.mongo.emf.junit.model.Location;
-import org.eclipselabs.mongo.emf.junit.model.MappedLibrary;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.Person;
+import org.eclipselabs.mongo.emf.junit.model.PrimaryObject;
+import org.eclipselabs.mongo.emf.junit.model.TargetObject;
 import org.eclipselabs.mongo.junit.MongoDatabase;
+import org.eclipselabs.mongo.junit.MongoUtil;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 import com.mongodb.MongoURI;
@@ -94,23 +85,63 @@ public class TestEmfMongoDB
 		IMongoDB mongoService = Activator.getInstance().getMongoDB();
 		assertThat(mongoService, is(notNullValue()));
 
-		mongo = mongoService.getMongo(new MongoURI("mongodb://localhost"));
+		Mongo mongo = mongoService.getMongo(new MongoURI("mongodb://localhost"));
 		assertThat(mongo, is(notNullValue()));
 
-		db = mongo.getDB("junit");
+		DB db = mongo.getDB("junit");
 		assertThat(db, is(notNullValue()));
 
-		typesCollection = db.getCollection(ModelPackage.Literals.ETYPES.getName());
-		personCollection = db.getCollection(ModelPackage.Literals.PERSON.getName());
-		libraryCollection = db.getCollection(ModelPackage.Literals.LIBRARY.getName());
-		locationCollection = db.getCollection(ModelPackage.Literals.LOCATION.getName());
+		targetCollection = db.getCollection(ModelPackage.Literals.TARGET_OBJECT.getName());
+	}
 
-		personCollection.ensureIndex(ModelPackage.Literals.PERSON__NAME.getName());
+	@Test(expected = IOException.class)
+	public void testShortURI() throws IOException
+	{
+		// Setup : Create a target object to save.
+
+		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject.setSingleAttribute("junit");
+
+		// Test : Save the target object with a short (invalid) URI
+
+		saveObject(targetObject, createObjectURI(targetObject.eClass(), new ObjectId()).appendSegment(""), null);
+	}
+
+	@Test(expected = IOException.class)
+	public void testLongURI() throws IOException
+	{
+		// Setup : Create a target object to save.
+
+		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject.setSingleAttribute("junit");
+
+		// Test : Save the target object with a long (invalid) URI
+
+		saveObject(targetObject, createCollectionURI(targetObject.eClass()).trimSegments(1), null);
 	}
 
 	@Test
-	public void testSaveTypes() throws IOException
+	public void testLoadNonexistentResource()
 	{
+		// Setup : Create an empty resource set
+
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
+
+		// Test : Get the resource from the database
+
+		Resource resource = resourceSet.getResource(createObjectURI(ModelPackage.Literals.TARGET_OBJECT, new ObjectId()), true);
+
+		// Verify : The resource must be empty
+
+		assertThat(resource, is(notNullValue()));
+		assertThat(resource.getContents().size(), is(0));
+	}
+
+	@Test
+	public void testTypes() throws IOException
+	{
+		// Setup
+
 		ETypes eTypes = ModelFactory.eINSTANCE.createETypes();
 		eTypes.setEBigDecimal(new BigDecimal(1));
 		eTypes.setEBigInteger(new BigInteger(2, new Random()));
@@ -126,897 +157,495 @@ public class TestEmfMongoDB
 		eTypes.setEShort((short) 1);
 		eTypes.setEString("j");
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-		Resource resource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.ETYPES));
-		resource.getContents().add(eTypes);
-		resource.save(null);
+		// Test
 
-		assertThat(typesCollection.getCount(), is(1L));
-		assertThat(resource.getURI().segmentCount(), is(3));
-		assertThat(resource.getURI().segment(2), is(notNullValue()));
+		saveObject(eTypes);
+
+		// Verify
+
+		assertThat(eTypes.eResource().getURI().segmentCount(), is(3));
+		assertThat(eTypes.eResource().getURI().segment(2), is(notNullValue()));
+		MongoUtil.checkObject(eTypes);
 	}
 
 	@Test
-	public void testSaveMultiplicityManyAttribute() throws IOException
+	public void testTargetObjectWithSingleAttribute() throws IOException
 	{
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		// Setup : Create a target object with the single attribute set.
 
-		Book book = ModelFactory.eINSTANCE.createBook();
-		book.setTitle("Title");
-		book.getTags().add("tag1");
-		book.getTags().add("tag2");
-		book.getData().add('1');
-		book.getData().add('2');
+		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject.setSingleAttribute("junit");
 
-		Resource resource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.BOOK));
-		resource.getContents().add(book);
-		resource.save(null);
+		// Test : Store the object to MongoDB
 
-		ResourceSet testResourceSet = new ResourceSetImpl();
-		uriHandlers = testResourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-		URI uri = createCollectionURI(ModelPackage.Literals.BOOK).trimSegments(1).appendSegment(resource.getURI().segment(2));
-		Resource targetResource = testResourceSet.getResource(uri, true);
-		assertThat(targetResource, is(notNullValue()));
-		assertThat(targetResource.getContents().size(), is(1));
-		Book actualBook = (Book) targetResource.getContents().get(0);
-		assertThat(actualBook.getTags().size(), is(2));
-		assertThat(actualBook.getTags().get(0), is(book.getTags().get(0)));
-		assertThat(actualBook.getTags().get(1), is(book.getTags().get(1)));
-		assertThat(actualBook.getData().size(), is(2));
-		assertThat(actualBook.getData().get(0), is(book.getData().get(0)));
-		assertThat(actualBook.getData().get(1), is(book.getData().get(1)));
+		saveObject(targetObject);
+
+		// Verify : Check that the object was stored correctly.
+
+		MongoUtil.checkObject(targetObject);
 	}
 
 	@Test
-	public void testLoadTypes()
+	public void testTargetObjectWithArrayAttribute() throws IOException
 	{
-		BasicDBObject object = new BasicDBObject();
-		object.put("_timeStamp", System.currentTimeMillis());
-		object.put("_eClass", EcoreUtil.getURI(ModelPackage.Literals.ETYPES).toString());
+		// Setup : Create a target object with the array attribute set.
 
-		BigDecimal bigDecimal = new BigDecimal(1);
-		BigInteger bigInteger = new BigInteger(2, new Random());
+		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject.getArrayAttribute().add("one");
+		targetObject.getArrayAttribute().add("two");
 
-		object.put(ModelPackage.Literals.ETYPES__EBIG_DECIMAL.getName(), bigDecimal.toString());
-		object.put(ModelPackage.Literals.ETYPES__EBIG_INTEGER.getName(), bigInteger.toString());
-		object.put(ModelPackage.Literals.ETYPES__EBOOLEAN.getName(), true);
-		object.put(ModelPackage.Literals.ETYPES__EBYTE.getName(), new Byte((byte) 1));
-		object.put(ModelPackage.Literals.ETYPES__EBYTE_ARRAY.getName(), new byte[] { 1, 2 });
-		object.put(ModelPackage.Literals.ETYPES__ECHAR.getName(), new Character('j').toString());
-		object.put(ModelPackage.Literals.ETYPES__EDATE.getName(), new Date());
-		object.put(ModelPackage.Literals.ETYPES__EDOUBLE.getName(), new Double(1.0));
-		object.put(ModelPackage.Literals.ETYPES__EFLOAT.getName(), new Float(1.0));
-		object.put(ModelPackage.Literals.ETYPES__EINT.getName(), new Integer(1));
-		object.put(ModelPackage.Literals.ETYPES__ELONG.getName(), new Long(1L));
-		object.put(ModelPackage.Literals.ETYPES__ESHORT.getName(), new Short((short) 1).toString());
-		object.put(ModelPackage.Literals.ETYPES__ESTRING.getName(), "j");
+		// Test : Store the object to MongoDB
 
-		typesCollection.insert(object);
+		saveObject(targetObject);
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-		Resource resource = resourceSet.getResource(createObjectURI(ModelPackage.Literals.ETYPES, (ObjectId) object.get(ID_KEY)), true);
-		assertThat(resource, is(notNullValue()));
-		assertThat(resource.getContents().size(), is(1));
-		assertThat(resource.getContents().get(0), is(instanceOf(ETypes.class)));
-		ETypes eTypes = (ETypes) resource.getContents().get(0);
-		assertThat(eTypes.getEBigDecimal(), is(bigDecimal));
-		assertThat(eTypes.getEBigInteger(), is(bigInteger));
-		assertTrue(eTypes.isEBoolean());
-		assertThat(eTypes.getEByte(), is((byte) 1));
-		assertThat(eTypes.getEChar(), is('j'));
-		assertThat(eTypes.getEInt(), is(1));
-		assertThat(eTypes.getELong(), is(1L));
-		assertThat(eTypes.getEShort(), is((short) 1));
-		assertThat(eTypes.getEString(), is("j"));
+		// Verify : Check that the object was stored correctly.
+
+		MongoUtil.checkObject(targetObject);
 	}
 
 	@Test
-	public void testSaveAuthorWithID() throws IOException
+	public void testTargetObjectUpdateSingleAttribute() throws IOException
 	{
-		Person author = ModelFactory.eINSTANCE.createPerson();
-		author.setName("Stephen King");
+		// Setup : Create a target object with the single attribute set and store it to the database.
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-		ObjectId id = new ObjectId(new Date());
-		Resource resource = resourceSet.createResource(createObjectURI(ModelPackage.Literals.PERSON, id));
-		resource.getContents().add(author);
-		HashMap<String, Object> options = new HashMap<String, Object>();
+		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject.setSingleAttribute("junit");
+		saveObject(targetObject);
+
+		// Test : Update the attribute and store it back to the database
+
+		targetObject.setSingleAttribute("green");
+		targetObject.eResource().save(null);
+
+		// Verify : Check that the object was stored correctly and there is only one object in the
+		// collection.
+
+		MongoUtil.checkObject(targetObject);
+		assertThat(targetCollection.getCount(), is(1L));
+	}
+
+	@Test
+	public void testTargetObjectUpdateArrayAttribute() throws IOException
+	{
+		// Setup : Create a target object with an array attribute set and store it to the database.
+
+		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject.getArrayAttribute().add("one");
+		saveObject(targetObject);
+
+		// Test : Update the attribute and store it back to the database
+
+		targetObject.getArrayAttribute().add("two");
+		targetObject.eResource().save(null);
+
+		// Verify : Check that the object was stored correctly and there is only one object in the
+		// collection.
+
+		MongoUtil.checkObject(targetObject);
+		assertThat(targetCollection.getCount(), is(1L));
+	}
+
+	@Test
+	public void testTargetObjectWithObjectId() throws IOException
+	{
+		// Setup : Create a target object and ObjectId for the ID
+
+		ObjectId id = new ObjectId();
+
+		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject.setSingleAttribute("junit");
+
+		HashMap<String, Object> options = new HashMap<String, Object>(1);
 		options.put(MongoDBURIHandlerImpl.OPTION_GENERATE_ID, Boolean.FALSE);
-		long initialTimeStamp = resource.getTimeStamp();
-		resource.save(options);
-		long finalTimeStamp = resource.getTimeStamp();
 
-		assertThat(initialTimeStamp < finalTimeStamp, is(true));
-		assertThat(personCollection.getCount(), is(1L));
-		assertThat(resource.getURI().segmentCount(), is(3));
-		assertThat(resource.getURI().segment(2), is(notNullValue()));
+		// Test : Store the object to MongoDB
 
-	}
+		saveObject(targetObject, createObjectURI(targetObject.eClass(), id), options);
 
-	@Test(expected = IOException.class)
-	public void testSaveWithShortURI() throws IOException
-	{
-		Person author = ModelFactory.eINSTANCE.createPerson();
-		author.setName("Stephen King");
+		// Verify : Check that the object was stored correctly, and that is has the ID we specified.
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-		Resource resource = resourceSet.createResource(URI.createURI("mongo://localhost/collection"));
-		resource.getContents().add(author);
-		resource.save(null);
-	}
-
-	@Test(expected = IOException.class)
-	public void testSaveWithLongURI() throws IOException
-	{
-		Person author = ModelFactory.eINSTANCE.createPerson();
-		author.setName("Stephen King");
-
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-		Resource resource = resourceSet.createResource(URI.createURI("mongo://localhost/resources/junit/collection/id"));
-		resource.getContents().add(author);
-		resource.save(null);
+		TargetObject actual = MongoUtil.checkObject(targetObject);
+		assertThat(MongoUtil.getID(actual), is(id.toString()));
 	}
 
 	@Test
-	public void tesetLoadAuthor()
+	public void testTargetObjectWithArbitraryId() throws IOException
 	{
-		BasicDBObject object = createAuthor("Stephen King");
+		// Setup : Create a target object and arbitrary string for the ID
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-		Resource resource = resourceSet.getResource(createObjectURI(ModelPackage.Literals.PERSON, (ObjectId) object.get(ID_KEY)), true);
-		assertThat(resource.getTimeStamp() > 0, is(true));
-		assertThat(resource.getTimeStamp() <= System.currentTimeMillis(), is(true));
-		assertThat(resource, is(notNullValue()));
-		assertThat(resource.getContents().size(), is(1));
-		assertThat(resource.getContents().get(0), is(instanceOf(Person.class)));
-		Person author = (Person) resource.getContents().get(0);
-		assertThat(author.getName(), is(object.get(ModelPackage.Literals.PERSON__NAME.getName())));
+		String id = "ID";
+
+		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject.setSingleAttribute("junit");
+
+		HashMap<String, Object> options = new HashMap<String, Object>(1);
+		options.put(MongoDBURIHandlerImpl.OPTION_GENERATE_ID, Boolean.FALSE);
+
+		// Test : Store the object to MongoDB
+
+		saveObject(targetObject, createObjectURI(targetObject.eClass(), id), options);
+
+		// Verify : Check that the object was stored correctly, and that is has the ID we specified.
+
+		TargetObject actual = MongoUtil.checkObject(targetObject);
+		assertThat(MongoUtil.getID(actual), is(id));
 	}
 
 	@Test
-	public void testDeleteAuthor() throws IOException
+	public void testDeleteTargetObject() throws IOException
 	{
-		BasicDBObject object = new BasicDBObject();
-		object.put(ModelPackage.Literals.BOOK__TITLE.getName(), "Stephen King");
-		personCollection.insert(object);
-		assertThat(personCollection.getCount(), is(1L));
+		// Setup : Create and store the target object
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-		Resource resource = resourceSet.createResource(createObjectURI(ModelPackage.Literals.PERSON, (ObjectId) object.get(ID_KEY)));
-		resource.delete(null);
+		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject.setSingleAttribute("junit");
+		saveObject(targetObject);
 
-		assertThat(personCollection.getCount(), is(0L));
+		// Test : Delete the target object
+
+		targetObject.eResource().delete(null);
+
+		// Verify : The target object was deleted
+
+		assertThat(targetCollection.getCount(), is(0L));
 	}
 
 	@Test
-	public void testDeleteLocation() throws IOException
+	public void testPrimaryObject() throws IOException
 	{
-		DBObject library = createLibrary("junit");
-		DBObject locationRef = (DBObject) library.get(ModelPackage.Literals.LIBRARY__LOCATION.getName());
+		// Setup : Create a primary object with only the name attribute set
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-		URI locationURI = URI.createURI((String) locationRef.get("_eProxyURI"));
-		Resource locationResource = resourceSet.getResource(createObjectURI(ModelPackage.Literals.LOCATION, new ObjectId(locationURI.lastSegment())), true);
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject.setName("junit");
 
-		locationResource.delete(null);
+		// Test : Store the object to MongoDB
 
-		Resource libraryResource = resourceSet.getResource(createObjectURI(ModelPackage.Literals.LIBRARY, (ObjectId) library.get(ID_KEY)), true);
-		assertThat(libraryResource, is(notNullValue()));
-		assertThat(libraryResource.getContents().size(), is(1));
+		saveObject(primaryObject);
+
+		// Verify : Check that the object was stored correctly.
+
+		MongoUtil.checkObject(primaryObject);
 	}
 
 	@Test
-	public void testSaveLibrary() throws IOException
+	public void testPrimaryObjectWithSingleContainmentReferenceNoProxies() throws IOException
 	{
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-		Library library = ModelFactory.eINSTANCE.createLibrary();
+		// Setup : Create a primary object with a containment reference to a target object.
 
-		Location location = ModelFactory.eINSTANCE.createLocation();
-		location.setAddress("Wastelands");
-		library.setLocation(location);
+		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject.setSingleAttribute("junit");
 
-		Person person = ModelFactory.eINSTANCE.createPerson();
-		person.setName("Stephen King");
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject.setName("junit");
+		primaryObject.setSingleContainmentReferenceNoProxies(targetObject);
 
-		Resource personResource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.PERSON));
-		personResource.getContents().add(person);
-		personResource.save(null);
+		// Test : Store the object to MongoDB
 
-		Book book = ModelFactory.eINSTANCE.createBook();
-		book.setTitle("The Gunslinger");
-		library.getBooks().add(book);
-		book.getAuthors().add(person);
-		location.setFeaturedBook(book);
+		saveObject(primaryObject);
 
-		Resource libraryResource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.LIBRARY));
-		libraryResource.getContents().add(library);
-		libraryResource.save(null);
+		// Verify : Check that the object was stored correctly.
 
-		Resource locationResource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.LOCATION));
-		locationResource.getContents().add(location);
-		locationResource.save(null);
-
-		libraryResource.save(null);
-		personResource.save(null);
-
-		{
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			libraryResource.save(out, null);
-
-			ResourceSet testResourceSet = new ResourceSetImpl();
-			uriHandlers = testResourceSet.getURIConverter().getURIHandlers();
-			uriHandlers.add(0, new MongoDBURIHandlerImpl());
-
-			testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Person/"), personResource.getURI().trimSegments(1).appendSegment(""));
-			testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Location/"), locationResource.getURI().trimSegments(1).appendSegment(""));
-			Resource libraryXMI = new XMIResourceFactoryImpl().createResource(URI.createURI("library.xmi"));
-			testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Library").appendSegment(libraryResource.getURI().lastSegment()), libraryXMI.getURI());
-			testResourceSet.getResources().add(libraryXMI);
-
-			libraryXMI.load(new ByteArrayInputStream(out.toByteArray()), null);
-			assertThat(EcoreUtil.equals(libraryXMI.getContents().get(0), libraryResource.getContents().get(0)), is(true));
-		}
-
-		{
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			Map<Object, Object> options = new HashMap<Object, Object>();
-			options.put(XMLResource.OPTION_BINARY, Boolean.TRUE);
-			libraryResource.save(out, options);
-
-			{
-
-				ResourceSet testResourceSet = new ResourceSetImpl();
-				uriHandlers = testResourceSet.getURIConverter().getURIHandlers();
-				uriHandlers.add(0, new MongoDBURIHandlerImpl());
-
-				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Person/"), personResource.getURI().trimSegments(1).appendSegment(""));
-				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Location/"), locationResource.getURI().trimSegments(1).appendSegment(""));
-
-				Resource libraryBinary = new BinaryResourceImpl(URI.createURI("library.binary"));
-				testResourceSet.getResources().add(libraryBinary);
-				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Library").appendSegment(libraryResource.getURI().lastSegment()), libraryBinary.getURI());
-
-				libraryBinary.load(new ByteArrayInputStream(out.toByteArray()), null);
-				assertThat(EcoreUtil.equals(libraryBinary.getContents().get(0), libraryResource.getContents().get(0)), is(true));
-			}
-			{
-
-				ResourceSet testResourceSet = new ResourceSetImpl();
-				uriHandlers = testResourceSet.getURIConverter().getURIHandlers();
-				uriHandlers.add(0, new MongoDBURIHandlerImpl());
-
-				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Person/"), personResource.getURI().trimSegments(1).appendSegment(""));
-				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Location/"), locationResource.getURI().trimSegments(1).appendSegment(""));
-
-				Resource libraryXMI = new XMIResourceFactoryImpl().createResource(URI.createURI("library.mongo.binary"));
-				testResourceSet.getResources().add(libraryXMI);
-				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Library").appendSegment(libraryResource.getURI().lastSegment()), libraryXMI.getURI());
-
-				libraryXMI.load(new ByteArrayInputStream(out.toByteArray()), options);
-				assertThat(EcoreUtil.equals(libraryXMI.getContents().get(0), libraryResource.getContents().get(0)), is(true));
-			}
-		}
-
-		{
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			Map<Object, Object> options = new HashMap<Object, Object>();
-			options.put(XMIResource.OPTION_SUPPRESS_XMI, Boolean.TRUE);
-			libraryResource.save(out, options);
-
-			{
-				ResourceSet testResourceSet = new ResourceSetImpl();
-				uriHandlers = testResourceSet.getURIConverter().getURIHandlers();
-				uriHandlers.add(0, new MongoDBURIHandlerImpl());
-
-				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Person/"), personResource.getURI().trimSegments(1).appendSegment(""));
-				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Location/"), locationResource.getURI().trimSegments(1).appendSegment(""));
-
-				Resource libraryXML = new XMLResourceFactoryImpl().createResource(URI.createURI("library.xml"));
-				testResourceSet.getResources().add(libraryXML);
-				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Library").appendSegment(libraryResource.getURI().lastSegment()), libraryXML.getURI());
-
-				libraryXML.load(new ByteArrayInputStream(out.toByteArray()), null);
-				assertThat(EcoreUtil.equals(libraryXML.getContents().get(0), libraryResource.getContents().get(0)), is(true));
-			}
-			{
-				ResourceSet testResourceSet = new ResourceSetImpl();
-				uriHandlers = testResourceSet.getURIConverter().getURIHandlers();
-				uriHandlers.add(0, new MongoDBURIHandlerImpl());
-
-				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Person/"), personResource.getURI().trimSegments(1).appendSegment(""));
-				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Location/"), locationResource.getURI().trimSegments(1).appendSegment(""));
-
-				Resource libraryXMI = new XMIResourceFactoryImpl().createResource(URI.createURI("library.mongo.xml"));
-				testResourceSet.getResources().add(libraryXMI);
-				testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../Library").appendSegment(libraryResource.getURI().lastSegment()), libraryXMI.getURI());
-
-				libraryXMI.load(new ByteArrayInputStream(out.toByteArray()), options);
-				assertThat(EcoreUtil.equals(libraryXMI.getContents().get(0), libraryResource.getContents().get(0)), is(true));
-			}
-		}
-
-		assertThat(libraryCollection.getCount(), is(1L));
-		assertThat(libraryResource.getURI().segmentCount(), is(3));
-		assertThat(libraryResource.getURI().segment(2), is(notNullValue()));
-
-		DBObject dbLibrary = libraryCollection.findOne();
-		DBObject dbLocation = (DBObject) dbLibrary.get(ModelPackage.Literals.LIBRARY__LOCATION.getName());
-		assertThat(dbLocation, is(notNullValue()));
-		@SuppressWarnings("unchecked")
-		List<DBObject> books = (List<DBObject>) libraryCollection.findOne().get(ModelPackage.Literals.LIBRARY__BOOKS.getName());
-		assertThat(books, is(notNullValue()));
-		assertThat(books.size(), is(1));
-		DBObject dbBook = books.get(0);
-		assertThat(dbBook, is(notNullValue()));
-		assertThat((String) dbBook.get(ModelPackage.Literals.BOOK__TITLE.getName()), is(book.getTitle()));
-		@SuppressWarnings("unchecked")
-		List<DBObject> authors = (List<DBObject>) dbBook.get(ModelPackage.Literals.BOOK__AUTHORS.getName());
-		assertThat(authors, is(notNullValue()));
-		assertThat(authors.size(), is(1));
-
-		DBObject dbPerson = personCollection.findOne();
-		assertThat(dbPerson, is(notNullValue()));
-		@SuppressWarnings("unchecked")
-		List<DBObject> bookReferences = (List<DBObject>) dbPerson.get(ModelPackage.Literals.PERSON__BOOKS.getName());
-		assertThat(bookReferences, is(notNullValue()));
-		assertThat(bookReferences.size(), is(1));
-
-		ResourceSet testResourceSet = new ResourceSetImpl();
-		uriHandlers = testResourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-
-		Resource testResource = testResourceSet.getResource(libraryResource.getURI(), true);
-		assertThat(testResource.getContents().size(), is(1));
-		Library actualLibrary = (Library) testResource.getContents().get(0);
-		assertThat(actualLibrary.getLocation(), is(notNullValue()));
-		assertThat(actualLibrary.getLocation().getId(), is(location.getId()));
-		assertThat(actualLibrary.getLocation().getAddress(), is(location.getAddress()));
-		assertThat(actualLibrary.getLocation().getFeaturedBook().getTitle(), is(book.getTitle()));
+		MongoUtil.checkObject(primaryObject);
 	}
 
 	@Test
-	public void testLoadLibrary()
+	public void testPrimaryObjectWithMultipleContainmentReferenceNoProxies() throws IOException
 	{
-		DBObject libraryObject = createLibrary("Wastelands");
-		DBObject authorObject = createAuthor("Stephen King");
-		ArrayList<DBObject> authors = new ArrayList<DBObject>();
-		authors.add(authorObject);
-		createBook(libraryObject, "The Gunslinger", authors);
+		// Setup : Create a primary object with multiple containment references to target objects.
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-		Resource resource = resourceSet.getResource(createObjectURI(ModelPackage.Literals.LIBRARY, (ObjectId) libraryObject.get(ID_KEY)), true);
-		assertThat(resource, is(notNullValue()));
-		assertThat(resource.getContents().size(), is(1));
+		TargetObject targetObject1 = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject1.setSingleAttribute("one");
 
-		Library library = (Library) resource.getContents().get(0);
+		TargetObject targetObject2 = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject2.setSingleAttribute("two");
 
-		assertThat(library.getLocation(), is(notNullValue()));
-		assertThat(library.getLocation().getAddress(), is("Wastelands"));
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject.setName("junit");
+		primaryObject.getMultipleContainmentReferenceNoProxies().add(targetObject1);
+		primaryObject.getMultipleContainmentReferenceNoProxies().add(targetObject2);
 
-		assertThat(library.getBooks().size(), is(1));
-		Book book = library.getBooks().get(0);
-		assertThat(book.getTitle(), is("The Gunslinger"));
-		assertThat(book.getAuthors().size(), is(1));
-		Person author = book.getAuthors().get(0);
-		assertThat(author.getName(), is("Stephen King"));
-		assertThat(author.getBooks().size(), is(1));
-		assertThat(author.getBooks().get(0), is(book));
+		// Test : Store the object to MongoDB
+
+		saveObject(primaryObject);
+
+		// Verify : Check that the object was stored correctly.
+
+		MongoUtil.checkObject(primaryObject);
 	}
 
 	@Test
-	public void testUpdateAttribute() throws IOException
+	public void testPrimaryObjectWithSingleNonContainmentReference() throws IOException
 	{
-		DBObject authorObject = createAuthor("Stephen King");
+		// Setup : Create a primary object with a non containment reference to a target object.
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-		Resource resource = resourceSet.getResource(createObjectURI(ModelPackage.Literals.PERSON, (ObjectId) authorObject.get(ID_KEY)), true);
-		Person author = (Person) resource.getContents().get(0);
-		author.setName("Tom Clancy");
-		resource.save(null);
+		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject.setSingleAttribute("junit");
 
-		assertThat(personCollection.getCount(), is(1L));
-		DBObject testObject = personCollection.findOne();
-		assertThat((String) testObject.get(ModelPackage.Literals.PERSON__NAME.getName()), is(author.getName()));
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject.setName("junit");
+		primaryObject.setSingleContainmentReferenceNoProxies(targetObject);
+		primaryObject.setSingleNonContainmentReference(targetObject);
+
+		// Test : Store the object to MongoDB
+
+		saveObject(primaryObject);
+
+		// Verify : Check that the object was stored correctly.
+
+		MongoUtil.checkObject(primaryObject);
 	}
 
 	@Test
-	public void testSaveUpdateLoad() throws IOException
+	public void testPrimaryObjectWithMultipleNonContainmentReference() throws IOException
 	{
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-		Library library = ModelFactory.eINSTANCE.createLibrary();
-		Resource libraryResource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.LIBRARY));
-		libraryResource.getContents().add(library);
-		libraryResource.save(null);
+		// Setup : Create a primary object with multiple containment references to target objects.
 
-		Location location = ModelFactory.eINSTANCE.createLocation();
-		location.setAddress("Austin, TX");
-		Resource locationResource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.LOCATION));
-		locationResource.getContents().add(location);
-		locationResource.save(null);
+		TargetObject targetObject1 = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject1.setSingleAttribute("one");
 
-		library.setLocation(location);
-		libraryResource.save(null);
-		assertThat(libraryCollection.getCount(), is(1L));
+		TargetObject targetObject2 = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject2.setSingleAttribute("two");
 
-		Person author = ModelFactory.eINSTANCE.createPerson();
-		author.setName("Tom Clancy");
-		Resource authorResource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.PERSON));
-		authorResource.getContents().add(author);
-		authorResource.save(null);
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject.setName("junit");
+		primaryObject.getMultipleContainmentReferenceNoProxies().add(targetObject1);
+		primaryObject.getMultipleContainmentReferenceNoProxies().add(targetObject2);
+		primaryObject.getMultipleNonContainmentReference().add(targetObject1);
+		primaryObject.getMultipleNonContainmentReference().add(targetObject2);
 
-		Book book1 = ModelFactory.eINSTANCE.createBook();
-		book1.setTitle("The Hunt for Red October");
-		book1.getAuthors().add(author);
+		// Test : Store the object to MongoDB
 
-		library.getBooks().add(book1);
-		libraryResource.save(null);
-		assertThat(libraryCollection.getCount(), is(1L));
+		saveObject(primaryObject);
 
-		Book book2 = ModelFactory.eINSTANCE.createBook();
-		book2.setTitle("The Cardinal of the Kremlin");
-		book2.getAuthors().add(author);
-		library.getBooks().add(book2);
+		// Verify : Check that the object was stored correctly.
 
-		Book book3 = ModelFactory.eINSTANCE.createBook();
-		book3.setTitle("Without Remorse");
-		book3.getAuthors().add(author);
-		library.getBooks().add(book3);
-
-		libraryResource.save(null);
-		assertThat(libraryCollection.getCount(), is(1L));
-		authorResource.save(null);
-
-		ObjectId libraryID = new ObjectId(libraryResource.getURI().segment(2));
-		ResourceSet targetResourceSet = new ResourceSetImpl();
-		uriHandlers = targetResourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-		Resource targetLibraryResource = targetResourceSet.getResource(createObjectURI(ModelPackage.Literals.LIBRARY, libraryID), true);
-
-		assertThat(targetLibraryResource, is(notNullValue()));
-		assertThat(targetLibraryResource.getContents().size(), is(1));
-		Library targetLibrary = (Library) targetLibraryResource.getContents().get(0);
-
-		assertThat(targetLibrary.getLocation(), is(notNullValue()));
-		assertThat(targetLibrary.getLocation().getAddress(), is(location.getAddress()));
-
-		assertThat(targetLibrary.getBooks().size(), is(3));
-		assertThat(targetLibrary.getBooks().get(0).getTitle(), is(book1.getTitle()));
-		assertThat(targetLibrary.getBooks().get(0).getAuthors().size(), is(1));
-		assertThat(targetLibrary.getBooks().get(0).getAuthors().get(0).getName(), is(author.getName()));
-
-		assertThat(targetLibrary.getBooks().get(1).getTitle(), is(book2.getTitle()));
-		assertThat(targetLibrary.getBooks().get(1).getAuthors().size(), is(1));
-		assertThat(targetLibrary.getBooks().get(1).getAuthors().get(0).getName(), is(author.getName()));
-
-		assertThat(targetLibrary.getBooks().get(2).getTitle(), is(book3.getTitle()));
-		assertThat(targetLibrary.getBooks().get(2).getAuthors().size(), is(1));
-		assertThat(targetLibrary.getBooks().get(2).getAuthors().get(0).getName(), is(author.getName()));
-
-		ObjectId authorID = new ObjectId(authorResource.getURI().segment(2));
-		Resource targetPersonResource = targetResourceSet.getResource(createObjectURI(ModelPackage.Literals.PERSON, authorID), true);
-		assertThat(targetPersonResource, is(notNullValue()));
-		assertThat(targetPersonResource.getContents().size(), is(1));
-		Person targetAuthor = (Person) targetPersonResource.getContents().get(0);
-		assertThat(targetAuthor.getBooks().size(), is(3));
-		assertThat(targetAuthor.getBooks().get(0), is(sameInstance(targetLibrary.getBooks().get(0))));
-		assertThat(targetAuthor.getBooks().get(1), is(sameInstance(targetLibrary.getBooks().get(1))));
-		assertThat(targetAuthor.getBooks().get(2), is(sameInstance(targetLibrary.getBooks().get(2))));
+		MongoUtil.checkObject(primaryObject);
 	}
 
 	@Test
-	public void testExternalReference() throws IOException
+	public void testPrimaryObjectWithSingleContainmentReferenceProxies() throws IOException
 	{
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		// Setup : Create a primary object with a cross-document containment reference to a target
+		// object.
 
-		Person author = ModelFactory.eINSTANCE.createPerson();
-		author.setName("Ed Merks");
-		Resource authorResource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.PERSON));
-		authorResource.getContents().add(author);
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
 
-		URI bookURI = URI.createFileURI(temporaryFolder.newFile("book.xml").getAbsolutePath());
-		Resource bookResource = resourceSet.createResource(bookURI);
-		Book book = ModelFactory.eINSTANCE.createBook();
-		book.setTitle("Eclipse Modeling Framework");
-		book.getAuthors().add(author);
-		bookResource.getContents().add(book);
+		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject.setSingleAttribute("junit");
+		saveObject(resourceSet, targetObject);
 
-		authorResource.save(null);
-		bookResource.save(null);
-		authorResource.save(null);
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject.setName("junit");
+		primaryObject.setSingleContainmentReferenceProxies(targetObject);
 
-		ResourceSet targetResourceSet = new ResourceSetImpl();
-		uriHandlers = targetResourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		// Test : Store the object to MongoDB
 
-		ObjectId authorID = new ObjectId(authorResource.getURI().segment(2));
-		Resource targetAuthorResource = targetResourceSet.getResource(createObjectURI(ModelPackage.Literals.PERSON, authorID), true);
-		assertThat(targetAuthorResource, is(notNullValue()));
-		assertThat(targetAuthorResource.getContents().size(), is(1));
-		Person targetAuthor = (Person) targetAuthorResource.getContents().get(0);
-		assertThat(targetAuthor.getBooks().size(), is(1));
-		Book targetBook = targetAuthor.getBooks().get(0);
-		assertThat(targetBook.getTitle(), is(book.getTitle()));
+		saveObject(resourceSet, primaryObject);
+
+		// Verify : Check that the object was stored correctly.
+
+		MongoUtil.checkObject(primaryObject);
 	}
 
 	@Test
-	public void testInternalReference() throws IOException
+	public void testPrimaryObjectWithMultipleContainmentReferenceProxies() throws IOException
 	{
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-		Library library = ModelFactory.eINSTANCE.createLibrary();
+		// Setup : Create a primary object with multiple cross-document containment references to target
+		// objects.
 
-		Book book = ModelFactory.eINSTANCE.createBook();
-		book.setTitle("The Gunslinger");
-		library.getBooks().add(book);
-		library.setLatestBook(book);
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
 
-		Resource libraryResource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.LIBRARY));
-		libraryResource.getContents().add(library);
-		libraryResource.save(null);
+		TargetObject targetObject1 = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject1.setSingleAttribute("one");
+		saveObject(resourceSet, targetObject1);
 
-		resourceSet = new ResourceSetImpl();
-		uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-		Resource resource = resourceSet.getResource(library.eResource().getURI(), true);
-		assertThat(resource, is(notNullValue()));
-		assertThat(resource.getContents().size(), is(1));
+		TargetObject targetObject2 = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject2.setSingleAttribute("two");
+		saveObject(resourceSet, targetObject2);
 
-		Library actualLibrary = (Library) resource.getContents().get(0);
-		assertThat(actualLibrary.getLatestBook(), is(notNullValue()));
-		assertThat(actualLibrary.getLatestBook().getTitle(), is(book.getTitle()));
-	}
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject.setName("junit");
+		primaryObject.getMultipleContainmentReferenceProxies().add(targetObject1);
+		primaryObject.getMultipleContainmentReferenceProxies().add(targetObject2);
 
-	@Test
-	public void testLoadNonexistentResource()
-	{
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		// Test : Store the object to MongoDB
 
-		Resource resource = resourceSet.getResource(createObjectURI(ModelPackage.Literals.LIBRARY, new ObjectId()), true);
-		assertThat(resource, is(notNullValue()));
-		assertThat(resource.getContents().size(), is(0));
-	}
+		saveObject(primaryObject);
 
-	@Test
-	public void testQueryAllLibraries()
-	{
-		createLibrary("Wastelands");
-		createLibrary("Badlands");
+		// Verify : Check that the object was stored correctly.
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-
-		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.LIBRARY, ""), true);
-		assertThat(resource, is(notNullValue()));
-		assertThat(resource.getContents().size(), is(1));
-
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(2));
-		Library library1 = (Library) result.getValues().get(0);
-		Library library2 = (Library) result.getValues().get(1);
-
-		assertThat(library1.getLocation(), is(notNullValue()));
-		assertThat(library1.getLocation().getAddress(), is("Wastelands"));
-
-		assertThat(library2.getLocation(), is(notNullValue()));
-		assertThat(library2.getLocation().getAddress(), is("Badlands"));
-	}
-
-	@Test
-	public void testQueryLibraryBooks()
-	{
-		BasicDBObject wastelands = createLibrary("Wastelands");
-		createBook(wastelands, "Gunslinger", Collections.<DBObject> emptyList());
-		BasicDBObject badlands = createLibrary("Badlands");
-		createBook(badlands, "Gunslinger", Collections.<DBObject> emptyList());
-		createLibrary("Wetlands");
-
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-
-		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.LIBRARY, "books.title == 'Gunslinger'"), true);
-		assertThat(resource, is(notNullValue()));
-		assertThat(resource.getContents().size(), is(1));
-
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(2));
-		Library library1 = (Library) result.getValues().get(0);
-		Library library2 = (Library) result.getValues().get(1);
-
-		assertThat(library1.getLocation(), is(notNullValue()));
-		assertThat(library1.getLocation().getAddress(), is("Wastelands"));
-
-		assertThat(library2.getLocation(), is(notNullValue()));
-		assertThat(library2.getLocation().getAddress(), is("Badlands"));
-	}
-
-	@Test
-	public void testQueryLibraryOr()
-	{
-		BasicDBObject wastelands = createLibrary("Wastelands");
-		createBook(wastelands, "Gunslinger", Collections.<DBObject> emptyList());
-		BasicDBObject badlands = createLibrary("Badlands");
-		createBook(badlands, "The Shining", Collections.<DBObject> emptyList());
-		BasicDBObject wetlands = createLibrary("Wetlands");
-		createBook(wetlands, "Thinner", Collections.<DBObject> emptyList());
-
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-
-		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.LIBRARY, "(books.title == 'Gunslinger') || (books.title == 'The Shining') || (books.title == 'Thinner')"), true);
-		assertThat(resource, is(notNullValue()));
-		assertThat(resource.getContents().size(), is(1));
-
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(3));
-		Library library1 = (Library) result.getValues().get(0);
-		Library library2 = (Library) result.getValues().get(1);
-		Library library3 = (Library) result.getValues().get(2);
-
-		assertThat(library1.getLocation(), is(notNullValue()));
-		assertThat(library1.getLocation().getAddress(), is("Wastelands"));
-
-		assertThat(library2.getLocation(), is(notNullValue()));
-		assertThat(library2.getLocation().getAddress(), is("Badlands"));
-
-		assertThat(library3.getLocation(), is(notNullValue()));
-		assertThat(library3.getLocation().getAddress(), is("Wetlands"));
-	}
-
-	@Test
-	public void testQueryLibraryAnd()
-	{
-		BasicDBObject wastelands = createLibrary("Wastelands");
-		createBook(wastelands, "Gunslinger", Collections.<DBObject> emptyList());
-		BasicDBObject badlands = createLibrary("Badlands");
-		createBook(badlands, "Gunslinger", Collections.<DBObject> emptyList());
-		createBook(badlands, "The Shining", Collections.<DBObject> emptyList());
-		BasicDBObject wetlands = createLibrary("Wetlands");
-		createBook(wetlands, "Thinner", Collections.<DBObject> emptyList());
-		createBook(wetlands, "Gunslinger", Collections.<DBObject> emptyList());
-		createBook(wetlands, "The Shining", Collections.<DBObject> emptyList());
-
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-
-		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.LIBRARY, "(books.title == 'Gunslinger') && (books.title == 'The Shining') && (books.title == 'Thinner')"), true);
-		assertThat(resource, is(notNullValue()));
-		assertThat(resource.getContents().size(), is(1));
-
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(1));
-		Library library1 = (Library) result.getValues().get(0);
-
-		assertThat(library1.getLocation(), is(notNullValue()));
-		assertThat(library1.getLocation().getAddress(), is("Wetlands"));
-	}
-
-	@Test
-	public void testQueryPersonNullName()
-	{
-		createAuthor(null);
-		createAuthor("Stephen King");
-
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-
-		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.PERSON, "name == null"), true);
-		assertThat(resource, is(notNullValue()));
-		assertThat(resource.getContents().size(), is(1));
-
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(1));
-		Person person = (Person) result.getValues().get(0);
-		assertThat(person.getName(), is((String) null));
-	}
-
-	@Test
-	public void testQueryPersonNonNullName()
-	{
-		createAuthor(null);
-		createAuthor("Stephen King");
-
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-
-		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.PERSON, "name != null"), true);
-		assertThat(resource, is(notNullValue()));
-		assertThat(resource.getContents().size(), is(1));
-
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(1));
-		Person person = (Person) result.getValues().get(0);
-		assertThat(person.getName(), is("Stephen King"));
-	}
-
-	@Test
-	public void testQueryPersonNotEqual()
-	{
-		createAuthor("Bryan Hunt");
-		createAuthor("Dean Kontz");
-		createAuthor("Ed Merks");
-		createAuthor("Stephen King");
-
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-
-		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.PERSON, "(name != 'Dean Kontz') && (name != 'Stephen King') && (name != 'Bryan Hunt')"), true);
-		assertThat(resource, is(notNullValue()));
-		assertThat(resource.getContents().size(), is(1));
-
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(1));
-		Person person = (Person) result.getValues().get(0);
-		assertThat(person.getName(), is("Ed Merks"));
-	}
-
-	@Test
-	public void testQueryLibraryID()
-	{
-		DBObject libraryObject = createLibrary("Wastelands");
-
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-
-		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.LIBRARY, "_id=='" + libraryObject.get(ID_KEY) + "'"), true);
-		assertThat(resource, is(notNullValue()));
-		assertThat(resource.getContents().size(), is(1));
-
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(1));
-		Library library = (Library) result.getValues().get(0);
-
-		assertThat(library.getLocation(), is(notNullValue()));
-		assertThat(library.getLocation().getAddress(), is("Wastelands"));
-	}
-
-	@Test
-	public void testQueryPerson()
-	{
-		createAuthor("Stephen King");
-
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-
-		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.PERSON, "name=='Stephen King'"), true);
-		assertThat(resource, is(notNullValue()));
-		assertThat(resource.getContents().size(), is(1));
-
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(1));
-		Person author = (Person) result.getValues().get(0);
-
-		assertThat(author.getName(), is("Stephen King"));
+		MongoUtil.checkObject(primaryObject);
 	}
 
 	@Test
 	public void testFeatureMap() throws IOException
 	{
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		// Setup : Create a primary object and two target objects for the feature map.
 
-		MappedLibrary library = ModelFactory.eINSTANCE.createMappedLibrary();
-		Resource libraryResource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.LIBRARY));
-		libraryResource.getContents().add(library);
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject.setName("junit");
 
-		Location location = ModelFactory.eINSTANCE.createLocation();
-		location.setAddress("Austin, TX");
-		Resource locationResource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.LOCATION));
-		locationResource.getContents().add(location);
-		locationResource.save(null);
-		library.setLocation(location);
+		TargetObject targetObject1 = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject1.setSingleAttribute("one");
 
-		Person author = ModelFactory.eINSTANCE.createPerson();
-		author.setName("Tom Clancy");
-		Resource authorResource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.PERSON));
-		authorResource.getContents().add(author);
-		authorResource.save(null);
+		TargetObject targetObject2 = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject2.setSingleAttribute("two");
 
-		Book book1 = ModelFactory.eINSTANCE.createBook();
-		book1.setTitle("The Hunt for Red October");
-		book1.getAuthors().add(author);
-		library.getRegularBooks().add(book1);
+		primaryObject.getFeatureMapType1().add(targetObject1);
+		primaryObject.getFeatureMapType2().add(targetObject2);
 
-		Book book2 = ModelFactory.eINSTANCE.createBook();
-		book2.setTitle("The Cardinal of the Kremlin");
-		book2.getAuthors().add(author);
-		library.getRareBooks().add(book2);
+		assertThat(primaryObject.getFeatureMapCollection().size(), is(2));
+		assertThat(primaryObject.getFeatureMapType1().size(), is(1));
+		assertThat(primaryObject.getFeatureMapType2().size(), is(1));
 
-		Book book3 = ModelFactory.eINSTANCE.createBook();
-		book3.setTitle("Without Remorse");
-		book3.getAuthors().add(author);
-		library.getRareBooks().add(book3);
+		// Test : Store the object to MongDB
 
-		libraryResource.save(null);
-		assertThat(libraryCollection.getCount(), is(1L));
-		authorResource.save(null);
+		saveObject(primaryObject);
 
-		ObjectId libraryID = new ObjectId(libraryResource.getURI().segment(2));
-		ResourceSet targetResourceSet = new ResourceSetImpl();
-		uriHandlers = targetResourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
-		Resource targetLibraryResource = targetResourceSet.getResource(createObjectURI(ModelPackage.Literals.LIBRARY, libraryID), true);
+		// Verify : Check that the object was stored correctly.
 
-		assertThat(targetLibraryResource, is(notNullValue()));
-		assertThat(targetLibraryResource.getContents().size(), is(1));
-		MappedLibrary targetLibrary = (MappedLibrary) targetLibraryResource.getContents().get(0);
+		HashSet<EStructuralFeature> excludeFeatures = new HashSet<EStructuralFeature>(1);
+		excludeFeatures.add(ModelPackage.Literals.PRIMARY_OBJECT__FEATURE_MAP_COLLECTION);
+		PrimaryObject actual = MongoUtil.checkObject(primaryObject, excludeFeatures);
+		assertThat(actual.getFeatureMapCollection().size(), is(2));
+	}
 
-		assertThat(targetLibrary.getLocation(), is(notNullValue()));
-		assertThat(targetLibrary.getLocation().getAddress(), is(location.getAddress()));
+	@Test
+	public void testXMIRepresentation() throws IOException
+	{
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
 
-		assertThat(targetLibrary.getBooks().size(), is(3));
+		TargetObject targetObject1 = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject1.setSingleAttribute("one");
+		saveObject(resourceSet, targetObject1);
 
-		assertThat(targetLibrary.getRegularBooks().size(), is(1));
-		assertThat(targetLibrary.getRegularBooks().get(0).getTitle(), is(book1.getTitle()));
-		assertThat(targetLibrary.getRegularBooks().get(0).getAuthors().size(), is(1));
-		assertThat(targetLibrary.getRegularBooks().get(0).getAuthors().get(0).getName(), is(author.getName()));
+		TargetObject targetObject2 = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject2.setSingleAttribute("two");
+		saveObject(resourceSet, targetObject2);
 
-		assertThat(targetLibrary.getRareBooks().size(), is(2));
-		assertThat(targetLibrary.getRareBooks().get(0).getTitle(), is(book2.getTitle()));
-		assertThat(targetLibrary.getRareBooks().get(0).getAuthors().size(), is(1));
-		assertThat(targetLibrary.getRareBooks().get(0).getAuthors().get(0).getName(), is(author.getName()));
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject.setName("junit");
+		primaryObject.getMultipleContainmentReferenceProxies().add(targetObject1);
+		primaryObject.getMultipleContainmentReferenceProxies().add(targetObject2);
 
-		assertThat(targetLibrary.getRareBooks().get(1).getTitle(), is(book3.getTitle()));
-		assertThat(targetLibrary.getRareBooks().get(1).getAuthors().size(), is(1));
-		assertThat(targetLibrary.getRareBooks().get(1).getAuthors().get(0).getName(), is(author.getName()));
+		saveObject(resourceSet, primaryObject);
 
-		ObjectId authorID = new ObjectId(authorResource.getURI().segment(2));
-		Resource targetPersonResource = targetResourceSet.getResource(createObjectURI(ModelPackage.Literals.PERSON, authorID), true);
-		assertThat(targetPersonResource, is(notNullValue()));
-		assertThat(targetPersonResource.getContents().size(), is(1));
-		Person targetAuthor = (Person) targetPersonResource.getContents().get(0);
-		assertThat(targetAuthor.getBooks().size(), is(3));
-		assertThat(targetAuthor.getBooks().get(0), is(sameInstance(targetLibrary.getRegularBooks().get(0))));
-		assertThat(targetAuthor.getBooks().get(1), is(sameInstance(targetLibrary.getRareBooks().get(0))));
-		assertThat(targetAuthor.getBooks().get(2), is(sameInstance(targetLibrary.getRareBooks().get(1))));
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		primaryObject.eResource().save(out, null);
 
+		ResourceSet testResourceSet = MongoUtil.createResourceSet();
+
+		testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../TargetObject/"), targetObject1.eResource().getURI().trimSegments(1).appendSegment(""));
+		Resource libraryXMI = new XMIResourceFactoryImpl().createResource(URI.createURI(temporaryFolder.newFile("model.xmi").getAbsolutePath()));
+		testResourceSet.getResources().add(libraryXMI);
+
+		libraryXMI.load(new ByteArrayInputStream(out.toByteArray()), null);
+		MongoUtil.checkObject(primaryObject, libraryXMI.getContents().get(0));
+	}
+
+	@Test
+	public void testBinaryRepresentation() throws IOException
+	{
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
+
+		TargetObject targetObject1 = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject1.setSingleAttribute("one");
+		saveObject(resourceSet, targetObject1);
+
+		TargetObject targetObject2 = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject2.setSingleAttribute("two");
+		saveObject(resourceSet, targetObject2);
+
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject.setName("junit");
+		primaryObject.getMultipleContainmentReferenceProxies().add(targetObject1);
+		primaryObject.getMultipleContainmentReferenceProxies().add(targetObject2);
+
+		saveObject(resourceSet, primaryObject);
+
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Map<Object, Object> options = new HashMap<Object, Object>();
+		options.put(XMLResource.OPTION_BINARY, Boolean.TRUE);
+		primaryObject.eResource().save(out, options);
+
+		{
+			ResourceSet testResourceSet = MongoUtil.createResourceSet();
+
+			testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../TargetObject/"), targetObject1.eResource().getURI().trimSegments(1).appendSegment(""));
+
+			Resource libraryBinary = new BinaryResourceImpl(URI.createURI(temporaryFolder.newFile("model.binary").getAbsolutePath()));
+			testResourceSet.getResources().add(libraryBinary);
+
+			libraryBinary.load(new ByteArrayInputStream(out.toByteArray()), null);
+			MongoUtil.checkObject(primaryObject, libraryBinary.getContents().get(0));
+		}
+		{
+			ResourceSet testResourceSet = MongoUtil.createResourceSet();
+
+			testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../TargetObject/"), targetObject1.eResource().getURI().trimSegments(1).appendSegment(""));
+
+			Resource libraryXMI = new XMIResourceFactoryImpl().createResource(URI.createURI(temporaryFolder.newFile("model.mongo.binary").getAbsolutePath()));
+			testResourceSet.getResources().add(libraryXMI);
+
+			libraryXMI.load(new ByteArrayInputStream(out.toByteArray()), options);
+			MongoUtil.checkObject(primaryObject, libraryXMI.getContents().get(0));
+		}
+	}
+
+	@Test
+	public void testXMLRepresentation() throws IOException
+	{
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
+
+		TargetObject targetObject1 = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject1.setSingleAttribute("one");
+		saveObject(resourceSet, targetObject1);
+
+		TargetObject targetObject2 = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject2.setSingleAttribute("two");
+		saveObject(resourceSet, targetObject2);
+
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject.setName("junit");
+		primaryObject.getMultipleContainmentReferenceProxies().add(targetObject1);
+		primaryObject.getMultipleContainmentReferenceProxies().add(targetObject2);
+
+		saveObject(resourceSet, primaryObject);
+
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		Map<Object, Object> options = new HashMap<Object, Object>();
+		options.put(XMIResource.OPTION_SUPPRESS_XMI, Boolean.TRUE);
+		primaryObject.eResource().save(out, options);
+
+		{
+			ResourceSet testResourceSet = MongoUtil.createResourceSet();
+
+			testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../TargetObject/"), targetObject1.eResource().getURI().trimSegments(1).appendSegment(""));
+
+			Resource libraryXML = new XMLResourceFactoryImpl().createResource(URI.createURI(temporaryFolder.newFile("model.xml").getAbsolutePath()));
+			testResourceSet.getResources().add(libraryXML);
+
+			libraryXML.load(new ByteArrayInputStream(out.toByteArray()), null);
+			MongoUtil.checkObject(primaryObject, libraryXML.getContents().get(0));
+		}
+		{
+			ResourceSet testResourceSet = MongoUtil.createResourceSet();
+
+			testResourceSet.getURIConverter().getURIMap().put(URI.createURI("../TargetObject/"), targetObject1.eResource().getURI().trimSegments(1).appendSegment(""));
+
+			Resource libraryXMI = new XMIResourceFactoryImpl().createResource(URI.createURI(temporaryFolder.newFile("model.mongo.xml").getAbsolutePath()));
+			testResourceSet.getResources().add(libraryXMI);
+
+			libraryXMI.load(new ByteArrayInputStream(out.toByteArray()), options);
+			MongoUtil.checkObject(primaryObject, libraryXMI.getContents().get(0));
+		}
 	}
 
 	@Test
 	public void testExtrinsicIDs() throws IOException
 	{
-		ResourceSet resourceSet = new ResourceSetImpl();
+		// Setup : Create a target object and set its extrinsic ID
+
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl()
 		{
 			@Override
@@ -1033,23 +662,22 @@ public class TestEmfMongoDB
 			}
 		});
 
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject.setSingleAttribute("junit");
+		saveObject(resourceSet, targetObject);
 
-		Resource resource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.PERSON));
+		XMLResource resource = (XMLResource) targetObject.eResource();
+		String authorID = resource.getID(targetObject);
 
-		Person author = ModelFactory.eINSTANCE.createPerson();
-		author.setName("Stephen King");
-		resource.getContents().add(author);
-		String authorID = ((XMLResource) resource).getID(author);
+		// Test : Reload the target object
 
-		resource.save(null);
 		resource.unload();
-
 		resource.load(null);
+
+		// Verify : Check that the extrinsic ID was restored.
+
 		EObject obj = resource.getContents().get(0);
 		String id = ((XMLResource) resource).getID(obj);
-
 		assertThat(id, equalTo(authorID));
 	}
 
@@ -1082,113 +710,6 @@ public class TestEmfMongoDB
 
 		long endTime = System.currentTimeMillis();
 		System.out.println("Time to load " + numberObjects + " objects: " + (endTime - startTime) + "ms");
-
-		startTime = System.currentTimeMillis();
-		DBObject person = personCollection.findOne(new BasicDBObject("name", "Person 203500"));
-		assertThat(person, is(notNullValue()));
-		endTime = System.currentTimeMillis();
-		System.out.println("Time to find: " + (endTime - startTime) + "ms");
-	}
-
-	private BasicDBObject createAuthor(String name)
-	{
-		long count = personCollection.count();
-
-		BasicDBObject object = new BasicDBObject();
-		object.put("_timeStamp", System.currentTimeMillis());
-		object.put("_eClass", EcoreUtil.getURI(ModelPackage.Literals.PERSON).toString());
-		if (name != null)
-		{
-			object.put(ModelPackage.Literals.PERSON__NAME.getName(), name);
-		}
-
-		personCollection.insert(object);
-		assertThat(personCollection.getCount(), is(count + 1));
-		return object;
-	}
-
-	private DBObject createBook(DBObject library, String title, List<DBObject> authors)
-	{
-		BasicDBObject object = new BasicDBObject();
-		object.put("_timeStamp", System.currentTimeMillis());
-		object.put("_eClass", EcoreUtil.getURI(ModelPackage.Literals.BOOK).toString());
-		object.put(ModelPackage.Literals.BOOK__TITLE.getName(), title);
-		object.put(ModelPackage.Literals.BOOK__TAGS.getName(), new ArrayList<String>());
-		object.put(ModelPackage.Literals.BOOK__DATA.getName(), new ArrayList<String>());
-
-		ArrayList<DBObject> authorsReferences = new ArrayList<DBObject>();
-
-		for (DBObject author : authors)
-		{
-			ObjectId authorId = (ObjectId) author.get(ID_KEY);
-			authorsReferences.add(createProxy(ModelPackage.Literals.PERSON, "../" + personCollection.getName() + "/" + authorId + "#/"));
-		}
-
-		object.put(ModelPackage.Literals.BOOK__AUTHORS.getName(), authorsReferences);
-
-		@SuppressWarnings("unchecked")
-		List<DBObject> books = (List<DBObject>) library.get(ModelPackage.Literals.LIBRARY__BOOKS.getName());
-
-		if (books == null)
-		{
-			books = new ArrayList<DBObject>();
-			library.put(ModelPackage.Literals.LIBRARY__BOOKS.getName(), books);
-		}
-
-		books.add(object);
-		libraryCollection.update(new BasicDBObject(ID_KEY, library.get(ID_KEY)), library);
-
-		for (DBObject author : authors)
-		{
-			@SuppressWarnings("unchecked")
-			ArrayList<DBObject> bookReferences = (ArrayList<DBObject>) author.get(ModelPackage.Literals.PERSON__BOOKS.getName());
-
-			if (bookReferences == null)
-			{
-				bookReferences = new ArrayList<DBObject>();
-				author.put(ModelPackage.Literals.PERSON__BOOKS.getName(), bookReferences);
-			}
-
-			BasicDBObject proxy = new BasicDBObject();
-			proxy.put("_eProxyURI", "../Library/" + library.get("_id") + "#//@books." + (bookReferences.size()));
-			proxy.put("_eClass", EcoreUtil.getURI(ModelPackage.Literals.BOOK).toString());
-			bookReferences.add(proxy);
-			personCollection.update(new BasicDBObject(ID_KEY, author.get(ID_KEY)), author);
-		}
-
-		return object;
-	}
-
-	private BasicDBObject createLibrary(String location)
-	{
-		long locationCount = locationCollection.count();
-		long libraryCount = libraryCollection.count();
-
-		BasicDBObject locationObject = new BasicDBObject();
-		locationObject.put("_timeStamp", System.currentTimeMillis());
-		locationObject.put("_eClass", EcoreUtil.getURI(ModelPackage.Literals.LOCATION).toString());
-		locationObject.put(ModelPackage.Literals.LOCATION__ADDRESS.getName(), location);
-
-		locationCollection.insert(locationObject);
-		assertThat(locationCollection.getCount(), is(locationCount + 1));
-
-		BasicDBObject libraryObject = new BasicDBObject();
-		libraryObject.put("_timeStamp", System.currentTimeMillis());
-		libraryObject.put("_eClass", EcoreUtil.getURI(ModelPackage.Literals.LIBRARY).toString());
-		ObjectId locationId = (ObjectId) locationObject.get(ID_KEY);
-		libraryObject.put(ModelPackage.Literals.LIBRARY__LOCATION.getName(), createProxy(ModelPackage.Literals.LOCATION, "../" + locationCollection.getName() + "/" + locationId + "#/"));
-
-		libraryCollection.insert(libraryObject);
-		assertThat(libraryCollection.getCount(), is(libraryCount + 1));
-		return libraryObject;
-	}
-
-	private DBObject createProxy(EClass eClass, String proxy)
-	{
-		BasicDBObject proxyObject = new BasicDBObject();
-		proxyObject.put("_eProxyURI", proxy);
-		proxyObject.put("_eClass", EcoreUtil.getURI(eClass).toString());
-		return proxyObject;
 	}
 
 	private URI createCollectionURI(EClass eClass)
@@ -1196,23 +717,34 @@ public class TestEmfMongoDB
 		return URI.createURI("mongo://localhost/junit/" + eClass.getName() + "/");
 	}
 
-	private URI createObjectURI(EClass eClass, ObjectId id)
+	private URI createObjectURI(EClass eClass, Object id)
 	{
 		return createCollectionURI(eClass).trimSegments(1).appendSegment(id.toString());
 	}
 
-	private URI createQueryURI(EClass eClass, String query)
+	private void saveObject(EObject object) throws IOException
 	{
-		return createCollectionURI(eClass).appendQuery(URI.encodeQuery(query, false));
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		saveObject(resourceSet, object, createCollectionURI(object.eClass()), null);
 	}
 
-	private static final String ID_KEY = "_id";
+	private void saveObject(ResourceSet resourceSet, EObject object) throws IOException
+	{
+		saveObject(resourceSet, object, createCollectionURI(object.eClass()), null);
+	}
 
-	private DBCollection typesCollection;
-	private DBCollection personCollection;
-	private DBCollection libraryCollection;
-	private DBCollection locationCollection;
-	private DB db;
+	private void saveObject(EObject object, URI uri, HashMap<String, Object> options) throws IOException
+	{
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		saveObject(resourceSet, object, uri, options);
+	}
 
-	private Mongo mongo;
+	private void saveObject(ResourceSet resourceSet, EObject object, URI uri, HashMap<String, Object> options) throws IOException
+	{
+		Resource resource = resourceSet.createResource(uri);
+		resource.getContents().add(object);
+		resource.save(options);
+	}
+
+	private DBCollection targetCollection;
 }

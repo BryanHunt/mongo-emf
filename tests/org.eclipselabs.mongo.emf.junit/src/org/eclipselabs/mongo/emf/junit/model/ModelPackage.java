@@ -441,6 +441,152 @@ public interface ModelPackage extends EPackage
 	int MAPPED_LIBRARY_FEATURE_COUNT = 4;
 
 	/**
+	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl <em>Primary Object</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl
+	 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getPrimaryObject()
+	 * @generated
+	 */
+	int PRIMARY_OBJECT = 6;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMARY_OBJECT__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Single Non Containment Reference</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Multiple Non Containment Reference</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE = 2;
+
+	/**
+	 * The feature id for the '<em><b>Single Containment Reference No Proxies</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_NO_PROXIES = 3;
+
+	/**
+	 * The feature id for the '<em><b>Multiple Containment Reference No Proxies</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_NO_PROXIES = 4;
+
+	/**
+	 * The feature id for the '<em><b>Single Containment Reference Proxies</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES = 5;
+
+	/**
+	 * The feature id for the '<em><b>Multiple Containment Reference Proxies</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES = 6;
+
+	/**
+	 * The feature id for the '<em><b>Feature Map Type2</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMARY_OBJECT__FEATURE_MAP_TYPE2 = 7;
+
+	/**
+	 * The feature id for the '<em><b>Feature Map Type1</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMARY_OBJECT__FEATURE_MAP_TYPE1 = 8;
+
+	/**
+	 * The feature id for the '<em><b>Feature Map Collection</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMARY_OBJECT__FEATURE_MAP_COLLECTION = 9;
+
+	/**
+	 * The number of structural features of the '<em>Primary Object</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMARY_OBJECT_FEATURE_COUNT = 10;
+
+	/**
+	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.TargetObjectImpl <em>Target Object</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipselabs.mongo.emf.junit.model.impl.TargetObjectImpl
+	 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getTargetObject()
+	 * @generated
+	 */
+	int TARGET_OBJECT = 7;
+
+	/**
+	 * The feature id for the '<em><b>Single Attribute</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TARGET_OBJECT__SINGLE_ATTRIBUTE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Array Attribute</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TARGET_OBJECT__ARRAY_ATTRIBUTE = 1;
+
+	/**
+	 * The number of structural features of the '<em>Target Object</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TARGET_OBJECT_FEATURE_COUNT = 2;
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.junit.model.Person <em>Person</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -798,6 +944,158 @@ public interface ModelPackage extends EPackage
 	EAttribute getMappedLibrary_Books();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject <em>Primary Object</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Primary Object</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject
+	 * @generated
+	 */
+	EClass getPrimaryObject();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getName()
+	 * @see #getPrimaryObject()
+	 * @generated
+	 */
+	EAttribute getPrimaryObject_Name();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getSingleNonContainmentReference <em>Single Non Containment Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Single Non Containment Reference</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getSingleNonContainmentReference()
+	 * @see #getPrimaryObject()
+	 * @generated
+	 */
+	EReference getPrimaryObject_SingleNonContainmentReference();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getMultipleNonContainmentReference <em>Multiple Non Containment Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Multiple Non Containment Reference</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getMultipleNonContainmentReference()
+	 * @see #getPrimaryObject()
+	 * @generated
+	 */
+	EReference getPrimaryObject_MultipleNonContainmentReference();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getSingleContainmentReferenceNoProxies <em>Single Containment Reference No Proxies</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Single Containment Reference No Proxies</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getSingleContainmentReferenceNoProxies()
+	 * @see #getPrimaryObject()
+	 * @generated
+	 */
+	EReference getPrimaryObject_SingleContainmentReferenceNoProxies();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getMultipleContainmentReferenceNoProxies <em>Multiple Containment Reference No Proxies</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Multiple Containment Reference No Proxies</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getMultipleContainmentReferenceNoProxies()
+	 * @see #getPrimaryObject()
+	 * @generated
+	 */
+	EReference getPrimaryObject_MultipleContainmentReferenceNoProxies();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getSingleContainmentReferenceProxies <em>Single Containment Reference Proxies</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Single Containment Reference Proxies</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getSingleContainmentReferenceProxies()
+	 * @see #getPrimaryObject()
+	 * @generated
+	 */
+	EReference getPrimaryObject_SingleContainmentReferenceProxies();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getMultipleContainmentReferenceProxies <em>Multiple Containment Reference Proxies</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Multiple Containment Reference Proxies</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getMultipleContainmentReferenceProxies()
+	 * @see #getPrimaryObject()
+	 * @generated
+	 */
+	EReference getPrimaryObject_MultipleContainmentReferenceProxies();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapType2 <em>Feature Map Type2</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Feature Map Type2</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapType2()
+	 * @see #getPrimaryObject()
+	 * @generated
+	 */
+	EReference getPrimaryObject_FeatureMapType2();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapType1 <em>Feature Map Type1</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Feature Map Type1</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapType1()
+	 * @see #getPrimaryObject()
+	 * @generated
+	 */
+	EReference getPrimaryObject_FeatureMapType1();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapCollection <em>Feature Map Collection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Feature Map Collection</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapCollection()
+	 * @see #getPrimaryObject()
+	 * @generated
+	 */
+	EAttribute getPrimaryObject_FeatureMapCollection();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.junit.model.TargetObject <em>Target Object</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Target Object</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.TargetObject
+	 * @generated
+	 */
+	EClass getTargetObject();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.TargetObject#getSingleAttribute <em>Single Attribute</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Single Attribute</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.TargetObject#getSingleAttribute()
+	 * @see #getTargetObject()
+	 * @generated
+	 */
+	EAttribute getTargetObject_SingleAttribute();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipselabs.mongo.emf.junit.model.TargetObject#getArrayAttribute <em>Array Attribute</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Array Attribute</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.TargetObject#getArrayAttribute()
+	 * @see #getTargetObject()
+	 * @generated
+	 */
+	EAttribute getTargetObject_ArrayAttribute();
+
+	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.junit.model.MappedLibrary#getRareBooks <em>Rare Books</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1117,6 +1415,122 @@ public interface ModelPackage extends EPackage
 		 * @generated
 		 */
 		EAttribute MAPPED_LIBRARY__BOOKS = eINSTANCE.getMappedLibrary_Books();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl <em>Primary Object</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl
+		 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getPrimaryObject()
+		 * @generated
+		 */
+		EClass PRIMARY_OBJECT = eINSTANCE.getPrimaryObject();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PRIMARY_OBJECT__NAME = eINSTANCE.getPrimaryObject_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Single Non Containment Reference</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE = eINSTANCE.getPrimaryObject_SingleNonContainmentReference();
+
+		/**
+		 * The meta object literal for the '<em><b>Multiple Non Containment Reference</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE = eINSTANCE.getPrimaryObject_MultipleNonContainmentReference();
+
+		/**
+		 * The meta object literal for the '<em><b>Single Containment Reference No Proxies</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_NO_PROXIES = eINSTANCE.getPrimaryObject_SingleContainmentReferenceNoProxies();
+
+		/**
+		 * The meta object literal for the '<em><b>Multiple Containment Reference No Proxies</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_NO_PROXIES = eINSTANCE.getPrimaryObject_MultipleContainmentReferenceNoProxies();
+
+		/**
+		 * The meta object literal for the '<em><b>Single Containment Reference Proxies</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES = eINSTANCE.getPrimaryObject_SingleContainmentReferenceProxies();
+
+		/**
+		 * The meta object literal for the '<em><b>Multiple Containment Reference Proxies</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES = eINSTANCE.getPrimaryObject_MultipleContainmentReferenceProxies();
+
+		/**
+		 * The meta object literal for the '<em><b>Feature Map Type2</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PRIMARY_OBJECT__FEATURE_MAP_TYPE2 = eINSTANCE.getPrimaryObject_FeatureMapType2();
+
+		/**
+		 * The meta object literal for the '<em><b>Feature Map Type1</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PRIMARY_OBJECT__FEATURE_MAP_TYPE1 = eINSTANCE.getPrimaryObject_FeatureMapType1();
+
+		/**
+		 * The meta object literal for the '<em><b>Feature Map Collection</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PRIMARY_OBJECT__FEATURE_MAP_COLLECTION = eINSTANCE.getPrimaryObject_FeatureMapCollection();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.TargetObjectImpl <em>Target Object</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipselabs.mongo.emf.junit.model.impl.TargetObjectImpl
+		 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getTargetObject()
+		 * @generated
+		 */
+		EClass TARGET_OBJECT = eINSTANCE.getTargetObject();
+
+		/**
+		 * The meta object literal for the '<em><b>Single Attribute</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TARGET_OBJECT__SINGLE_ATTRIBUTE = eINSTANCE.getTargetObject_SingleAttribute();
+
+		/**
+		 * The meta object literal for the '<em><b>Array Attribute</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TARGET_OBJECT__ARRAY_ATTRIBUTE = eINSTANCE.getTargetObject_ArrayAttribute();
 
 		/**
 		 * The meta object literal for the '<em><b>Rare Books</b></em>' containment reference list feature.
