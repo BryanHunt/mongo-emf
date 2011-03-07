@@ -15,6 +15,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -81,6 +82,20 @@ public class TestMongoEmfBasics extends TestHarness
 		// Test : Save the target object with a long (invalid) URI
 
 		saveObject(targetObject, createCollectionURI(targetObject.eClass()).trimSegments(1), null);
+	}
+
+	@Test
+	public void testExists() throws IOException
+	{
+		// Setup : Create and save a target object.
+
+		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject.setSingleAttribute("junit");
+		saveObject(targetObject);
+
+		// Verify : exists() on the URI converter should return true
+
+		assertTrue(targetObject.eResource().getResourceSet().getURIConverter().exists(targetObject.eResource().getURI(), null));
 	}
 
 	@Test

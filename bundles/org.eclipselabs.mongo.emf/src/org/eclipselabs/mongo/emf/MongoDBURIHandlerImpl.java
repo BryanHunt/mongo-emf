@@ -268,6 +268,27 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		};
 	}
 
+	@Override
+	public boolean exists(URI uri, Map<?, ?> options)
+	{
+		if (uri.query() != null)
+		{
+			return false;
+		}
+		else
+		{
+			try
+			{
+				DBCollection collection = getCollection(uri);
+				return collection.findOne(new BasicDBObject(ID_KEY, getID(uri))) != null;
+			}
+			catch (IOException exception)
+			{
+				return false;
+			}
+		}
+	}
+
 	public abstract static class MongoDBInputStream extends InputStream implements URIConverter.Loadable
 	{
 		@Override
