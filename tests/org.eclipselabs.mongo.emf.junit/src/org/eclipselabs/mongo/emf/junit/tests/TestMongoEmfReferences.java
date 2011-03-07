@@ -12,12 +12,15 @@
 package org.eclipselabs.mongo.emf.junit.tests;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.HashSet;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
@@ -197,6 +200,61 @@ public class TestMongoEmfReferences extends TestHarness
 		// Verify : Check that the object was stored correctly.
 
 		MongoUtil.checkObject(primaryObject);
+	}
+
+	@Test
+	public void testPrimaryObjectWithSingleContainmentReferenceProxiesSameDocument() throws IOException
+	{
+		// Setup : Create a primary object with a containment reference to a target object.
+
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
+
+		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject.setSingleAttribute("junit");
+
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject.setName("junit");
+		primaryObject.setSingleContainmentReferenceProxies(targetObject);
+
+		// Test : Store the object to MongoDB
+
+		saveObject(resourceSet, primaryObject);
+
+		// Verify : Check that the object was stored correctly.
+
+		MongoUtil.checkObject(primaryObject);
+	}
+
+	@Test
+	public void testDeletedCrossDocumentReference() throws IOException
+	{
+		// Setup : Create a primary object with a cross-document containment reference to a target
+		// object.
+
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
+
+		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject.setSingleAttribute("junit");
+		saveObject(resourceSet, targetObject);
+
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject.setName("junit");
+		primaryObject.setSingleContainmentReferenceProxies(targetObject);
+		saveObject(resourceSet, primaryObject);
+
+		// Test : Delete the target object and reload the primary object
+
+		targetObject.eResource().delete(null);
+		ResourceSet testResourceSet = MongoUtil.createResourceSet();
+		Resource resource = testResourceSet.getResource(primaryObject.eResource().getURI(), true);
+
+		// Verify : Check that the object was stored correctly.
+
+		assertThat(resource, is(notNullValue()));
+		assertThat(resource.getContents().size(), is(1));
+		PrimaryObject actual = (PrimaryObject) resource.getContents().get(0);
+		assertThat(actual.getSingleContainmentReferenceProxies(), is(notNullValue()));
+		assertTrue(actual.getSingleContainmentReferenceProxies().eIsProxy());
 	}
 
 	@Test
