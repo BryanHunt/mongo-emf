@@ -53,7 +53,7 @@ import com.mongodb.MongoURI;
  * @author bhunt
  * 
  */
-public class TestEmfQuery
+public class TestMongoEmfQuery
 {
 	@Rule
 	public MongoDatabase database = new MongoDatabase(Activator.getInstance().getContext(), "junit");
