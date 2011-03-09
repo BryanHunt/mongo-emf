@@ -15,6 +15,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
+import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,8 +30,10 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipselabs.emf.query.Result;
 import org.eclipselabs.mongo.emf.junit.internal.Activator;
 import org.eclipselabs.mongo.emf.junit.model.Library;
+import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.Person;
+import org.eclipselabs.mongo.emf.junit.model.TargetObject;
 import org.eclipselabs.mongo.junit.MongoDatabase;
 import org.eclipselabs.mongo.junit.MongoUtil;
 import org.junit.Before;
@@ -263,6 +266,27 @@ public class TestMongoEmfQuery extends TestHarness
 		Person author = (Person) result.getValues().get(0);
 
 		assertThat(author.getName(), is("Stephen King"));
+	}
+
+	@Test
+	public void testQueryWithInvalidOperator() throws IOException
+	{
+		// Setup : Create and save a target object.
+
+		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject.setSingleAttribute("junit");
+		saveObject(targetObject);
+
+		// Test : Query for the object using an invalid operator - this can happen if you forget to
+		// enclose the value in ''
+
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		Resource resource = resourceSet.getResource(createCollectionURI(targetObject.eClass()).appendQuery(URI.encodeQuery("singleAttribute==4d", false)), true);
+
+		// Verify : The query should not return any results;
+
+		Result result = (Result) resource.getContents().get(0);
+		assertThat(result.getValues().size(), is(0));
 	}
 
 	private BasicDBObject createAuthor(String name)
