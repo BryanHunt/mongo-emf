@@ -168,7 +168,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 					// The id was not specified in the URI, so we are creating an object for the first time.
 
 					collection.insert(dbObject);
-					id = (ObjectId) dbObject.get(ID_KEY);
+					id = dbObject.get(ID_KEY);
 
 					// Since MongoDB assigns an id to the inserted object, we need to modify the EMF Resource
 					// URI to include the generated id by removing the dummy id and appending the id generated
@@ -201,7 +201,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		};
 	}
 
-	public static class MongoDBOutputStream extends ByteArrayOutputStream implements URIConverter.Savable
+	public static class MongoDBOutputStream extends ByteArrayOutputStream implements URIConverter.Saveable
 	{
 		protected Resource resource;
 
