@@ -21,39 +21,32 @@ import java.util.Collections;
 import java.util.List;
 
 import org.bson.types.ObjectId;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.URIHandler;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipselabs.emf.query.Result;
-import org.eclipselabs.mongo.IMongoDB;
-import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 import org.eclipselabs.mongo.emf.junit.internal.Activator;
 import org.eclipselabs.mongo.emf.junit.model.Library;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.Person;
 import org.eclipselabs.mongo.junit.MongoDatabase;
+import org.eclipselabs.mongo.junit.MongoUtil;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
-import com.mongodb.Mongo;
 import com.mongodb.MongoException;
-import com.mongodb.MongoURI;
 
 /**
  * @author bhunt
  * 
  */
-public class TestMongoEmfQuery
+public class TestMongoEmfQuery extends TestHarness
 {
 	@Rule
 	public MongoDatabase database = new MongoDatabase(Activator.getInstance().getContext(), "junit");
@@ -61,19 +54,11 @@ public class TestMongoEmfQuery
 	@Before
 	public void setUp() throws UnknownHostException, MongoException
 	{
-		IMongoDB mongoService = Activator.getInstance().getMongoDB();
-		assertThat(mongoService, is(notNullValue()));
+		super.setUp();
 
-		mongo = mongoService.getMongo(new MongoURI("mongodb://localhost"));
-		assertThat(mongo, is(notNullValue()));
-
-		db = mongo.getDB("junit");
-		assertThat(db, is(notNullValue()));
-
-		personCollection = db.getCollection(ModelPackage.Literals.PERSON.getName());
-		libraryCollection = db.getCollection(ModelPackage.Literals.LIBRARY.getName());
-		locationCollection = db.getCollection(ModelPackage.Literals.LOCATION.getName());
-
+		personCollection = getCollection(ModelPackage.Literals.PERSON);
+		libraryCollection = getCollection(ModelPackage.Literals.LIBRARY);
+		locationCollection = getCollection(ModelPackage.Literals.LOCATION);
 		personCollection.ensureIndex(ModelPackage.Literals.PERSON__NAME.getName());
 	}
 
@@ -82,9 +67,7 @@ public class TestMongoEmfQuery
 	{
 		DBObject libraryObject = createLibrary("Wastelands");
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
 
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.LIBRARY, "_id=='" + libraryObject.get(ID_KEY) + "'"), true);
 		assertThat(resource, is(notNullValue()));
@@ -104,9 +87,7 @@ public class TestMongoEmfQuery
 		createLibrary("Wastelands");
 		createLibrary("Badlands");
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
 
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.LIBRARY, ""), true);
 		assertThat(resource, is(notNullValue()));
@@ -133,9 +114,7 @@ public class TestMongoEmfQuery
 		createBook(badlands, "Gunslinger", Collections.<DBObject> emptyList());
 		createLibrary("Wetlands");
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
 
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.LIBRARY, "books.title == 'Gunslinger'"), true);
 		assertThat(resource, is(notNullValue()));
@@ -163,9 +142,7 @@ public class TestMongoEmfQuery
 		BasicDBObject wetlands = createLibrary("Wetlands");
 		createBook(wetlands, "Thinner", Collections.<DBObject> emptyList());
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
 
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.LIBRARY, "(books.title == 'Gunslinger') || (books.title == 'The Shining') || (books.title == 'Thinner')"), true);
 		assertThat(resource, is(notNullValue()));
@@ -200,9 +177,7 @@ public class TestMongoEmfQuery
 		createBook(wetlands, "Gunslinger", Collections.<DBObject> emptyList());
 		createBook(wetlands, "The Shining", Collections.<DBObject> emptyList());
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
 
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.LIBRARY, "(books.title == 'Gunslinger') && (books.title == 'The Shining') && (books.title == 'Thinner')"), true);
 		assertThat(resource, is(notNullValue()));
@@ -222,9 +197,7 @@ public class TestMongoEmfQuery
 		createAuthor(null);
 		createAuthor("Stephen King");
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
 
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.PERSON, "name == null"), true);
 		assertThat(resource, is(notNullValue()));
@@ -242,9 +215,7 @@ public class TestMongoEmfQuery
 		createAuthor(null);
 		createAuthor("Stephen King");
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
 
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.PERSON, "name != null"), true);
 		assertThat(resource, is(notNullValue()));
@@ -264,9 +235,7 @@ public class TestMongoEmfQuery
 		createAuthor("Ed Merks");
 		createAuthor("Stephen King");
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
 
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.PERSON, "(name != 'Dean Kontz') && (name != 'Stephen King') && (name != 'Bryan Hunt')"), true);
 		assertThat(resource, is(notNullValue()));
@@ -283,9 +252,7 @@ public class TestMongoEmfQuery
 	{
 		createAuthor("Stephen King");
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
 
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.PERSON, "name=='Stephen King'"), true);
 		assertThat(resource, is(notNullValue()));
@@ -399,11 +366,6 @@ public class TestMongoEmfQuery
 		return proxyObject;
 	}
 
-	private URI createCollectionURI(EClass eClass)
-	{
-		return URI.createURI("mongo://localhost/junit/" + eClass.getName() + "/");
-	}
-
 	private URI createQueryURI(EClass eClass, String query)
 	{
 		return createCollectionURI(eClass).appendQuery(URI.encodeQuery(query, false));
@@ -413,7 +375,4 @@ public class TestMongoEmfQuery
 	private DBCollection personCollection;
 	private DBCollection libraryCollection;
 	private DBCollection locationCollection;
-	private DB db;
-
-	private Mongo mongo;
 }
