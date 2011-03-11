@@ -165,6 +165,26 @@ public class MongoTemplateLoader implements TemplateLoader
 	}
 
 	/**
+	 * Removed the FreeMarker template for the specified ID.
+	 * 
+	 * @param id The unique ID of the template.
+	 * @throws IOException If the template could not be found or there was a problem deleting the
+	 *           template.
+	 */
+	public void removeTemplate(String id) throws IOException
+	{
+		synchronized (resourceSet)
+		{
+			FreeMarkerTemplate targetTemplate = (FreeMarkerTemplate) findTemplateSource(id);
+
+			if (targetTemplate == null)
+				throw new IOException("Template was not found");
+
+			targetTemplate.eResource().delete(null);
+		}
+	}
+
+	/**
 	 * Overwrites an existing template with a new version
 	 * 
 	 * @param template The new template to store to the database.
