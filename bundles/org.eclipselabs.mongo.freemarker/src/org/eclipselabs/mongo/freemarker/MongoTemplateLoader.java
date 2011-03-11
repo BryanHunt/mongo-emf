@@ -14,14 +14,18 @@ package org.eclipselabs.mongo.freemarker;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipselabs.emf.query.Result;
 import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 
 import freemarker.cache.TemplateLoader;
@@ -162,6 +166,27 @@ public class MongoTemplateLoader implements TemplateLoader
 		{
 			return resource.getContents().isEmpty() ? null : (FreeMarkerTemplate) resource.getContents().get(0);
 		}
+	}
+
+	/**
+	 * Gets the entire list of FreeMarker templates
+	 * 
+	 * @return All of the FreeMarker templates.
+	 */
+	public Collection<FreeMarkerTemplate> getTemplates()
+	{
+		ArrayList<FreeMarkerTemplate> templates = new ArrayList<FreeMarkerTemplate>();
+
+		synchronized (resourceSet)
+		{
+			Resource resource = resourceSet.getResource(baseURI.appendSegment("").appendQuery(""), true);
+			Result result = (Result) resource.getContents().get(0);
+
+			for (EObject object : result.getValues())
+				templates.add((FreeMarkerTemplate) object);
+		}
+
+		return templates;
 	}
 
 	/**
