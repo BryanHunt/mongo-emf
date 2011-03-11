@@ -200,12 +200,12 @@ public class MongoTemplateLoader implements TemplateLoader
 	{
 		synchronized (resourceSet)
 		{
-			FreeMarkerTemplate targetTemplate = (FreeMarkerTemplate) findTemplateSource(id);
+			Resource resource = (Resource) findTemplateSource(id);
 
-			if (targetTemplate == null)
+			if (resource == null)
 				throw new IOException("Template was not found");
 
-			targetTemplate.eResource().delete(null);
+			resource.delete(null);
 		}
 	}
 
