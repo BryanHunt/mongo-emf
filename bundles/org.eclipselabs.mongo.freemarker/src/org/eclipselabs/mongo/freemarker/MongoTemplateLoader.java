@@ -16,7 +16,6 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -97,9 +96,7 @@ public class MongoTemplateLoader implements TemplateLoader
 		{
 			Resource resource = resourceSet.createResource(baseURI.appendSegment(id));
 			resource.getContents().add(template);
-			HashMap<String, Object> options = new HashMap<String, Object>(1);
-			options.put(MongoDBURIHandlerImpl.OPTION_GENERATE_ID, Boolean.FALSE);
-			resource.save(options);
+			resource.save(null);
 		}
 	}
 
