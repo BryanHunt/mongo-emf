@@ -38,7 +38,6 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
-import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 import org.eclipselabs.mongo.emf.junit.model.ETypes;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
@@ -156,12 +155,9 @@ public class TestMongoEmfBasics extends TestHarness
 		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
 		targetObject.setSingleAttribute("junit");
 
-		HashMap<String, Object> options = new HashMap<String, Object>(1);
-		options.put(MongoDBURIHandlerImpl.OPTION_GENERATE_ID, Boolean.FALSE);
-
 		// Test : Store the object to MongoDB
 
-		saveObject(targetObject, createObjectURI(targetObject.eClass(), id), options);
+		saveObject(targetObject, createObjectURI(targetObject.eClass(), id), null);
 
 		// Verify : Check that the object was stored correctly, and that is has the ID we specified.
 
@@ -179,17 +175,38 @@ public class TestMongoEmfBasics extends TestHarness
 		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
 		targetObject.setSingleAttribute("junit");
 
-		HashMap<String, Object> options = new HashMap<String, Object>(1);
-		options.put(MongoDBURIHandlerImpl.OPTION_GENERATE_ID, Boolean.FALSE);
-
 		// Test : Store the object to MongoDB
 
-		saveObject(targetObject, createObjectURI(targetObject.eClass(), id), options);
+		saveObject(targetObject, createObjectURI(targetObject.eClass(), id), null);
 
 		// Verify : Check that the object was stored correctly, and that is has the ID we specified.
 
 		TargetObject actual = MongoUtil.checkObject(targetObject);
 		assertThat(MongoUtil.getID(actual), is(id));
+	}
+
+	@Test
+	public void testUpdateWithOptionGenerateId() throws IOException
+	{
+		// Setup : Create a target object and arbitrary string for the ID
+
+		String id = "ID";
+
+		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject.setSingleAttribute("junit");
+
+		saveObject(targetObject, createObjectURI(targetObject.eClass(), id), null);
+
+		// Test : Update the object and store it back to MongoDB
+
+		targetObject.setSingleAttribute("updated");
+		targetObject.eResource().save(null);
+
+		// Verify : Check that the object was stored correctly, and that is has the ID we specified.
+
+		TargetObject actual = MongoUtil.checkObject(targetObject);
+		assertThat(MongoUtil.getID(actual), is(id));
+
 	}
 
 	@Test

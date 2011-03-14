@@ -80,12 +80,6 @@ import com.mongodb.MongoURI;
 public class MongoDBURIHandlerImpl extends URIHandlerImpl
 {
 	/**
-	 * This option can be used when saving an object the first time to indicate that the client is
-	 * generating the ID by setting the value to Boolean.FALSE.
-	 */
-	public static final String OPTION_GENERATE_ID = "org.eclipselabs.mongo.emf.genId";
-
-	/**
 	 * This constructor can be used in an OSGi environment and will get the IMongoDB service from the
 	 * bundle activator.
 	 */
@@ -184,18 +178,11 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 				else
 				{
 					// The object id was specified, so we are either doing an update, or inserting a new
-					// object. If the save option OPTION_GENERATE_ID is specified and set to false, we assume
-					// the client is generating the id and we insert the object. Under all other conditions,
-					// we update the object.
+					// object. If the object already exists, then it will be updated; otherwise it will
+					// be inserted.
 
-					Boolean genId = (Boolean) options.get(OPTION_GENERATE_ID);
-
-					dbObject.put(ID_KEY, id);
-
-					if (genId != null && !genId)
-						collection.insert(dbObject);
-					else
-						collection.findAndModify(new BasicDBObject(ID_KEY, id), dbObject);
+					dbObject.put("_id", id);
+					collection.save(dbObject);
 				}
 			}
 		};
