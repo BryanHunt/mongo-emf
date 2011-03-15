@@ -19,11 +19,11 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipselabs.emf.query.Result;
 import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 
@@ -62,6 +62,7 @@ public class MongoTemplateLoader implements TemplateLoader
 		resourceSet = new ResourceSetImpl();
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
 		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		loadTemplates();
 	}
 
 	/**
@@ -81,6 +82,7 @@ public class MongoTemplateLoader implements TemplateLoader
 
 		this.baseURI = baseURI;
 		this.resourceSet = resourceSet;
+		loadTemplates();
 	}
 
 	/**
@@ -102,22 +104,14 @@ public class MongoTemplateLoader implements TemplateLoader
 
 	@Override
 	public void closeTemplateSource(Object templateSource) throws IOException
-	{
-		Resource resource = (Resource) templateSource;
-		resource.unload();
-	}
+	{}
 
 	@Override
 	public Object findTemplateSource(String name) throws IOException
 	{
 		synchronized (resourceSet)
 		{
-			Resource resource = resourceSet.getResource(baseURI.appendSegment(name), false);
-
-			if (resource == null || resource.getContents().isEmpty())
-				return null;
-
-			return resource;
+			return resourceSet.getResource(baseURI.appendSegment(name), false);
 		}
 	}
 
@@ -176,14 +170,19 @@ public class MongoTemplateLoader implements TemplateLoader
 
 		synchronized (resourceSet)
 		{
-			Resource resource = resourceSet.getResource(baseURI.appendSegment("").appendQuery(""), true);
-			Result result = (Result) resource.getContents().get(0);
-
-			for (EObject object : result.getValues())
-				templates.add((FreeMarkerTemplate) object);
+			for (Resource resource : resourceSet.getResources())
+				templates.add((FreeMarkerTemplate) resource.getContents().get(0));
 		}
 
 		return templates;
+	}
+
+	public void loadTemplates()
+	{
+		Resource resource = resourceSet.getResource(baseURI.appendSegment("").appendQuery(""), true);
+		Result result = (Result) resource.getContents().get(0);
+		EcoreUtil.resolveAll(result);
+		resourceSet.getResources().remove(0);
 	}
 
 	/**
