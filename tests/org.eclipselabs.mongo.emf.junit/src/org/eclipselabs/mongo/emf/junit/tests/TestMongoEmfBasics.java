@@ -12,6 +12,7 @@
 package org.eclipselabs.mongo.emf.junit.tests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -38,6 +39,7 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
+import org.eclipselabs.emf.query.Result;
 import org.eclipselabs.mongo.emf.junit.model.ETypes;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
@@ -225,6 +227,42 @@ public class TestMongoEmfBasics extends TestHarness
 		// Verify : The target object was deleted
 
 		assertThat(getCollection(targetObject.eClass()).getCount(), is(0L));
+	}
+
+	@Test
+	public void testBatchInsert() throws IOException
+	{
+		// Setup : Create several target objects to be stored in the database
+
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		Resource resource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.TARGET_OBJECT));
+		int numberTargets = 10;
+
+		for (int i = 0; i < numberTargets; i++)
+		{
+			TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+			targetObject.setSingleAttribute("junit " + i);
+			resource.getContents().add(targetObject);
+		}
+
+		// Test : Store the objects in the database
+
+		resource.save(null);
+
+		// Verify : The resouce should contain a Result with proxies to all of the stored objects
+
+		assertThat(resource.getContents().size(), is(1));
+		assertThat(resource.getContents().get(0), is(instanceOf(Result.class)));
+
+		Result result = (Result) resource.getContents().get(0);
+		assertThat(result.getValues().size(), is(numberTargets));
+
+		for (int i = 0; i < numberTargets; i++)
+		{
+			assertThat(result.getValues().get(i), is(instanceOf(TargetObject.class)));
+			TargetObject targetObject = (TargetObject) result.getValues().get(i);
+			assertThat(targetObject.getSingleAttribute(), is("junit " + i));
+		}
 	}
 
 	@Test

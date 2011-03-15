@@ -128,7 +128,6 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 			public void close() throws IOException
 			{
 				super.close();
-				EObject root = resource.getContents().get(0);
 				DBCollection collection = getCollection(uri);
 
 				// We need to set up the XMLResource.URIHandler so that proxy URIs are handled properly.
@@ -148,11 +147,52 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 				uriHandler.setBaseURI(resource.getURI());
 
+				Map<Object, Object> response = getResponse(options);
+
+				if (resource.getContents().size() == 1)
+					saveSingleObject(collection, uriHandler, id, response);
+				else
+					saveMultipleObjects(collection, uriHandler, id, response);
+			}
+
+			private void saveMultipleObjects(DBCollection collection, XMLResource.URIHandler uriHandler, Object id, Map<Object, Object> response) throws IOException
+			{
+				ArrayList<DBObject> dbObjects = new ArrayList<DBObject>();
+				long timeStamp = System.currentTimeMillis();
+				response.put(URIConverter.RESPONSE_TIME_STAMP_PROPERTY, timeStamp);
+
+				for (EObject eObject : resource.getContents())
+				{
+					DBObject dbObject = buildDBObject(collection.getDB(), eObject, uriHandler);
+					dbObject.put(TIME_STAMP_KEY, timeStamp);
+					dbObjects.add(dbObject);
+				}
+
+				collection.insert(dbObjects);
+				URI baseURI = resource.getURI().trimSegments(1);
+				ArrayList<EObject> eObjects = new ArrayList<EObject>(resource.getContents());
+				Result result = QueryFactory.eINSTANCE.createResult();
+				EList<EObject> values = result.getValues();
+
+				for (int i = 0; i < dbObjects.size(); i++)
+				{
+					EObject eObject = eObjects.get(i);
+					InternalEObject internalEObject = (InternalEObject) eObject;
+					internalEObject.eSetProxyURI(baseURI.appendSegment(dbObjects.get(i).get(ID_KEY).toString()).appendFragment("/"));
+					internalEObject.eAdapters().clear();
+					values.add(eObject);
+				}
+
+				resource.getContents().clear();
+				resource.getContents().add(result);
+			}
+
+			private void saveSingleObject(DBCollection collection, XMLResource.URIHandler uriHandler, Object id, Map<Object, Object> response) throws IOException
+			{
 				// Build a MongoDB object from the EMF object.
 
-				DBObject dbObject = buildDBObject(collection.getDB(), root, uriHandler);
+				DBObject dbObject = buildDBObject(collection.getDB(), resource.getContents().get(0), uriHandler);
 
-				Map<Object, Object> response = getResponse(options);
 				long timeStamp = System.currentTimeMillis();
 				dbObject.put(TIME_STAMP_KEY, timeStamp);
 				response.put(URIConverter.RESPONSE_TIME_STAMP_PROPERTY, timeStamp);
@@ -516,7 +556,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		return dbObject;
 	}
 
-	private DBObject buildDBObject(DB db, EObject eObject, XMLResource.URIHandler uriHandler) throws UnknownHostException, IOException
+	private DBObject buildDBObject(DB db, EObject eObject, XMLResource.URIHandler uriHandler) throws IOException
 	{
 		// Build a MongoDB object from the EMF object.
 

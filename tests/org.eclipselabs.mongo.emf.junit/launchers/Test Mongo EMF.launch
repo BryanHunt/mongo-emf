@@ -35,7 +35,7 @@
 <stringAttribute key="selected_workspace_plugins" value="org.eclipselabs.mongo.emf.junit@default:default,org.eclipselabs.mongo.emf@default:default,org.eclipselabs.emf.query@default:default,org.eclipselabs.mongo@default:default,org.eclipselabs.mongo.junit@default:default"/>
 <booleanAttribute key="show_selected_only" value="true"/>
 <stringAttribute key="templateConfig" value="${target_home}/configuration/config.ini"/>
-<stringAttribute key="timestamp" value="1298334782212"/>
+<stringAttribute key="timestamp" value="1300125004282"/>
 <booleanAttribute key="tracing" value="false"/>
 <booleanAttribute key="useCustomFeatures" value="false"/>
 <booleanAttribute key="useDefaultConfig" value="true"/>
