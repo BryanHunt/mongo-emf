@@ -16,10 +16,10 @@
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Declipse.ignoreApp=true -Dosgi.noShutdown=true"/>
 <stringAttribute key="pde.version" value="3.3"/>
 <booleanAttribute key="show_selected_only" value="true"/>
-<stringAttribute key="target_bundles" value="org.eclipse.equinox.common@2:true,org.eclipse.core.runtime@default:true,org.eclipse.equinox.util@default:default,org.eclipse.equinox.app@default:default,org.eclipse.osgi@-1:true,org.eclipse.core.jobs@default:default,org.eclipse.emf.common@default:default,org.eclipse.core.contenttype@default:default,org.eclipse.core.runtime.compatibility.registry@default:false,org.eclipse.osgi.services@default:default,com.mongodb@default:default,org.eclipse.emf.ecore.xmi@default:default,org.eclipse.equinox.preferences@default:default,org.eclipse.emf.ecore@default:default,org.eclipse.equinox.registry@default:default,org.eclipse.equinox.ds@default:true"/>
+<stringAttribute key="target_bundles" value="org.eclipse.core.contenttype@default:default,org.eclipse.emf.ecore.xmi@default:default,org.eclipse.equinox.common@2:true,org.eclipse.equinox.ds@default:true,org.eclipse.emf.common@default:default,org.eclipse.osgi.services@default:default,org.eclipse.core.runtime@default:true,org.eclipse.core.runtime.compatibility.registry@default:false,org.eclipse.equinox.app@default:default,org.eclipse.osgi@-1:true,org.eclipse.equinox.registry@default:default,com.mongodb@default:default,org.eclipse.core.jobs@default:default,org.eclipse.equinox.util@default:default,org.eclipse.equinox.preferences@default:default,org.eclipse.emf.ecore@default:default"/>
 <stringAttribute key="timestamp" value="1298335114353"/>
 <booleanAttribute key="tracing" value="false"/>
 <booleanAttribute key="useCustomFeatures" value="false"/>
 <booleanAttribute key="useDefaultConfigArea" value="true"/>
-<stringAttribute key="workspace_bundles" value="org.eclipselabs.mongo@default:default,org.eclipselabs.mongo.emf@default:default,org.eclipselabs.emf.query@default:default,org.eclipselabs.mongo.emf.examples@default:default"/>
+<stringAttribute key="workspace_bundles" value="org.eclipselabs.mongo.emf@default:default,org.eclipselabs.mongo.emf.examples@default:default,org.eclipselabs.emf.query@default:default,org.eclipselabs.mongo@default:default"/>
 </launchConfiguration>
