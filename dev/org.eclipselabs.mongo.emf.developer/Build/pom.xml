@@ -1,0 +1,138 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>mongo-emf</groupId>
+  <artifactId>build</artifactId>
+  <version>0.3.2-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <modules>
+    <module>../../../bundles/org.eclipselabs.emf.query</module>
+    <module>../../../bundles/org.eclipselabs.mongo</module>
+    <module>../../../bundles/org.eclipselabs.mongo.emf</module>
+    <module>../../../tests/org.eclipselabs.mongo.junit</module>
+    <module>../../../tests/org.eclipselabs.mongo.emf.junit</module>
+    <module>../../../features/org.eclipselabs.mongo.emf.feature</module>
+    <module>../../../features/org.eclipselabs.mongo.emf.junit.feature</module>
+    <module>../../../features/org.eclipselabs.mongo.emf.source.feature</module>
+    <module>../../../features/org.eclipselabs.mongo.emf.junit.source.feature</module>
+    <module>../../../dev/org.eclipselabs.mongo.emf.repository</module>
+    <module>../../../dev/org.eclipselabs.mongo.emf.site</module>
+  </modules>
+
+  <properties>
+  	<tycho-version>0.10.0</tycho-version>
+  	<targets>/Users/bhunt/Documents/Programming/Code/Targets</targets>
+  </properties>
+  <repositories>
+    <repository>
+      <id>helios</id>
+      <layout>p2</layout>
+      <url>http://download.eclipse.org/releases/indigo</url>
+    </repository>
+    <repository>
+      <id>EMF</id>
+      <layout>p2</layout>
+      <url>file://${targets}/emf/repository</url>
+    </repository> 
+    <repository>
+      <id>MongoDB</id>
+      <layout>p2</layout>
+      <url>file://${targets}/MongoDB</url>
+    </repository> 
+  </repositories>
+
+  <build>
+    <plugins>
+      <plugin>
+        <!-- enable tycho build extension -->
+        <groupId>org.sonatype.tycho</groupId>
+        <artifactId>tycho-maven-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <extensions>true</extensions>
+      </plugin>
+      
+      <plugin>
+    	  <groupId>org.sonatype.tycho</groupId>
+	      <artifactId>maven-osgi-packaging-plugin</artifactId>
+	      <version>${tycho-version}</version>
+	      <configuration>
+	        <archiveSite>true</archiveSite>
+	      </configuration>
+      </plugin>
+
+    <plugin>
+        <groupId>org.sonatype.tycho</groupId>
+        <artifactId>maven-osgi-source-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <executions>
+          <execution>
+            <id>plugin-source</id>
+            <goals>
+              <goal>plugin-source</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      
+      <plugin>
+        <groupId>org.sonatype.tycho</groupId>
+        <artifactId>target-platform-configuration</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <!-- recommended: use p2-based target platform resolver -->
+          <resolver>p2</resolver>
+          <pomDependenciesConsider>true</pomDependenciesConsider>
+          <!-- configure the p2 target environments for multi-platform build -->
+          <environments>
+            <environment>
+               <os>linux</os>
+               <ws>gtk</ws>
+               <arch>x86_64</arch>
+             </environment>
+           <environment>
+              <os>linux</os>
+              <ws>gtk</ws>
+              <arch>x86</arch>
+            </environment>
+            <environment>
+               <os>win32</os>
+               <ws>win32</ws>
+               <arch>x86</arch>
+             </environment>
+           </environments>
+         </configuration>
+       </plugin>
+     </plugins>
+   </build>
+
+   <profiles>
+     <profile>
+     <!-- as a workaround for TYCHO-520, only build mac binaries on macs -->
+     <id>macosx</id>
+     <activation>
+       <property>
+         <name>java.vendor.url</name>
+         <value>http://www.apple.com/</value>
+       </property>
+     </activation>
+     <build>
+       <plugins>
+         <plugin>
+            <groupId>org.sonatype.tycho</groupId>
+            <artifactId>target-platform-configuration</artifactId>
+            <version>${tycho-version}</version>
+            <configuration>
+              <environments combine.children="append">
+                <environment>
+                  <os>macosx</os>
+                  <ws>cocoa</ws>
+                  <arch>x86_64</arch>
+                </environment>
+              </environments>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles> 
+</project>

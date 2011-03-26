@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipselabs.emf.mongo.feature"
+      label="Mongo EMF Feature"
+      version="0.3.2.qualifier"
+      provider-name="EclipseLabs">
+
+   <description url="http://code.google.com/a/eclipselabs.org/p/mongo-emf/">
+      Mongo EMF runtime.  This feature contains the necessary bundles to persist EMF objects to MongoDB.
+   </description>
+
+   <copyright>
+      Copyright (C) 2010 Bryan Hunt &amp; Ed Merks.  All rights reserved.
+   </copyright>
+
+   <license url="http://www.eclipse.org/legal/epl-v10.html">
+      This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.emf.common"/>
+      <import plugin="org.eclipse.emf.ecore"/>
+      <import plugin="com.mongodb" version="2.5.2" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.ecore.xmi"/>
+      <import plugin="org.eclipse.osgi"/>
+   </requires>
+
+   <plugin
+         id="org.eclipselabs.emf.query"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipselabs.mongo"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipselabs.mongo.emf"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

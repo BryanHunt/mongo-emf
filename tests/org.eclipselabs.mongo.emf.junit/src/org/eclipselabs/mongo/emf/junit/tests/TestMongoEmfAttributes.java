@@ -18,6 +18,7 @@ import java.io.IOException;
 
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.TargetObject;
+import org.eclipselabs.mongo.emf.junit.support.TestHarness;
 import org.eclipselabs.mongo.junit.MongoUtil;
 import org.junit.Test;
 

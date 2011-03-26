@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipselabs.mongo.emf.junit;singleton:=true
-Bundle-Version: 1.0.0
+Bundle-Version: 0.3.2.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -13,10 +13,12 @@ Export-Package: org.eclipselabs.mongo.emf.junit.model,
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipselabs.mongo.emf.junit.internal.Activator
 Import-Package: com.mongodb,
+ org.bson,
  org.bson.types,
  org.eclipse.emf.common.notify,
  org.eclipse.emf.common.notify.impl,
  org.eclipse.emf.common.util,
+ org.eclipse.emf.common,
  org.eclipse.emf.ecore,
  org.eclipse.emf.ecore.impl,
  org.eclipse.emf.ecore.plugin,
@@ -31,6 +33,8 @@ Import-Package: com.mongodb,
  org.eclipselabs.mongo.junit,
  org.junit;version="4.8.1",
  org.junit.rules;version="4.8.1",
+ org.junit.runner;version="4.8.1",
+ org.junit.runners;version="4.8.1",
  org.osgi.framework;version="1.6.0",
  org.osgi.util.tracker;version="1.5.0"
 Require-Bundle: org.hamcrest.core;bundle-version="1.1.0"

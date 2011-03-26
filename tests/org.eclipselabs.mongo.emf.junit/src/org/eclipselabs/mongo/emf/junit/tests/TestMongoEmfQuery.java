@@ -34,11 +34,13 @@ import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.Person;
 import org.eclipselabs.mongo.emf.junit.model.TargetObject;
+import org.eclipselabs.mongo.emf.junit.support.TestHarness;
 import org.eclipselabs.mongo.junit.MongoDatabase;
 import org.eclipselabs.mongo.junit.MongoUtil;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.Ignore;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -268,6 +270,7 @@ public class TestMongoEmfQuery extends TestHarness
 		assertThat(author.getName(), is("Stephen King"));
 	}
 
+	@Ignore
 	@Test
 	public void testQueryWithInvalidOperator() throws IOException
 	{
