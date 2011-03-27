@@ -32,12 +32,12 @@
     <repository>
       <id>EMF</id>
       <layout>p2</layout>
-      <url>file://${targets}/emf/repository</url>
+      <url>http://quickiemart.springfieldusa.net/Targets/EMF/</url>
     </repository> 
     <repository>
       <id>MongoDB</id>
       <layout>p2</layout>
-      <url>file://${targets}/MongoDB</url>
+      <url>http://quickiemart.springfieldusa.net/Targets/MongoDB/</url>
     </repository> 
   </repositories>
 
