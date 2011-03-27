@@ -22,6 +22,7 @@
   <properties>
   	<tycho-version>0.10.0</tycho-version>
   	<targets>/Users/bhunt/Documents/Programming/Code/Targets</targets>
+	  <project.build.sourceEncoding>MacRoman</project.build.sourceEncoding>
   </properties>
   <repositories>
     <repository>
