@@ -28,19 +28,16 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipselabs.emf.query.Result;
-import org.eclipselabs.mongo.emf.junit.internal.Activator;
 import org.eclipselabs.mongo.emf.junit.model.Library;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.Person;
 import org.eclipselabs.mongo.emf.junit.model.TargetObject;
 import org.eclipselabs.mongo.emf.junit.support.TestHarness;
-import org.eclipselabs.mongo.junit.MongoDatabase;
 import org.eclipselabs.mongo.junit.MongoUtil;
 import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
 import org.junit.Ignore;
+import org.junit.Test;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -53,9 +50,6 @@ import com.mongodb.MongoException;
  */
 public class TestMongoEmfQuery extends TestHarness
 {
-	@Rule
-	public MongoDatabase database = new MongoDatabase(Activator.getInstance().getContext(), "junit");
-
 	@Before
 	public void setUp() throws UnknownHostException, MongoException
 	{

@@ -4,6 +4,7 @@
  *
  * $Id$
  */
+
 package org.eclipselabs.mongo.emf.junit.model.impl;
 
 import java.math.BigDecimal;
@@ -24,22 +25,25 @@ import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEBigDecimal <em>EBig Decimal</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEBigInteger <em>EBig Integer</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#isEBoolean <em>EBoolean</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEByte <em>EByte</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEByteArray <em>EByte Array</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEChar <em>EChar</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEDate <em>EDate</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEDouble <em>EDouble</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEFloat <em>EFloat</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEInt <em>EInt</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getELong <em>ELong</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEShort <em>EShort</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEString <em>EString</em>}</li>
+ * <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEBigDecimal <em>EBig Decimal
+ * </em>}</li>
+ * <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEBigInteger <em>EBig Integer
+ * </em>}</li>
+ * <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#isEBoolean <em>EBoolean</em>}</li>
+ * <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEByte <em>EByte</em>}</li>
+ * <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEByteArray <em>EByte Array
+ * </em>}</li>
+ * <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEChar <em>EChar</em>}</li>
+ * <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEDate <em>EDate</em>}</li>
+ * <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEDouble <em>EDouble</em>}</li>
+ * <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEFloat <em>EFloat</em>}</li>
+ * <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEInt <em>EInt</em>}</li>
+ * <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getELong <em>ELong</em>}</li>
+ * <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEShort <em>EShort</em>}</li>
+ * <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl#getEString <em>EString</em>}</li>
  * </ul>
  * </p>
- *
+ * 
  * @generated
  */
 public class ETypesImpl extends EObjectImpl implements ETypes
@@ -48,6 +52,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The default value of the '{@link #getEBigDecimal() <em>EBig Decimal</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEBigDecimal()
 	 * @generated
 	 * @ordered
@@ -58,6 +63,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The cached value of the '{@link #getEBigDecimal() <em>EBig Decimal</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEBigDecimal()
 	 * @generated
 	 * @ordered
@@ -68,6 +74,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The default value of the '{@link #getEBigInteger() <em>EBig Integer</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEBigInteger()
 	 * @generated
 	 * @ordered
@@ -78,6 +85,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The cached value of the '{@link #getEBigInteger() <em>EBig Integer</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEBigInteger()
 	 * @generated
 	 * @ordered
@@ -88,6 +96,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The default value of the '{@link #isEBoolean() <em>EBoolean</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #isEBoolean()
 	 * @generated
 	 * @ordered
@@ -98,6 +107,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The cached value of the '{@link #isEBoolean() <em>EBoolean</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #isEBoolean()
 	 * @generated
 	 * @ordered
@@ -108,6 +118,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The default value of the '{@link #getEByte() <em>EByte</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEByte()
 	 * @generated
 	 * @ordered
@@ -118,6 +129,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The cached value of the '{@link #getEByte() <em>EByte</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEByte()
 	 * @generated
 	 * @ordered
@@ -128,6 +140,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The default value of the '{@link #getEByteArray() <em>EByte Array</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEByteArray()
 	 * @generated
 	 * @ordered
@@ -138,6 +151,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The cached value of the '{@link #getEByteArray() <em>EByte Array</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEByteArray()
 	 * @generated
 	 * @ordered
@@ -148,6 +162,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The default value of the '{@link #getEChar() <em>EChar</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEChar()
 	 * @generated
 	 * @ordered
@@ -158,6 +173,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The cached value of the '{@link #getEChar() <em>EChar</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEChar()
 	 * @generated
 	 * @ordered
@@ -168,6 +184,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The default value of the '{@link #getEDate() <em>EDate</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEDate()
 	 * @generated
 	 * @ordered
@@ -178,6 +195,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The cached value of the '{@link #getEDate() <em>EDate</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEDate()
 	 * @generated
 	 * @ordered
@@ -188,6 +206,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The default value of the '{@link #getEDouble() <em>EDouble</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEDouble()
 	 * @generated
 	 * @ordered
@@ -198,6 +217,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The cached value of the '{@link #getEDouble() <em>EDouble</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEDouble()
 	 * @generated
 	 * @ordered
@@ -208,6 +228,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The default value of the '{@link #getEFloat() <em>EFloat</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEFloat()
 	 * @generated
 	 * @ordered
@@ -218,6 +239,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The cached value of the '{@link #getEFloat() <em>EFloat</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEFloat()
 	 * @generated
 	 * @ordered
@@ -228,6 +250,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The default value of the '{@link #getEInt() <em>EInt</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEInt()
 	 * @generated
 	 * @ordered
@@ -238,6 +261,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The cached value of the '{@link #getEInt() <em>EInt</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEInt()
 	 * @generated
 	 * @ordered
@@ -248,6 +272,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The default value of the '{@link #getELong() <em>ELong</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getELong()
 	 * @generated
 	 * @ordered
@@ -258,6 +283,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The cached value of the '{@link #getELong() <em>ELong</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getELong()
 	 * @generated
 	 * @ordered
@@ -268,6 +294,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The default value of the '{@link #getEShort() <em>EShort</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEShort()
 	 * @generated
 	 * @ordered
@@ -278,6 +305,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The cached value of the '{@link #getEShort() <em>EShort</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEShort()
 	 * @generated
 	 * @ordered
@@ -288,6 +316,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The default value of the '{@link #getEString() <em>EString</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEString()
 	 * @generated
 	 * @ordered
@@ -298,6 +327,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	 * The cached value of the '{@link #getEString() <em>EString</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @see #getEString()
 	 * @generated
 	 * @ordered
@@ -307,6 +337,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	protected ETypesImpl()
@@ -317,6 +348,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -328,6 +360,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public BigDecimal getEBigDecimal()
@@ -338,6 +371,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setEBigDecimal(BigDecimal newEBigDecimal)
@@ -351,6 +385,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public BigInteger getEBigInteger()
@@ -361,6 +396,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setEBigInteger(BigInteger newEBigInteger)
@@ -374,6 +410,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public boolean isEBoolean()
@@ -384,6 +421,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setEBoolean(boolean newEBoolean)
@@ -397,6 +435,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public byte getEByte()
@@ -407,6 +446,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setEByte(byte newEByte)
@@ -420,6 +460,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public byte[] getEByteArray()
@@ -430,6 +471,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setEByteArray(byte[] newEByteArray)
@@ -443,6 +485,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public char getEChar()
@@ -453,6 +496,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setEChar(char newEChar)
@@ -466,6 +510,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public Date getEDate()
@@ -476,6 +521,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setEDate(Date newEDate)
@@ -489,6 +535,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public double getEDouble()
@@ -499,6 +546,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setEDouble(double newEDouble)
@@ -512,6 +560,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public float getEFloat()
@@ -522,6 +571,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setEFloat(float newEFloat)
@@ -535,6 +585,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public int getEInt()
@@ -545,6 +596,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setEInt(int newEInt)
@@ -558,6 +610,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public long getELong()
@@ -568,6 +621,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setELong(long newELong)
@@ -581,6 +635,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public short getEShort()
@@ -591,6 +646,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setEShort(short newEShort)
@@ -604,6 +660,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public String getEString()
@@ -614,6 +671,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	public void setEString(String newEString)
@@ -627,6 +685,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -667,6 +726,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -675,43 +735,43 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 		switch (featureID)
 		{
 			case ModelPackage.ETYPES__EBIG_DECIMAL:
-				setEBigDecimal((BigDecimal)newValue);
+				setEBigDecimal((BigDecimal) newValue);
 				return;
 			case ModelPackage.ETYPES__EBIG_INTEGER:
-				setEBigInteger((BigInteger)newValue);
+				setEBigInteger((BigInteger) newValue);
 				return;
 			case ModelPackage.ETYPES__EBOOLEAN:
-				setEBoolean((Boolean)newValue);
+				setEBoolean((Boolean) newValue);
 				return;
 			case ModelPackage.ETYPES__EBYTE:
-				setEByte((Byte)newValue);
+				setEByte((Byte) newValue);
 				return;
 			case ModelPackage.ETYPES__EBYTE_ARRAY:
-				setEByteArray((byte[])newValue);
+				setEByteArray((byte[]) newValue);
 				return;
 			case ModelPackage.ETYPES__ECHAR:
-				setEChar((Character)newValue);
+				setEChar((Character) newValue);
 				return;
 			case ModelPackage.ETYPES__EDATE:
-				setEDate((Date)newValue);
+				setEDate((Date) newValue);
 				return;
 			case ModelPackage.ETYPES__EDOUBLE:
-				setEDouble((Double)newValue);
+				setEDouble((Double) newValue);
 				return;
 			case ModelPackage.ETYPES__EFLOAT:
-				setEFloat((Float)newValue);
+				setEFloat((Float) newValue);
 				return;
 			case ModelPackage.ETYPES__EINT:
-				setEInt((Integer)newValue);
+				setEInt((Integer) newValue);
 				return;
 			case ModelPackage.ETYPES__ELONG:
-				setELong((Long)newValue);
+				setELong((Long) newValue);
 				return;
 			case ModelPackage.ETYPES__ESHORT:
-				setEShort((Short)newValue);
+				setEShort((Short) newValue);
 				return;
 			case ModelPackage.ETYPES__ESTRING:
-				setEString((String)newValue);
+				setEString((String) newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -720,6 +780,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -773,6 +834,7 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
 	 * @generated
 	 */
 	@Override
@@ -813,12 +875,14 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * 
+	 * @generated NOT
 	 */
 	@Override
 	public String toString()
 	{
-		if (eIsProxy()) return super.toString();
+		if (eIsProxy())
+			return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (eBigDecimal: ");
@@ -830,7 +894,10 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 		result.append(", eByte: ");
 		result.append(eByte);
 		result.append(", eByteArray: ");
-		result.append(eByteArray);
+
+		for (byte data : eByteArray)
+			result.append(data);
+
 		result.append(", eChar: ");
 		result.append(eChar);
 		result.append(", eDate: ");
@@ -851,4 +918,4 @@ public class ETypesImpl extends EObjectImpl implements ETypes
 		return result.toString();
 	}
 
-} //ETypesImpl
+} // ETypesImpl
