@@ -9,11 +9,14 @@
     <module>../../../bundles/org.eclipselabs.emf.query</module>
     <module>../../../bundles/org.eclipselabs.mongo</module>
     <module>../../../bundles/org.eclipselabs.mongo.emf</module>
+    <module>../../../bundles/org.eclipselabs.mongo.emf.freemarker</module>
     <module>../../../tests/org.eclipselabs.mongo.junit</module>
     <module>../../../tests/org.eclipselabs.mongo.emf.junit</module>
     <module>../../../features/org.eclipselabs.mongo.emf.feature</module>
+    <module>../../../features/org.eclipselabs.mongo.emf.freemarker.feature</module>
     <module>../../../features/org.eclipselabs.mongo.emf.junit.feature</module>
     <module>../../../features/org.eclipselabs.mongo.emf.source.feature</module>
+    <module>../../../features/org.eclipselabs.mongo.emf.freemarker.source.feature</module>
     <module>../../../features/org.eclipselabs.mongo.emf.junit.source.feature</module>
     <module>../../../dev/org.eclipselabs.mongo.emf.repository</module>
     <module>../../../dev/org.eclipselabs.mongo.emf.site</module>
@@ -39,6 +42,11 @@
       <id>MongoDB</id>
       <layout>p2</layout>
       <url>http://quickiemart.springfieldusa.net/Targets/MongoDB/</url>
+    </repository> 
+    <repository>
+      <id>Restlet</id>
+      <layout>p2</layout>
+      <url>http://quickiemart.springfieldusa.net/Targets/Restlet/</url>
     </repository> 
   </repositories>
 

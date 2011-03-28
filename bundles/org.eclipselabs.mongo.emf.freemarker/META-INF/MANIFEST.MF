@@ -11,6 +11,7 @@ Export-Package: org.eclipselabs.mongo.freemarker,
  org.eclipselabs.mongo.freemarker.util
 Bundle-ActivationPolicy: lazy
 Import-Package: freemarker.cache,
+ org.eclipse.emf.common,
  org.eclipse.emf.common.notify,
  org.eclipse.emf.common.notify.impl,
  org.eclipse.emf.common.util,
