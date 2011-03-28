@@ -142,7 +142,7 @@
 			<properties>
 				<emma.session.out.file>${project.build.directory}/emma/${project.artifactId}.es</emma.session.out.file>
 				<emma.filter>org.eclipselabs.*</emma.filter>
-				<eclemma.instrument.bundles>org.eclipselabs.mongo,org.eclipselabs.mongo.emf,org.ecliplselabs.mongo.emf.freemarker</eclemma.instrument.bundles>
+				<eclemma.instrument.bundles>org.eclipselabs.mongo,org.eclipselabs.mongo.emf</eclemma.instrument.bundles>
 			</properties>
 			<build>
 				<plugins>
