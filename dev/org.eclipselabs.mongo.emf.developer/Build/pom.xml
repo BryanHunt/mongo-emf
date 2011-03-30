@@ -51,6 +51,7 @@
   </repositories>
 
   <build>
+ 	<sourceDirectory>src</sourceDirectory>
     <plugins>
       <plugin>
         <!-- enable tycho build extension -->
@@ -59,6 +60,16 @@
         <version>${tycho-version}</version>
         <extensions>true</extensions>
       </plugin>
+      
+			<plugin>
+				<groupId>org.sonatype.tycho</groupId>
+				<artifactId>maven-osgi-compiler-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+  				<source>1.6</source>
+  				<target>1.6</target>
+				</configuration>
+			</plugin>
       
       <plugin>
     	  <groupId>org.sonatype.tycho</groupId>
@@ -142,7 +153,6 @@
 			<properties>
 				<emma.session.out.file>${project.build.directory}/emma/${project.artifactId}.es</emma.session.out.file>
 				<emma.filter>org.eclipselabs.*</emma.filter>
-				<eclemma.instrument.bundles>org.eclipselabs.mongo,org.eclipselabs.mongo.emf</eclemma.instrument.bundles>
 			</properties>
 			<build>
 				<plugins>

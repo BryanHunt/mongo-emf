@@ -10,7 +10,9 @@
   <artifactId>org.eclipselabs.mongo.emf.junit</artifactId>
   <version>0.3.2-SNAPSHOT</version>
   <packaging>eclipse-test-plugin</packaging>
-  
+  <properties>
+  				<eclemma.instrument.bundles>org.eclipselabs.mongo,org.eclipselabs.mongo.emf</eclemma.instrument.bundles>
+  </properties>
   <build>
     <plugins>
       <plugin>
