@@ -19,7 +19,6 @@
     <module>../../../features/org.eclipselabs.mongo.emf.freemarker.source.feature</module>
     <module>../../../features/org.eclipselabs.mongo.emf.junit.source.feature</module>
     <module>../../../dev/org.eclipselabs.mongo.emf.repository</module>
-    <module>../../../dev/org.eclipselabs.mongo.emf.site</module>
   </modules>
 
   <properties>
@@ -71,16 +70,7 @@
 				</configuration>
 			</plugin>
       
-      <plugin>
-    	  <groupId>org.sonatype.tycho</groupId>
-	      <artifactId>maven-osgi-packaging-plugin</artifactId>
-	      <version>${tycho-version}</version>
-	      <configuration>
-	        <archiveSite>true</archiveSite>
-	      </configuration>
-      </plugin>
-
-    <plugin>
+     <plugin>
         <groupId>org.sonatype.tycho</groupId>
         <artifactId>maven-osgi-source-plugin</artifactId>
         <version>${tycho-version}</version>
