@@ -45,7 +45,7 @@
     <repository>
       <id>Restlet</id>
       <layout>p2</layout>
-      <url>http://quickiemart.springfieldusa.net/Targets/Restlet/</url>
+      <url>http://quickiemart.springfieldusa.net/Targets/FreeMarker/</url>
     </repository> 
   </repositories>
 
@@ -77,6 +77,22 @@
         <executions>
           <execution>
             <id>plugin-source</id>
+            <goals>
+              <goal>plugin-source</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      
+      <plugin>
+      <!-- TODO remove workaround when https://issues.sonatype.org/browse/TYCHO-473 is fixed -->
+        <groupId>org.sonatype.tycho</groupId>
+	      <artifactId>maven-osgi-source-plugin</artifactId>
+	      <version>${tycho-version}</version>
+	      <executions>
+	        <execution>
+            <id>attach-source</id>
+            <phase>process-classes</phase>
             <goals>
               <goal>plugin-source</goal>
             </goals>
