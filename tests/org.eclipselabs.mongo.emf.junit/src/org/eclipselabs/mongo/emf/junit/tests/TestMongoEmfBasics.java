@@ -16,6 +16,7 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -24,6 +25,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -146,6 +148,8 @@ public class TestMongoEmfBasics extends TestHarness
 		// Verify : exists() on the URI converter should return true
 
 		assertTrue(targetObject.eResource().getResourceSet().getURIConverter().exists(targetObject.eResource().getURI(), null));
+		assertFalse(targetObject.eResource().getResourceSet().getURIConverter().exists(targetObject.eResource().getURI().trimSegments(1).appendQuery(""), null));
+		assertFalse(targetObject.eResource().getResourceSet().getURIConverter().exists(URI.createURI("mongo://host:8080/junit/junit/id"), null));
 	}
 
 	@Test
@@ -184,6 +188,8 @@ public class TestMongoEmfBasics extends TestHarness
 		eTypes.setELong(1L);
 		eTypes.setEShort((short) 1);
 		eTypes.setEString("j");
+		eTypes.getUris().add(URI.createURI("mongo://localhost/db/collection/id1"));
+		eTypes.getUris().add(URI.createURI("mongo://localhost/db/collection/id2"));
 
 		// Test
 
@@ -484,5 +490,12 @@ public class TestMongoEmfBasics extends TestHarness
 		EObject obj = resource.getContents().get(0);
 		String id = ((XMLResource) resource).getID(obj);
 		assertThat(id, equalTo(authorID));
+	}
+
+	@Test
+	public void testReadInputStream() throws IOException
+	{
+		// Simply for coverage
+		new MongoDBURIHandlerImpl().createInputStream(URI.createURI("mongo://localhost/junit/junit/id"), Collections.emptyMap()).read();
 	}
 }

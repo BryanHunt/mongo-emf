@@ -272,12 +272,12 @@ public class TestMongoEmfReferences extends TestHarness
 		TargetObject targetObject2 = ModelFactory.eINSTANCE.createTargetObject();
 		targetObject2.setSingleAttribute("two");
 
-		primaryObject.getFeatureMapType1().add(targetObject1);
-		primaryObject.getFeatureMapType2().add(targetObject2);
+		primaryObject.getFeatureMapReferenceType1().add(targetObject1);
+		primaryObject.getFeatureMapReferenceType2().add(targetObject2);
 
-		assertThat(primaryObject.getFeatureMapCollection().size(), is(2));
-		assertThat(primaryObject.getFeatureMapType1().size(), is(1));
-		assertThat(primaryObject.getFeatureMapType2().size(), is(1));
+		assertThat(primaryObject.getFeatureMapReferenceCollection().size(), is(2));
+		assertThat(primaryObject.getFeatureMapReferenceType1().size(), is(1));
+		assertThat(primaryObject.getFeatureMapReferenceType2().size(), is(1));
 
 		// Test : Store the object to MongDB
 
@@ -286,8 +286,8 @@ public class TestMongoEmfReferences extends TestHarness
 		// Verify : Check that the object was stored correctly.
 
 		HashSet<EStructuralFeature> excludeFeatures = new HashSet<EStructuralFeature>(1);
-		excludeFeatures.add(ModelPackage.Literals.PRIMARY_OBJECT__FEATURE_MAP_COLLECTION);
+		excludeFeatures.add(ModelPackage.Literals.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION);
 		PrimaryObject actual = MongoUtil.checkObject(primaryObject, excludeFeatures);
-		assertThat(actual.getFeatureMapCollection().size(), is(2));
+		assertThat(actual.getFeatureMapReferenceCollection().size(), is(2));
 	}
 }

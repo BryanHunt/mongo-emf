@@ -25,9 +25,12 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getMultipleContainmentReferenceNoProxies <em>Multiple Containment Reference No Proxies</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getSingleContainmentReferenceProxies <em>Single Containment Reference Proxies</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getMultipleContainmentReferenceProxies <em>Multiple Containment Reference Proxies</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapType2 <em>Feature Map Type2</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapType1 <em>Feature Map Type1</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapCollection <em>Feature Map Collection</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapReferenceType2 <em>Feature Map Reference Type2</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapReferenceType1 <em>Feature Map Reference Type1</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapReferenceCollection <em>Feature Map Reference Collection</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapAttributeType1 <em>Feature Map Attribute Type1</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapAttributeType2 <em>Feature Map Attribute Type2</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapAttributeCollection <em>Feature Map Attribute Collection</em>}</li>
  * </ul>
  * </p>
  *
@@ -190,54 +193,105 @@ public interface PrimaryObject extends EObject
 	EList<TargetObject> getMultipleContainmentReferenceProxies();
 
 	/**
-	 * Returns the value of the '<em><b>Feature Map Type2</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Feature Map Reference Type2</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipselabs.mongo.emf.junit.model.TargetObject}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Feature Map Type2</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Feature Map Reference Type2</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Feature Map Type2</em>' containment reference list.
-	 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getPrimaryObject_FeatureMapType2()
+	 * @return the value of the '<em>Feature Map Reference Type2</em>' containment reference list.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getPrimaryObject_FeatureMapReferenceType2()
 	 * @model containment="true" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="group='#featureMapCollection'"
+	 *        extendedMetaData="group='#featureMapReferenceCollection'"
 	 * @generated
 	 */
-	EList<TargetObject> getFeatureMapType2();
+	EList<TargetObject> getFeatureMapReferenceType2();
 
 	/**
-	 * Returns the value of the '<em><b>Feature Map Type1</b></em>' containment reference list.
+	 * Returns the value of the '<em><b>Feature Map Reference Type1</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipselabs.mongo.emf.junit.model.TargetObject}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Feature Map Type1</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Feature Map Reference Type1</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Feature Map Type1</em>' containment reference list.
-	 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getPrimaryObject_FeatureMapType1()
+	 * @return the value of the '<em>Feature Map Reference Type1</em>' containment reference list.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getPrimaryObject_FeatureMapReferenceType1()
 	 * @model containment="true" transient="true" volatile="true" derived="true"
-	 *        extendedMetaData="group='#featureMapCollection'"
+	 *        extendedMetaData="group='#featureMapReferenceCollection'"
 	 * @generated
 	 */
-	EList<TargetObject> getFeatureMapType1();
+	EList<TargetObject> getFeatureMapReferenceType1();
 
 	/**
-	 * Returns the value of the '<em><b>Feature Map Collection</b></em>' attribute list.
+	 * Returns the value of the '<em><b>Feature Map Reference Collection</b></em>' attribute list.
 	 * The list contents are of type {@link org.eclipse.emf.ecore.util.FeatureMap.Entry}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Feature Map Collection</em>' attribute list isn't clear,
+	 * If the meaning of the '<em>Feature Map Reference Collection</em>' attribute list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Feature Map Collection</em>' attribute list.
-	 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getPrimaryObject_FeatureMapCollection()
+	 * @return the value of the '<em>Feature Map Reference Collection</em>' attribute list.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getPrimaryObject_FeatureMapReferenceCollection()
 	 * @model dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="false"
 	 *        extendedMetaData="kind='group'"
 	 * @generated
 	 */
-	FeatureMap getFeatureMapCollection();
+	FeatureMap getFeatureMapReferenceCollection();
+
+	/**
+	 * Returns the value of the '<em><b>Feature Map Attribute Type1</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Feature Map Attribute Type1</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Feature Map Attribute Type1</em>' attribute list.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getPrimaryObject_FeatureMapAttributeType1()
+	 * @model transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="group='#featureMapAttributeCollection'"
+	 * @generated
+	 */
+	EList<String> getFeatureMapAttributeType1();
+
+	/**
+	 * Returns the value of the '<em><b>Feature Map Attribute Type2</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Feature Map Attribute Type2</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Feature Map Attribute Type2</em>' attribute list.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getPrimaryObject_FeatureMapAttributeType2()
+	 * @model transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="group='#featureMapAttributeCollection'"
+	 * @generated
+	 */
+	EList<String> getFeatureMapAttributeType2();
+
+	/**
+	 * Returns the value of the '<em><b>Feature Map Attribute Collection</b></em>' attribute list.
+	 * The list contents are of type {@link org.eclipse.emf.ecore.util.FeatureMap.Entry}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Feature Map Attribute Collection</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Feature Map Attribute Collection</em>' attribute list.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getPrimaryObject_FeatureMapAttributeCollection()
+	 * @model dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="true"
+	 *        extendedMetaData="kind='group'"
+	 * @generated
+	 */
+	FeatureMap getFeatureMapAttributeCollection();
 
 } // PrimaryObject

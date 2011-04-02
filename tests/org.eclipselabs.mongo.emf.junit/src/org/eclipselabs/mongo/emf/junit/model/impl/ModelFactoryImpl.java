@@ -11,11 +11,14 @@
 
 package org.eclipselabs.mongo.emf.junit.model.impl;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipselabs.mongo.emf.junit.model.*;
 import org.eclipselabs.mongo.emf.junit.model.Book;
 import org.eclipselabs.mongo.emf.junit.model.ETypes;
 import org.eclipselabs.mongo.emf.junit.model.Library;
@@ -89,6 +92,40 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 			case ModelPackage.TARGET_OBJECT: return createTargetObject();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object createFromString(EDataType eDataType, String initialValue)
+	{
+		switch (eDataType.getClassifierID())
+		{
+			case ModelPackage.URI:
+				return createURIFromString(eDataType, initialValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String convertToString(EDataType eDataType, Object instanceValue)
+	{
+		switch (eDataType.getClassifierID())
+		{
+			case ModelPackage.URI:
+				return convertURIToString(eDataType, instanceValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
 	}
 
@@ -183,6 +220,27 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * 
+	 * @generated NOT
+	 */
+	public URI createURIFromString(EDataType eDataType, String initialValue)
+	{
+		return URI.createURI(initialValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertURIToString(EDataType eDataType, Object instanceValue)
+	{
+		return super.convertToString(eDataType, instanceValue);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	public ModelPackage getModelPackage()
@@ -202,4 +260,4 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 		return ModelPackage.eINSTANCE;
 	}
 
-} //ModelFactoryImpl
+} // ModelFactoryImpl

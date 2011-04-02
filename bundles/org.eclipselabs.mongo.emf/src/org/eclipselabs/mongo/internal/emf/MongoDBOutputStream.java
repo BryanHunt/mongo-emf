@@ -121,7 +121,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 
 		for (EAttribute attribute : eClass.getEAllAttributes())
 		{
-			if (!attribute.isTransient() && !(attribute.isID() && attribute.isDerived()))
+			if (!attribute.isTransient())
 			{
 				Object value = null;
 

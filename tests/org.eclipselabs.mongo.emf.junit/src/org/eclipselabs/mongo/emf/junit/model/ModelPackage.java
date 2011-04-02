@@ -13,6 +13,7 @@ package org.eclipselabs.mongo.emf.junit.model;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -377,13 +378,22 @@ public interface ModelPackage extends EPackage
 	int ETYPES__ESTRING = 12;
 
 	/**
+	 * The feature id for the '<em><b>Uris</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ETYPES__URIS = 13;
+
+	/**
 	 * The number of structural features of the '<em>ETypes</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ETYPES_FEATURE_COUNT = 13;
+	int ETYPES_FEATURE_COUNT = 14;
 
 	/**
 	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.MappedLibraryImpl <em>Mapped Library</em>}' class.
@@ -514,31 +524,58 @@ public interface ModelPackage extends EPackage
 	int PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES = 6;
 
 	/**
-	 * The feature id for the '<em><b>Feature Map Type2</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Feature Map Reference Type2</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__FEATURE_MAP_TYPE2 = 7;
+	int PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2 = 7;
 
 	/**
-	 * The feature id for the '<em><b>Feature Map Type1</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Feature Map Reference Type1</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__FEATURE_MAP_TYPE1 = 8;
+	int PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1 = 8;
 
 	/**
-	 * The feature id for the '<em><b>Feature Map Collection</b></em>' attribute list.
+	 * The feature id for the '<em><b>Feature Map Reference Collection</b></em>' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__FEATURE_MAP_COLLECTION = 9;
+	int PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION = 9;
+
+	/**
+	 * The feature id for the '<em><b>Feature Map Attribute Type1</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE1 = 10;
+
+	/**
+	 * The feature id for the '<em><b>Feature Map Attribute Type2</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE2 = 11;
+
+	/**
+	 * The feature id for the '<em><b>Feature Map Attribute Collection</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_COLLECTION = 12;
 
 	/**
 	 * The number of structural features of the '<em>Primary Object</em>' class.
@@ -547,7 +584,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT_FEATURE_COUNT = 10;
+	int PRIMARY_OBJECT_FEATURE_COUNT = 13;
 
 	/**
 	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.TargetObjectImpl <em>Target Object</em>}' class.
@@ -585,6 +622,16 @@ public interface ModelPackage extends EPackage
 	 * @ordered
 	 */
 	int TARGET_OBJECT_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '<em>URI</em>' data type.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipse.emf.common.util.URI
+	 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getURI()
+	 * @generated
+	 */
+	int URI = 8;
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.junit.model.Person <em>Person</em>}'.
@@ -912,6 +959,17 @@ public interface ModelPackage extends EPackage
 	EAttribute getETypes_EString();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getUris <em>Uris</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Uris</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ETypes#getUris()
+	 * @see #getETypes()
+	 * @generated
+	 */
+	EAttribute getETypes_Uris();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.junit.model.MappedLibrary <em>Mapped Library</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1031,37 +1089,70 @@ public interface ModelPackage extends EPackage
 	EReference getPrimaryObject_MultipleContainmentReferenceProxies();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapType2 <em>Feature Map Type2</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapReferenceType2 <em>Feature Map Reference Type2</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Feature Map Type2</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapType2()
+	 * @return the meta object for the containment reference list '<em>Feature Map Reference Type2</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapReferenceType2()
 	 * @see #getPrimaryObject()
 	 * @generated
 	 */
-	EReference getPrimaryObject_FeatureMapType2();
+	EReference getPrimaryObject_FeatureMapReferenceType2();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapType1 <em>Feature Map Type1</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapReferenceType1 <em>Feature Map Reference Type1</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Feature Map Type1</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapType1()
+	 * @return the meta object for the containment reference list '<em>Feature Map Reference Type1</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapReferenceType1()
 	 * @see #getPrimaryObject()
 	 * @generated
 	 */
-	EReference getPrimaryObject_FeatureMapType1();
+	EReference getPrimaryObject_FeatureMapReferenceType1();
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapCollection <em>Feature Map Collection</em>}'.
+	 * Returns the meta object for the attribute list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapReferenceCollection <em>Feature Map Reference Collection</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Feature Map Collection</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapCollection()
+	 * @return the meta object for the attribute list '<em>Feature Map Reference Collection</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapReferenceCollection()
 	 * @see #getPrimaryObject()
 	 * @generated
 	 */
-	EAttribute getPrimaryObject_FeatureMapCollection();
+	EAttribute getPrimaryObject_FeatureMapReferenceCollection();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapAttributeType1 <em>Feature Map Attribute Type1</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Feature Map Attribute Type1</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapAttributeType1()
+	 * @see #getPrimaryObject()
+	 * @generated
+	 */
+	EAttribute getPrimaryObject_FeatureMapAttributeType1();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapAttributeType2 <em>Feature Map Attribute Type2</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Feature Map Attribute Type2</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapAttributeType2()
+	 * @see #getPrimaryObject()
+	 * @generated
+	 */
+	EAttribute getPrimaryObject_FeatureMapAttributeType2();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapAttributeCollection <em>Feature Map Attribute Collection</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Feature Map Attribute Collection</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapAttributeCollection()
+	 * @see #getPrimaryObject()
+	 * @generated
+	 */
+	EAttribute getPrimaryObject_FeatureMapAttributeCollection();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.junit.model.TargetObject <em>Target Object</em>}'.
@@ -1094,6 +1185,17 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 */
 	EAttribute getTargetObject_ArrayAttribute();
+
+	/**
+	 * Returns the meta object for data type '{@link org.eclipse.emf.common.util.URI <em>URI</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for data type '<em>URI</em>'.
+	 * @see org.eclipse.emf.common.util.URI
+	 * @model instanceClass="org.eclipse.emf.common.util.URI"
+	 * @generated
+	 */
+	EDataType getURI();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.junit.model.MappedLibrary#getRareBooks <em>Rare Books</em>}'.
@@ -1391,6 +1493,14 @@ public interface ModelPackage extends EPackage
 		EAttribute ETYPES__ESTRING = eINSTANCE.getETypes_EString();
 
 		/**
+		 * The meta object literal for the '<em><b>Uris</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ETYPES__URIS = eINSTANCE.getETypes_Uris();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.MappedLibraryImpl <em>Mapped Library</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1483,28 +1593,52 @@ public interface ModelPackage extends EPackage
 		EReference PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES = eINSTANCE.getPrimaryObject_MultipleContainmentReferenceProxies();
 
 		/**
-		 * The meta object literal for the '<em><b>Feature Map Type2</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Feature Map Reference Type2</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference PRIMARY_OBJECT__FEATURE_MAP_TYPE2 = eINSTANCE.getPrimaryObject_FeatureMapType2();
+		EReference PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2 = eINSTANCE.getPrimaryObject_FeatureMapReferenceType2();
 
 		/**
-		 * The meta object literal for the '<em><b>Feature Map Type1</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Feature Map Reference Type1</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference PRIMARY_OBJECT__FEATURE_MAP_TYPE1 = eINSTANCE.getPrimaryObject_FeatureMapType1();
+		EReference PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1 = eINSTANCE.getPrimaryObject_FeatureMapReferenceType1();
 
 		/**
-		 * The meta object literal for the '<em><b>Feature Map Collection</b></em>' attribute list feature.
+		 * The meta object literal for the '<em><b>Feature Map Reference Collection</b></em>' attribute list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PRIMARY_OBJECT__FEATURE_MAP_COLLECTION = eINSTANCE.getPrimaryObject_FeatureMapCollection();
+		EAttribute PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION = eINSTANCE.getPrimaryObject_FeatureMapReferenceCollection();
+
+		/**
+		 * The meta object literal for the '<em><b>Feature Map Attribute Type1</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE1 = eINSTANCE.getPrimaryObject_FeatureMapAttributeType1();
+
+		/**
+		 * The meta object literal for the '<em><b>Feature Map Attribute Type2</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE2 = eINSTANCE.getPrimaryObject_FeatureMapAttributeType2();
+
+		/**
+		 * The meta object literal for the '<em><b>Feature Map Attribute Collection</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_COLLECTION = eINSTANCE.getPrimaryObject_FeatureMapAttributeCollection();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.TargetObjectImpl <em>Target Object</em>}' class.
@@ -1531,6 +1665,16 @@ public interface ModelPackage extends EPackage
 		 * @generated
 		 */
 		EAttribute TARGET_OBJECT__ARRAY_ATTRIBUTE = eINSTANCE.getTargetObject_ArrayAttribute();
+
+		/**
+		 * The meta object literal for the '<em>URI</em>' data type.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.emf.common.util.URI
+		 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getURI()
+		 * @generated
+		 */
+		EDataType URI = eINSTANCE.getURI();
 
 		/**
 		 * The meta object literal for the '<em><b>Rare Books</b></em>' containment reference list feature.

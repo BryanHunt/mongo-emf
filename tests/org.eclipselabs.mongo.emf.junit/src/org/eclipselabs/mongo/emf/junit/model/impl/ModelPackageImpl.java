@@ -13,6 +13,7 @@ package org.eclipselabs.mongo.emf.junit.model.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
@@ -90,6 +91,13 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * @generated
 	 */
 	private EClass targetObjectEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EDataType uriEDataType = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -459,6 +467,16 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getETypes_Uris()
+	{
+		return (EAttribute)eTypesEClass.getEStructuralFeatures().get(13);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getMappedLibrary()
 	{
 		return mappedLibraryEClass;
@@ -569,7 +587,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPrimaryObject_FeatureMapType2()
+	public EReference getPrimaryObject_FeatureMapReferenceType2()
 	{
 		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(7);
 	}
@@ -579,7 +597,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPrimaryObject_FeatureMapType1()
+	public EReference getPrimaryObject_FeatureMapReferenceType1()
 	{
 		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(8);
 	}
@@ -589,9 +607,39 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getPrimaryObject_FeatureMapCollection()
+	public EAttribute getPrimaryObject_FeatureMapReferenceCollection()
 	{
 		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPrimaryObject_FeatureMapAttributeType1()
+	{
+		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPrimaryObject_FeatureMapAttributeType2()
+	{
+		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPrimaryObject_FeatureMapAttributeCollection()
+	{
+		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(12);
 	}
 
 	/**
@@ -622,6 +670,16 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	public EAttribute getTargetObject_ArrayAttribute()
 	{
 		return (EAttribute)targetObjectEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EDataType getURI()
+	{
+		return uriEDataType;
 	}
 
 	/**
@@ -708,6 +766,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 		createEAttribute(eTypesEClass, ETYPES__ELONG);
 		createEAttribute(eTypesEClass, ETYPES__ESHORT);
 		createEAttribute(eTypesEClass, ETYPES__ESTRING);
+		createEAttribute(eTypesEClass, ETYPES__URIS);
 
 		mappedLibraryEClass = createEClass(MAPPED_LIBRARY);
 		createEReference(mappedLibraryEClass, MAPPED_LIBRARY__LOCATION);
@@ -723,13 +782,19 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 		createEReference(primaryObjectEClass, PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_NO_PROXIES);
 		createEReference(primaryObjectEClass, PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES);
 		createEReference(primaryObjectEClass, PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES);
-		createEReference(primaryObjectEClass, PRIMARY_OBJECT__FEATURE_MAP_TYPE2);
-		createEReference(primaryObjectEClass, PRIMARY_OBJECT__FEATURE_MAP_TYPE1);
-		createEAttribute(primaryObjectEClass, PRIMARY_OBJECT__FEATURE_MAP_COLLECTION);
+		createEReference(primaryObjectEClass, PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2);
+		createEReference(primaryObjectEClass, PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1);
+		createEAttribute(primaryObjectEClass, PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION);
+		createEAttribute(primaryObjectEClass, PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE1);
+		createEAttribute(primaryObjectEClass, PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE2);
+		createEAttribute(primaryObjectEClass, PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_COLLECTION);
 
 		targetObjectEClass = createEClass(TARGET_OBJECT);
 		createEAttribute(targetObjectEClass, TARGET_OBJECT__SINGLE_ATTRIBUTE);
 		createEAttribute(targetObjectEClass, TARGET_OBJECT__ARRAY_ATTRIBUTE);
+
+		// Create data types
+		uriEDataType = createEDataType(URI);
 	}
 
 	/**
@@ -797,6 +862,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 		initEAttribute(getETypes_ELong(), ecorePackage.getELong(), "eLong", null, 0, 1, ETypes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getETypes_EShort(), ecorePackage.getEShort(), "eShort", null, 0, 1, ETypes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getETypes_EString(), ecorePackage.getEString(), "eString", null, 0, 1, ETypes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getETypes_Uris(), this.getURI(), "uris", null, 0, -1, ETypes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(mappedLibraryEClass, MappedLibrary.class, "MappedLibrary", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getMappedLibrary_Location(), this.getLocation(), null, "location", null, 0, 1, MappedLibrary.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -812,13 +878,19 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 		initEReference(getPrimaryObject_MultipleContainmentReferenceNoProxies(), this.getTargetObject(), null, "multipleContainmentReferenceNoProxies", null, 0, -1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPrimaryObject_SingleContainmentReferenceProxies(), this.getTargetObject(), null, "singleContainmentReferenceProxies", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPrimaryObject_MultipleContainmentReferenceProxies(), this.getTargetObject(), null, "multipleContainmentReferenceProxies", null, 0, -1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getPrimaryObject_FeatureMapType2(), this.getTargetObject(), null, "featureMapType2", null, 0, -1, PrimaryObject.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEReference(getPrimaryObject_FeatureMapType1(), this.getTargetObject(), null, "featureMapType1", null, 0, -1, PrimaryObject.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-		initEAttribute(getPrimaryObject_FeatureMapCollection(), ecorePackage.getEFeatureMapEntry(), "featureMapCollection", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPrimaryObject_FeatureMapReferenceType2(), this.getTargetObject(), null, "featureMapReferenceType2", null, 0, -1, PrimaryObject.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getPrimaryObject_FeatureMapReferenceType1(), this.getTargetObject(), null, "featureMapReferenceType1", null, 0, -1, PrimaryObject.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPrimaryObject_FeatureMapReferenceCollection(), ecorePackage.getEFeatureMapEntry(), "featureMapReferenceCollection", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPrimaryObject_FeatureMapAttributeType1(), ecorePackage.getEString(), "featureMapAttributeType1", null, 0, -1, PrimaryObject.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPrimaryObject_FeatureMapAttributeType2(), ecorePackage.getEString(), "featureMapAttributeType2", null, 0, -1, PrimaryObject.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPrimaryObject_FeatureMapAttributeCollection(), ecorePackage.getEFeatureMapEntry(), "featureMapAttributeCollection", null, 0, -1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(targetObjectEClass, TargetObject.class, "TargetObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTargetObject_SingleAttribute(), ecorePackage.getEString(), "singleAttribute", null, 0, 1, TargetObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTargetObject_ArrayAttribute(), ecorePackage.getEString(), "arrayAttribute", null, 0, -1, TargetObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		// Initialize data types
+		initEDataType(uriEDataType, org.eclipse.emf.common.util.URI.class, "URI", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -859,21 +931,42 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 			 "kind", "group"
 		   });		
 		addAnnotation
-		  (getPrimaryObject_FeatureMapType2(), 
+		  (getPrimaryObject_FeatureMapReferenceType2(), 
 		   source, 
 		   new String[] 
 		   {
-			 "group", "#featureMapCollection"
+			 "group", "#featureMapReferenceCollection"
 		   });		
 		addAnnotation
-		  (getPrimaryObject_FeatureMapType1(), 
+		  (getPrimaryObject_FeatureMapReferenceType1(), 
 		   source, 
 		   new String[] 
 		   {
-			 "group", "#featureMapCollection"
+			 "group", "#featureMapReferenceCollection"
 		   });		
 		addAnnotation
-		  (getPrimaryObject_FeatureMapCollection(), 
+		  (getPrimaryObject_FeatureMapReferenceCollection(), 
+		   source, 
+		   new String[] 
+		   {
+			 "kind", "group"
+		   });		
+		addAnnotation
+		  (getPrimaryObject_FeatureMapAttributeType1(), 
+		   source, 
+		   new String[] 
+		   {
+			 "group", "#featureMapAttributeCollection"
+		   });		
+		addAnnotation
+		  (getPrimaryObject_FeatureMapAttributeType2(), 
+		   source, 
+		   new String[] 
+		   {
+			 "group", "#featureMapAttributeCollection"
+		   });		
+		addAnnotation
+		  (getPrimaryObject_FeatureMapAttributeCollection(), 
 		   source, 
 		   new String[] 
 		   {

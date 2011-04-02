@@ -14,6 +14,7 @@ package org.eclipselabs.mongo.emf.junit.model.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
+import org.eclipselabs.mongo.emf.junit.model.*;
 import org.eclipselabs.mongo.emf.junit.model.Book;
 import org.eclipselabs.mongo.emf.junit.model.ETypes;
 import org.eclipselabs.mongo.emf.junit.model.Library;

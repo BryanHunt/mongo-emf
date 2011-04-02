@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.BasicFeatureMap;
+import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.FeatureMap;
@@ -38,9 +39,12 @@ import org.eclipselabs.mongo.emf.junit.model.TargetObject;
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getMultipleContainmentReferenceNoProxies <em>Multiple Containment Reference No Proxies</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getSingleContainmentReferenceProxies <em>Single Containment Reference Proxies</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getMultipleContainmentReferenceProxies <em>Multiple Containment Reference Proxies</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getFeatureMapType2 <em>Feature Map Type2</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getFeatureMapType1 <em>Feature Map Type1</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getFeatureMapCollection <em>Feature Map Collection</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getFeatureMapReferenceType2 <em>Feature Map Reference Type2</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getFeatureMapReferenceType1 <em>Feature Map Reference Type1</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getFeatureMapReferenceCollection <em>Feature Map Reference Collection</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getFeatureMapAttributeType1 <em>Feature Map Attribute Type1</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getFeatureMapAttributeType2 <em>Feature Map Attribute Type2</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getFeatureMapAttributeCollection <em>Feature Map Attribute Collection</em>}</li>
  * </ul>
  * </p>
  *
@@ -129,14 +133,24 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 	protected EList<TargetObject> multipleContainmentReferenceProxies;
 
 	/**
-	 * The cached value of the '{@link #getFeatureMapCollection() <em>Feature Map Collection</em>}' attribute list.
+	 * The cached value of the '{@link #getFeatureMapReferenceCollection() <em>Feature Map Reference Collection</em>}' attribute list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getFeatureMapCollection()
+	 * @see #getFeatureMapReferenceCollection()
 	 * @generated
 	 * @ordered
 	 */
-	protected FeatureMap featureMapCollection;
+	protected FeatureMap featureMapReferenceCollection;
+
+	/**
+	 * The cached value of the '{@link #getFeatureMapAttributeCollection() <em>Feature Map Attribute Collection</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getFeatureMapAttributeCollection()
+	 * @generated
+	 * @ordered
+	 */
+	protected FeatureMap featureMapAttributeCollection;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -395,9 +409,9 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<TargetObject> getFeatureMapType2()
+	public EList<TargetObject> getFeatureMapReferenceType2()
 	{
-		return getFeatureMapCollection().list(ModelPackage.Literals.PRIMARY_OBJECT__FEATURE_MAP_TYPE2);
+		return getFeatureMapReferenceCollection().list(ModelPackage.Literals.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2);
 	}
 
 	/**
@@ -405,9 +419,9 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<TargetObject> getFeatureMapType1()
+	public EList<TargetObject> getFeatureMapReferenceType1()
 	{
-		return getFeatureMapCollection().list(ModelPackage.Literals.PRIMARY_OBJECT__FEATURE_MAP_TYPE1);
+		return getFeatureMapReferenceCollection().list(ModelPackage.Literals.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1);
 	}
 
 	/**
@@ -415,13 +429,47 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public FeatureMap getFeatureMapCollection()
+	public FeatureMap getFeatureMapReferenceCollection()
 	{
-		if (featureMapCollection == null)
+		if (featureMapReferenceCollection == null)
 		{
-			featureMapCollection = new BasicFeatureMap(this, ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_COLLECTION);
+			featureMapReferenceCollection = new BasicFeatureMap(this, ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION);
 		}
-		return featureMapCollection;
+		return featureMapReferenceCollection;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<String> getFeatureMapAttributeType1()
+	{
+		return getFeatureMapAttributeCollection().list(ModelPackage.Literals.PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<String> getFeatureMapAttributeType2()
+	{
+		return getFeatureMapAttributeCollection().list(ModelPackage.Literals.PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public FeatureMap getFeatureMapAttributeCollection()
+	{
+		if (featureMapAttributeCollection == null)
+		{
+			featureMapAttributeCollection = new BasicFeatureMap(this, ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_COLLECTION);
+		}
+		return featureMapAttributeCollection;
 	}
 
 	/**
@@ -442,12 +490,14 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 				return basicSetSingleContainmentReferenceProxies(null, msgs);
 			case ModelPackage.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES:
 				return ((InternalEList<?>)getMultipleContainmentReferenceProxies()).basicRemove(otherEnd, msgs);
-			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_TYPE2:
-				return ((InternalEList<?>)getFeatureMapType2()).basicRemove(otherEnd, msgs);
-			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_TYPE1:
-				return ((InternalEList<?>)getFeatureMapType1()).basicRemove(otherEnd, msgs);
-			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_COLLECTION:
-				return ((InternalEList<?>)getFeatureMapCollection()).basicRemove(otherEnd, msgs);
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2:
+				return ((InternalEList<?>)getFeatureMapReferenceType2()).basicRemove(otherEnd, msgs);
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1:
+				return ((InternalEList<?>)getFeatureMapReferenceType1()).basicRemove(otherEnd, msgs);
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION:
+				return ((InternalEList<?>)getFeatureMapReferenceCollection()).basicRemove(otherEnd, msgs);
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_COLLECTION:
+				return ((InternalEList<?>)getFeatureMapAttributeCollection()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -478,13 +528,20 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 				return basicGetSingleContainmentReferenceProxies();
 			case ModelPackage.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES:
 				return getMultipleContainmentReferenceProxies();
-			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_TYPE2:
-				return getFeatureMapType2();
-			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_TYPE1:
-				return getFeatureMapType1();
-			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_COLLECTION:
-				if (coreType) return getFeatureMapCollection();
-				return ((FeatureMap.Internal)getFeatureMapCollection()).getWrapper();
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2:
+				return getFeatureMapReferenceType2();
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1:
+				return getFeatureMapReferenceType1();
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION:
+				if (coreType) return getFeatureMapReferenceCollection();
+				return ((FeatureMap.Internal)getFeatureMapReferenceCollection()).getWrapper();
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE1:
+				return getFeatureMapAttributeType1();
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE2:
+				return getFeatureMapAttributeType2();
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_COLLECTION:
+				if (coreType) return getFeatureMapAttributeCollection();
+				return ((FeatureMap.Internal)getFeatureMapAttributeCollection()).getWrapper();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -524,16 +581,27 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 				getMultipleContainmentReferenceProxies().clear();
 				getMultipleContainmentReferenceProxies().addAll((Collection<? extends TargetObject>)newValue);
 				return;
-			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_TYPE2:
-				getFeatureMapType2().clear();
-				getFeatureMapType2().addAll((Collection<? extends TargetObject>)newValue);
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2:
+				getFeatureMapReferenceType2().clear();
+				getFeatureMapReferenceType2().addAll((Collection<? extends TargetObject>)newValue);
 				return;
-			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_TYPE1:
-				getFeatureMapType1().clear();
-				getFeatureMapType1().addAll((Collection<? extends TargetObject>)newValue);
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1:
+				getFeatureMapReferenceType1().clear();
+				getFeatureMapReferenceType1().addAll((Collection<? extends TargetObject>)newValue);
 				return;
-			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_COLLECTION:
-				((FeatureMap.Internal)getFeatureMapCollection()).set(newValue);
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION:
+				((FeatureMap.Internal)getFeatureMapReferenceCollection()).set(newValue);
+				return;
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE1:
+				getFeatureMapAttributeType1().clear();
+				getFeatureMapAttributeType1().addAll((Collection<? extends String>)newValue);
+				return;
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE2:
+				getFeatureMapAttributeType2().clear();
+				getFeatureMapAttributeType2().addAll((Collection<? extends String>)newValue);
+				return;
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_COLLECTION:
+				((FeatureMap.Internal)getFeatureMapAttributeCollection()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -570,14 +638,23 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 			case ModelPackage.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES:
 				getMultipleContainmentReferenceProxies().clear();
 				return;
-			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_TYPE2:
-				getFeatureMapType2().clear();
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2:
+				getFeatureMapReferenceType2().clear();
 				return;
-			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_TYPE1:
-				getFeatureMapType1().clear();
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1:
+				getFeatureMapReferenceType1().clear();
 				return;
-			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_COLLECTION:
-				getFeatureMapCollection().clear();
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION:
+				getFeatureMapReferenceCollection().clear();
+				return;
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE1:
+				getFeatureMapAttributeType1().clear();
+				return;
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE2:
+				getFeatureMapAttributeType2().clear();
+				return;
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_COLLECTION:
+				getFeatureMapAttributeCollection().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -607,12 +684,18 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 				return singleContainmentReferenceProxies != null;
 			case ModelPackage.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES:
 				return multipleContainmentReferenceProxies != null && !multipleContainmentReferenceProxies.isEmpty();
-			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_TYPE2:
-				return !getFeatureMapType2().isEmpty();
-			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_TYPE1:
-				return !getFeatureMapType1().isEmpty();
-			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_COLLECTION:
-				return featureMapCollection != null && !featureMapCollection.isEmpty();
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2:
+				return !getFeatureMapReferenceType2().isEmpty();
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1:
+				return !getFeatureMapReferenceType1().isEmpty();
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION:
+				return featureMapReferenceCollection != null && !featureMapReferenceCollection.isEmpty();
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE1:
+				return !getFeatureMapAttributeType1().isEmpty();
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE2:
+				return !getFeatureMapAttributeType2().isEmpty();
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_COLLECTION:
+				return featureMapAttributeCollection != null && !featureMapAttributeCollection.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -630,8 +713,10 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
-		result.append(", featureMapCollection: ");
-		result.append(featureMapCollection);
+		result.append(", featureMapReferenceCollection: ");
+		result.append(featureMapReferenceCollection);
+		result.append(", featureMapAttributeCollection: ");
+		result.append(featureMapAttributeCollection);
 		result.append(')');
 		return result.toString();
 	}

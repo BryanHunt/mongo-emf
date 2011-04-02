@@ -180,7 +180,7 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 	@SuppressWarnings("unchecked")
 	private void buildEObjectAttribute(DBCollection collection, DBObject dbObject, Resource resource, XMLResource.URIHandler uriHandler, ResourceSet resourceSet, EObject eObject, EAttribute attribute)
 	{
-		if (!attribute.isTransient() && !(attribute.isID() && attribute.isDerived()) && dbObject.containsField(attribute.getName()))
+		if (!attribute.isTransient() && dbObject.containsField(attribute.getName()))
 		{
 			Object value = dbObject.get(attribute.getName());
 

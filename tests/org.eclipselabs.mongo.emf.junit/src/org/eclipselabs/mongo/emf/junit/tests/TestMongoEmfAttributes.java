@@ -15,8 +15,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
+import java.util.HashSet;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
+import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
+import org.eclipselabs.mongo.emf.junit.model.PrimaryObject;
 import org.eclipselabs.mongo.emf.junit.model.TargetObject;
 import org.eclipselabs.mongo.emf.junit.support.TestHarness;
 import org.eclipselabs.mongo.junit.MongoUtil;
@@ -103,5 +107,32 @@ public class TestMongoEmfAttributes extends TestHarness
 
 		MongoUtil.checkObject(targetObject);
 		assertThat(getCollection(targetObject.eClass()).getCount(), is(1L));
+	}
+
+	@Test
+	public void testFeatureMap() throws IOException
+	{
+		// Setup : Create a primary object and two attributes for the feature map.
+
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject.setName("junit");
+
+		primaryObject.getFeatureMapAttributeType1().add("Hello");
+		primaryObject.getFeatureMapAttributeType2().add("World");
+
+		assertThat(primaryObject.getFeatureMapAttributeCollection().size(), is(2));
+		assertThat(primaryObject.getFeatureMapAttributeType1().size(), is(1));
+		assertThat(primaryObject.getFeatureMapAttributeType2().size(), is(1));
+
+		// Test : Store the object to MongDB
+
+		saveObject(primaryObject);
+
+		// Verify : Check that the object was stored correctly.
+
+		HashSet<EStructuralFeature> excludeFeatures = new HashSet<EStructuralFeature>(1);
+		excludeFeatures.add(ModelPackage.Literals.PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_COLLECTION);
+		PrimaryObject actual = MongoUtil.checkObject(primaryObject, excludeFeatures);
+		assertThat(actual.getFeatureMapAttributeCollection().size(), is(2));
 	}
 }

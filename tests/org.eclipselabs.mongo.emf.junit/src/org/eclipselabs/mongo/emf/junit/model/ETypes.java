@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -33,6 +35,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getELong <em>ELong</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEShort <em>EShort</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEString <em>EString</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getUris <em>Uris</em>}</li>
  * </ul>
  * </p>
  *
@@ -379,5 +382,21 @@ public interface ETypes extends EObject
 	 * @generated
 	 */
 	void setEString(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Uris</b></em>' attribute list.
+	 * The list contents are of type {@link org.eclipse.emf.common.util.URI}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Uris</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Uris</em>' attribute list.
+	 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getETypes_Uris()
+	 * @model dataType="org.eclipselabs.mongo.emf.junit.model.URI"
+	 * @generated
+	 */
+	EList<URI> getUris();
 
 } // ETypes

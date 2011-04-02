@@ -42,6 +42,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="eLong" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="eShort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EShort"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="eString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uris" upperBound="-1" eType="#//URI"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MappedLibrary">
     <eStructuralFeatures xsi:type="ecore:EReference" name="location" eType="#//Location"
@@ -80,21 +81,42 @@
         eType="#//TargetObject" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="multipleContainmentReferenceProxies"
         upperBound="-1" eType="#//TargetObject" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="featureMapType2" upperBound="-1"
-        eType="#//TargetObject" volatile="true" transient="true" derived="true" containment="true"
-        resolveProxies="false">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="featureMapReferenceType2"
+        upperBound="-1" eType="#//TargetObject" volatile="true" transient="true" derived="true"
+        containment="true" resolveProxies="false">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="group" value="#featureMapCollection"/>
+        <details key="group" value="#featureMapReferenceCollection"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="featureMapType1" upperBound="-1"
-        eType="#//TargetObject" volatile="true" transient="true" derived="true" containment="true"
-        resolveProxies="false">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="featureMapReferenceType1"
+        upperBound="-1" eType="#//TargetObject" volatile="true" transient="true" derived="true"
+        containment="true" resolveProxies="false">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="group" value="#featureMapCollection"/>
+        <details key="group" value="#featureMapReferenceCollection"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="featureMapCollection" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="featureMapReferenceCollection"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="group"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="featureMapAttributeType1"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        volatile="true" transient="true" derived="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="group" value="#featureMapAttributeCollection"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="featureMapAttributeType2"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        volatile="true" transient="true" derived="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="group" value="#featureMapAttributeCollection"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="featureMapAttributeCollection"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="group"/>
       </eAnnotations>
@@ -105,4 +127,5 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="arrayAttribute" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="URI" instanceClassName="org.eclipse.emf.common.util.URI"/>
 </ecore:EPackage>
