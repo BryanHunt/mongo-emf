@@ -134,7 +134,7 @@ public class MongoTemplateLoader implements TemplateLoader
 		synchronized (resource)
 		{
 			FreeMarkerTemplate template = (FreeMarkerTemplate) resource.getContents().get(0);
-			return new StringReader(new String(template.getContents()));
+			return new StringReader(template.getContents());
 		}
 
 	}
