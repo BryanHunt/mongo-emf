@@ -15,6 +15,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -31,6 +32,7 @@ import java.util.Random;
 import org.bson.types.ObjectId;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.BinaryResourceImpl;
@@ -40,6 +42,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.eclipselabs.emf.query.Result;
+import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 import org.eclipselabs.mongo.emf.junit.model.ETypes;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
@@ -59,6 +62,51 @@ public class TestMongoEmfBasics extends TestHarness
 {
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+	@Test
+	public void testGetID() throws IOException
+	{
+		assertThat(MongoDBURIHandlerImpl.getID(URI.createURI("mongo://localhost/db/collection/")), is(nullValue()));
+
+		{
+			Object id = MongoDBURIHandlerImpl.getID(URI.createURI("mongo://localhost/db/collection/id"));
+			assertThat(id, is(instanceOf(String.class)));
+			assertThat((String) id, is("id"));
+		}
+
+		{
+			ObjectId objectID = new ObjectId();
+			Object id = MongoDBURIHandlerImpl.getID(URI.createURI("mongo://localhost/db/collection/" + objectID));
+			assertThat(id, is(instanceOf(ObjectId.class)));
+			assertThat((ObjectId) id, is(objectID));
+		}
+	}
+
+	@Test(expected = IOException.class)
+	public void testGetBadID() throws IOException
+	{
+		MongoDBURIHandlerImpl.getID(URI.createURI("mongo://localhost/db/collection"));
+	}
+
+	@Test
+	public void testNativeTypes()
+	{
+		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EBOOLEAN));
+		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EBOOLEAN_OBJECT));
+		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EBYTE));
+		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EBYTE_OBJECT));
+		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EBYTE_ARRAY));
+		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EINT));
+		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EINTEGER_OBJECT));
+		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.ELONG));
+		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.ELONG_OBJECT));
+		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EDOUBLE));
+		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EDOUBLE_OBJECT));
+		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EFLOAT));
+		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EFLOAT_OBJECT));
+		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EDATE));
+		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.ESTRING));
+	}
 
 	@Test(expected = IOException.class)
 	public void testShortURI() throws IOException
