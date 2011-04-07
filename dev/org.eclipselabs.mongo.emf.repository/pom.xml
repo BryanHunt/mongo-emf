@@ -56,7 +56,7 @@
             <phase>install</phase>
             <configuration>
               <tasks>
-                <unzip src="target/org.eclipselabs.mongo.emf.repository.zip" dest="../../../repository/" />
+                <unzip src="target/org.eclipselabs.mongo.emf.repository.zip" dest="../../../repository/${build-type}" />
               </tasks>
             </configuration>
             <goals>
