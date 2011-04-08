@@ -20,6 +20,7 @@ import java.util.Map;
 import org.bson.types.ObjectId;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.resource.impl.BinaryResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
 import org.eclipselabs.mongo.IMongoDB;
 import org.eclipselabs.mongo.internal.emf.Activator;
@@ -205,7 +206,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	public static final String ECLASS_KEY = "_eClass";
 	public static final String PROXY_KEY = "_eProxyURI";
 	public static final String EXTRINSIC_ID_KEY = "_eId";
-	public static final String OPTION_PROXY_ATTRIBUTES = "PROXY_ATTRIBUTES";
+	public static final String OPTION_PROXY_ATTRIBUTES = BinaryResourceImpl.OPTION_STYLE_PROXY_ATTRIBUTES;
 
 	private IMongoDB mongoDB;
 }
