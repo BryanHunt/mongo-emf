@@ -58,7 +58,7 @@ class Response {
         
         for ( int i=0; i<_num; i++ ){
             if ( user._toGo < 5 )
-                throw new IOException( "should have more obejcts, but only " + user._toGo + " bytes left" );
+                throw new IOException( "should have more objects, but only " + user._toGo + " bytes left" );
             c.reset();
             decoder.decode( user , c );
             _objects.add( c.dbget() );
@@ -84,7 +84,7 @@ class Response {
     }
     
     public boolean hasGetMore( int queryOptions ){
-        if ( _cursor <= 0 )
+        if ( _cursor == 0 )
             return false;
         
         if ( _num > 0 )
@@ -122,7 +122,7 @@ class Response {
         return new ServerError( obj );
     }
     
-    class MyInputStream extends InputStream {
+    static class MyInputStream extends InputStream {
         MyInputStream( InputStream in , int max ){
             _in = in;
             _toGo = max;
@@ -176,7 +176,7 @@ class Response {
     final int _operation;
     
     final int _flags;
-    final long _cursor;
+    long _cursor;
     final int _startingFrom;
     final int _num;
     

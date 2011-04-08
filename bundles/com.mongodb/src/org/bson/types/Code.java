@@ -42,7 +42,16 @@ public class Code {
         Code c = (Code)o;
         return _code.equals( c._code );
     }
-    
+
+    public int hashCode(){
+        return _code.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return getCode();
+    }
+
     final String _code;
 
 }

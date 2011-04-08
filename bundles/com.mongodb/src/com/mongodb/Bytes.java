@@ -22,14 +22,20 @@ import java.nio.*;
 import java.nio.charset.*;
 import java.util.regex.Pattern;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.*;
 
 import org.bson.*;
 import org.bson.types.*;
 
+/**
+ * Class that hold definitions of the wire protocol
+ * @author antoine
+ */
 public class Bytes extends BSON {
     
-    static Logger LOGGER = Logger.getLogger( "com.mongodb" );
+    static final Logger LOGGER = Logger.getLogger( "com.mongodb" );
     
     static final boolean D = Boolean.getBoolean( "DEBUG.MONGO" );
 
@@ -44,23 +50,71 @@ public class Bytes extends BSON {
 
     /** Little-endian */
     public static final ByteOrder ORDER = ByteOrder.LITTLE_ENDIAN;
-    
+
+    /** this size is set low to 4MB, but just serves as safe default */
     static final int MAX_OBJECT_SIZE = 1024 * 1024 * 4;
+
+    /** default target size of an insert batch */
+    static final int BATCH_INSERT_SIZE = 1024 * 1024 * 8;
     
     static final int CONNECTIONS_PER_HOST = Integer.parseInt( System.getProperty( "MONGO.POOLSIZE" , "10" ) );
 
 
     // --- network protocol options
 
+    /**
+     * Tailable means cursor is not closed when the last data is retrieved.
+     * Rather, the cursor marks the final object's position.
+     * You can resume using the cursor later, from where it was located, if more data were received.
+     * Like any "latent cursor", the cursor may become invalid at some point (CursorNotFound) – for example if the final object it references were deleted.
+     */
     public static final int QUERYOPTION_TAILABLE = 1 << 1;
+    /**
+     * Allow query of replica slave. Normally these return an error except for namespace "local".
+     */
     public static final int QUERYOPTION_SLAVEOK = 1 << 2;
+    /**
+     * Internal replication use only - driver should not set
+     */
     public static final int QUERYOPTION_OPLOGREPLAY = 1 << 3;
+    /**
+     * The server normally times out idle cursors after an inactivity period (10 minutes) to prevent excess memory use.
+     * Set this option to prevent that.
+     */
     public static final int QUERYOPTION_NOTIMEOUT = 1 << 4;
+    /**
+     * Use with TailableCursor.
+     * If we are at the end of the data, block for a while rather than returning no data.
+     * After a timeout period, we do return as normal.
+     */
     public static final int QUERYOPTION_AWAITDATA = 1 << 5;
+    /**
+     * Stream the data down full blast in multiple "more" packages, on the assumption that the client will fully read all data queried.
+     * Faster when you are pulling a lot of data and know you want to pull it all down.
+     * Note: the client is not allowed to not read all the data unless it closes the connection.
+     */
+    public static final int QUERYOPTION_EXHAUST = 1 << 6;
 
+    /**
+     * Set when getMore is called but the cursor id is not valid at the server.
+     * Returned with zero results. 
+     */
     public static final int RESULTFLAG_CURSORNOTFOUND = 1;
+    /**
+     * Set when query failed.
+     * Results consist of one document containing an "$err" field describing the failure.
+     */
     public static final int RESULTFLAG_ERRSET = 2;
+    /**
+     * Drivers should ignore this.
+     * Only mongos will ever see this set, in which case, it needs to update config from the server.
+     */
     public static final int RESULTFLAG_SHARDCONFIGSTALE = 4;
+    /**
+     * Set when the server supports the AwaitData Query option.
+     * If it doesn't, a client should sleep a little between getMore's of a Tailable cursor.
+     * Mongod version 1.6 supports AwaitData and thus always sets AwaitCapable.
+     */
     public static final int RESULTFLAG_AWAITCAPABLE = 8;
 
     static class OptionHolder {
@@ -95,16 +149,29 @@ public class Bytes extends BSON {
         boolean _hasOptions = false;
     }
 
-    /** Gets the type byte for a given object.
+    /**
+     * Gets the type byte for a given object.
      * @param o the object
-     * @return the byte value associated with the type, or 0 if <code>o</code> was <code>null</code>
+     * @return the byte value associated with the type, or -1 if no type is matched
      */
+    @SuppressWarnings("deprecation")
     public static byte getType( Object o ){
         if ( o == null )
             return NULL;
 
         if ( o instanceof DBPointer )
             return REF;
+
+        if (o instanceof Integer
+                || o instanceof Short
+                || o instanceof Byte
+                || o instanceof AtomicInteger) {
+            return NUMBER_INT;
+        }
+        
+        if (o instanceof Long || o instanceof AtomicLong) {
+            return NUMBER_LONG;
+        }
 
         if ( o instanceof Number )
             return NUMBER;
@@ -127,13 +194,22 @@ public class Bytes extends BSON {
         if ( o instanceof java.util.Date )
             return DATE;
 
+        if ( o instanceof BSONTimestamp )
+            return TIMESTAMP;
+
         if ( o instanceof java.util.regex.Pattern )
             return REGEX;
         
-        if ( o instanceof DBObject )
+        if ( o instanceof DBObject || o instanceof DBRefBase )
             return OBJECT;
 
-        return 0;
+        if ( o instanceof Code )
+            return CODE;
+        
+        if ( o instanceof CodeWScope )
+            return CODE_W_SCOPE;
+
+        return -1;
     }
 
     static final ObjectId COLLECTION_REF_ID = new ObjectId( -1 , -1 , -1 );

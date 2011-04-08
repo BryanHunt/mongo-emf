@@ -15,13 +15,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.UnknownHostException;
-import java.util.HashSet;
 import java.util.Map;
 
 import org.bson.types.ObjectId;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
 import org.eclipselabs.mongo.IMongoDB;
 import org.eclipselabs.mongo.internal.emf.Activator;
@@ -181,7 +179,25 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 	public static boolean isNativeType(EDataType dataType)
 	{
-		return nativeTypes.contains(dataType);
+		String instanceClassName = dataType.getInstanceClassName();
+		return
+			instanceClassName == "java.lang.String" ||
+			instanceClassName == "int" ||
+			instanceClassName == "boolean" ||
+			instanceClassName == "float" ||
+			instanceClassName == "long" ||
+			instanceClassName == "double" ||
+			instanceClassName == "java.util.Date" ||
+			instanceClassName == "short" ||
+			instanceClassName == "byte[]" ||
+			instanceClassName == "byte" ||
+			instanceClassName == "java.lang.Integer" ||
+			instanceClassName == "java.lang.Boolean" ||
+			instanceClassName == "java.lang.Long" ||
+			instanceClassName == "java.lang.Float" ||
+			instanceClassName == "java.lang.Double" ||
+			instanceClassName == "java.lang.Short" ||
+			instanceClassName == "java.lang.Byte";
 	}
 
 	public static final String TIME_STAMP_KEY = "_timeStamp";
@@ -189,29 +205,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	public static final String ECLASS_KEY = "_eClass";
 	public static final String PROXY_KEY = "_eProxyURI";
 	public static final String EXTRINSIC_ID_KEY = "_eId";
-
-	private static HashSet<EDataType> nativeTypes = new HashSet<EDataType>();
+	public static final String OPTION_PROXY_ATTRIBUTES = "PROXY_ATTRIBUTES";
 
 	private IMongoDB mongoDB;
-
-	// These are the EMF types natively supported by MongoDB. All other types are stored as a string.
-
-	static
-	{
-		nativeTypes.add(EcorePackage.Literals.EBOOLEAN);
-		nativeTypes.add(EcorePackage.Literals.EBOOLEAN_OBJECT);
-		nativeTypes.add(EcorePackage.Literals.EBYTE);
-		nativeTypes.add(EcorePackage.Literals.EBYTE_OBJECT);
-		nativeTypes.add(EcorePackage.Literals.EBYTE_ARRAY);
-		nativeTypes.add(EcorePackage.Literals.EINT);
-		nativeTypes.add(EcorePackage.Literals.EINTEGER_OBJECT);
-		nativeTypes.add(EcorePackage.Literals.ELONG);
-		nativeTypes.add(EcorePackage.Literals.ELONG_OBJECT);
-		nativeTypes.add(EcorePackage.Literals.EDOUBLE);
-		nativeTypes.add(EcorePackage.Literals.EDOUBLE_OBJECT);
-		nativeTypes.add(EcorePackage.Literals.EFLOAT);
-		nativeTypes.add(EcorePackage.Literals.EFLOAT_OBJECT);
-		nativeTypes.add(EcorePackage.Literals.EDATE);
-		nativeTypes.add(EcorePackage.Literals.ESTRING);
-	}
 }
