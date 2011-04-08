@@ -26,6 +26,7 @@
   	<targets>/Users/bhunt/Documents/Programming/Code/Targets</targets>
 	  <project.build.sourceEncoding>MacRoman</project.build.sourceEncoding>
   </properties>
+  
   <repositories>
     <repository>
       <id>helios</id>
@@ -75,49 +76,26 @@
         <artifactId>maven-osgi-source-plugin</artifactId>
         <version>${tycho-version}</version>
         <executions>
-          <execution>
-            <id>plugin-source</id>
-            <goals>
-              <goal>plugin-source</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      
-      <plugin>
-      <!-- TODO remove workaround when https://issues.sonatype.org/browse/TYCHO-473 is fixed -->
-        <groupId>org.sonatype.tycho</groupId>
-	      <artifactId>maven-osgi-source-plugin</artifactId>
-	      <version>${tycho-version}</version>
-	      <executions>
-	        <execution>
+      		<!-- TODO remove workaround when https://issues.sonatype.org/browse/TYCHO-473 is fixed -->
+ 	        <execution>
             <id>attach-source</id>
             <phase>process-classes</phase>
             <goals>
               <goal>plugin-source</goal>
             </goals>
           </execution>
-        </executions>
-      </plugin>
-      
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>findbugs-maven-plugin</artifactId>
-        <version>2.3.2</version>
-        <configuration>
-          <findbugsXmlOutput>true</findbugsXmlOutput>
-          <failOnError>false</failOnError>
-        </configuration>
-        <executions>
+          <!-- Not sure if I need the one below or above or both
           <execution>
+            <id>plugin-source</id>
             <goals>
-              <goal>check</goal>
+              <goal>plugin-source</goal>
             </goals>
           </execution>
+           -->
         </executions>
       </plugin>
       
-      <plugin>
+       <plugin>
         <groupId>org.sonatype.tycho</groupId>
         <artifactId>target-platform-configuration</artifactId>
         <version>${tycho-version}</version>
@@ -145,10 +123,41 @@
            </environments>
          </configuration>
        </plugin>
+
      </plugins>
    </build>
 
    <profiles>
+   
+  <profile>
+   	<id>findbugs</id>
+   	<activation>
+   		<property>
+   			<name>findbugs</name>
+   		</property>
+   	</activation>
+   	<build>
+   		<plugins>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>findbugs-maven-plugin</artifactId>
+          <version>2.3.2</version>
+          <configuration>
+            <findbugsXmlOutput>true</findbugsXmlOutput>
+            <failOnError>false</failOnError>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+   		</plugins>
+   	</build>
+   </profile>
+   
 		<profile>
 			<id>coverage</id>
 			<activation>
@@ -208,6 +217,7 @@
 				</plugins>
 			</build>
 		</profile>
+		
      <profile>
      <!-- as a workaround for TYCHO-520, only build mac binaries on macs -->
      <id>macosx</id>
