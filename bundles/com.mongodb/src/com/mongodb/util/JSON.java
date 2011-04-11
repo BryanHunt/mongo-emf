@@ -2,6 +2,7 @@
 
 package com.mongodb.util;
 
+import java.lang.reflect.*;
 import java.text.*;
 import java.util.*;
 import java.util.regex.*;
@@ -51,6 +52,8 @@ public class JSON {
         }
         a.append("\"");
     }
+
+    @SuppressWarnings("unchecked")
     public static void serialize( Object o , StringBuilder buf ){
         
         o = Bytes.applyEncodingHooks( o );
@@ -118,7 +121,7 @@ public class JSON {
             buf.append( "{ " );
             
             Map m = (Map)o;
-            
+
             for ( Map.Entry entry : (Set<Map.Entry>)m.entrySet() ){
                 if ( first ) first = false;
                 else buf.append( " , " );
@@ -143,7 +146,11 @@ public class JSON {
         }
 
         if (o instanceof DBRefBase) {
-            buf.append(o);
+            DBRefBase ref = (DBRefBase)o;
+            BasicDBObject temp = new BasicDBObject();
+            temp.put( "$ref" , ref.getRef() );
+            temp.put( "$id" , ref.getId() );
+            serialize( temp, buf );
             return;
         }
 
@@ -152,7 +159,7 @@ public class JSON {
             return;
 	}
 
-        if (o instanceof byte[]) {
+        if (o instanceof byte[] || o instanceof Binary) {
             buf.append("<Binary Data>");
             return;
         }
@@ -166,13 +173,11 @@ public class JSON {
         }
 
         if ( o.getClass().isArray() ){
-            Object[] arr = (Object[])o;
-
             buf.append( "[ " );
             
-            for ( int i=0; i<arr.length; i++) {
+            for ( int i=0; i<Array.getLength( o ); i++) {
                 if ( i > 0 ) buf.append( " , " );
-                serialize( arr[i] , buf );
+                serialize( Array.get( o , i ) , buf );
             }
             
             buf.append( "]" );
@@ -181,7 +186,10 @@ public class JSON {
 
         if ( o instanceof BSONTimestamp ){
             BSONTimestamp t = (BSONTimestamp)o;
-            buf.append( t.getTime() + "|" + t.getInc() );
+            BasicDBObject temp = new BasicDBObject();
+            temp.put( "$ts" , t.getTime() );
+            temp.put( "$inc" , t.getInc() );
+            serialize( temp, buf );
             return;
         }
         
@@ -196,7 +204,10 @@ public class JSON {
         }
 
         if ( o instanceof Code ){
-            string( buf , ((Code)o).getCode() );
+            Code c = (Code)o;
+            BasicDBObject temp = new BasicDBObject();
+            temp.put( "$code" , c.getCode() );
+            serialize( temp, buf );
             return;
         }
         
@@ -205,20 +216,20 @@ public class JSON {
 
 
     /**
-     *  Parses a JSON string into a DBObject.
+     *  Parses a JSON string representing a JSON value
      *
-     * @param s the string to serialize
-     * @return DBObject the object
+     * @param s the string to parse
+     * @return the object
      */
     public static Object parse( String s ){
 	return parse( s, null );
     }
 
     /**
-     *  Parses a JSON string into a DBObject.
+     * Parses a JSON string representing a JSON value
      *
-     * @param s the string to serialize
-     * @return DBObject the object
+     * @param s the string to parse
+     * @return the object
      */
     public static Object parse( String s, BSONCallback c ){
         if (s == null || (s=s.trim()).equals("")) {
@@ -285,6 +296,11 @@ class JSONParser {
         case 'n':
             read('n'); read('u'); read('l'); read('l');
 	    value = null;
+            break;
+        // NaN
+        case 'N':
+            read('N'); read('a'); read('N');
+	    value = Double.NaN;
             break;
         // true
         case 't':
@@ -560,9 +576,7 @@ class JSONParser {
 
         if (isDouble)
           return Double.valueOf(s.substring(start, pos));
-        if ( pos - start >= 10 )
-          return Long.valueOf(s.substring(start, pos));
-        return Integer.valueOf(s.substring(start, pos));
+        return Long.valueOf(s.substring(start, pos));
     }
 
     /** 
@@ -640,7 +654,7 @@ class JSONParser {
 	int i = 0;
         char current = get();
         while( current != ']' ) {
-	    String elemName = "" + i++;
+	    String elemName = String.valueOf(i++);
             Object elem = parse(elemName);
 	    doCallback(elemName, elem);
 
@@ -663,7 +677,7 @@ class JSONParser {
 }
 
 /**
- * Exeception throw when invalid JSON is passed to JSONParser.
+ * Exception throw when invalid JSON is passed to JSONParser.
  * 
  * This exception creates a message that points to the first 
  * offending character in the JSON string:
@@ -673,6 +687,8 @@ class JSONParser {
  * </pre>
  */
 class JSONParseException extends RuntimeException { 
+
+    private static final long serialVersionUID = -4415279469780082174L;
 
     String s;
     int pos;

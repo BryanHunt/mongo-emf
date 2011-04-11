@@ -29,6 +29,8 @@ import java.util.*;
  * </pre></blockquote>
  */
 public class BasicBSONObject extends LinkedHashMap<String,Object> implements BSONObject {
+
+    private static final long serialVersionUID = -4415279469780082174L;
     
     /**
      *  Creates an empty object.
@@ -53,6 +55,7 @@ public class BasicBSONObject extends LinkedHashMap<String,Object> implements BSO
      * Creates a DBObject from a map.
      * @param m map to convert
      */
+    @SuppressWarnings("unchecked")   
     public BasicBSONObject(Map m) {
         super(m);
     }
@@ -84,6 +87,7 @@ public class BasicBSONObject extends LinkedHashMap<String,Object> implements BSO
     /**
      * @deprecated
      */
+    @Deprecated
     public boolean containsKey( String key ){
         return containsField(key);
     }
@@ -154,6 +158,19 @@ public class BasicBSONObject extends LinkedHashMap<String,Object> implements BSO
         return foo.toString();
     }
 
+    /** Returns the value of a field as a boolean.
+     * @param key the field to look up
+     * @return the value of the field, or false if field does not exist
+     */
+    public boolean getBoolean( String key ){
+        return getBoolean(key, false);
+    }
+
+    /** Returns the value of a field as a boolean
+     * @param key the field to look up
+     * @param def the default value in case the field is not found
+     * @return the value of the field, converted to a string
+     */
     public boolean getBoolean( String key , boolean def ){
         Object foo = get( key );
         if ( foo == null )
@@ -174,6 +191,7 @@ public class BasicBSONObject extends LinkedHashMap<String,Object> implements BSO
         return super.put( key , val );
     }
 
+    @SuppressWarnings("unchecked")   
     public void putAll( Map m ){
         for ( Map.Entry entry : (Set<Map.Entry>)m.entrySet() ){
             put( entry.getKey().toString() , entry.getValue() );

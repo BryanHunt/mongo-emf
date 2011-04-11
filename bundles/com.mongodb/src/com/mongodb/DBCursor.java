@@ -66,7 +66,9 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
         }
     }
 
-    /** Types of cursors: iterator or array. */
+    /**
+     * Types of cursors: iterator or array.
+     */
     static enum CursorType { ITERATOR , ARRAY };
 
     /**
@@ -80,7 +82,7 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
         DBCursor c = new DBCursor(_collection, _query, _keysWanted);
         c._orderBy = _orderBy;
         c._hint = _hint;
-        c._numWanted = _numWanted;
+        c._limit = _limit;
         c._skip = _skip;
         c._options = _options;
         c._batchSize = _batchSize;
@@ -89,6 +91,14 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
         return c;
     }
 
+    /**
+     * creates a copy of this cursor object that can be iterated.
+     * Note:
+     * - you can iterate the DBCursor itself without calling this method
+     * - no actual data is getting copied.
+     *
+     * @return
+     */
     public Iterator<DBObject> iterator(){
         return this.copy();
     }
@@ -97,7 +107,8 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
 
     /**
      * Sorts this cursor's elements.
-     * @param orderBy the fields on which to sort
+     * This method must be called before getting any object from the cursor.
+     * @param orderBy the fields by which to sort
      * @return a cursor pointing to the first element of the sorted results
      */
     public DBCursor sort( DBObject orderBy ){
@@ -109,9 +120,12 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
     }
 
     /**
-     * add a special operator like $maxScan or $returnKey
+     * adds a special operator like $maxScan or $returnKey
      * e.g. addSpecial( "$returnKey" , 1 )
      * e.g. addSpecial( "$maxScan" , 100 )
+     * @param name
+     * @param o
+     * @return
      * @dochub specialOperators
      */
     public DBCursor addSpecial( String name , Object o ){
@@ -123,7 +137,7 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
 
     /**
      * Informs the database of indexed fields of the collection in order to improve performance.
-     * @param indexKeys an <code>DBObject</code> with index names as keys
+     * @param indexKeys a <code>DBObject</code> with index names as keys
      * @return same DBCursor for chaining operations
      */
     public DBCursor hint( DBObject indexKeys ){
@@ -138,7 +152,20 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
     }
 
     /**
-     * Use snapshot mode for the query.  Snapshot mode assures no duplicates are 
+     *  Informs the database of an indexed field of the collection in order to improve performance.
+     * @param indexName the name of an index
+     * @return same DBCursort for chaining operations
+     */
+    public DBCursor hint( String indexName ){
+        if ( _it != null )
+            throw new IllegalStateException( "can't hint after executing query" );
+
+        _hint = indexName;
+        return this;
+    }
+
+    /**
+     * Use snapshot mode for the query. Snapshot mode assures no duplicates are 
      * returned, or objects missed, which were present at both the start and end 
      * of the query's execution (if an object is new during the query, or deleted 
      * during the query, it may or may not be returned, even with snapshot mode).
@@ -155,23 +182,9 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
         return this;
     }
 
-
-    /**
-     *  Informs the database of an indexed field of the collection in order to improve performance.
-     * @param indexName the name of an index
-     * @return same DBCursort for chaining operations
-     */
-    public DBCursor hint( String indexName ){
-        if ( _it != null )
-            throw new IllegalStateException( "can't hint after executing query" );
-
-        _hint = indexName;
-        return this;
-    }
-
     /**
      * Returns an object containing basic information about the
-     * exectution of the query that created this cursor
+     * execution of the query that created this cursor
      * This creates a <code>DBObject</code> with the key/value pairs:
      * "cursor" : cursor type
      * "nScanned" : number of records examined by the database for this query
@@ -183,38 +196,58 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
     public DBObject explain(){
         DBCursor c = copy();
         c._explain = true;
-        c._numWanted = c._numWanted * -1;
+        if (c._limit > 0) {
+            // need to pass a negative batchSize as limit for explain
+            c._batchSize = c._limit * -1;
+            c._limit = 0;
+        }
         return c.next();
     }
 
     /**
-     * <p>Limits the number of elements returned.</p> 
-     * <p><b>Note</b>: Specifying a <i>negative number</i> instructs the server to return that number of items 
-     * and to close the cursor. It will only return what can fit in a <i>single 4mb response</i>.</p>
+     * Limits the number of elements returned.
+     * Note: parameter <tt>n</tt> should be positive, although a negative value is supported for legacy reason.
+     * Passing a negative value will call {@link DBCursor#batchSize(int)} which is the preferred method.
      * @param n the number of elements to return
-     * @return a cursor pointing to the first element of the limited results
+     * @return a cursor to iterate the results
      * @dochub limit
      */
     public DBCursor limit( int n ){
         if ( _it != null )
             throw new IllegalStateException( "can't set limit after executing query" );
 
-        _numWanted = n;
+        if (n > 0)
+            _limit = n;
+        else if (n < 0)
+            batchSize(n);
         return this;
     }
 
     /**
-     * Limits the number of elements returned in one batch
+     * Limits the number of elements returned in one batch.
+     * A cursor typically fetches a batch of result objects and store them locally.
+     * 
+     * If <tt>batchSize</tt> is positive, it represents the size of each batch of objects retrieved.
+     * It can be adjusted to optimize performance and limit data transfer.
+     * 
+     * If <tt>batchSize</tt> is negative, it will limit of number objects returned, that fit within the max batch size limit (usually 4MB), and cursor will be closed.
+     * For example if <tt>batchSize</tt> is -10, then the server will return a maximum of 10 documents and as many as can fit in 4MB, then close the cursor.
+     * Note that this feature is different from limit() in that documents must fit within a maximum size, and it removes the need to send a request to close the cursor server-side.
+     * 
+     * The batch size can be changed even after a cursor is iterated, in which case the setting will apply on the next batch retrieval.
+     *
      * @param n the number of elements to return in a batch
+     * @return
      */
     public DBCursor batchSize( int n ){
-//        if ( n < 1 )
-//            throw new IllegalArgumentException( "batchSize has to be >= 1" );
+        // check for special case, used to have server bug with 1
         if ( n == 1 )
             n = 2;
-        if ( _it != null )
+        
+        if ( _it != null ) {
         	if (_it instanceof DBApiLayer.Result)
-        		((DBApiLayer.Result)_it).setNumberToReturn(n);
+        		((DBApiLayer.Result)_it).setBatchSize(n);
+        }
 
         _batchSize = n;
         return this;
@@ -233,7 +266,10 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
         return this;
     }
 
-    /** The cursor (id) on the server; 0 = no cursor */
+    /**
+     * gets the cursor id.
+     * @return the cursor id, or 0 if there is no active cursor.
+     */
     public long getCursorId() {
     	if ( _it instanceof Result )
             return ((Result)_it).getCursorId();
@@ -241,7 +277,9 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
     	return 0;
     }
     
-    /** kill the current cursor on the server. */
+    /**
+     * kills the current cursor on the server.
+     */
     public void close() {
     	if ( _it instanceof Result )
             ((Result)_it).close();
@@ -249,27 +287,41 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
     
     /**
      * makes this query ok to run on a slave node
+     * @return
      */
     public DBCursor slaveOk(){
         return addOption( Bytes.QUERYOPTION_SLAVEOK );
     }
 
     /**
-     * adds an option - see Bytes.QUERYOPTION_* for list
+     * adds a query option - see Bytes.QUERYOPTION_* for list
+     * @param option
+     * @return
      */
     public DBCursor addOption( int option ){
         _options |= option;
         return this;
     }
 
+    /**
+     * sets the query option - see Bytes.QUERYOPTION_* for list
+     * @param options
+     */
     public void setOptions( int options ){
         _options = options;
     }
 
+    /**
+     * resets the query options
+     */
     public void resetOptions(){
         _options = 0;
     }
 
+    /**
+     * gets the query options
+     * @return
+     */
     public int getOptions(){
         return _options;
     }
@@ -299,14 +351,7 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
                     foo.put( "$snapshot", true );
             }
 
-            int bs = _numWanted;
-            if ( _batchSize > 0 ){
-                if ( _numWanted == 0 )
-                    bs = _batchSize;
-                else
-                    bs = Math.min( bs , _batchSize );
-            }
-            _it = _collection.__find( foo , _keysWanted , _skip , bs , _options );
+            _it = _collection.__find( foo, _keysWanted, _skip, _batchSize, _limit , _options );
         }
 
         if ( _it == null ){
@@ -406,6 +451,10 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
         return _cur;
     }
 
+    /**
+     * gets the number of times, so far, that the cursor retrieved a batch from the database
+     * @return
+     */
     public int numGetMores(){
         if ( _fake )
             return 0;
@@ -416,6 +465,10 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
         throw new IllegalArgumentException("_it not a real result" );
     }
 
+    /**
+     * gets a list containing the number of items received in each batch
+     * @return
+     */
     public List<Integer> getSizes(){
         if ( _fake )
             return new LinkedList<Integer>();
@@ -430,7 +483,7 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
         throws MongoException {
         _check();
 
-        if ( _numWanted > 0 && _num >= _numWanted )
+        if ( _limit > 0 && _num >= _limit )
             return false;
 
         return _it.hasNext();
@@ -447,31 +500,23 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
     // ----- iterator api -----
 
     /**
-     * Checks if there is another element.
-     * @return if there is another element
+     * Checks if there is another object available
+     * @return
+     * @throws MongoException
      */
-    public boolean hasNext(){
+    public boolean hasNext() throws MongoException {
         _checkType( CursorType.ITERATOR );
-        try {
-            return _hasNext();
-        }
-        catch ( MongoException e ){
-            throw new MongoInternalException( "couldn't get next element" , e );
-        }
+        return _hasNext();
     }
     
     /**
-     * Returns the element the cursor is at and moves the cursor ahead by one.
+     * Returns the object the cursor is at and moves the cursor ahead by one.
      * @return the next element
+     * @throws MongoException
      */
-    public DBObject next(){
+    public DBObject next() throws MongoException {
         _checkType( CursorType.ITERATOR );
-        try {
-            return _next();
-        }
-        catch ( MongoException e ){
-            throw new MongoInternalException( "couldn't get next element" , e );
-        }
+        return _next();
     }
 
     /**
@@ -484,7 +529,7 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
     }
 
     /**
-     * Unimplemented.
+     * Not implemented.
      */
     public void remove(){
         throw new UnsupportedOperationException( "can't remove from a cursor" );
@@ -501,11 +546,12 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
     }
 
     /** 
-     * pulls back all items into an array
-     * this is slow
-     * @see count()
-     * @see size()
+     * pulls back all items into an array and returns the number of objects.
+     * Note: this can be resource intensive
+     * @see #count()
+     * @see #size()
      * @return the number of elements in the array
+     * @throws MongoException
      */
     public int length()
         throws MongoException {
@@ -514,8 +560,10 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
         return _all.size();
     }
 
-    /** Converts this cursor to an array.
+    /**
+     * Converts this cursor to an array.
      * @return an array of elements
+     * @throws MongoException
      */
     public List<DBObject> toArray()
         throws MongoException {
@@ -523,22 +571,22 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
     }
     
     /**
-     * Converts this cursor to an array.  If there are more than a given number of elements in the resulting array, only return the first <tt>min</tt>.
-     * @param min the minimum size of the array to return
-     * @return an array of elements
+     * Converts this cursor to an array.
+     * @param max the maximum number of objects to return
+     * @return an array of objects
+     * @throws MongoException
      */
-    public List<DBObject> toArray( int min )
+    public List<DBObject> toArray( int max )
         throws MongoException {
         _checkType( CursorType.ARRAY );
-        _fill( min );
+        _fill( max );
         return _all;
     }
     
     /**
      * for testing only!
-     * iterates cursor and counts objects
-     * very slow
-     * @see count()
+     * Iterates cursor and counts objects
+     * @see #count()
      * @return num objects
      */
     public int itcount(){
@@ -551,10 +599,11 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
     }
 
     /**
-     * Counts the number of elements matching the query
-     * this does not take limit/skip into consideration
-     * @see size()
-     * @return the number of elements
+     * Counts the number of objects matching the query
+     * This does not take limit/skip into consideration
+     * @see #size()
+     * @return the number of objects
+     * @throws MongoException
      */
     public int count() 
         throws MongoException {
@@ -567,10 +616,11 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
     }
 
     /**
-     * Counts the number of elements matching the query that would be returned
+     * Counts the number of objects matching the query
      * this does take limit/skip into consideration
-     * @see count()
-     * @return the number of elements
+     * @see #count()
+     * @return the number of objects
+     * @throws MongoException
      */
     public int size() 
         throws MongoException {
@@ -579,16 +629,68 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
         if ( _collection._db == null )
             throw new IllegalArgumentException( "why is _collection._db null" );
         
-        return (int)_collection.getCount(this._query, this._keysWanted, this._numWanted, this._skip );
+        return (int)_collection.getCount(this._query, this._keysWanted, this._limit, this._skip );
     }
 
     
+    /**
+     * gets the fields to be returned
+     * @return
+     */
     public DBObject getKeysWanted(){
         return _keysWanted;
     }
     
+    /**
+     * gets the query
+     * @return
+     */
     public DBObject getQuery(){
         return _query;
+    }
+
+    /**
+     * gets the collection
+     * @return
+     */
+    public DBCollection getCollection(){
+        return _collection;
+    }
+
+    /**
+     * Gets the Server Address of the server that data is pulled from.
+     * Note that this information is not available if no data has been retrieved yet.
+     * Availability is specific to underlying implementation and may vary.
+     * @return
+     */
+    public ServerAddress getServerAddress() {
+        if (_it != null) {
+            if (_it instanceof DBApiLayer.Result)
+                return ((DBApiLayer.Result)_it).getServerAddress();
+        }
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Cursor id=").append(getCursorId());
+        sb.append(", ns=").append(getCollection().getFullName());
+        sb.append(", query=").append(getQuery());
+        if (getKeysWanted() != null)
+            sb.append(", fields=").append(getKeysWanted());
+        sb.append(", numIterated=").append(_num);
+        if (_skip != 0)
+            sb.append(", skip=").append(_skip);
+        if (_limit != 0)
+            sb.append(", limit=").append(_limit);
+        if (_batchSize != 0)
+            sb.append(", batchSize=").append(_batchSize);
+
+        ServerAddress addr = getServerAddress();
+        if (addr != null)
+            sb.append(", addr=").append(addr);
+        return sb.toString();
     }
 
     // ----  query setup ----
@@ -599,7 +701,7 @@ public class DBCursor implements Iterator<DBObject> , Iterable<DBObject> {
     private DBObject _orderBy = null;
     private String _hint = null;
     private boolean _explain = false;
-    private int _numWanted = 0;
+    private int _limit = 0;
     private int _batchSize = 0;
     private int _skip = 0;
     private boolean _snapshot = false;

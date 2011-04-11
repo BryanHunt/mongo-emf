@@ -13,15 +13,16 @@ package org.eclipselabs.mongo.internal.emf;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -30,9 +31,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMap;
-import org.eclipse.emf.ecore.util.FeatureMap.Entry;
-import org.eclipse.emf.ecore.util.FeatureMap.Internal;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipselabs.emf.query.QueryFactory;
 import org.eclipselabs.emf.query.Result;
@@ -100,7 +100,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 		BasicDBObject dbObject = new BasicDBObject();
 		EClass eClass = eObject.eClass();
 
-		// We have to add the package namespace URI and eclass name to the object so that we can
+		// We have to add the URI of the class to the object so that we can
 		// reconstruct the EMF object when we read it back out of MongoDB.
 
 		dbObject.put(MongoDBURIHandlerImpl.ECLASS_KEY, EcoreUtil.getURI(eClass).toString());
@@ -121,20 +121,20 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 
 		for (EAttribute attribute : eClass.getEAllAttributes())
 		{
-			if (!attribute.isTransient())
+			if (!attribute.isTransient() && eObject.eIsSet(attribute))
 			{
-				Object value = null;
+				Object value = eObject.eGet(attribute);
 
 				if (FeatureMapUtil.isFeatureMap(attribute))
 				{
-					FeatureMap.Internal featureMap = (Internal) eObject.eGet(attribute);
-					Iterator<Entry> iterator = featureMap.iterator();
+					FeatureMap.Internal featureMap = (FeatureMap.Internal)value;
+					Iterator<FeatureMap.Entry> iterator = featureMap.basicIterator();
 					ArrayList<DBObject> dbFeatureMap = new ArrayList<DBObject>();
 
 					while (iterator.hasNext())
 					{
 						DBObject dbEntry = new BasicDBObject();
-						Entry entry = iterator.next();
+						FeatureMap.Entry entry = iterator.next();
 						EStructuralFeature feature = entry.getEStructuralFeature();
 						dbEntry.put("key", EcoreUtil.getURI(feature).toString());
 
@@ -148,19 +148,22 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 
 					value = dbFeatureMap;
 				}
-				else if (attribute.isMany() && !MongoDBURIHandlerImpl.isNativeType(attribute.getEAttributeType()))
+				else if (attribute.isMany())
 				{
-					@SuppressWarnings("unchecked")
-					EList<Object> rawValues = (EList<Object>) eObject.eGet(attribute);
-					ArrayList<String> values = new ArrayList<String>(rawValues.size());
+				    EDataType eDataType = attribute.getEAttributeType();
+				    if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
+				    {
+						EList<?> rawValues = (EList<?>) value;
+						ArrayList<String> values = new ArrayList<String>(rawValues.size());
 
-					for (Object rawValue : rawValues)
-						values.add(EcoreUtil.convertToString(attribute.getEAttributeType(), rawValue));
+						for (Object rawValue : rawValues)
+							values.add(EcoreUtil.convertToString(eDataType, rawValue));
 
-					value = values;
+						value = values;
+				    }
 				}
 				else
-					value = getDBAttributeValue(attribute, eObject.eGet(attribute));
+					value = getDBAttributeValue(attribute, value);
 
 				dbObject.put(attribute.getName(), value);
 			}
@@ -170,47 +173,52 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 
 		for (EReference reference : eClass.getEAllReferences())
 		{
-			if (reference.isTransient())
-				continue;
-
-			Object value = null;
-
-			if (reference.isMany())
+			if (!reference.isTransient() && eObject.eIsSet(reference))
 			{
-				// One to many reference
+				Object value = eObject.eGet(reference, false);
 
-				@SuppressWarnings("unchecked")
-				EList<EObject> targetObjects = (EList<EObject>) eObject.eGet(reference);
-				ArrayList<Object> dbReferences = new ArrayList<Object>(targetObjects.size());
+				if (reference.isMany())
+				{
+					// One to many reference
 
-				for (EObject targetObject : targetObjects)
-					dbReferences.add(buildDBReference(db, reference, targetObject, uriHandler));
+					@SuppressWarnings("unchecked")
+					List<EObject> targetObjects = ((InternalEList<EObject>) value).basicList();
+					ArrayList<Object> dbReferences = new ArrayList<Object>(targetObjects.size());
 
-				value = dbReferences;
+					for (EObject targetObject : targetObjects)
+						dbReferences.add(buildDBReference(db, reference, targetObject, uriHandler));
+
+					value = dbReferences;
+				}
+				else if (value != null)
+				{
+					// One to one reference
+
+					EObject targetObject = (EObject) value;
+
+					value = buildDBReference(db, reference, targetObject, uriHandler);
+				}
+
+				dbObject.put(reference.getName(), value);
 			}
-			else
-			{
-				// One to one reference
-
-				EObject targetObject = (EObject) eObject.eGet(reference);
-
-				if (targetObject == null)
-					continue;
-
-				value = buildDBReference(db, reference, targetObject, uriHandler);
-			}
-
-			dbObject.put(reference.getName(), value);
 		}
 
 		return dbObject;
 	}
 
-	private Object buildDBReference(DB db, EReference eReference, EObject targetObject, XMLResource.URIHandler uriHandler) throws UnknownHostException, IOException
+	private Object buildDBReference(DB db, EReference eReference, EObject targetObject, XMLResource.URIHandler uriHandler) throws IOException
 	{
 		InternalEObject internalEObject = (InternalEObject) targetObject;
+		URI eProxyURI = internalEObject.eProxyURI();
 
-		if (!eReference.isContainment() || (eReference.isResolveProxies() && internalEObject.eDirectResource() != null))
+		if (eProxyURI != null)
+		{
+			BasicDBObject dbObject = new BasicDBObject(2);
+			dbObject.put(MongoDBURIHandlerImpl.PROXY_KEY, uriHandler.deresolve(eProxyURI).toString());
+			dbObject.put(MongoDBURIHandlerImpl.ECLASS_KEY, EcoreUtil.getURI(targetObject.eClass()).toString());
+			return dbObject;
+		}
+		else if (!eReference.isContainment() || (eReference.isResolveProxies() && internalEObject.eDirectResource() != null))
 		{
 			// Cross-document containment, or non-containment reference - build a proxy
 
@@ -229,42 +237,44 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 
 	private Object getDBAttributeValue(EAttribute attribute, Object rawValue)
 	{
-		if (!MongoDBURIHandlerImpl.isNativeType(attribute.getEAttributeType()))
-			return EcoreUtil.convertToString(attribute.getEAttributeType(), rawValue);
+		EDataType eDataType = attribute.getEAttributeType();
+		if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
+			return EcoreUtil.convertToString(eDataType, rawValue);
 
 		return rawValue;
 	}
 
 	private void saveMultipleObjects(DBCollection collection, XMLResource.URIHandler uriHandler, Object id, Map<Object, Object> response) throws IOException
 	{
-		ArrayList<DBObject> dbObjects = new ArrayList<DBObject>();
+		EList<EObject> contents = resource.getContents();
+		ArrayList<DBObject> dbObjects = new ArrayList<DBObject>(contents.size());
 		long timeStamp = System.currentTimeMillis();
 		response.put(URIConverter.RESPONSE_TIME_STAMP_PROPERTY, timeStamp);
 
-		for (EObject eObject : resource.getContents())
+		DB db = collection.getDB();
+		for (EObject eObject : contents)
 		{
-			DBObject dbObject = buildDBObject(collection.getDB(), eObject, uriHandler);
+			DBObject dbObject = buildDBObject(db, eObject, uriHandler);
 			dbObject.put(MongoDBURIHandlerImpl.TIME_STAMP_KEY, timeStamp);
 			dbObjects.add(dbObject);
 		}
 
 		collection.insert(dbObjects);
 		URI baseURI = resource.getURI().trimSegments(1);
-		ArrayList<EObject> eObjects = new ArrayList<EObject>(resource.getContents());
+		InternalEObject[] eObjects = contents.toArray(new InternalEObject[contents.size()]);
 		Result result = QueryFactory.eINSTANCE.createResult();
 		EList<EObject> values = result.getValues();
 
 		for (int i = 0; i < dbObjects.size(); i++)
 		{
-			EObject eObject = eObjects.get(i);
-			InternalEObject internalEObject = (InternalEObject) eObject;
+			InternalEObject internalEObject = eObjects[i];
 			internalEObject.eSetProxyURI(baseURI.appendSegment(dbObjects.get(i).get(MongoDBURIHandlerImpl.ID_KEY).toString()).appendFragment("/"));
 			internalEObject.eAdapters().clear();
-			values.add(eObject);
+			values.add(internalEObject);
 		}
 
-		resource.getContents().clear();
-		resource.getContents().add(result);
+		contents.clear();
+		contents.add(result);
 	}
 
 	private void saveSingleObject(DBCollection collection, XMLResource.URIHandler uriHandler, Object id, Map<Object, Object> response) throws IOException
