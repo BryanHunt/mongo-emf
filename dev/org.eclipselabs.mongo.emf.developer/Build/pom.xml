@@ -29,15 +29,15 @@
   
   <repositories>
     <repository>
-      <id>helios</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/releases/indigo</url>
-    </repository>
-    <repository>
       <id>EMF</id>
       <layout>p2</layout>
       <url>http://quickiemart.springfieldusa.net/Targets/EMF/</url>
     </repository> 
+    <repository>
+      <id>helios</id>
+      <layout>p2</layout>
+      <url>http://download.eclipse.org/releases/indigo</url>
+    </repository>
     <repository>
       <id>MongoDB</id>
       <layout>p2</layout>
