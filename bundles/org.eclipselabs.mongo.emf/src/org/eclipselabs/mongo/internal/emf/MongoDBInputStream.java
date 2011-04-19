@@ -33,6 +33,7 @@ import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipselabs.emf.query.BinaryOperation;
 import org.eclipselabs.emf.query.Expression;
@@ -95,10 +96,10 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 		if (query != null)
 		{
 			Result result = QueryFactory.eINSTANCE.createResult();
-			EList<EObject> values = result.getValues();
+			InternalEList<EObject> values = (InternalEList<EObject>)result.getValues();
 
 			for (DBObject dbObject : collection.find(buildDBObjectQuery(collection, new ExpressionBuilder(URI.decode(query)).parseExpression())))
-				values.add(buildEObject(collection, dbObject, resource, uriHandler, true));
+				values.addUnique(buildEObject(collection, dbObject, resource, uriHandler, true));
 
 			contents.add(result);
 		}
