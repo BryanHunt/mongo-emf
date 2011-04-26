@@ -18,7 +18,9 @@ import static org.junit.Assert.assertThat;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -28,6 +30,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipselabs.emf.query.Result;
+import org.eclipselabs.mongo.emf.junit.model.ETypes;
 import org.eclipselabs.mongo.emf.junit.model.Library;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
@@ -262,6 +265,26 @@ public class TestMongoEmfQuery extends TestHarness
 		Person author = (Person) result.getValues().get(0);
 
 		assertThat(author.getName(), is("Stephen King"));
+	}
+
+	@Test
+	public void testQueryDate() throws IOException
+	{
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, 1);
+
+		ETypes eTypes = ModelFactory.eINSTANCE.createETypes();
+		eTypes.setEDate(calendar.getTime());
+
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		Resource resource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.ETYPES));
+		resource.getContents().add(eTypes);
+		resource.save(null);
+
+		resourceSet = MongoUtil.createResourceSet();
+		resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.ETYPES, "eDate <= '" + new Date() + "'"), true);
+		Result result = (Result) resource.getContents().get(0);
+		assertThat(result.getValues().size(), is(0));
 	}
 
 	@Ignore
