@@ -28,6 +28,7 @@ import org.eclipselabs.mongo.emf.log.ILogService;
 import org.eclipselabs.mongo.emf.log.LogEntry;
 import org.eclipselabs.mongo.emf.log.LogLevel;
 import org.eclipselabs.mongo.emf.log.LogPackage;
+import org.eclipselabs.mongo.emf.log.LogServiceConfigurator;
 import org.eclipselabs.mongo.emf.log.impl.MongoEmfLogService;
 import org.eclipselabs.mongo.emf.log.junit.bundle.Activator;
 import org.eclipselabs.mongo.junit.MongoDatabase;
@@ -38,6 +39,7 @@ import org.junit.Test;
 import org.osgi.service.log.LogListener;
 import org.osgi.service.log.LogReaderService;
 import org.osgi.service.log.LogService;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author bhunt
@@ -150,6 +152,16 @@ public class TestLogService
 		Collection<LogEntry> entries = mongoLogService.getLogEntries(filter);
 		assertThat(entries.size(), is(1));
 		assertThat(entries.iterator().next().getLevel(), is(LogLevel.LOG_ERROR));
+	}
+
+	@Test
+	public void testConfigureLogService() throws InterruptedException
+	{
+		LogServiceConfigurator.configureLogService(URI.createURI("mongo://localhost/junit/logs/"));
+		ServiceTracker<ILogService, ILogService> logServiceTracker = new ServiceTracker<ILogService, ILogService>(Activator.getInstance().getContext(), ILogService.class, null);
+		logServiceTracker.open();
+		ILogService logService = logServiceTracker.waitForService(2000);
+		assertThat(logService, is(notNullValue()));
 	}
 
 	private static final String DB_LOGS = "logs";
