@@ -2,13 +2,13 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipselabs.mongo.emf.log;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.3.2.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipselabs.mongo.emf.log,
- org.eclipselabs.mongo.emf.log.impl;x-friends:="org.eclipselabs.mongo.emf.log.junit",
+ org.eclipselabs.mongo.emf.log.impl;x-internal:=true,
  org.eclipselabs.mongo.emf.log.util
 Import-Package: org.eclipselabs.emf.query, org.eclipselabs.mongo.emf, org.eclipselabs.emf.query.util, 
  org.osgi.service.component, org.eclipse.emf.ecore, org.eclipse.emf.common.notify, org.eclipse.emf.common.notify.impl,
