@@ -157,7 +157,7 @@ public class TestLogService
 	@Test
 	public void testConfigureLogService() throws InterruptedException
 	{
-		LogServiceConfigurator.configureLogService(URI.createURI("mongo://localhost/junit/logs/"));
+		LogServiceConfigurator.configureLogService(URI.createURI("mongo://localhost/junit/logs/"), LogLevel.LOG_ERROR_VALUE);
 		ServiceTracker<ILogService, ILogService> logServiceTracker = new ServiceTracker<ILogService, ILogService>(Activator.getInstance().getContext(), ILogService.class, null);
 		logServiceTracker.open();
 		ILogService logService = logServiceTracker.waitForService(2000);

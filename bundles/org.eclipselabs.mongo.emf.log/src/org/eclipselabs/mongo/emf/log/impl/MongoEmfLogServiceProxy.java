@@ -62,11 +62,7 @@ public class MongoEmfLogServiceProxy implements ILogService
 		MongoEmfLogService mongoEmfLogService = new MongoEmfLogService(URI.createURI(baseURI));
 		logService = mongoEmfLogService;
 		logListener = mongoEmfLogService;
-
-		LogReaderService logReaderService = this.logReaderService;
-
-		if (logReaderService != null)
-			logReaderService.addLogListener(logListener);
+		logReaderService.addLogListener(logListener);
 	}
 
 	protected void bindLogReaderService(LogReaderService logReaderService)
