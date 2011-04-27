@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipselabs.mongo.emf.log/src"
+    modelPluginID="org.eclipselabs.mongo.emf.log" modelName="Log" suppressInterfaces="true"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false">
+  <foreignModel>log.ecore</foreignModel>
+  <genPackages prefix="Log" basePackage="org.eclipselabs.mongo.emf" disposableProviderFactory="true"
+      ecorePackage="log.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="log.ecore#//LogLevel">
+      <genEnumLiterals ecoreEnumLiteral="log.ecore#//LogLevel/LOG_ERROR"/>
+      <genEnumLiterals ecoreEnumLiteral="log.ecore#//LogLevel/LOG_WARNING"/>
+      <genEnumLiterals ecoreEnumLiteral="log.ecore#//LogLevel/LOG_INFO"/>
+      <genEnumLiterals ecoreEnumLiteral="log.ecore#//LogLevel/LOG_DEBUG"/>
+    </genEnums>
+    <genClasses ecoreClass="log.ecore#//LogEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute log.ecore#//LogEntry/level"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute log.ecore#//LogEntry/time"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute log.ecore#//LogEntry/message"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute log.ecore#//LogEntry/exceptionMessage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute log.ecore#//LogEntry/exceptionStack"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

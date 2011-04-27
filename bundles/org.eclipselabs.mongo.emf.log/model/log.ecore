@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="log"
+    nsURI="http://code.google.com/a/eclipselabs.org/p/mongo-emf/1.0/log" nsPrefix="org.eclipselabs.mongo.emf.log">
+  <eClassifiers xsi:type="ecore:EClass" name="LogEntry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="level" lowerBound="1" eType="#//LogLevel"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="time" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="message" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="exceptionMessage" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="exceptionStack" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="LogLevel">
+    <eLiterals name="LOG_ERROR" value="1" literal="ERROR"/>
+    <eLiterals name="LOG_WARNING" value="2" literal="WARNING"/>
+    <eLiterals name="LOG_INFO" value="3" literal="INFO"/>
+    <eLiterals name="LOG_DEBUG" value="4" literal="DEBUG"/>
+  </eClassifiers>
+</ecore:EPackage>
