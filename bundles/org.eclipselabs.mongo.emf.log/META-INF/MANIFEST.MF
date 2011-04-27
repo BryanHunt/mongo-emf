@@ -8,7 +8,7 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipselabs.mongo.emf.log,
- org.eclipselabs.mongo.emf.log.impl;x-internal:=true,
+ org.eclipselabs.mongo.emf.log.impl,
  org.eclipselabs.mongo.emf.log.util
 Import-Package: org.eclipselabs.emf.query, org.eclipselabs.mongo.emf, org.eclipselabs.emf.query.util, 
  org.osgi.service.component, org.eclipse.emf.ecore, org.eclipse.emf.common.notify, org.eclipse.emf.common.notify.impl,
