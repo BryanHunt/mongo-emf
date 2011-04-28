@@ -54,7 +54,6 @@ public class MongoEmfLogServiceProxy implements ILogService
 
 	protected void activate(ComponentContext context)
 	{
-		System.out.println("MongoEmfLogServiceProxy.activate()");
 		String baseURI = (String) context.getProperties().get("baseURI");
 
 		if (baseURI == null)
@@ -74,13 +73,11 @@ public class MongoEmfLogServiceProxy implements ILogService
 
 	protected void bindLogReaderService(LogReaderService logReaderService)
 	{
-		System.out.println("MongoEmfLogServiceProxy.bindLogReaderService()");
 		this.logReaderService = logReaderService;
 	}
 
 	protected void unbindLogReaderService(LogReaderService logReaderService)
 	{
-		System.out.println("MongoEmfLogServiceProxy.unbindLogReaderService()");
 		if (logReaderService == this.logReaderService)
 		{
 			this.logReaderService.removeLogListener(logListener);
