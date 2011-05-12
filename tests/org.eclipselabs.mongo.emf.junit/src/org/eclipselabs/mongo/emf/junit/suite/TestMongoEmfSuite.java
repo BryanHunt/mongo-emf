@@ -9,8 +9,12 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf.junit.tests;
+package org.eclipselabs.mongo.emf.junit.suite;
 
+import org.eclipselabs.mongo.emf.junit.tests.TestMongoEmfAttributes;
+import org.eclipselabs.mongo.emf.junit.tests.TestMongoEmfBasics;
+import org.eclipselabs.mongo.emf.junit.tests.TestMongoEmfQuery;
+import org.eclipselabs.mongo.emf.junit.tests.TestMongoEmfReferences;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
