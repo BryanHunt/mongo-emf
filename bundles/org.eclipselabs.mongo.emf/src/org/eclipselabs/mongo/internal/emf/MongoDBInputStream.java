@@ -48,6 +48,7 @@ import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
+import com.mongodb.QueryOperators;
 
 /**
  * @author bhunt
@@ -367,6 +368,11 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 		{
 			new QuerySwitch<Object>()
 			{
+				Object getValue(Literal literal)
+				{
+					return literal.getValue() == null ? literal.getLiteralValue() : literal.getValue();
+				}
+
 				@Override
 				public Object caseBinaryOperation(BinaryOperation binaryOperation)
 				{
@@ -384,7 +390,7 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 						}
 						else if (rightOperand instanceof Literal)
 						{
-							dbObject.put(property, ((Literal) rightOperand).getLiteralValue());
+							dbObject.put(property, getValue((Literal) rightOperand));
 						}
 						else if ("null".equals(ExpressionBuilder.toString(rightOperand)))
 						{
@@ -404,7 +410,7 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 						if (rightOperand instanceof Literal)
 						{
 							DBObject notEqual = new BasicDBObject();
-							notEqual.put("$ne", ((Literal) rightOperand).getLiteralValue());
+							notEqual.put("$ne", getValue((Literal) rightOperand));
 							dbObject.put(property, notEqual);
 						}
 						else if ("null".equals(ExpressionBuilder.toString(rightOperand)))
@@ -412,6 +418,29 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 							DBObject exists = new BasicDBObject();
 							exists.put("$exists", Boolean.TRUE);
 							dbObject.put(property, exists);
+						}
+						else
+						{
+							// TODO: What to do?
+						}
+					}
+					else if ("<".equals(operator) || "<=".equals(operator) || ">".equals(operator) || ">=".equals(operator))
+					{
+						Expression rightOperand = binaryOperation.getRightOperand();
+						String property = ExpressionBuilder.toString(leftOperand);
+						if (rightOperand instanceof Literal)
+						{
+							DBObject compare = new BasicDBObject();
+							compare.put
+							  ("<".equals(operator) ? 
+							      QueryOperators.LT : 
+							      "<=".equals(operator) ?
+							        QueryOperators.LTE : 
+							        ">".equals(operator) ?
+							          QueryOperators.GT : 
+							          QueryOperators.GTE,
+							   getValue((Literal) rightOperand));
+							dbObject.put(property, compare);
 						}
 						else
 						{

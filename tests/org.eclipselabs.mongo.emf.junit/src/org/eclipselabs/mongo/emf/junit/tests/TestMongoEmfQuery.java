@@ -26,6 +26,8 @@ import java.util.List;
 import org.bson.types.ObjectId;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -282,9 +284,10 @@ public class TestMongoEmfQuery extends TestHarness
 		resource.save(null);
 
 		resourceSet = MongoUtil.createResourceSet();
-		resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.ETYPES, "eDate <= '" + new Date() + "'"), true);
+		resource = resourceSet.getResource
+		  (createQueryURI(ModelPackage.Literals.ETYPES, "eDate >= " + EcoreFactory.eINSTANCE.convertToString(EcorePackage.Literals.EDATE, new Date())), true);
 		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(0));
+		assertThat(result.getValues().size(), is(1));
 	}
 
 	@Ignore
