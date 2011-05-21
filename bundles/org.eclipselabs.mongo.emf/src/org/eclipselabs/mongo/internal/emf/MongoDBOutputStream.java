@@ -56,6 +56,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 		this.uri = uri;
 		this.options = options;
 		this.response = response;
+		this.serializeDefault = false;
 	}
 
 	@Override
@@ -80,6 +81,11 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 			resource.setURI(resource.getURI().trimSegments(1).appendSegment("-1"));
 
 		uriHandler.setBaseURI(resource.getURI());
+
+		Boolean serializeOption = (Boolean) options.get(MongoDBURIHandlerImpl.OPTION_SERIALIZE_DEFAULT_ATTRIBUTE_VALUES);
+
+		if (serializeOption != null)
+			serializeDefault = serializeOption;
 
 		if (resource.getContents().size() == 1)
 			saveSingleObject(collection, uriHandler, id, response);
@@ -121,13 +127,13 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 
 		for (EAttribute attribute : eClass.getEAllAttributes())
 		{
-			if (!attribute.isTransient() && eObject.eIsSet(attribute))
+			if (!attribute.isTransient() && (eObject.eIsSet(attribute) || (!attribute.isUnsettable() && serializeDefault)))
 			{
 				Object value = eObject.eGet(attribute);
 
 				if (FeatureMapUtil.isFeatureMap(attribute))
 				{
-					FeatureMap.Internal featureMap = (FeatureMap.Internal)value;
+					FeatureMap.Internal featureMap = (FeatureMap.Internal) value;
 					Iterator<FeatureMap.Entry> iterator = featureMap.basicIterator();
 					ArrayList<DBObject> dbFeatureMap = new ArrayList<DBObject>();
 
@@ -150,9 +156,10 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 				}
 				else if (attribute.isMany())
 				{
-				    EDataType eDataType = attribute.getEAttributeType();
-				    if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
-				    {
+					EDataType eDataType = attribute.getEAttributeType();
+
+					if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
+					{
 						EList<?> rawValues = (EList<?>) value;
 						ArrayList<String> values = new ArrayList<String>(rawValues.size());
 
@@ -160,7 +167,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 							values.add(EcoreUtil.convertToString(eDataType, rawValue));
 
 						value = values;
-				    }
+					}
 				}
 				else
 					value = getDBAttributeValue(attribute, value);
@@ -321,4 +328,5 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 	private Resource resource;
 	private Map<Object, Object> response;
 	private URI uri;
+	private boolean serializeDefault;
 }

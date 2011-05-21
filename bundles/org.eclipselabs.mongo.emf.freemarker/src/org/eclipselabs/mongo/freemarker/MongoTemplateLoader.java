@@ -19,6 +19,7 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
@@ -82,6 +83,8 @@ public class MongoTemplateLoader implements TemplateLoader
 
 		this.baseURI = baseURI;
 		this.resourceSet = resourceSet;
+		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
+		uriHandlers.add(0, new MongoDBURIHandlerImpl());
 		loadTemplates();
 	}
 
@@ -171,7 +174,12 @@ public class MongoTemplateLoader implements TemplateLoader
 		synchronized (resourceSet)
 		{
 			for (Resource resource : resourceSet.getResources())
-				templates.add((FreeMarkerTemplate) resource.getContents().get(0));
+			{
+				EObject eObject = resource.getContents().get(0);
+
+				if (eObject instanceof FreeMarkerTemplate)
+					templates.add((FreeMarkerTemplate) eObject);
+			}
 		}
 
 		return templates;

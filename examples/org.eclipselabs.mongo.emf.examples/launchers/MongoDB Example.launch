@@ -6,6 +6,10 @@
 <stringAttribute key="bootstrap" value=""/>
 <stringAttribute key="checked" value="[NONE]"/>
 <booleanAttribute key="clearConfig" value="false"/>
+<listAttribute key="com.chronon.sb.browser.launcher.launchattrs.excludePatterns"/>
+<listAttribute key="com.chronon.sb.browser.launcher.launchattrs.includePatterns">
+<listEntry value="org.eclipselabs.**"/>
+</listAttribute>
 <stringAttribute key="configLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.pde.core/MongoDB Example"/>
 <booleanAttribute key="default" value="true"/>
 <booleanAttribute key="default_auto_start" value="true"/>
@@ -13,10 +17,10 @@
 <booleanAttribute key="includeOptional" value="false"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog -console"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Declipse.ignoreApp=true -Dosgi.noShutdown=true"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Declipse.ignoreApp=true"/>
 <stringAttribute key="pde.version" value="3.3"/>
 <booleanAttribute key="show_selected_only" value="true"/>
-<stringAttribute key="target_bundles" value="org.eclipse.core.contenttype@default:default,org.eclipse.emf.ecore.xmi@default:default,org.eclipse.equinox.common@2:true,org.eclipse.equinox.ds@default:true,org.eclipse.emf.common@default:default,org.eclipse.osgi.services@default:default,org.eclipse.core.runtime@default:true,org.eclipse.core.runtime.compatibility.registry@default:false,org.eclipse.equinox.app@default:default,org.eclipse.osgi@-1:true,org.eclipse.equinox.registry@default:default,com.mongodb@default:default,org.eclipse.core.jobs@default:default,org.eclipse.equinox.util@default:default,org.eclipse.equinox.preferences@default:default,org.eclipse.emf.ecore@default:default"/>
+<stringAttribute key="target_bundles" value="org.eclipse.osgi.services@default:default,org.eclipse.equinox.registry@default:default,org.eclipse.core.runtime.compatibility.registry@default:false,org.eclipse.equinox.util@default:default,org.eclipse.equinox.common@2:true,org.eclipse.core.contenttype@default:default,org.eclipse.emf.ecore@default:default,org.eclipse.equinox.app@default:default,org.eclipse.core.jobs@default:default,org.eclipse.equinox.preferences@default:default,org.eclipse.equinox.ds@default:true,com.mongodb@default:default,org.eclipse.emf.ecore.xmi@default:default,org.eclipse.emf.common@default:default,org.eclipse.osgi@-1:true,org.eclipse.core.runtime@default:true"/>
 <stringAttribute key="timestamp" value="1298335114353"/>
 <booleanAttribute key="tracing" value="false"/>
 <booleanAttribute key="useCustomFeatures" value="false"/>

@@ -181,24 +181,26 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	public static boolean isNativeType(EDataType dataType)
 	{
 		String instanceClassName = dataType.getInstanceClassName();
+		//@formatter:off
 		return
-			instanceClassName == "java.lang.String" ||
-			instanceClassName == "int" ||
-			instanceClassName == "boolean" ||
-			instanceClassName == "float" ||
-			instanceClassName == "long" ||
-			instanceClassName == "double" ||
-			instanceClassName == "java.util.Date" ||
-			instanceClassName == "short" ||
-			instanceClassName == "byte[]" ||
-			instanceClassName == "byte" ||
+			instanceClassName == "java.lang.String"  ||
+			instanceClassName == "int"               ||
+			instanceClassName == "boolean"           ||
+			instanceClassName == "float"             ||
+			instanceClassName == "long"              ||
+			instanceClassName == "double"            ||
+			instanceClassName == "java.util.Date"    ||
+			instanceClassName == "short"             ||
+			instanceClassName == "byte[]"            ||
+			instanceClassName == "byte"              ||
 			instanceClassName == "java.lang.Integer" ||
 			instanceClassName == "java.lang.Boolean" ||
-			instanceClassName == "java.lang.Long" ||
-			instanceClassName == "java.lang.Float" ||
-			instanceClassName == "java.lang.Double" ||
-			instanceClassName == "java.lang.Short" ||
+			instanceClassName == "java.lang.Long"    ||
+			instanceClassName == "java.lang.Float"   ||
+			instanceClassName == "java.lang.Double"  ||
+			instanceClassName == "java.lang.Short"   ||
 			instanceClassName == "java.lang.Byte";
+		//@formatter:on
 	}
 
 	public static final String TIME_STAMP_KEY = "_timeStamp";
@@ -207,6 +209,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	public static final String PROXY_KEY = "_eProxyURI";
 	public static final String EXTRINSIC_ID_KEY = "_eId";
 	public static final String OPTION_PROXY_ATTRIBUTES = BinaryResourceImpl.OPTION_STYLE_PROXY_ATTRIBUTES;
+	public static final String OPTION_SERIALIZE_DEFAULT_ATTRIBUTE_VALUES = "SERIALIZE_DEFAULT";
 
 	private IMongoDB mongoDB;
 }
