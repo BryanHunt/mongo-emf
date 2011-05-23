@@ -233,6 +233,7 @@ public class ExpressionBuilder
             }
             FeatureAccessor baseFeatureAccessor = featureAccessor;
             featureAccessor = QueryFactory.eINSTANCE.createFeatureAccessor();
+            featureName = end == -1 ? text.substring(start) : text.substring(start, end);
             featureAccessor.setFeatureName(featureName);
             featureAccessor.setFeatureAccessor(baseFeatureAccessor);
           }
