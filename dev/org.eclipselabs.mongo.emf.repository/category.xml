@@ -27,7 +27,7 @@
    <feature url="features/org.eclipselabs.mongo.emf.log.feature_0.3.2.qualifier.jar" id="org.eclipselabs.mongo.emf.log.feature" version="0.3.2.qualifier">
       <category name="mongo-emf"/>
    </feature>
-   <feature url="features/org.eclipselabs.emf.log.source.feature_0.3.2.qualifier.jar" id="org.eclipselabs.emf.log.source.feature" version="0.3.2.qualifier">
+   <feature url="features/org.eclipselabs.mongo.emf.log.source.feature_0.3.2.qualifier.jar" id="org.eclipselabs.mongo.emf.log.source.feature" version="0.3.2.qualifier">
       <category name="mongo-emf-source"/>
    </feature>
    <category-def name="mongo-emf" label="Mongo EMF">
