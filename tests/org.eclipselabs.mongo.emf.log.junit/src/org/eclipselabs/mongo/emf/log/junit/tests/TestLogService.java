@@ -66,7 +66,7 @@ public class TestLogService
 	{
 		mongoLogService.setLogLevel(LogLevel.LOG_DEBUG);
 		osgiLogService.log(LogService.LOG_DEBUG, "debug");
-		Thread.sleep(200);
+		Thread.sleep(500);
 		Collection<LogEntry> logEntries = MongoUtil.getObjects(MongoUtil.createResourceSet(), "junit", DB_LOGS);
 
 		for (LogEntry entry : logEntries)
