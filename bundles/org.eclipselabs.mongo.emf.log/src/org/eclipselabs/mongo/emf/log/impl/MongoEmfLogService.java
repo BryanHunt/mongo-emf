@@ -16,6 +16,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -73,9 +74,12 @@ public class MongoEmfLogService implements ILogService, LogListener
 		Resource resource = resourceSet.createResource(baseURI);
 		resource.getContents().add(logEntry);
 
+		HashMap<String, Object> options = new HashMap<String, Object>(1);
+		options.put(MongoDBURIHandlerImpl.OPTION_SERIALIZE_DEFAULT_ATTRIBUTE_VALUES, Boolean.TRUE);
+
 		try
 		{
-			resource.save(null);
+			resource.save(options);
 		}
 		catch (IOException e)
 		{
