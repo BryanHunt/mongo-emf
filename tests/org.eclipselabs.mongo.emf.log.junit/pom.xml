@@ -28,10 +28,20 @@
               <artifactId>org.eclipse.equinox.ds</artifactId>
               <version>0.0.0</version>
             </dependency>
+            <dependency>
+              <type>eclipse-plugin</type>
+              <artifactId>org.eclipse.equinox.cm</artifactId>
+              <version>0.0.0</version>
+            </dependency>
            </dependencies>
           <bundleStartLevel>
 						<bundle>
 							<id>org.eclipse.equinox.ds</id>
+							<level>1</level>
+							<autoStart>true</autoStart>
+						</bundle>
+						<bundle>
+							<id>org.eclipse.equinox.cm</id>
 							<level>1</level>
 							<autoStart>true</autoStart>
 						</bundle>
