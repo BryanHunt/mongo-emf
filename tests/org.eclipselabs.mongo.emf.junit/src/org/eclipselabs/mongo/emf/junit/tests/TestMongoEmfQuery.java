@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipselabs.emf.query.Result;
+import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 import org.eclipselabs.mongo.emf.junit.model.ETypes;
 import org.eclipselabs.mongo.emf.junit.model.Library;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
@@ -270,6 +272,35 @@ public class TestMongoEmfQuery extends TestHarness
 	}
 
 	@Test
+	public void testQueryDefaultAttribute() throws IOException
+	{
+		ETypes eTypes = ModelFactory.eINSTANCE.createETypes();
+		eTypes.setELong(1);
+
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		Resource resource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.ETYPES));
+		resource.getContents().add(eTypes);
+		HashMap<String, Object> options = new HashMap<String, Object>(1);
+		options.put(MongoDBURIHandlerImpl.OPTION_SERIALIZE_DEFAULT_ATTRIBUTE_VALUES, Boolean.TRUE);
+		resource.save(options);
+
+		eTypes = ModelFactory.eINSTANCE.createETypes();
+		eTypes.setEInt(1);
+
+		resource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.ETYPES));
+		resource.getContents().add(eTypes);
+		resource.save(null);
+
+		resourceSet = MongoUtil.createResourceSet();
+		resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.ETYPES, "eInt == 0"), true);
+		Result result = (Result) resource.getContents().get(0);
+		assertThat(result.getValues().size(), is(1));
+		ETypes target = (ETypes) result.getValues().get(0);
+		assertThat(target.getEInt(), is(0));
+		assertThat(target.getELong(), is(1L));
+	}
+
+	@Test
 	public void testQueryDate() throws IOException
 	{
 		Calendar calendar = Calendar.getInstance();
@@ -284,8 +315,7 @@ public class TestMongoEmfQuery extends TestHarness
 		resource.save(null);
 
 		resourceSet = MongoUtil.createResourceSet();
-		resource = resourceSet.getResource
-		  (createQueryURI(ModelPackage.Literals.ETYPES, "eDate >= " + EcoreFactory.eINSTANCE.convertToString(EcorePackage.Literals.EDATE, new Date())), true);
+		resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.ETYPES, "eDate >= " + EcoreFactory.eINSTANCE.convertToString(EcorePackage.Literals.EDATE, new Date())), true);
 		Result result = (Result) resource.getContents().get(0);
 		assertThat(result.getValues().size(), is(1));
 	}
