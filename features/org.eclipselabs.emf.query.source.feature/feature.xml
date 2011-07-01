@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipselabs.emf.query.source.feature"
-      label="MongoEMF Query Source Feature"
+      label="Mongo EMF Query Support Source"
       version="0.3.2.qualifier"
       provider-name="EclipseLabs">
 

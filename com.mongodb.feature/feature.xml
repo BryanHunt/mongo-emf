@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipselabs.mongo.emf.freemarker.feature"
-      label="Mongo EMF FreeMarker Support"
-      version="0.3.2.qualifier"
-      provider-name="EclipseLabs">
+      id="com.mongodb.feature"
+      label="MongoDB Driver"
+      version="2.5.2.qualifier"
+      provider-name="MongoDB">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -17,15 +17,8 @@
       [Enter License Description here.]
    </license>
 
-   <requires>
-      <import plugin="org.freemarker"/>
-      <import plugin="org.eclipse.emf.common"/>
-      <import plugin="org.eclipse.emf.ecore"/>
-      <import feature="org.eclipselabs.emf.mongo.feature" version="0.3.2.qualifier"/>
-   </requires>
-
    <plugin
-         id="org.eclipselabs.mongo.emf.freemarker"
+         id="com.mongodb"
          download-size="0"
          install-size="0"
          version="0.0.0"

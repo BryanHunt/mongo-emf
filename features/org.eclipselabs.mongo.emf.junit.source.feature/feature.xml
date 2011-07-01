@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipselabs.mongo.junit.source.feature"
-      label="Mongo EMF JUnit Source Feature"
+      label="Mongo EMF JUnit Developer Support Source"
       version="0.3.2.qualifier"
       provider-name="EclipseLabs">
 

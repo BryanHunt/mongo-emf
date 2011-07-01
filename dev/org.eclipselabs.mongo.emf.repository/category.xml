@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipselabs.emf.mongo.feature_0.3.2.qualifier.jar" id="org.eclipselabs.emf.mongo.feature" version="0.3.2.qualifier">
-      <category name="mongo-emf"/>
-   </feature>
    <feature url="features/org.eclipselabs.mongo.emf.junit.feature_0.3.2.qualifier.jar" id="org.eclipselabs.mongo.emf.junit.feature" version="0.3.2.qualifier">
       <category name="mongo-emf"/>
    </feature>
@@ -30,7 +27,13 @@
    <feature url="features/org.eclipselabs.mongo.emf.log.source.feature_0.3.2.qualifier.jar" id="org.eclipselabs.mongo.emf.log.source.feature" version="0.3.2.qualifier">
       <category name="mongo-emf-source"/>
    </feature>
-   <category-def name="mongo-emf" label="Mongo EMF">
+   <feature url="features/org.eclipselabs.mongo.emf.feature_0.3.2.qualifier.jar" id="org.eclipselabs.mongo.emf.feature" version="0.3.2.qualifier">
+      <category name="mongo-emf"/>
+   </feature>
+   <feature url="features/com.mongodb.feature_2.5.2.qualifier.jar" id="com.mongodb.feature" version="2.5.2.qualifier">
+      <category name="mongo-emf"/>
+   </feature>
+   <category-def name="mongo-emf" label="Mongo EMF Runtime">
       <description>
          EMF binding for MongoDB persistence.
       </description>

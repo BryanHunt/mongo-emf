@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipselabs.emf.mongo.feature"
-      label="Mongo EMF Feature"
+      id="org.eclipselabs.mongo.emf.feature"
+      label="Mongo EMF Core Runtime"
       version="0.3.2.qualifier"
       provider-name="EclipseLabs">
 
