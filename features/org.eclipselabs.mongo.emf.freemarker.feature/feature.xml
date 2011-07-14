@@ -21,7 +21,8 @@
       <import plugin="org.freemarker"/>
       <import plugin="org.eclipse.emf.common"/>
       <import plugin="org.eclipse.emf.ecore"/>
-      <import feature="org.eclipselabs.emf.mongo.feature" version="0.3.2.qualifier"/>
+      <import plugin="org.eclipselabs.emf.query"/>
+      <import plugin="org.eclipselabs.mongo.emf"/>
    </requires>
 
    <plugin

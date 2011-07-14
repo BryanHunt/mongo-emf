@@ -4,7 +4,7 @@
       label="Mongo EMF JUnit Developer Support"
       version="0.3.2.qualifier"
       provider-name="EclipseLabs"
-      license-feature="org.eclipselabs.emf.mongo.feature"
+      license-feature="org.eclipselabs.mongo.emf.feature"
       license-feature-version="0.3.2.qualifier">
 
    <description url="http://code.google.com/a/eclipselabs.org/p/mongo-emf/">
@@ -20,13 +20,15 @@
    </license>
 
    <requires>
-      <import feature="org.eclipselabs.emf.mongo.feature" version="0.3.2.qualifier"/>
       <import plugin="org.hamcrest.core" version="1.1.0" match="greaterOrEqual"/>
       <import plugin="com.mongodb"/>
       <import plugin="org.eclipse.emf.common"/>
       <import plugin="org.eclipse.emf.ecore"/>
       <import plugin="org.junit"/>
       <import plugin="org.eclipse.osgi"/>
+      <import plugin="org.eclipselabs.emf.query"/>
+      <import plugin="org.eclipselabs.mongo"/>
+      <import plugin="org.eclipselabs.mongo.emf"/>
    </requires>
 
    <plugin
