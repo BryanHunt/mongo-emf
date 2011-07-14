@@ -11,18 +11,20 @@
 
 package org.eclipselabs.mongo.emf.perf.tests;
 
-import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipselabs.emf.query.Result;
 import org.eclipselabs.mongo.emf.perf.bundle.Activator;
 import org.eclipselabs.mongo.emf.perf.model.ModelFactory;
 import org.eclipselabs.mongo.emf.perf.model.TestObject1;
 import org.eclipselabs.mongo.junit.MongoDatabase;
 import org.eclipselabs.mongo.junit.MongoUtil;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
 
 import com.yourkit.api.Controller;
@@ -34,6 +36,7 @@ import com.yourkit.api.ProfilingModes;
  */
 public class TestPerformance
 {
+	@Rule
 	public static MongoDatabase db = new MongoDatabase(Activator.getBundleContext(), "junit");
 
 	@BeforeClass
@@ -73,14 +76,17 @@ public class TestPerformance
 		System.out.println("Store snapshot: " + controller.captureSnapshot(ProfilingModes.SNAPSHOT_WITHOUT_HEAP));
 
 		resourceSet = MongoUtil.createResourceSet();
-		ByteArrayOutputStream data = new ByteArrayOutputStream();
 
 		System.out.println("Loading data");
 
 		controller.startCPUProfiling(ProfilingModes.CPU_TRACING, filters.toString());
 		resource = resourceSet.getResource(uri.appendQuery(""), true);
-		System.out.println("Saving data to byte stream");
-		resource.save(data, null);
+		Result result = (Result) resource.getContents().get(0);
+
+		System.out.println("Loading from a Result");
+
+		for (EObject object : result.getValues());
+
 		System.out.println("Stopping profile");
 		controller.stopCPUProfiling();
 		System.out.println("Capturing snapshot");

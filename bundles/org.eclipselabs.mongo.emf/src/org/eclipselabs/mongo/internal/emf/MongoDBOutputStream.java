@@ -270,14 +270,14 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 		URI baseURI = resource.getURI().trimSegments(1);
 		InternalEObject[] eObjects = contents.toArray(new InternalEObject[contents.size()]);
 		Result result = QueryFactory.eINSTANCE.createResult();
-		EList<EObject> values = result.getValues();
+		InternalEList<EObject> values = (InternalEList<EObject>) result.getValues();
 
 		for (int i = 0; i < dbObjects.size(); i++)
 		{
 			InternalEObject internalEObject = eObjects[i];
 			internalEObject.eSetProxyURI(baseURI.appendSegment(dbObjects.get(i).get(MongoDBURIHandlerImpl.ID_KEY).toString()).appendFragment("/"));
 			internalEObject.eAdapters().clear();
-			values.add(internalEObject);
+			values.addUnique(internalEObject);
 		}
 
 		contents.clear();

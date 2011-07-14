@@ -14,6 +14,7 @@ package org.eclipselabs.mongo.internal.emf;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -52,7 +53,7 @@ import com.mongodb.QueryOperators;
 
 /**
  * @author bhunt
- *
+ * 
  */
 public class MongoDBInputStream extends InputStream implements URIConverter.Loadable
 {
@@ -60,6 +61,7 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 	private URI uri;
 	private Map<?, ?> options;
 	private Map<Object, Object> response;
+	private static Map<String, EClass> eClassCache = new HashMap<String, EClass>();
 	private boolean proxyAttributes;
 
 	public MongoDBInputStream(IMongoDB mongoDB, URI uri, Map<?, ?> options, Map<Object, Object> response)
@@ -97,7 +99,7 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 		if (query != null)
 		{
 			Result result = QueryFactory.eINSTANCE.createResult();
-			InternalEList<EObject> values = (InternalEList<EObject>)result.getValues();
+			InternalEList<EObject> values = (InternalEList<EObject>) result.getValues();
 
 			for (DBObject dbObject : collection.find(buildDBObjectQuery(collection, new ExpressionBuilder(URI.decode(query)).parseExpression())))
 				values.addUnique(buildEObject(collection, dbObject, resource, uriHandler, true));
@@ -312,11 +314,11 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 						DBObject referencedDBObject = referenceCollection.findOne(referenceDBObject);
 						if (referencedDBObject != null)
 						{
-						  for (EAttribute attribute : eObject.eClass().getEAllAttributes())
-						  {
-						    if (!attribute.isTransient() && !FeatureMapUtil.isFeatureMap(attribute))
-							    buildEObjectAttribute(referenceCollection, referencedDBObject, null, uriHandler, resourceSet, eObject, attribute);
-						  }
+							for (EAttribute attribute : eObject.eClass().getEAllAttributes())
+							{
+								if (!attribute.isTransient() && !FeatureMapUtil.isFeatureMap(attribute))
+									buildEObjectAttribute(referenceCollection, referencedDBObject, null, uriHandler, resourceSet, eObject, attribute);
+							}
 						}
 					}
 				}
@@ -331,7 +333,15 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 		if (dbObject == null)
 			return null;
 
-		EClass eClass = (EClass) resourceSet.getEObject(URI.createURI((String) dbObject.get(MongoDBURIHandlerImpl.ECLASS_KEY)), true);
+		String eClassURI = (String) dbObject.get(MongoDBURIHandlerImpl.ECLASS_KEY);
+		EClass eClass = eClassCache.get(eClassURI);
+
+		if (eClass == null)
+		{
+			eClass = (EClass) resourceSet.getEObject(URI.createURI(eClassURI), true);
+			eClassCache.put(eClassURI, eClass);
+		}
+
 		return EcoreUtil.create(eClass);
 	}
 
@@ -431,15 +441,8 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 						if (rightOperand instanceof Literal)
 						{
 							DBObject compare = new BasicDBObject();
-							compare.put
-							  ("<".equals(operator) ? 
-							      QueryOperators.LT : 
-							      "<=".equals(operator) ?
-							        QueryOperators.LTE : 
-							        ">".equals(operator) ?
-							          QueryOperators.GT : 
-							          QueryOperators.GTE,
-							   getValue((Literal) rightOperand));
+							compare.put("<".equals(operator) ? QueryOperators.LT : "<=".equals(operator) ? QueryOperators.LTE : ">".equals(operator) ? QueryOperators.GT : QueryOperators.GTE,
+									getValue((Literal) rightOperand));
 							dbObject.put(property, compare);
 						}
 						else
