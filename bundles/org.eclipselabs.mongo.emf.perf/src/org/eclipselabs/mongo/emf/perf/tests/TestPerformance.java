@@ -54,6 +54,7 @@ public class TestPerformance
 
 	}
 
+	@SuppressWarnings("unused")
 	@Test
 	public void test1() throws Exception
 	{
