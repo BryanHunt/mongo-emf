@@ -2,7 +2,7 @@
 <feature
       id="org.eclipselabs.mongo.junit.source.feature"
       label="Mongo EMF JUnit Developer Support Source"
-      version="0.3.2.qualifier"
+      version="0.3.3.qualifier"
       provider-name="EclipseLabs">
 
    <description url="http://www.example.com/description">

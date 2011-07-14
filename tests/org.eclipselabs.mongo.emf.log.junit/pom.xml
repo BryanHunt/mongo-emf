@@ -2,13 +2,13 @@
 	<parent>
 		<artifactId>build</artifactId>
 		<groupId>mongo-emf</groupId>
-		<version>0.3.2-SNAPSHOT</version>
+		<version>0.3.3-SNAPSHOT</version>
 		<relativePath>../../dev/org.eclipselabs.mongo.emf.developer/Build/pom.xml</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
   <groupId>mongo-emf</groupId>
   <artifactId>org.eclipselabs.mongo.emf.log.junit</artifactId>
-  <version>0.3.2-SNAPSHOT</version>
+  <version>0.3.3-SNAPSHOT</version>
   <packaging>eclipse-test-plugin</packaging>
   <properties>
   				<eclemma.instrument.bundles>org.eclipselabs.mongo,org.eclipselabs.mongo.emf</eclemma.instrument.bundles>

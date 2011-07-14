@@ -2,7 +2,7 @@
 <feature
       id="org.eclipselabs.emf.query.feature"
       label="Mongo EMF Query Engine"
-      version="0.3.2.qualifier"
+      version="0.3.3.qualifier"
       provider-name="EclipseLabs">
 
    <description url="http://www.example.com/description">
