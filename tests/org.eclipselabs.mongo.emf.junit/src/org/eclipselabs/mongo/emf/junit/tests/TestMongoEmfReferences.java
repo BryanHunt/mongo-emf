@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -30,6 +31,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
+import org.eclipselabs.mongo.emf.MongoDBUtil;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.PrimaryObject;
@@ -40,7 +42,7 @@ import org.junit.Test;
 
 /**
  * @author bhunt
- *
+ * 
  */
 public class TestMongoEmfReferences extends TestHarness
 {
@@ -306,7 +308,7 @@ public class TestMongoEmfReferences extends TestHarness
 
 		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
 		primaryObject.setName("junit");
-		
+
 		{
 			TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
 			targetObject.setSingleAttribute("one");
@@ -314,7 +316,7 @@ public class TestMongoEmfReferences extends TestHarness
 			primaryObject.setSingleContainmentReferenceProxies(targetObject);
 			targetObject.eResource().unload();
 		}
-		
+
 		{
 			TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
 			targetObject.setSingleAttribute("one");
@@ -336,34 +338,36 @@ public class TestMongoEmfReferences extends TestHarness
 			primaryObject.getMultipleNonContainmentReference().add(targetObject);
 			targetObject.eResource().unload();
 		}
-		
+
 		saveObject(resourceSet, primaryObject);
-		
+
 		// Verify that proxies aren't resolved as a result of saving to Mongo DB.
 		//
-		assertTrue(((EObject)primaryObject.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES, false)).eIsProxy());
-		assertTrue(((EObject)primaryObject.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE, false)).eIsProxy());
-		assertTrue(((EObject)((InternalEList<?>)primaryObject.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES)).basicGet(0)).eIsProxy());
-		assertTrue(((EObject)((InternalEList<?>)primaryObject.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE)).basicGet(0)).eIsProxy());
+		assertTrue(((EObject) primaryObject.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES, false)).eIsProxy());
+		assertTrue(((EObject) primaryObject.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE, false)).eIsProxy());
+		assertTrue(((EObject) ((InternalEList<?>) primaryObject.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES)).basicGet(0)).eIsProxy());
+		assertTrue(((EObject) ((InternalEList<?>) primaryObject.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE)).basicGet(0)).eIsProxy());
 
 		ResourceSet resourceSet2 = MongoUtil.createResourceSet();
 		resourceSet2.getLoadOptions().put(MongoDBURIHandlerImpl.OPTION_PROXY_ATTRIBUTES, Boolean.TRUE);
 		Resource primaryResource2 = resourceSet2.getResource(primaryObject.eResource().getURI(), true);
-		PrimaryObject primaryObject2 = (PrimaryObject)primaryResource2.getContents().get(0);
+		PrimaryObject primaryObject2 = (PrimaryObject) primaryResource2.getContents().get(0);
 
 		// Verify that proxies are created when loading from Mongo DB.
 		//
-		assertTrue(((EObject)primaryObject2.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES, false)).eIsProxy());
-		assertTrue(((EObject)primaryObject2.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE, false)).eIsProxy());
-		assertTrue(((EObject)((InternalEList<?>)primaryObject2.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES)).basicGet(0)).eIsProxy());
-		assertTrue(((EObject)((InternalEList<?>)primaryObject2.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE)).basicGet(0)).eIsProxy());
+		assertTrue(((EObject) primaryObject2.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES, false)).eIsProxy());
+		assertTrue(((EObject) primaryObject2.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE, false)).eIsProxy());
+		assertTrue(((EObject) ((InternalEList<?>) primaryObject2.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES)).basicGet(0)).eIsProxy());
+		assertTrue(((EObject) ((InternalEList<?>) primaryObject2.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE)).basicGet(0)).eIsProxy());
 
 		// Verify that those proxies have attributes populated as expected for OPTION_PROXY_ATTRIBUTES
 		//
-		assertThat(((TargetObject)((EObject)primaryObject2.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES, false))).getSingleAttribute(), is("one"));
-		assertThat(((TargetObject)((EObject)primaryObject2.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE, false))).getSingleAttribute(), is("one"));
-		assertThat(((TargetObject)((EObject)((InternalEList<?>)primaryObject2.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES)).basicGet(0))).getSingleAttribute(), is("one"));
-		assertThat(((TargetObject)((EObject)((InternalEList<?>)primaryObject2.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE)).basicGet(0))).getSingleAttribute(), is("one"));
+		assertThat(((TargetObject) ((EObject) primaryObject2.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES, false))).getSingleAttribute(), is("one"));
+		assertThat(((TargetObject) ((EObject) primaryObject2.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE, false))).getSingleAttribute(), is("one"));
+		assertThat(((TargetObject) ((EObject) ((InternalEList<?>) primaryObject2.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES)).basicGet(0))).getSingleAttribute(),
+				is("one"));
+		assertThat(((TargetObject) ((EObject) ((InternalEList<?>) primaryObject2.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE)).basicGet(0))).getSingleAttribute(),
+				is("one"));
 
 		// Save it to XML, again with proxy attributes.
 		//
@@ -375,21 +379,54 @@ public class TestMongoEmfReferences extends TestHarness
 		ResourceSet resourceSet3 = MongoUtil.createResourceSet();
 		Resource primaryResource3 = resourceSet3.createResource(primaryObject.eResource().getURI());
 		primaryResource3.load(new ByteArrayInputStream(out.toByteArray()), null);
-		
+
 		// Verify that proxies are created when loading from XML.
 		//
-		PrimaryObject primaryObject3 = (PrimaryObject)primaryResource3.getContents().get(0);
-		assertTrue(((EObject)primaryObject3.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES, false)).eIsProxy());
-		assertTrue(((EObject)primaryObject3.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE, false)).eIsProxy());
-		assertTrue(((EObject)((InternalEList<?>)primaryObject3.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES)).basicGet(0)).eIsProxy());
-		assertTrue(((EObject)((InternalEList<?>)primaryObject3.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE)).basicGet(0)).eIsProxy());
+		PrimaryObject primaryObject3 = (PrimaryObject) primaryResource3.getContents().get(0);
+		assertTrue(((EObject) primaryObject3.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES, false)).eIsProxy());
+		assertTrue(((EObject) primaryObject3.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE, false)).eIsProxy());
+		assertTrue(((EObject) ((InternalEList<?>) primaryObject3.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES)).basicGet(0)).eIsProxy());
+		assertTrue(((EObject) ((InternalEList<?>) primaryObject3.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE)).basicGet(0)).eIsProxy());
 
 		// Verify that those proxies have attributes populated as expected for OPTION_PROXY_ATTRIBUTES.
 		//
-		assertThat(((TargetObject)((EObject)primaryObject3.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES, false))).getSingleAttribute(), is("one"));
-		assertThat(((TargetObject)((EObject)primaryObject3.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE, false))).getSingleAttribute(), is("one"));
-		assertThat(((TargetObject)((EObject)((InternalEList<?>)primaryObject3.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES)).basicGet(0))).getSingleAttribute(), is("one"));
-		assertThat(((TargetObject)((EObject)((InternalEList<?>)primaryObject3.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE)).basicGet(0))).getSingleAttribute(), is("one"));
+		assertThat(((TargetObject) ((EObject) primaryObject3.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES, false))).getSingleAttribute(), is("one"));
+		assertThat(((TargetObject) ((EObject) primaryObject3.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE, false))).getSingleAttribute(), is("one"));
+		assertThat(((TargetObject) ((EObject) ((InternalEList<?>) primaryObject3.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES)).basicGet(0))).getSingleAttribute(),
+				is("one"));
+		assertThat(((TargetObject) ((EObject) ((InternalEList<?>) primaryObject3.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE)).basicGet(0))).getSingleAttribute(),
+				is("one"));
 	}
-	
+
+	@Test
+	public void testCascadeDelete() throws IOException
+	{
+		// Setup : Create a primary object with a cross-document containment reference to a target object.
+
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
+
+		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject.setSingleAttribute("junit");
+		saveObject(resourceSet, targetObject);
+
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject.setName("junit");
+		primaryObject.setSingleContainmentReferenceProxies(targetObject);
+		saveObject(resourceSet, primaryObject);
+
+		URI primaryURI = primaryObject.eResource().getURI();
+		URI targetURI = targetObject.eResource().getURI();
+
+		// Test : Cascade delete the primary object.
+
+		MongoDBUtil.cascadeDelete(primaryObject, null);
+
+		// Verify : Check that the target object was also deleted.
+
+		ResourceSet targetResourceSet = MongoUtil.createResourceSet();
+		Resource primaryResource = targetResourceSet.getResource(primaryURI, true);
+		assertTrue(primaryResource.getContents().isEmpty());
+		Resource targetResource = targetResourceSet.getResource(targetURI, true);
+		assertTrue(targetResource.getContents().isEmpty());
+	}
 }
