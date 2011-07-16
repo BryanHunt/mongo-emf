@@ -54,6 +54,16 @@
       <url>http://quickiemart.springfieldusa.net/Targets/MongoDB/</url>
     </repository> 
     <repository>
+      <id>Hamcrest</id>
+      <layout>p2</layout>
+      <url>http://quickiemart.springfieldusa.net/Targets/Hamcrest/</url>
+    </repository>
+     <repository>
+      <id>JUnit</id>
+      <layout>p2</layout>
+      <url>http://quickiemart.springfieldusa.net/Targets/JUnit/</url>
+    </repository> 
+    <repository>
       <id>Restlet</id>
       <layout>p2</layout>
       <url>http://quickiemart.springfieldusa.net/Targets/FreeMarker/</url>
