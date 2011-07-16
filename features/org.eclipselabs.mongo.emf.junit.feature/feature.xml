@@ -2,7 +2,7 @@
 <feature
       id="org.eclipselabs.mongo.emf.junit.feature"
       label="Mongo EMF JUnit Developer Support"
-      version="0.3.3.qualifier"
+      version="0.4.0.qualifier"
       provider-name="EclipseLabs"
       license-feature="org.eclipselabs.mongo.emf.feature"
       license-feature-version="0.3.3.qualifier">
