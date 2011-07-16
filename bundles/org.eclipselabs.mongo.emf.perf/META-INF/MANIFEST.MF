@@ -9,12 +9,19 @@ Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipselabs.mongo.emf.perf.model,
  org.eclipselabs.mongo.emf.perf.model.util
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.ecore;visibility:=reexport,
- org.junit;bundle-version="4.8.1",
- com.yourkit.api;bundle-version="9.5.4",
- org.eclipselabs.mongo.junit;bundle-version="0.3.2",
- org.eclipselabs.emf.query;bundle-version="0.3.2"
 Bundle-ActivationPolicy: lazy
-Import-Package: org.osgi.framework;version="1.6.0"
+Import-Package: com.yourkit.api,
+ org.eclipse.emf.common,
+ org.eclipse.emf.common.notify,
+ org.eclipse.emf.common.notify.impl,
+ org.eclipse.emf.common.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.impl,
+ org.eclipse.emf.ecore.plugin,
+ org.eclipse.emf.ecore.resource,
+ org.eclipse.emf.ecore.util,
+ org.eclipselabs.emf.query,
+ org.eclipselabs.mongo.junit,
+ org.junit;version="4.9.0",
+ org.osgi.framework;version="1.6.0"
 Bundle-Activator: org.eclipselabs.mongo.emf.perf.bundle.Activator
