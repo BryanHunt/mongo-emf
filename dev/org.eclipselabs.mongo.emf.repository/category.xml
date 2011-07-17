@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipselabs.mongo.emf.junit.feature_0.3.3.qualifier.jar" id="org.eclipselabs.mongo.emf.junit.feature" version="0.3.3.qualifier">
-      <category name="mongo-emf"/>
-   </feature>
-   <feature url="features/org.eclipselabs.mongo.emf.source.feature_0.3.3.qualifier.jar" id="org.eclipselabs.mongo.emf.source.feature" version="0.3.3.qualifier">
-      <category name="mongo-emf-source"/>
-   </feature>
-   <feature url="features/org.eclipselabs.mongo.junit.source.feature_0.3.3.qualifier.jar" id="org.eclipselabs.mongo.junit.source.feature" version="0.3.3.qualifier">
-      <category name="mongo-emf-source"/>
-   </feature>
-   <feature url="features/org.eclipselabs.mongo.emf.freemarker.feature_0.3.3.qualifier.jar" id="org.eclipselabs.mongo.emf.freemarker.feature" version="0.3.3.qualifier">
-      <category name="mongo-emf"/>
-   </feature>
-   <feature url="features/org.eclipselabs.mongo.emf.freemarker.source.feature_0.3.3.qualifier.jar" id="org.eclipselabs.mongo.emf.freemarker.source.feature" version="0.3.3.qualifier">
-      <category name="mongo-emf-source"/>
-   </feature>
-   <feature url="features/org.eclipselabs.emf.query.feature_0.3.3.qualifier.jar" id="org.eclipselabs.emf.query.feature" version="0.3.3.qualifier">
-      <category name="mongo-emf"/>
-   </feature>
-   <feature url="features/org.eclipselabs.emf.query.source.feature_0.3.3.qualifier.jar" id="org.eclipselabs.emf.query.source.feature" version="0.3.3.qualifier">
-      <category name="mongo-emf-source"/>
-   </feature>
-   <feature url="features/org.eclipselabs.mongo.emf.log.feature_0.3.3.qualifier.jar" id="org.eclipselabs.mongo.emf.log.feature" version="0.3.3.qualifier">
-      <category name="mongo-emf"/>
-   </feature>
-   <feature url="features/org.eclipselabs.mongo.emf.log.source.feature_0.3.3.qualifier.jar" id="org.eclipselabs.mongo.emf.log.source.feature" version="0.3.3.qualifier">
-      <category name="mongo-emf-source"/>
-   </feature>
-   <feature url="features/org.eclipselabs.mongo.emf.feature_0.3.3.qualifier.jar" id="org.eclipselabs.mongo.emf.feature" version="0.3.3.qualifier">
-      <category name="mongo-emf"/>
-   </feature>
    <feature url="features/com.mongodb.feature_2.5.2.qualifier.jar" id="com.mongodb.feature" version="2.5.2.qualifier">
       <category name="mongo-emf"/>
+   </feature>
+   <feature url="features/org.eclipselabs.emf.query.feature_0.4.0.qualifier.jar" id="org.eclipselabs.emf.query.feature" version="0.4.0.qualifier">
+      <category name="mongo-emf"/>
+   </feature>
+   <feature url="features/org.eclipselabs.mongo.emf.feature_0.4.0.qualifier.jar" id="org.eclipselabs.mongo.emf.feature" version="0.4.0.qualifier">
+      <category name="mongo-emf"/>
+   </feature>
+   <feature url="features/org.eclipselabs.mongo.emf.freemarker.feature_0.4.0.qualifier.jar" id="org.eclipselabs.mongo.emf.freemarker.feature" version="0.4.0.qualifier">
+      <category name="mongo-emf"/>
+   </feature>
+   <feature url="features/org.eclipselabs.mongo.emf.junit.feature_0.4.0.qualifier.jar" id="org.eclipselabs.mongo.emf.junit.feature" version="0.4.0.qualifier">
+      <category name="mongo-emf"/>
+   </feature>
+   <feature url="features/org.eclipselabs.mongo.emf.log.feature_0.4.0.qualifier.jar" id="org.eclipselabs.mongo.emf.log.feature" version="0.4.0.qualifier">
+      <category name="mongo-emf"/>
+   </feature>
+   <feature url="features/org.eclipselabs.emf.query.source.feature_0.4.0.qualifier.jar" id="org.eclipselabs.emf.query.source.feature" version="0.4.0.qualifier">
+      <category name="mongo-emf-source"/>
+   </feature>
+   <feature url="features/org.eclipselabs.mongo.emf.freemarker.source.feature_0.4.0.qualifier.jar" id="org.eclipselabs.mongo.emf.freemarker.source.feature" version="0.4.0.qualifier">
+      <category name="mongo-emf-source"/>
+   </feature>
+   <feature url="features/org.eclipselabs.mongo.emf.log.source.feature_0.4.0.qualifier.jar" id="org.eclipselabs.mongo.emf.log.source.feature" version="0.4.0.qualifier">
+      <category name="mongo-emf-source"/>
+   </feature>
+   <feature url="features/org.eclipselabs.mongo.emf.source.feature_0.4.0.qualifier.jar" id="org.eclipselabs.mongo.emf.source.feature" version="0.4.0.qualifier">
+      <category name="mongo-emf-source"/>
+   </feature>
+   <feature url="features/org.eclipselabs.mongo.junit.source.feature_0.4.0.qualifier.jar" id="org.eclipselabs.mongo.junit.source.feature" version="0.4.0.qualifier">
+      <category name="mongo-emf-source"/>
    </feature>
    <category-def name="mongo-emf" label="Mongo EMF Runtime">
       <description>
