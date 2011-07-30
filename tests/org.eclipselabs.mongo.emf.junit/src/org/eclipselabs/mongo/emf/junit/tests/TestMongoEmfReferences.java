@@ -13,6 +13,8 @@ package org.eclipselabs.mongo.emf.junit.tests;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -23,7 +25,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -31,7 +32,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
-import org.eclipselabs.mongo.emf.MongoDBUtil;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.PrimaryObject;
@@ -61,6 +61,32 @@ public class TestMongoEmfReferences extends TestHarness
 		// Verify : Check that the object was stored correctly.
 
 		MongoUtil.checkObject(primaryObject);
+	}
+
+	@Test
+	public void testUnsettableReferenceSetToNULL() throws IOException
+	{
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject.setUnsettableReference(null);
+		saveObject(primaryObject);
+
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		Resource resource = resourceSet.getResource(primaryObject.eResource().getURI(), true);
+		PrimaryObject object = (PrimaryObject) resource.getContents().get(0);
+		assertTrue(object.isSetUnsettableReference());
+		assertThat(object.getUnsettableReference(), is(nullValue()));
+	}
+
+	@Test
+	public void testUnsettableReferenceUnset() throws IOException
+	{
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		saveObject(primaryObject);
+
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		Resource resource = resourceSet.getResource(primaryObject.eResource().getURI(), true);
+		PrimaryObject object = (PrimaryObject) resource.getContents().get(0);
+		assertFalse(object.isSetUnsettableReference());
 	}
 
 	@Test
@@ -121,6 +147,28 @@ public class TestMongoEmfReferences extends TestHarness
 		primaryObject.setName("junit");
 		primaryObject.setSingleContainmentReferenceNoProxies(targetObject);
 		primaryObject.setSingleNonContainmentReference(targetObject);
+
+		// Test : Store the object to MongoDB
+
+		saveObject(primaryObject);
+
+		// Verify : Check that the object was stored correctly.
+
+		MongoUtil.checkObject(primaryObject);
+	}
+
+	@Test
+	public void testPrimaryObjectWithSingleNonContainmentReferenceNoProxies() throws IOException
+	{
+		// Setup : Create a primary object with a non containment reference to a target object.
+
+		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject.setSingleAttribute("junit");
+
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject.setName("junit");
+		primaryObject.setSingleContainmentReferenceNoProxies(targetObject);
+		primaryObject.setSingleNonContainmentReferenceNoProxies(targetObject);
 
 		// Test : Store the object to MongoDB
 
@@ -316,7 +364,6 @@ public class TestMongoEmfReferences extends TestHarness
 			primaryObject.setSingleContainmentReferenceProxies(targetObject);
 			targetObject.eResource().unload();
 		}
-
 		{
 			TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
 			targetObject.setSingleAttribute("one");
@@ -338,11 +385,19 @@ public class TestMongoEmfReferences extends TestHarness
 			primaryObject.getMultipleNonContainmentReference().add(targetObject);
 			targetObject.eResource().unload();
 		}
+		{
+			PrimaryObject targetObject = ModelFactory.eINSTANCE.createPrimaryObject();
+			targetObject.setName("target");
+			saveObject(targetObject);
+			primaryObject.setContainmentReferenceSameCollectioin(targetObject);
+			targetObject.eResource().unload();
+		}
 
 		saveObject(resourceSet, primaryObject);
 
 		// Verify that proxies aren't resolved as a result of saving to Mongo DB.
 		//
+		assertTrue(((EObject) primaryObject.eGet(ModelPackage.Literals.PRIMARY_OBJECT__CONTAINMENT_REFERENCE_SAME_COLLECTIOIN, false)).eIsProxy());
 		assertTrue(((EObject) primaryObject.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES, false)).eIsProxy());
 		assertTrue(((EObject) primaryObject.eGet(ModelPackage.Literals.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE, false)).eIsProxy());
 		assertTrue(((EObject) ((InternalEList<?>) primaryObject.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES)).basicGet(0)).eIsProxy());
@@ -396,37 +451,5 @@ public class TestMongoEmfReferences extends TestHarness
 				is("one"));
 		assertThat(((TargetObject) ((EObject) ((InternalEList<?>) primaryObject3.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE)).basicGet(0))).getSingleAttribute(),
 				is("one"));
-	}
-
-	@Test
-	public void testCascadeDelete() throws IOException
-	{
-		// Setup : Create a primary object with a cross-document containment reference to a target object.
-
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
-
-		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
-		targetObject.setSingleAttribute("junit");
-		saveObject(resourceSet, targetObject);
-
-		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
-		primaryObject.setName("junit");
-		primaryObject.setSingleContainmentReferenceProxies(targetObject);
-		saveObject(resourceSet, primaryObject);
-
-		URI primaryURI = primaryObject.eResource().getURI();
-		URI targetURI = targetObject.eResource().getURI();
-
-		// Test : Cascade delete the primary object.
-
-		MongoDBUtil.cascadeDelete(primaryObject, null);
-
-		// Verify : Check that the target object was also deleted.
-
-		ResourceSet targetResourceSet = MongoUtil.createResourceSet();
-		Resource primaryResource = targetResourceSet.getResource(primaryURI, true);
-		assertTrue(primaryResource.getContents().isEmpty());
-		Resource targetResource = targetResourceSet.getResource(targetURI, true);
-		assertTrue(targetResource.getContents().isEmpty());
 	}
 }

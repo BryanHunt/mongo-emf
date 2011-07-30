@@ -527,9 +527,9 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPrimaryObject_SingleNonContainmentReference()
+	public EAttribute getPrimaryObject_UnsettableAttribute()
 	{
-		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -537,9 +537,9 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPrimaryObject_MultipleNonContainmentReference()
+	public EAttribute getPrimaryObject_UnsettableAttributeWithNonNullDefault()
 	{
-		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(2);
+		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -547,7 +547,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPrimaryObject_SingleContainmentReferenceNoProxies()
+	public EReference getPrimaryObject_UnsettableReference()
 	{
 		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(3);
 	}
@@ -557,7 +557,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPrimaryObject_MultipleContainmentReferenceNoProxies()
+	public EReference getPrimaryObject_ContainmentReferenceSameCollectioin()
 	{
 		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(4);
 	}
@@ -567,7 +567,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPrimaryObject_SingleContainmentReferenceProxies()
+	public EReference getPrimaryObject_SingleNonContainmentReference()
 	{
 		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(5);
 	}
@@ -577,7 +577,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPrimaryObject_MultipleContainmentReferenceProxies()
+	public EReference getPrimaryObject_MultipleNonContainmentReference()
 	{
 		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(6);
 	}
@@ -587,7 +587,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPrimaryObject_FeatureMapReferenceType2()
+	public EReference getPrimaryObject_SingleContainmentReferenceNoProxies()
 	{
 		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(7);
 	}
@@ -597,7 +597,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getPrimaryObject_FeatureMapReferenceType1()
+	public EReference getPrimaryObject_MultipleContainmentReferenceNoProxies()
 	{
 		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(8);
 	}
@@ -607,9 +607,59 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getPrimaryObject_SingleContainmentReferenceProxies()
+	{
+		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPrimaryObject_MultipleContainmentReferenceProxies()
+	{
+		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(10);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPrimaryObject_SingleNonContainmentReferenceNoProxies()
+	{
+		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(11);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPrimaryObject_FeatureMapReferenceType2()
+	{
+		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(12);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getPrimaryObject_FeatureMapReferenceType1()
+	{
+		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(13);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EAttribute getPrimaryObject_FeatureMapReferenceCollection()
 	{
-		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(9);
+		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(14);
 	}
 
 	/**
@@ -619,7 +669,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 */
 	public EAttribute getPrimaryObject_FeatureMapAttributeType1()
 	{
-		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(10);
+		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(15);
 	}
 
 	/**
@@ -629,7 +679,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 */
 	public EAttribute getPrimaryObject_FeatureMapAttributeType2()
 	{
-		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(11);
+		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(16);
 	}
 
 	/**
@@ -639,7 +689,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 */
 	public EAttribute getPrimaryObject_FeatureMapAttributeCollection()
 	{
-		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(12);
+		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(17);
 	}
 
 	/**
@@ -776,12 +826,17 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 
 		primaryObjectEClass = createEClass(PRIMARY_OBJECT);
 		createEAttribute(primaryObjectEClass, PRIMARY_OBJECT__NAME);
+		createEAttribute(primaryObjectEClass, PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE);
+		createEAttribute(primaryObjectEClass, PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE_WITH_NON_NULL_DEFAULT);
+		createEReference(primaryObjectEClass, PRIMARY_OBJECT__UNSETTABLE_REFERENCE);
+		createEReference(primaryObjectEClass, PRIMARY_OBJECT__CONTAINMENT_REFERENCE_SAME_COLLECTIOIN);
 		createEReference(primaryObjectEClass, PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE);
 		createEReference(primaryObjectEClass, PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE);
 		createEReference(primaryObjectEClass, PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_NO_PROXIES);
 		createEReference(primaryObjectEClass, PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_NO_PROXIES);
 		createEReference(primaryObjectEClass, PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES);
 		createEReference(primaryObjectEClass, PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES);
+		createEReference(primaryObjectEClass, PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE_NO_PROXIES);
 		createEReference(primaryObjectEClass, PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2);
 		createEReference(primaryObjectEClass, PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1);
 		createEAttribute(primaryObjectEClass, PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION);
@@ -872,12 +927,17 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 
 		initEClass(primaryObjectEClass, PrimaryObject.class, "PrimaryObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getPrimaryObject_Name(), ecorePackage.getEString(), "name", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPrimaryObject_UnsettableAttribute(), ecorePackage.getEString(), "unsettableAttribute", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPrimaryObject_UnsettableAttributeWithNonNullDefault(), ecorePackage.getEString(), "unsettableAttributeWithNonNullDefault", "junit", 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPrimaryObject_UnsettableReference(), this.getTargetObject(), null, "unsettableReference", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPrimaryObject_ContainmentReferenceSameCollectioin(), this.getPrimaryObject(), null, "containmentReferenceSameCollectioin", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPrimaryObject_SingleNonContainmentReference(), this.getTargetObject(), null, "singleNonContainmentReference", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPrimaryObject_MultipleNonContainmentReference(), this.getTargetObject(), null, "multipleNonContainmentReference", null, 0, -1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPrimaryObject_SingleContainmentReferenceNoProxies(), this.getTargetObject(), null, "singleContainmentReferenceNoProxies", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPrimaryObject_MultipleContainmentReferenceNoProxies(), this.getTargetObject(), null, "multipleContainmentReferenceNoProxies", null, 0, -1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPrimaryObject_SingleContainmentReferenceProxies(), this.getTargetObject(), null, "singleContainmentReferenceProxies", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPrimaryObject_MultipleContainmentReferenceProxies(), this.getTargetObject(), null, "multipleContainmentReferenceProxies", null, 0, -1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPrimaryObject_SingleNonContainmentReferenceNoProxies(), this.getTargetObject(), null, "singleNonContainmentReferenceNoProxies", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getPrimaryObject_FeatureMapReferenceType2(), this.getTargetObject(), null, "featureMapReferenceType2", null, 0, -1, PrimaryObject.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEReference(getPrimaryObject_FeatureMapReferenceType1(), this.getTargetObject(), null, "featureMapReferenceType1", null, 0, -1, PrimaryObject.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getPrimaryObject_FeatureMapReferenceCollection(), ecorePackage.getEFeatureMapEntry(), "featureMapReferenceCollection", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

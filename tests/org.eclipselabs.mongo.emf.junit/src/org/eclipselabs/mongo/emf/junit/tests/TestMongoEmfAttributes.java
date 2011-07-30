@@ -12,12 +12,17 @@
 package org.eclipselabs.mongo.emf.junit.tests;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.HashSet;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.PrimaryObject;
@@ -107,6 +112,58 @@ public class TestMongoEmfAttributes extends TestHarness
 
 		MongoUtil.checkObject(targetObject);
 		assertThat(getCollection(targetObject.eClass()).getCount(), is(1L));
+	}
+
+	@Test
+	public void testUnsettableAttributeSetToNULL() throws IOException
+	{
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject.setUnsettableAttribute(null);
+		saveObject(primaryObject);
+
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		Resource resource = resourceSet.getResource(primaryObject.eResource().getURI(), true);
+		PrimaryObject object = (PrimaryObject) resource.getContents().get(0);
+		assertTrue(object.isSetUnsettableAttribute());
+		assertThat(object.getUnsettableAttribute(), is(nullValue()));
+	}
+
+	@Test
+	public void testUnsettableAttributeUnset() throws IOException
+	{
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		saveObject(primaryObject);
+
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		Resource resource = resourceSet.getResource(primaryObject.eResource().getURI(), true);
+		PrimaryObject object = (PrimaryObject) resource.getContents().get(0);
+		assertFalse(object.isSetUnsettableAttribute());
+	}
+
+	@Test
+	public void testUnsettableAttributeWithNonNullDefaultSetToNULL() throws IOException
+	{
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject.setUnsettableAttributeWithNonNullDefault(null);
+		saveObject(primaryObject);
+
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		Resource resource = resourceSet.getResource(primaryObject.eResource().getURI(), true);
+		PrimaryObject object = (PrimaryObject) resource.getContents().get(0);
+		assertFalse(object.isSetUnsettableAttribute());
+		assertThat(object.getUnsettableAttribute(), is(nullValue()));
+	}
+
+	@Test
+	public void testUnsettableAttributeWithNonNullDefaultUnset() throws IOException
+	{
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		saveObject(primaryObject);
+
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		Resource resource = resourceSet.getResource(primaryObject.eResource().getURI(), true);
+		PrimaryObject object = (PrimaryObject) resource.getContents().get(0);
+		assertFalse(object.isSetUnsettableAttribute());
 	}
 
 	@Test

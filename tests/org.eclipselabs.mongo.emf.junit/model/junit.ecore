@@ -69,6 +69,15 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PrimaryObject">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableAttribute" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableAttributeWithNonNullDefault"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="junit"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="unsettableReference" eType="#//TargetObject"
+        unsettable="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="containmentReferenceSameCollectioin"
+        eType="#//PrimaryObject" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="singleNonContainmentReference"
         eType="#//TargetObject"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="multipleNonContainmentReference"
@@ -81,6 +90,8 @@
         eType="#//TargetObject" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="multipleContainmentReferenceProxies"
         upperBound="-1" eType="#//TargetObject" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="singleNonContainmentReferenceNoProxies"
+        eType="#//TargetObject" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="featureMapReferenceType2"
         upperBound="-1" eType="#//TargetObject" volatile="true" transient="true" derived="true"
         containment="true" resolveProxies="false">

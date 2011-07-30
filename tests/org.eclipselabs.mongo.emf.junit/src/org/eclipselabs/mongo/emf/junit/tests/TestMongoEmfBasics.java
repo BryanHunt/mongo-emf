@@ -145,10 +145,11 @@ public class TestMongoEmfBasics extends TestHarness
 		targetObject.setSingleAttribute("junit");
 		saveObject(targetObject);
 
-		// Verify : exists() on the URI converter should return true
+		// Verify : exists() on the URI converter return true / false as appropriate
 
 		assertTrue(targetObject.eResource().getResourceSet().getURIConverter().exists(targetObject.eResource().getURI(), null));
 		assertFalse(targetObject.eResource().getResourceSet().getURIConverter().exists(targetObject.eResource().getURI().trimSegments(1).appendQuery(""), null));
+		assertFalse(targetObject.eResource().getResourceSet().getURIConverter().exists(targetObject.eResource().getURI().trimSegments(1).appendSegment("id"), null));
 		assertFalse(targetObject.eResource().getResourceSet().getURIConverter().exists(URI.createURI("mongo://host:8080/junit/junit/id"), null));
 	}
 

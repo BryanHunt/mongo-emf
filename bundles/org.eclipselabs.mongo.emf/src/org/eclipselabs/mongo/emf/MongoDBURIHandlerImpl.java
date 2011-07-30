@@ -28,9 +28,7 @@ import org.eclipselabs.mongo.internal.emf.MongoDBInputStream;
 import org.eclipselabs.mongo.internal.emf.MongoDBOutputStream;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.Mongo;
 import com.mongodb.MongoURI;
 
 /**
@@ -138,22 +136,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 		String port = uri.port();
 		MongoURI mongoURI = new MongoURI("mongodb://" + uri.host() + (port != null ? ":" + port : ""));
-		Mongo mongo = mongoDB.getMongo(mongoURI);
-
-		if (mongo == null)
-			throw new IOException("Could not find MongoDB host: " + mongoURI);
-
-		DB db = mongo.getDB(uri.segment(0));
-
-		if (db == null)
-			throw new IOException("Could not find Mongo database: " + uri.segment(0));
-
-		DBCollection collection = db.getCollection(uri.segment(1));
-
-		if (collection == null)
-			throw new IOException("Could not find collection: " + uri.segment(1));
-
-		return collection;
+		return mongoDB.getMongo(mongoURI).getDB(uri.segment(0)).getCollection(uri.segment(1));
 	}
 
 	public static Object getID(URI uri) throws IOException

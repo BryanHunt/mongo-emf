@@ -470,13 +470,49 @@ public interface ModelPackage extends EPackage
 	int PRIMARY_OBJECT__NAME = 0;
 
 	/**
+	 * The feature id for the '<em><b>Unsettable Attribute</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Unsettable Attribute With Non Null Default</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE_WITH_NON_NULL_DEFAULT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Unsettable Reference</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMARY_OBJECT__UNSETTABLE_REFERENCE = 3;
+
+	/**
+	 * The feature id for the '<em><b>Containment Reference Same Collectioin</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMARY_OBJECT__CONTAINMENT_REFERENCE_SAME_COLLECTIOIN = 4;
+
+	/**
 	 * The feature id for the '<em><b>Single Non Containment Reference</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE = 1;
+	int PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE = 5;
 
 	/**
 	 * The feature id for the '<em><b>Multiple Non Containment Reference</b></em>' reference list.
@@ -485,7 +521,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE = 2;
+	int PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE = 6;
 
 	/**
 	 * The feature id for the '<em><b>Single Containment Reference No Proxies</b></em>' containment reference.
@@ -494,7 +530,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_NO_PROXIES = 3;
+	int PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_NO_PROXIES = 7;
 
 	/**
 	 * The feature id for the '<em><b>Multiple Containment Reference No Proxies</b></em>' containment reference list.
@@ -503,7 +539,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_NO_PROXIES = 4;
+	int PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_NO_PROXIES = 8;
 
 	/**
 	 * The feature id for the '<em><b>Single Containment Reference Proxies</b></em>' containment reference.
@@ -512,7 +548,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES = 5;
+	int PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES = 9;
 
 	/**
 	 * The feature id for the '<em><b>Multiple Containment Reference Proxies</b></em>' containment reference list.
@@ -521,7 +557,16 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES = 6;
+	int PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES = 10;
+
+	/**
+	 * The feature id for the '<em><b>Single Non Containment Reference No Proxies</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE_NO_PROXIES = 11;
 
 	/**
 	 * The feature id for the '<em><b>Feature Map Reference Type2</b></em>' containment reference list.
@@ -530,7 +575,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2 = 7;
+	int PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2 = 12;
 
 	/**
 	 * The feature id for the '<em><b>Feature Map Reference Type1</b></em>' containment reference list.
@@ -539,7 +584,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1 = 8;
+	int PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1 = 13;
 
 	/**
 	 * The feature id for the '<em><b>Feature Map Reference Collection</b></em>' attribute list.
@@ -548,7 +593,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION = 9;
+	int PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION = 14;
 
 	/**
 	 * The feature id for the '<em><b>Feature Map Attribute Type1</b></em>' attribute list.
@@ -557,7 +602,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE1 = 10;
+	int PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE1 = 15;
 
 	/**
 	 * The feature id for the '<em><b>Feature Map Attribute Type2</b></em>' attribute list.
@@ -566,7 +611,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE2 = 11;
+	int PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE2 = 16;
 
 	/**
 	 * The feature id for the '<em><b>Feature Map Attribute Collection</b></em>' attribute list.
@@ -575,7 +620,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_COLLECTION = 12;
+	int PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_COLLECTION = 17;
 
 	/**
 	 * The number of structural features of the '<em>Primary Object</em>' class.
@@ -584,7 +629,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT_FEATURE_COUNT = 13;
+	int PRIMARY_OBJECT_FEATURE_COUNT = 18;
 
 	/**
 	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.TargetObjectImpl <em>Target Object</em>}' class.
@@ -1023,6 +1068,50 @@ public interface ModelPackage extends EPackage
 	EAttribute getPrimaryObject_Name();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getUnsettableAttribute <em>Unsettable Attribute</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Unsettable Attribute</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getUnsettableAttribute()
+	 * @see #getPrimaryObject()
+	 * @generated
+	 */
+	EAttribute getPrimaryObject_UnsettableAttribute();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getUnsettableAttributeWithNonNullDefault <em>Unsettable Attribute With Non Null Default</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Unsettable Attribute With Non Null Default</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getUnsettableAttributeWithNonNullDefault()
+	 * @see #getPrimaryObject()
+	 * @generated
+	 */
+	EAttribute getPrimaryObject_UnsettableAttributeWithNonNullDefault();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getUnsettableReference <em>Unsettable Reference</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Unsettable Reference</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getUnsettableReference()
+	 * @see #getPrimaryObject()
+	 * @generated
+	 */
+	EReference getPrimaryObject_UnsettableReference();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getContainmentReferenceSameCollectioin <em>Containment Reference Same Collectioin</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Containment Reference Same Collectioin</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getContainmentReferenceSameCollectioin()
+	 * @see #getPrimaryObject()
+	 * @generated
+	 */
+	EReference getPrimaryObject_ContainmentReferenceSameCollectioin();
+
+	/**
 	 * Returns the meta object for the reference '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getSingleNonContainmentReference <em>Single Non Containment Reference</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1087,6 +1176,17 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 */
 	EReference getPrimaryObject_MultipleContainmentReferenceProxies();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getSingleNonContainmentReferenceNoProxies <em>Single Non Containment Reference No Proxies</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Single Non Containment Reference No Proxies</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getSingleNonContainmentReferenceNoProxies()
+	 * @see #getPrimaryObject()
+	 * @generated
+	 */
+	EReference getPrimaryObject_SingleNonContainmentReferenceNoProxies();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapReferenceType2 <em>Feature Map Reference Type2</em>}'.
@@ -1545,6 +1645,38 @@ public interface ModelPackage extends EPackage
 		EAttribute PRIMARY_OBJECT__NAME = eINSTANCE.getPrimaryObject_Name();
 
 		/**
+		 * The meta object literal for the '<em><b>Unsettable Attribute</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE = eINSTANCE.getPrimaryObject_UnsettableAttribute();
+
+		/**
+		 * The meta object literal for the '<em><b>Unsettable Attribute With Non Null Default</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE_WITH_NON_NULL_DEFAULT = eINSTANCE.getPrimaryObject_UnsettableAttributeWithNonNullDefault();
+
+		/**
+		 * The meta object literal for the '<em><b>Unsettable Reference</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PRIMARY_OBJECT__UNSETTABLE_REFERENCE = eINSTANCE.getPrimaryObject_UnsettableReference();
+
+		/**
+		 * The meta object literal for the '<em><b>Containment Reference Same Collectioin</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PRIMARY_OBJECT__CONTAINMENT_REFERENCE_SAME_COLLECTIOIN = eINSTANCE.getPrimaryObject_ContainmentReferenceSameCollectioin();
+
+		/**
 		 * The meta object literal for the '<em><b>Single Non Containment Reference</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1591,6 +1723,14 @@ public interface ModelPackage extends EPackage
 		 * @generated
 		 */
 		EReference PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES = eINSTANCE.getPrimaryObject_MultipleContainmentReferenceProxies();
+
+		/**
+		 * The meta object literal for the '<em><b>Single Non Containment Reference No Proxies</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE_NO_PROXIES = eINSTANCE.getPrimaryObject_SingleNonContainmentReferenceNoProxies();
 
 		/**
 		 * The meta object literal for the '<em><b>Feature Map Reference Type2</b></em>' containment reference list feature.

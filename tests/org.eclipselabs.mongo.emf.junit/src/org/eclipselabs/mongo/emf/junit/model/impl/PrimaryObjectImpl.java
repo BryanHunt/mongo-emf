@@ -32,12 +32,17 @@ import org.eclipselabs.mongo.emf.junit.model.TargetObject;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getUnsettableAttribute <em>Unsettable Attribute</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getUnsettableAttributeWithNonNullDefault <em>Unsettable Attribute With Non Null Default</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getUnsettableReference <em>Unsettable Reference</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getContainmentReferenceSameCollectioin <em>Containment Reference Same Collectioin</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getSingleNonContainmentReference <em>Single Non Containment Reference</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getMultipleNonContainmentReference <em>Multiple Non Containment Reference</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getSingleContainmentReferenceNoProxies <em>Single Containment Reference No Proxies</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getMultipleContainmentReferenceNoProxies <em>Multiple Containment Reference No Proxies</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getSingleContainmentReferenceProxies <em>Single Containment Reference Proxies</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getMultipleContainmentReferenceProxies <em>Multiple Containment Reference Proxies</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getSingleNonContainmentReferenceNoProxies <em>Single Non Containment Reference No Proxies</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getFeatureMapReferenceType2 <em>Feature Map Reference Type2</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getFeatureMapReferenceType1 <em>Feature Map Reference Type1</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getFeatureMapReferenceCollection <em>Feature Map Reference Collection</em>}</li>
@@ -70,6 +75,93 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getUnsettableAttribute() <em>Unsettable Attribute</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUnsettableAttribute()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String UNSETTABLE_ATTRIBUTE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getUnsettableAttribute() <em>Unsettable Attribute</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUnsettableAttribute()
+	 * @generated
+	 * @ordered
+	 */
+	protected String unsettableAttribute = UNSETTABLE_ATTRIBUTE_EDEFAULT;
+
+	/**
+	 * This is true if the Unsettable Attribute attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean unsettableAttributeESet;
+
+	/**
+	 * The default value of the '{@link #getUnsettableAttributeWithNonNullDefault() <em>Unsettable Attribute With Non Null Default</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUnsettableAttributeWithNonNullDefault()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String UNSETTABLE_ATTRIBUTE_WITH_NON_NULL_DEFAULT_EDEFAULT = "junit";
+
+	/**
+	 * The cached value of the '{@link #getUnsettableAttributeWithNonNullDefault() <em>Unsettable Attribute With Non Null Default</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUnsettableAttributeWithNonNullDefault()
+	 * @generated
+	 * @ordered
+	 */
+	protected String unsettableAttributeWithNonNullDefault = UNSETTABLE_ATTRIBUTE_WITH_NON_NULL_DEFAULT_EDEFAULT;
+
+	/**
+	 * This is true if the Unsettable Attribute With Non Null Default attribute has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean unsettableAttributeWithNonNullDefaultESet;
+
+	/**
+	 * The cached value of the '{@link #getUnsettableReference() <em>Unsettable Reference</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getUnsettableReference()
+	 * @generated
+	 * @ordered
+	 */
+	protected TargetObject unsettableReference;
+
+	/**
+	 * This is true if the Unsettable Reference reference has been set.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean unsettableReferenceESet;
+
+	/**
+	 * The cached value of the '{@link #getContainmentReferenceSameCollectioin() <em>Containment Reference Same Collectioin</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getContainmentReferenceSameCollectioin()
+	 * @generated
+	 * @ordered
+	 */
+	protected PrimaryObject containmentReferenceSameCollectioin;
 
 	/**
 	 * The cached value of the '{@link #getSingleNonContainmentReference() <em>Single Non Containment Reference</em>}' reference.
@@ -130,6 +222,16 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 	 * @ordered
 	 */
 	protected EList<TargetObject> multipleContainmentReferenceProxies;
+
+	/**
+	 * The cached value of the '{@link #getSingleNonContainmentReferenceNoProxies() <em>Single Non Containment Reference No Proxies</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSingleNonContainmentReferenceNoProxies()
+	 * @generated
+	 * @ordered
+	 */
+	protected TargetObject singleNonContainmentReferenceNoProxies;
 
 	/**
 	 * The cached value of the '{@link #getFeatureMapReferenceCollection() <em>Feature Map Reference Collection</em>}' attribute list.
@@ -193,6 +295,251 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 		name = newName;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.PRIMARY_OBJECT__NAME, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getUnsettableAttribute()
+	{
+		return unsettableAttribute;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setUnsettableAttribute(String newUnsettableAttribute)
+	{
+		String oldUnsettableAttribute = unsettableAttribute;
+		unsettableAttribute = newUnsettableAttribute;
+		boolean oldUnsettableAttributeESet = unsettableAttributeESet;
+		unsettableAttributeESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE, oldUnsettableAttribute, unsettableAttribute, !oldUnsettableAttributeESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetUnsettableAttribute()
+	{
+		String oldUnsettableAttribute = unsettableAttribute;
+		boolean oldUnsettableAttributeESet = unsettableAttributeESet;
+		unsettableAttribute = UNSETTABLE_ATTRIBUTE_EDEFAULT;
+		unsettableAttributeESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ModelPackage.PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE, oldUnsettableAttribute, UNSETTABLE_ATTRIBUTE_EDEFAULT, oldUnsettableAttributeESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetUnsettableAttribute()
+	{
+		return unsettableAttributeESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getUnsettableAttributeWithNonNullDefault()
+	{
+		return unsettableAttributeWithNonNullDefault;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setUnsettableAttributeWithNonNullDefault(String newUnsettableAttributeWithNonNullDefault)
+	{
+		String oldUnsettableAttributeWithNonNullDefault = unsettableAttributeWithNonNullDefault;
+		unsettableAttributeWithNonNullDefault = newUnsettableAttributeWithNonNullDefault;
+		boolean oldUnsettableAttributeWithNonNullDefaultESet = unsettableAttributeWithNonNullDefaultESet;
+		unsettableAttributeWithNonNullDefaultESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE_WITH_NON_NULL_DEFAULT, oldUnsettableAttributeWithNonNullDefault, unsettableAttributeWithNonNullDefault, !oldUnsettableAttributeWithNonNullDefaultESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetUnsettableAttributeWithNonNullDefault()
+	{
+		String oldUnsettableAttributeWithNonNullDefault = unsettableAttributeWithNonNullDefault;
+		boolean oldUnsettableAttributeWithNonNullDefaultESet = unsettableAttributeWithNonNullDefaultESet;
+		unsettableAttributeWithNonNullDefault = UNSETTABLE_ATTRIBUTE_WITH_NON_NULL_DEFAULT_EDEFAULT;
+		unsettableAttributeWithNonNullDefaultESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ModelPackage.PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE_WITH_NON_NULL_DEFAULT, oldUnsettableAttributeWithNonNullDefault, UNSETTABLE_ATTRIBUTE_WITH_NON_NULL_DEFAULT_EDEFAULT, oldUnsettableAttributeWithNonNullDefaultESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetUnsettableAttributeWithNonNullDefault()
+	{
+		return unsettableAttributeWithNonNullDefaultESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TargetObject getUnsettableReference()
+	{
+		if (unsettableReference != null && unsettableReference.eIsProxy())
+		{
+			InternalEObject oldUnsettableReference = (InternalEObject)unsettableReference;
+			unsettableReference = (TargetObject)eResolveProxy(oldUnsettableReference);
+			if (unsettableReference != oldUnsettableReference)
+			{
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.PRIMARY_OBJECT__UNSETTABLE_REFERENCE, oldUnsettableReference, unsettableReference));
+			}
+		}
+		return unsettableReference;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TargetObject basicGetUnsettableReference()
+	{
+		return unsettableReference;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setUnsettableReference(TargetObject newUnsettableReference)
+	{
+		TargetObject oldUnsettableReference = unsettableReference;
+		unsettableReference = newUnsettableReference;
+		boolean oldUnsettableReferenceESet = unsettableReferenceESet;
+		unsettableReferenceESet = true;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.PRIMARY_OBJECT__UNSETTABLE_REFERENCE, oldUnsettableReference, unsettableReference, !oldUnsettableReferenceESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void unsetUnsettableReference()
+	{
+		TargetObject oldUnsettableReference = unsettableReference;
+		boolean oldUnsettableReferenceESet = unsettableReferenceESet;
+		unsettableReference = null;
+		unsettableReferenceESet = false;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.UNSET, ModelPackage.PRIMARY_OBJECT__UNSETTABLE_REFERENCE, oldUnsettableReference, null, oldUnsettableReferenceESet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isSetUnsettableReference()
+	{
+		return unsettableReferenceESet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PrimaryObject getContainmentReferenceSameCollectioin()
+	{
+		if (containmentReferenceSameCollectioin != null && containmentReferenceSameCollectioin.eIsProxy())
+		{
+			InternalEObject oldContainmentReferenceSameCollectioin = (InternalEObject)containmentReferenceSameCollectioin;
+			containmentReferenceSameCollectioin = (PrimaryObject)eResolveProxy(oldContainmentReferenceSameCollectioin);
+			if (containmentReferenceSameCollectioin != oldContainmentReferenceSameCollectioin)
+			{
+				InternalEObject newContainmentReferenceSameCollectioin = (InternalEObject)containmentReferenceSameCollectioin;
+				NotificationChain msgs = oldContainmentReferenceSameCollectioin.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.PRIMARY_OBJECT__CONTAINMENT_REFERENCE_SAME_COLLECTIOIN, null, null);
+				if (newContainmentReferenceSameCollectioin.eInternalContainer() == null)
+				{
+					msgs = newContainmentReferenceSameCollectioin.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ModelPackage.PRIMARY_OBJECT__CONTAINMENT_REFERENCE_SAME_COLLECTIOIN, null, msgs);
+				}
+				if (msgs != null) msgs.dispatch();
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.PRIMARY_OBJECT__CONTAINMENT_REFERENCE_SAME_COLLECTIOIN, oldContainmentReferenceSameCollectioin, containmentReferenceSameCollectioin));
+			}
+		}
+		return containmentReferenceSameCollectioin;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public PrimaryObject basicGetContainmentReferenceSameCollectioin()
+	{
+		return containmentReferenceSameCollectioin;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetContainmentReferenceSameCollectioin(PrimaryObject newContainmentReferenceSameCollectioin, NotificationChain msgs)
+	{
+		PrimaryObject oldContainmentReferenceSameCollectioin = containmentReferenceSameCollectioin;
+		containmentReferenceSameCollectioin = newContainmentReferenceSameCollectioin;
+		if (eNotificationRequired())
+		{
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ModelPackage.PRIMARY_OBJECT__CONTAINMENT_REFERENCE_SAME_COLLECTIOIN, oldContainmentReferenceSameCollectioin, newContainmentReferenceSameCollectioin);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setContainmentReferenceSameCollectioin(PrimaryObject newContainmentReferenceSameCollectioin)
+	{
+		if (newContainmentReferenceSameCollectioin != containmentReferenceSameCollectioin)
+		{
+			NotificationChain msgs = null;
+			if (containmentReferenceSameCollectioin != null)
+				msgs = ((InternalEObject)containmentReferenceSameCollectioin).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.PRIMARY_OBJECT__CONTAINMENT_REFERENCE_SAME_COLLECTIOIN, null, msgs);
+			if (newContainmentReferenceSameCollectioin != null)
+				msgs = ((InternalEObject)newContainmentReferenceSameCollectioin).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ModelPackage.PRIMARY_OBJECT__CONTAINMENT_REFERENCE_SAME_COLLECTIOIN, null, msgs);
+			msgs = basicSetContainmentReferenceSameCollectioin(newContainmentReferenceSameCollectioin, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.PRIMARY_OBJECT__CONTAINMENT_REFERENCE_SAME_COLLECTIOIN, newContainmentReferenceSameCollectioin, newContainmentReferenceSameCollectioin));
 	}
 
 	/**
@@ -408,6 +755,29 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public TargetObject getSingleNonContainmentReferenceNoProxies()
+	{
+		return singleNonContainmentReferenceNoProxies;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setSingleNonContainmentReferenceNoProxies(TargetObject newSingleNonContainmentReferenceNoProxies)
+	{
+		TargetObject oldSingleNonContainmentReferenceNoProxies = singleNonContainmentReferenceNoProxies;
+		singleNonContainmentReferenceNoProxies = newSingleNonContainmentReferenceNoProxies;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE_NO_PROXIES, oldSingleNonContainmentReferenceNoProxies, singleNonContainmentReferenceNoProxies));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EList<TargetObject> getFeatureMapReferenceType2()
 	{
 		return getFeatureMapReferenceCollection().list(ModelPackage.Literals.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2);
@@ -481,6 +851,8 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 	{
 		switch (featureID)
 		{
+			case ModelPackage.PRIMARY_OBJECT__CONTAINMENT_REFERENCE_SAME_COLLECTIOIN:
+				return basicSetContainmentReferenceSameCollectioin(null, msgs);
 			case ModelPackage.PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_NO_PROXIES:
 				return basicSetSingleContainmentReferenceNoProxies(null, msgs);
 			case ModelPackage.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_NO_PROXIES:
@@ -513,6 +885,16 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 		{
 			case ModelPackage.PRIMARY_OBJECT__NAME:
 				return getName();
+			case ModelPackage.PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE:
+				return getUnsettableAttribute();
+			case ModelPackage.PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE_WITH_NON_NULL_DEFAULT:
+				return getUnsettableAttributeWithNonNullDefault();
+			case ModelPackage.PRIMARY_OBJECT__UNSETTABLE_REFERENCE:
+				if (resolve) return getUnsettableReference();
+				return basicGetUnsettableReference();
+			case ModelPackage.PRIMARY_OBJECT__CONTAINMENT_REFERENCE_SAME_COLLECTIOIN:
+				if (resolve) return getContainmentReferenceSameCollectioin();
+				return basicGetContainmentReferenceSameCollectioin();
 			case ModelPackage.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE:
 				if (resolve) return getSingleNonContainmentReference();
 				return basicGetSingleNonContainmentReference();
@@ -527,6 +909,8 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 				return basicGetSingleContainmentReferenceProxies();
 			case ModelPackage.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES:
 				return getMultipleContainmentReferenceProxies();
+			case ModelPackage.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE_NO_PROXIES:
+				return getSingleNonContainmentReferenceNoProxies();
 			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2:
 				return getFeatureMapReferenceType2();
 			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1:
@@ -559,6 +943,18 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 			case ModelPackage.PRIMARY_OBJECT__NAME:
 				setName((String)newValue);
 				return;
+			case ModelPackage.PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE:
+				setUnsettableAttribute((String)newValue);
+				return;
+			case ModelPackage.PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE_WITH_NON_NULL_DEFAULT:
+				setUnsettableAttributeWithNonNullDefault((String)newValue);
+				return;
+			case ModelPackage.PRIMARY_OBJECT__UNSETTABLE_REFERENCE:
+				setUnsettableReference((TargetObject)newValue);
+				return;
+			case ModelPackage.PRIMARY_OBJECT__CONTAINMENT_REFERENCE_SAME_COLLECTIOIN:
+				setContainmentReferenceSameCollectioin((PrimaryObject)newValue);
+				return;
 			case ModelPackage.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE:
 				setSingleNonContainmentReference((TargetObject)newValue);
 				return;
@@ -579,6 +975,9 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 			case ModelPackage.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES:
 				getMultipleContainmentReferenceProxies().clear();
 				getMultipleContainmentReferenceProxies().addAll((Collection<? extends TargetObject>)newValue);
+				return;
+			case ModelPackage.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE_NO_PROXIES:
+				setSingleNonContainmentReferenceNoProxies((TargetObject)newValue);
 				return;
 			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2:
 				getFeatureMapReferenceType2().clear();
@@ -619,6 +1018,18 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 			case ModelPackage.PRIMARY_OBJECT__NAME:
 				setName(NAME_EDEFAULT);
 				return;
+			case ModelPackage.PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE:
+				unsetUnsettableAttribute();
+				return;
+			case ModelPackage.PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE_WITH_NON_NULL_DEFAULT:
+				unsetUnsettableAttributeWithNonNullDefault();
+				return;
+			case ModelPackage.PRIMARY_OBJECT__UNSETTABLE_REFERENCE:
+				unsetUnsettableReference();
+				return;
+			case ModelPackage.PRIMARY_OBJECT__CONTAINMENT_REFERENCE_SAME_COLLECTIOIN:
+				setContainmentReferenceSameCollectioin((PrimaryObject)null);
+				return;
 			case ModelPackage.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE:
 				setSingleNonContainmentReference((TargetObject)null);
 				return;
@@ -636,6 +1047,9 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 				return;
 			case ModelPackage.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES:
 				getMultipleContainmentReferenceProxies().clear();
+				return;
+			case ModelPackage.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE_NO_PROXIES:
+				setSingleNonContainmentReferenceNoProxies((TargetObject)null);
 				return;
 			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2:
 				getFeatureMapReferenceType2().clear();
@@ -671,6 +1085,14 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 		{
 			case ModelPackage.PRIMARY_OBJECT__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case ModelPackage.PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE:
+				return isSetUnsettableAttribute();
+			case ModelPackage.PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE_WITH_NON_NULL_DEFAULT:
+				return isSetUnsettableAttributeWithNonNullDefault();
+			case ModelPackage.PRIMARY_OBJECT__UNSETTABLE_REFERENCE:
+				return isSetUnsettableReference();
+			case ModelPackage.PRIMARY_OBJECT__CONTAINMENT_REFERENCE_SAME_COLLECTIOIN:
+				return containmentReferenceSameCollectioin != null;
 			case ModelPackage.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE:
 				return singleNonContainmentReference != null;
 			case ModelPackage.PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE:
@@ -683,6 +1105,8 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 				return singleContainmentReferenceProxies != null;
 			case ModelPackage.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES:
 				return multipleContainmentReferenceProxies != null && !multipleContainmentReferenceProxies.isEmpty();
+			case ModelPackage.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE_NO_PROXIES:
+				return singleNonContainmentReferenceNoProxies != null;
 			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2:
 				return !getFeatureMapReferenceType2().isEmpty();
 			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1:
@@ -712,6 +1136,10 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
+		result.append(", unsettableAttribute: ");
+		if (unsettableAttributeESet) result.append(unsettableAttribute); else result.append("<unset>");
+		result.append(", unsettableAttributeWithNonNullDefault: ");
+		if (unsettableAttributeWithNonNullDefaultESet) result.append(unsettableAttributeWithNonNullDefault); else result.append("<unset>");
 		result.append(", featureMapReferenceCollection: ");
 		result.append(featureMapReferenceCollection);
 		result.append(", featureMapAttributeCollection: ");
