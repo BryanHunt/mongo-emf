@@ -3,21 +3,27 @@
     xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipselabs.mongo.emf.perf/src"
     modelPluginID="org.eclipselabs.mongo.emf.perf" modelName="Model" suppressInterfaces="true"
-    importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false">
+    importerID="org.eclipse.emf.importer.ecore" containmentProxies="true" complianceLevel="6.0"
+    copyrightFields="false">
   <foreignModel>model.ecore</foreignModel>
   <genPackages prefix="Model" basePackage="org.eclipselabs.mongo.emf.perf" disposableProviderFactory="true"
       ecorePackage="model.ecore#/">
+    <genClasses ecoreClass="model.ecore#//BaseObject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//BaseObject/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//BaseObject/description"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//BaseObject/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//BaseObject/tag"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//BaseObject/created"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//BaseObject/lastModified"/>
+    </genClasses>
     <genClasses ecoreClass="model.ecore#//TestObject1">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//TestObject1/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//TestObject1/description"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//TestObject1/category"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//TestObject1/tag"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//TestObject1/created"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//TestObject1/lastModified"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//TestObject1/firstAvailable"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//TestObject1/lastAvailable"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//TestObject1/count"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model.ecore#//TestObject1/data"/>
+    </genClasses>
+    <genClasses ecoreClass="model.ecore#//ObjectGroup">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model.ecore#//ObjectGroup/children"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

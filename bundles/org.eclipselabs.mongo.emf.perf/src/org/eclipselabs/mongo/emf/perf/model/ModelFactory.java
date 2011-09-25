@@ -9,9 +9,7 @@ package org.eclipselabs.mongo.emf.perf.model;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
-
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
@@ -76,10 +74,23 @@ public class ModelFactory extends EFactoryImpl
 	{
 		switch (eClass.getClassifierID())
 		{
+			case ModelPackage.BASE_OBJECT: return createBaseObject();
 			case ModelPackage.TEST_OBJECT1: return createTestObject1();
+			case ModelPackage.OBJECT_GROUP: return createObjectGroup();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public BaseObject createBaseObject()
+	{
+		BaseObject baseObject = new BaseObject();
+		return baseObject;
 	}
 
 	/**
@@ -91,6 +102,17 @@ public class ModelFactory extends EFactoryImpl
 	{
 		TestObject1 testObject1 = new TestObject1();
 		return testObject1;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ObjectGroup createObjectGroup()
+	{
+		ObjectGroup objectGroup = new ObjectGroup();
+		return objectGroup;
 	}
 
 	/**

@@ -9,7 +9,7 @@ package org.eclipselabs.mongo.emf.perf.model;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
-
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -62,14 +62,14 @@ public class ModelPackage extends EPackageImpl
 	public static final ModelPackage eINSTANCE = org.eclipselabs.mongo.emf.perf.model.ModelPackage.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.perf.model.TestObject1 <em>Test Object1</em>}' class.
+	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.perf.model.BaseObject <em>Base Object</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipselabs.mongo.emf.perf.model.TestObject1
-	 * @see org.eclipselabs.mongo.emf.perf.model.ModelPackage#getTestObject1()
+	 * @see org.eclipselabs.mongo.emf.perf.model.BaseObject
+	 * @see org.eclipselabs.mongo.emf.perf.model.ModelPackage#getBaseObject()
 	 * @generated
 	 */
-	public static final int TEST_OBJECT1 = 0;
+	public static final int BASE_OBJECT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -78,7 +78,7 @@ public class ModelPackage extends EPackageImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int TEST_OBJECT1__NAME = 0;
+	public static final int BASE_OBJECT__NAME = 0;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -87,7 +87,7 @@ public class ModelPackage extends EPackageImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int TEST_OBJECT1__DESCRIPTION = 1;
+	public static final int BASE_OBJECT__DESCRIPTION = 1;
 
 	/**
 	 * The feature id for the '<em><b>Category</b></em>' attribute.
@@ -96,7 +96,7 @@ public class ModelPackage extends EPackageImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int TEST_OBJECT1__CATEGORY = 2;
+	public static final int BASE_OBJECT__CATEGORY = 2;
 
 	/**
 	 * The feature id for the '<em><b>Tag</b></em>' attribute.
@@ -105,7 +105,7 @@ public class ModelPackage extends EPackageImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int TEST_OBJECT1__TAG = 3;
+	public static final int BASE_OBJECT__TAG = 3;
 
 	/**
 	 * The feature id for the '<em><b>Created</b></em>' attribute.
@@ -114,7 +114,7 @@ public class ModelPackage extends EPackageImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int TEST_OBJECT1__CREATED = 4;
+	public static final int BASE_OBJECT__CREATED = 4;
 
 	/**
 	 * The feature id for the '<em><b>Last Modified</b></em>' attribute.
@@ -123,7 +123,80 @@ public class ModelPackage extends EPackageImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int TEST_OBJECT1__LAST_MODIFIED = 5;
+	public static final int BASE_OBJECT__LAST_MODIFIED = 5;
+
+	/**
+	 * The number of structural features of the '<em>Base Object</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int BASE_OBJECT_FEATURE_COUNT = 6;
+
+	/**
+	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.perf.model.TestObject1 <em>Test Object1</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipselabs.mongo.emf.perf.model.TestObject1
+	 * @see org.eclipselabs.mongo.emf.perf.model.ModelPackage#getTestObject1()
+	 * @generated
+	 */
+	public static final int TEST_OBJECT1 = 1;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TEST_OBJECT1__NAME = BASE_OBJECT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TEST_OBJECT1__DESCRIPTION = BASE_OBJECT__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Category</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TEST_OBJECT1__CATEGORY = BASE_OBJECT__CATEGORY;
+
+	/**
+	 * The feature id for the '<em><b>Tag</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TEST_OBJECT1__TAG = BASE_OBJECT__TAG;
+
+	/**
+	 * The feature id for the '<em><b>Created</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TEST_OBJECT1__CREATED = BASE_OBJECT__CREATED;
+
+	/**
+	 * The feature id for the '<em><b>Last Modified</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int TEST_OBJECT1__LAST_MODIFIED = BASE_OBJECT__LAST_MODIFIED;
 
 	/**
 	 * The feature id for the '<em><b>First Available</b></em>' attribute.
@@ -132,7 +205,7 @@ public class ModelPackage extends EPackageImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int TEST_OBJECT1__FIRST_AVAILABLE = 6;
+	public static final int TEST_OBJECT1__FIRST_AVAILABLE = BASE_OBJECT_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Last Available</b></em>' attribute.
@@ -141,7 +214,7 @@ public class ModelPackage extends EPackageImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int TEST_OBJECT1__LAST_AVAILABLE = 7;
+	public static final int TEST_OBJECT1__LAST_AVAILABLE = BASE_OBJECT_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Count</b></em>' attribute.
@@ -150,7 +223,7 @@ public class ModelPackage extends EPackageImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int TEST_OBJECT1__COUNT = 8;
+	public static final int TEST_OBJECT1__COUNT = BASE_OBJECT_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Data</b></em>' attribute.
@@ -159,7 +232,7 @@ public class ModelPackage extends EPackageImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int TEST_OBJECT1__DATA = 9;
+	public static final int TEST_OBJECT1__DATA = BASE_OBJECT_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of structural features of the '<em>Test Object1</em>' class.
@@ -168,7 +241,96 @@ public class ModelPackage extends EPackageImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int TEST_OBJECT1_FEATURE_COUNT = 10;
+	public static final int TEST_OBJECT1_FEATURE_COUNT = BASE_OBJECT_FEATURE_COUNT + 4;
+
+	/**
+	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.perf.model.ObjectGroup <em>Object Group</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.eclipselabs.mongo.emf.perf.model.ObjectGroup
+	 * @see org.eclipselabs.mongo.emf.perf.model.ModelPackage#getObjectGroup()
+	 * @generated
+	 */
+	public static final int OBJECT_GROUP = 2;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OBJECT_GROUP__NAME = BASE_OBJECT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Description</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OBJECT_GROUP__DESCRIPTION = BASE_OBJECT__DESCRIPTION;
+
+	/**
+	 * The feature id for the '<em><b>Category</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OBJECT_GROUP__CATEGORY = BASE_OBJECT__CATEGORY;
+
+	/**
+	 * The feature id for the '<em><b>Tag</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OBJECT_GROUP__TAG = BASE_OBJECT__TAG;
+
+	/**
+	 * The feature id for the '<em><b>Created</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OBJECT_GROUP__CREATED = BASE_OBJECT__CREATED;
+
+	/**
+	 * The feature id for the '<em><b>Last Modified</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OBJECT_GROUP__LAST_MODIFIED = BASE_OBJECT__LAST_MODIFIED;
+
+	/**
+	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OBJECT_GROUP__CHILDREN = BASE_OBJECT_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Object Group</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int OBJECT_GROUP_FEATURE_COUNT = BASE_OBJECT_FEATURE_COUNT + 1;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass baseObjectEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -176,6 +338,13 @@ public class ModelPackage extends EPackageImpl
 	 * @generated
 	 */
 	private EClass testObject1EClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass objectGroupEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -242,6 +411,110 @@ public class ModelPackage extends EPackageImpl
 
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.perf.model.BaseObject <em>Base Object</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Base Object</em>'.
+	 * @see org.eclipselabs.mongo.emf.perf.model.BaseObject
+	 * @generated
+	 */
+	public EClass getBaseObject()
+	{
+		return baseObjectEClass;
+	}
+
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.perf.model.BaseObject#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipselabs.mongo.emf.perf.model.BaseObject#getName()
+	 * @see #getBaseObject()
+	 * @generated
+	 */
+	public EAttribute getBaseObject_Name()
+	{
+		return (EAttribute)baseObjectEClass.getEStructuralFeatures().get(0);
+	}
+
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.perf.model.BaseObject#getDescription <em>Description</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Description</em>'.
+	 * @see org.eclipselabs.mongo.emf.perf.model.BaseObject#getDescription()
+	 * @see #getBaseObject()
+	 * @generated
+	 */
+	public EAttribute getBaseObject_Description()
+	{
+		return (EAttribute)baseObjectEClass.getEStructuralFeatures().get(1);
+	}
+
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.perf.model.BaseObject#getCategory <em>Category</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Category</em>'.
+	 * @see org.eclipselabs.mongo.emf.perf.model.BaseObject#getCategory()
+	 * @see #getBaseObject()
+	 * @generated
+	 */
+	public EAttribute getBaseObject_Category()
+	{
+		return (EAttribute)baseObjectEClass.getEStructuralFeatures().get(2);
+	}
+
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.perf.model.BaseObject#getTag <em>Tag</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Tag</em>'.
+	 * @see org.eclipselabs.mongo.emf.perf.model.BaseObject#getTag()
+	 * @see #getBaseObject()
+	 * @generated
+	 */
+	public EAttribute getBaseObject_Tag()
+	{
+		return (EAttribute)baseObjectEClass.getEStructuralFeatures().get(3);
+	}
+
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.perf.model.BaseObject#getCreated <em>Created</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Created</em>'.
+	 * @see org.eclipselabs.mongo.emf.perf.model.BaseObject#getCreated()
+	 * @see #getBaseObject()
+	 * @generated
+	 */
+	public EAttribute getBaseObject_Created()
+	{
+		return (EAttribute)baseObjectEClass.getEStructuralFeatures().get(4);
+	}
+
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.perf.model.BaseObject#getLastModified <em>Last Modified</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Last Modified</em>'.
+	 * @see org.eclipselabs.mongo.emf.perf.model.BaseObject#getLastModified()
+	 * @see #getBaseObject()
+	 * @generated
+	 */
+	public EAttribute getBaseObject_LastModified()
+	{
+		return (EAttribute)baseObjectEClass.getEStructuralFeatures().get(5);
+	}
+
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.perf.model.TestObject1 <em>Test Object1</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -255,90 +528,6 @@ public class ModelPackage extends EPackageImpl
 	}
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.perf.model.TestObject1#getName <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.eclipselabs.mongo.emf.perf.model.TestObject1#getName()
-	 * @see #getTestObject1()
-	 * @generated
-	 */
-	public EAttribute getTestObject1_Name()
-	{
-		return (EAttribute)testObject1EClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.perf.model.TestObject1#getDescription <em>Description</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Description</em>'.
-	 * @see org.eclipselabs.mongo.emf.perf.model.TestObject1#getDescription()
-	 * @see #getTestObject1()
-	 * @generated
-	 */
-	public EAttribute getTestObject1_Description()
-	{
-		return (EAttribute)testObject1EClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.perf.model.TestObject1#getCategory <em>Category</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Category</em>'.
-	 * @see org.eclipselabs.mongo.emf.perf.model.TestObject1#getCategory()
-	 * @see #getTestObject1()
-	 * @generated
-	 */
-	public EAttribute getTestObject1_Category()
-	{
-		return (EAttribute)testObject1EClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.perf.model.TestObject1#getTag <em>Tag</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Tag</em>'.
-	 * @see org.eclipselabs.mongo.emf.perf.model.TestObject1#getTag()
-	 * @see #getTestObject1()
-	 * @generated
-	 */
-	public EAttribute getTestObject1_Tag()
-	{
-		return (EAttribute)testObject1EClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.perf.model.TestObject1#getCreated <em>Created</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Created</em>'.
-	 * @see org.eclipselabs.mongo.emf.perf.model.TestObject1#getCreated()
-	 * @see #getTestObject1()
-	 * @generated
-	 */
-	public EAttribute getTestObject1_Created()
-	{
-		return (EAttribute)testObject1EClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.perf.model.TestObject1#getLastModified <em>Last Modified</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Last Modified</em>'.
-	 * @see org.eclipselabs.mongo.emf.perf.model.TestObject1#getLastModified()
-	 * @see #getTestObject1()
-	 * @generated
-	 */
-	public EAttribute getTestObject1_LastModified()
-	{
-		return (EAttribute)testObject1EClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
 	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.perf.model.TestObject1#getFirstAvailable <em>First Available</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -349,7 +538,7 @@ public class ModelPackage extends EPackageImpl
 	 */
 	public EAttribute getTestObject1_FirstAvailable()
 	{
-		return (EAttribute)testObject1EClass.getEStructuralFeatures().get(6);
+		return (EAttribute)testObject1EClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -363,7 +552,7 @@ public class ModelPackage extends EPackageImpl
 	 */
 	public EAttribute getTestObject1_LastAvailable()
 	{
-		return (EAttribute)testObject1EClass.getEStructuralFeatures().get(7);
+		return (EAttribute)testObject1EClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -377,7 +566,7 @@ public class ModelPackage extends EPackageImpl
 	 */
 	public EAttribute getTestObject1_Count()
 	{
-		return (EAttribute)testObject1EClass.getEStructuralFeatures().get(8);
+		return (EAttribute)testObject1EClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -391,8 +580,37 @@ public class ModelPackage extends EPackageImpl
 	 */
 	public EAttribute getTestObject1_Data()
 	{
-		return (EAttribute)testObject1EClass.getEStructuralFeatures().get(9);
+		return (EAttribute)testObject1EClass.getEStructuralFeatures().get(3);
 	}
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.perf.model.ObjectGroup <em>Object Group</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Object Group</em>'.
+	 * @see org.eclipselabs.mongo.emf.perf.model.ObjectGroup
+	 * @generated
+	 */
+	public EClass getObjectGroup()
+	{
+		return objectGroupEClass;
+	}
+
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.perf.model.ObjectGroup#getChildren <em>Children</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Children</em>'.
+	 * @see org.eclipselabs.mongo.emf.perf.model.ObjectGroup#getChildren()
+	 * @see #getObjectGroup()
+	 * @generated
+	 */
+	public EReference getObjectGroup_Children()
+	{
+		return (EReference)objectGroupEClass.getEStructuralFeatures().get(0);
+	}
+
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -426,17 +644,22 @@ public class ModelPackage extends EPackageImpl
 		isCreated = true;
 
 		// Create classes and their features
+		baseObjectEClass = createEClass(BASE_OBJECT);
+		createEAttribute(baseObjectEClass, BASE_OBJECT__NAME);
+		createEAttribute(baseObjectEClass, BASE_OBJECT__DESCRIPTION);
+		createEAttribute(baseObjectEClass, BASE_OBJECT__CATEGORY);
+		createEAttribute(baseObjectEClass, BASE_OBJECT__TAG);
+		createEAttribute(baseObjectEClass, BASE_OBJECT__CREATED);
+		createEAttribute(baseObjectEClass, BASE_OBJECT__LAST_MODIFIED);
+
 		testObject1EClass = createEClass(TEST_OBJECT1);
-		createEAttribute(testObject1EClass, TEST_OBJECT1__NAME);
-		createEAttribute(testObject1EClass, TEST_OBJECT1__DESCRIPTION);
-		createEAttribute(testObject1EClass, TEST_OBJECT1__CATEGORY);
-		createEAttribute(testObject1EClass, TEST_OBJECT1__TAG);
-		createEAttribute(testObject1EClass, TEST_OBJECT1__CREATED);
-		createEAttribute(testObject1EClass, TEST_OBJECT1__LAST_MODIFIED);
 		createEAttribute(testObject1EClass, TEST_OBJECT1__FIRST_AVAILABLE);
 		createEAttribute(testObject1EClass, TEST_OBJECT1__LAST_AVAILABLE);
 		createEAttribute(testObject1EClass, TEST_OBJECT1__COUNT);
 		createEAttribute(testObject1EClass, TEST_OBJECT1__DATA);
+
+		objectGroupEClass = createEClass(OBJECT_GROUP);
+		createEReference(objectGroupEClass, OBJECT_GROUP__CHILDREN);
 	}
 
 	/**
@@ -468,19 +691,26 @@ public class ModelPackage extends EPackageImpl
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
+		testObject1EClass.getESuperTypes().add(this.getBaseObject());
+		objectGroupEClass.getESuperTypes().add(this.getBaseObject());
 
 		// Initialize classes and features; add operations and parameters
+		initEClass(baseObjectEClass, BaseObject.class, "BaseObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getBaseObject_Name(), ecorePackage.getEString(), "name", null, 0, 1, BaseObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBaseObject_Description(), ecorePackage.getEString(), "description", null, 0, 1, BaseObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBaseObject_Category(), ecorePackage.getEString(), "category", null, 0, 1, BaseObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBaseObject_Tag(), ecorePackage.getEString(), "tag", null, 0, 1, BaseObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBaseObject_Created(), ecorePackage.getEDate(), "created", null, 0, 1, BaseObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBaseObject_LastModified(), ecorePackage.getEDate(), "lastModified", null, 0, 1, BaseObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(testObject1EClass, TestObject1.class, "TestObject1", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getTestObject1_Name(), ecorePackage.getEString(), "name", null, 0, 1, TestObject1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTestObject1_Description(), ecorePackage.getEString(), "description", null, 0, 1, TestObject1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTestObject1_Category(), ecorePackage.getEString(), "category", null, 0, 1, TestObject1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTestObject1_Tag(), ecorePackage.getEString(), "tag", null, 0, 1, TestObject1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTestObject1_Created(), ecorePackage.getEDate(), "created", null, 0, 1, TestObject1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTestObject1_LastModified(), ecorePackage.getEDate(), "lastModified", null, 0, 1, TestObject1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTestObject1_FirstAvailable(), ecorePackage.getEDate(), "firstAvailable", null, 0, 1, TestObject1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTestObject1_LastAvailable(), ecorePackage.getEDate(), "lastAvailable", null, 0, 1, TestObject1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTestObject1_Count(), ecorePackage.getEInt(), "count", null, 0, 1, TestObject1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTestObject1_Data(), ecorePackage.getEString(), "data", null, 0, 1, TestObject1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(objectGroupEClass, ObjectGroup.class, "ObjectGroup", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getObjectGroup_Children(), this.getBaseObject(), null, "children", null, 0, -1, ObjectGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -501,6 +731,64 @@ public class ModelPackage extends EPackageImpl
 	public interface Literals
 	{
 		/**
+		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.perf.model.BaseObject <em>Base Object</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipselabs.mongo.emf.perf.model.BaseObject
+		 * @see org.eclipselabs.mongo.emf.perf.model.ModelPackage#getBaseObject()
+		 * @generated
+		 */
+		public static final EClass BASE_OBJECT = eINSTANCE.getBaseObject();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EAttribute BASE_OBJECT__NAME = eINSTANCE.getBaseObject_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EAttribute BASE_OBJECT__DESCRIPTION = eINSTANCE.getBaseObject_Description();
+
+		/**
+		 * The meta object literal for the '<em><b>Category</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EAttribute BASE_OBJECT__CATEGORY = eINSTANCE.getBaseObject_Category();
+
+		/**
+		 * The meta object literal for the '<em><b>Tag</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EAttribute BASE_OBJECT__TAG = eINSTANCE.getBaseObject_Tag();
+
+		/**
+		 * The meta object literal for the '<em><b>Created</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EAttribute BASE_OBJECT__CREATED = eINSTANCE.getBaseObject_Created();
+
+		/**
+		 * The meta object literal for the '<em><b>Last Modified</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EAttribute BASE_OBJECT__LAST_MODIFIED = eINSTANCE.getBaseObject_LastModified();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.perf.model.TestObject1 <em>Test Object1</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -509,54 +797,6 @@ public class ModelPackage extends EPackageImpl
 		 * @generated
 		 */
 		public static final EClass TEST_OBJECT1 = eINSTANCE.getTestObject1();
-
-		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public static final EAttribute TEST_OBJECT1__NAME = eINSTANCE.getTestObject1_Name();
-
-		/**
-		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public static final EAttribute TEST_OBJECT1__DESCRIPTION = eINSTANCE.getTestObject1_Description();
-
-		/**
-		 * The meta object literal for the '<em><b>Category</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public static final EAttribute TEST_OBJECT1__CATEGORY = eINSTANCE.getTestObject1_Category();
-
-		/**
-		 * The meta object literal for the '<em><b>Tag</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public static final EAttribute TEST_OBJECT1__TAG = eINSTANCE.getTestObject1_Tag();
-
-		/**
-		 * The meta object literal for the '<em><b>Created</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public static final EAttribute TEST_OBJECT1__CREATED = eINSTANCE.getTestObject1_Created();
-
-		/**
-		 * The meta object literal for the '<em><b>Last Modified</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public static final EAttribute TEST_OBJECT1__LAST_MODIFIED = eINSTANCE.getTestObject1_LastModified();
 
 		/**
 		 * The meta object literal for the '<em><b>First Available</b></em>' attribute feature.
@@ -589,6 +829,24 @@ public class ModelPackage extends EPackageImpl
 		 * @generated
 		 */
 		public static final EAttribute TEST_OBJECT1__DATA = eINSTANCE.getTestObject1_Data();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.perf.model.ObjectGroup <em>Object Group</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipselabs.mongo.emf.perf.model.ObjectGroup
+		 * @see org.eclipselabs.mongo.emf.perf.model.ModelPackage#getObjectGroup()
+		 * @generated
+		 */
+		public static final EClass OBJECT_GROUP = eINSTANCE.getObjectGroup();
+
+		/**
+		 * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EReference OBJECT_GROUP__CHILDREN = eINSTANCE.getObjectGroup_Children();
 
 	}
 

@@ -8,12 +8,12 @@ package org.eclipselabs.mongo.emf.perf.model.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
-
-import org.eclipselabs.mongo.emf.perf.model.*;
+import org.eclipselabs.mongo.emf.perf.model.BaseObject;
+import org.eclipselabs.mongo.emf.perf.model.ModelPackage;
+import org.eclipselabs.mongo.emf.perf.model.ObjectGroup;
+import org.eclipselabs.mongo.emf.perf.model.TestObject1;
 
 /**
  * <!-- begin-user-doc -->
@@ -79,9 +79,19 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 		new ModelSwitch<Adapter>()
 		{
 			@Override
+			public Adapter caseBaseObject(BaseObject object)
+			{
+				return createBaseObjectAdapter();
+			}
+			@Override
 			public Adapter caseTestObject1(TestObject1 object)
 			{
 				return createTestObject1Adapter();
+			}
+			@Override
+			public Adapter caseObjectGroup(ObjectGroup object)
+			{
+				return createObjectGroupAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object)
@@ -106,6 +116,21 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipselabs.mongo.emf.perf.model.BaseObject <em>Base Object</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipselabs.mongo.emf.perf.model.BaseObject
+	 * @generated
+	 */
+	public Adapter createBaseObjectAdapter()
+	{
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipselabs.mongo.emf.perf.model.TestObject1 <em>Test Object1</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -116,6 +141,21 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 	 * @generated
 	 */
 	public Adapter createTestObject1Adapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipselabs.mongo.emf.perf.model.ObjectGroup <em>Object Group</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipselabs.mongo.emf.perf.model.ObjectGroup
+	 * @generated
+	 */
+	public Adapter createObjectGroupAdapter()
 	{
 		return null;
 	}

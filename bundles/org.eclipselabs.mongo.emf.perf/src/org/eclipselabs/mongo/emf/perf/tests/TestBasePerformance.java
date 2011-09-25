@@ -34,7 +34,7 @@ import com.yourkit.api.ProfilingModes;
  * @author bhunt
  * 
  */
-public class TestPerformance
+public class TestBasePerformance
 {
 	@Rule
 	public static MongoDatabase db = new MongoDatabase(Activator.getBundleContext(), "junit");
@@ -51,12 +51,11 @@ public class TestPerformance
 		filters.append("com.sun.*\n");
 		filters.append("junit.*\n");
 		filters.append("com.yourkit.*\n");
-
 	}
 
 	@SuppressWarnings("unused")
 	@Test
-	public void test1() throws Exception
+	public void testCollectionOfObjects() throws Exception
 	{
 		ResourceSet resourceSet = MongoUtil.createResourceSet();
 		URI uri = URI.createURI("mongo://localhost/junit/objects/");
@@ -74,7 +73,7 @@ public class TestPerformance
 		System.out.println("Stopping profile");
 		controller.stopCPUProfiling();
 		System.out.println("Capturing snapshot");
-		System.out.println("Store snapshot: " + controller.captureSnapshot(ProfilingModes.SNAPSHOT_WITHOUT_HEAP));
+		System.out.println("Collection store snapshot: " + controller.captureSnapshot(ProfilingModes.SNAPSHOT_WITHOUT_HEAP));
 
 		resourceSet = MongoUtil.createResourceSet();
 
@@ -91,16 +90,17 @@ public class TestPerformance
 		System.out.println("Stopping profile");
 		controller.stopCPUProfiling();
 		System.out.println("Capturing snapshot");
-		System.out.println("Load snapshot: " + controller.captureSnapshot(ProfilingModes.SNAPSHOT_WITHOUT_HEAP));
+		System.out.println("Collection load snapshot: " + controller.captureSnapshot(ProfilingModes.SNAPSHOT_WITHOUT_HEAP));
 	}
 
 	/**
-	 * @param i
-	 * @return
+	 * @param i unique object index
+	 * @return test object filled with dummy data
 	 */
 	private TestObject1 createTestObject1(int i)
 	{
 		TestObject1 object = ModelFactory.eINSTANCE.createTestObject1();
+
 		object.setName("Test Object " + i);
 		object.setDescription("MongoDB test object " + i);
 		object.setCategory("Test Object");
@@ -111,6 +111,7 @@ public class TestPerformance
 		object.setLastAvailable(new Date());
 		object.setLastModified(new Date());
 		object.setData(object.toString());
+
 		return object;
 	}
 

@@ -8,10 +8,11 @@ package org.eclipselabs.mongo.emf.perf.model.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
-
-import org.eclipselabs.mongo.emf.perf.model.*;
+import org.eclipselabs.mongo.emf.perf.model.BaseObject;
+import org.eclipselabs.mongo.emf.perf.model.ModelPackage;
+import org.eclipselabs.mongo.emf.perf.model.ObjectGroup;
+import org.eclipselabs.mongo.emf.perf.model.TestObject1;
 
 /**
  * <!-- begin-user-doc -->
@@ -76,15 +77,47 @@ public class ModelSwitch<T> extends Switch<T>
 	{
 		switch (classifierID)
 		{
+			case ModelPackage.BASE_OBJECT:
+			{
+				BaseObject baseObject = (BaseObject)theEObject;
+				T result = caseBaseObject(baseObject);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ModelPackage.TEST_OBJECT1:
 			{
 				TestObject1 testObject1 = (TestObject1)theEObject;
 				T result = caseTestObject1(testObject1);
+				if (result == null) result = caseBaseObject(testObject1);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ModelPackage.OBJECT_GROUP:
+			{
+				ObjectGroup objectGroup = (ObjectGroup)theEObject;
+				T result = caseObjectGroup(objectGroup);
+				if (result == null) result = caseBaseObject(objectGroup);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			default: return defaultCase(theEObject);
 		}
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Base Object</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Base Object</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseBaseObject(BaseObject object)
+	{
+		return null;
 	}
 
 	/**
@@ -99,6 +132,22 @@ public class ModelSwitch<T> extends Switch<T>
 	 * @generated
 	 */
 	public T caseTestObject1(TestObject1 object)
+	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Object Group</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Object Group</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseObjectGroup(ObjectGroup object)
 	{
 		return null;
 	}
