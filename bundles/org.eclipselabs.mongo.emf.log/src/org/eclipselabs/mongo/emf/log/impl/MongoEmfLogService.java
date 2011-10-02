@@ -28,7 +28,7 @@ import org.eclipselabs.emf.query.Expression;
 import org.eclipselabs.emf.query.Result;
 import org.eclipselabs.emf.query.util.ExpressionBuilder;
 import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
-import org.eclipselabs.mongo.emf.log.ILogService;
+import org.eclipselabs.mongo.emf.log.IMongoLogService;
 import org.eclipselabs.mongo.emf.log.LogEntry;
 import org.eclipselabs.mongo.emf.log.LogFactory;
 import org.eclipselabs.mongo.emf.log.LogLevel;
@@ -38,7 +38,7 @@ import org.osgi.service.log.LogListener;
  * @author bhunt
  * 
  */
-public class MongoEmfLogService implements ILogService, LogListener
+public class MongoEmfLogService implements IMongoLogService, LogListener
 {
 	public MongoEmfLogService(URI baseURI)
 	{

@@ -15,7 +15,7 @@ import java.util.Collection;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipselabs.emf.query.Expression;
-import org.eclipselabs.mongo.emf.log.ILogService;
+import org.eclipselabs.mongo.emf.log.IMongoLogService;
 import org.eclipselabs.mongo.emf.log.LogEntry;
 import org.eclipselabs.mongo.emf.log.LogLevel;
 import org.osgi.service.component.ComponentContext;
@@ -26,7 +26,7 @@ import org.osgi.service.log.LogReaderService;
  * @author bhunt
  * 
  */
-public class MongoEmfLogServiceProxy implements ILogService
+public class MongoEmfLogServiceProxy implements IMongoLogService
 {
 	@Override
 	public Collection<LogEntry> getLogEntries()
@@ -86,6 +86,6 @@ public class MongoEmfLogServiceProxy implements ILogService
 	}
 
 	private LogReaderService logReaderService;
-	private ILogService logService;
+	private IMongoLogService logService;
 	private LogListener logListener;
 }

@@ -3,6 +3,6 @@
    <implementation class="org.eclipselabs.mongo.emf.log.impl.MongoEmfLogServiceProxy"/>
    <reference bind="bindLogReaderService" cardinality="1..1" interface="org.osgi.service.log.LogReaderService" name="LogReaderService" policy="static" unbind="unbindLogReaderService"/>
    <service>
-      <provide interface="org.eclipselabs.mongo.emf.log.ILogService"/>
+      <provide interface="org.eclipselabs.mongo.emf.log.IMongoLogService"/>
    </service>
 </scr:component>

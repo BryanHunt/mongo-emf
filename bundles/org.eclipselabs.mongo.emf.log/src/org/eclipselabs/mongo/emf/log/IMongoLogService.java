@@ -19,7 +19,7 @@ import org.eclipselabs.emf.query.Expression;
  * @author bhunt
  * 
  */
-public interface ILogService
+public interface IMongoLogService
 {
 	Collection<LogEntry> getLogEntries();
 
