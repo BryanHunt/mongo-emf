@@ -106,20 +106,16 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	public boolean exists(URI uri, Map<?, ?> options)
 	{
 		if (uri.query() != null)
+			return false;
+
+		try
+		{
+			DBCollection collection = getCollection(mongoDB, uri);
+			return collection.findOne(new BasicDBObject(ID_KEY, getID(uri))) != null;
+		}
+		catch (Exception exception)
 		{
 			return false;
-		}
-		else
-		{
-			try
-			{
-				DBCollection collection = getCollection(mongoDB, uri);
-				return collection.findOne(new BasicDBObject(ID_KEY, getID(uri))) != null;
-			}
-			catch (Exception exception)
-			{
-				return false;
-			}
 		}
 	}
 

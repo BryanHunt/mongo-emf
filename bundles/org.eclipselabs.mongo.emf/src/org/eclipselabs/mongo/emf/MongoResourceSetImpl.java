@@ -21,6 +21,12 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 
 /**
+ * This implementation of ResourceSet gives better performance when loading many
+ * EMF objects in conjunction with URI normalization. If your URI converter
+ * normalizes the URI to another form, then this resource set will load resources
+ * with O(n) complexity whereas the default ResourceSetImpl will load resources
+ * with O(n^2) complexity.
+ * 
  * @author bhunt
  * 
  */
