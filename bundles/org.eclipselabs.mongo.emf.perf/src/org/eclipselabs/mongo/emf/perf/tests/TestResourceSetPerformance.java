@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 import org.eclipselabs.mongo.emf.MongoResourceSetImpl;
-import org.eclipselabs.mongo.emf.perf.bundle.Activator;
 import org.eclipselabs.mongo.emf.perf.model.ModelFactory;
 import org.eclipselabs.mongo.emf.perf.model.ObjectGroup;
 import org.eclipselabs.mongo.emf.perf.model.TestObject1;
@@ -43,7 +42,7 @@ import org.junit.runners.Parameterized.Parameters;
 public class TestResourceSetPerformance
 {
 	@Rule
-	public static MongoDatabase db = new MongoDatabase(Activator.getBundleContext(), "junit");
+	public static MongoDatabase db = new MongoDatabase("junit");
 
 	@Parameters
 	public static Collection<Object[]> data()

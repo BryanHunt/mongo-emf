@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: YourKit API
+Bundle-SymbolicName: com.yourkit.api
+Bundle-Version: 10.0.0
+Export-Package: com.yourkit,
+ com.yourkit.api,
+ com.yourkit.runtime,
+ com.yourkit.util
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipselabs.emf.query.Result;
-import org.eclipselabs.mongo.emf.perf.bundle.Activator;
 import org.eclipselabs.mongo.emf.perf.model.ModelFactory;
 import org.eclipselabs.mongo.emf.perf.model.TestObject1;
 import org.eclipselabs.mongo.junit.MongoDatabase;
@@ -37,7 +36,7 @@ import com.yourkit.api.ProfilingModes;
 public class TestBasePerformance
 {
 	@Rule
-	public static MongoDatabase db = new MongoDatabase(Activator.getBundleContext(), "junit");
+	public static MongoDatabase db = new MongoDatabase("junit");
 
 	@BeforeClass
 	public static void globalSetUp() throws Exception

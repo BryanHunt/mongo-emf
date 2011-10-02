@@ -16,21 +16,50 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 import org.eclipselabs.mongo.IMongoDB;
+import org.eclipselabs.mongo.junit.bundle.Activator;
 import org.junit.rules.ExternalResource;
-import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
 
 import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoURI;
 
+/**
+ * This class is intended to be used as a JUnit @Rule. It will verify that
+ * the IMongoDB service exists, and it will delete all collections in the specified
+ * MongoDB after each test runs.
+ * 
+ * Example usage:
+ * 
+ * @Rule
+ *       public MongoDatabase database = new MongoDatabase("junit");
+ * 
+ * @author bhunt
+ * 
+ */
 public class MongoDatabase extends ExternalResource
 {
-	public MongoDatabase(BundleContext context, String database)
+	public MongoDatabase(String database)
 	{
+		this("localhost", database);
+	}
+
+	public MongoDatabase(String hostname, String database)
+	{
+		this.hostname = hostname;
 		this.database = database;
-		mongoServiceTracker = new ServiceTracker<IMongoDB, IMongoDB>(context, IMongoDB.class, null);
+		mongoServiceTracker = new ServiceTracker<IMongoDB, IMongoDB>(Activator.getBundleContext(), IMongoDB.class, null);
 		mongoServiceTracker.open();
+	}
+
+	public DB getMongoDB()
+	{
+		return db;
+	}
+
+	public IMongoDB getMongoDBService()
+	{
+		return mongoService;
 	}
 
 	@Override
@@ -39,6 +68,8 @@ public class MongoDatabase extends ExternalResource
 		super.before();
 		mongoService = mongoServiceTracker.waitForService(1000);
 		assertThat(mongoService, is(notNullValue()));
+		Mongo mongo = mongoService.getMongo(new MongoURI("mongodb://" + hostname));
+		db = mongo.getDB(database);
 	}
 
 	@Override
@@ -48,8 +79,6 @@ public class MongoDatabase extends ExternalResource
 		{
 			try
 			{
-				Mongo mongo = mongoService.getMongo(new MongoURI("mongodb://localhost"));
-				DB db = mongo.getDB(database);
 
 				for (String collectionName : db.getCollectionNames())
 				{
@@ -59,14 +88,16 @@ public class MongoDatabase extends ExternalResource
 			}
 			catch (Exception e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+
 		super.after();
 	}
 
+	private String hostname;
 	private String database;
 	private ServiceTracker<IMongoDB, IMongoDB> mongoServiceTracker;
 	private IMongoDB mongoService;
+	private DB db;
 }

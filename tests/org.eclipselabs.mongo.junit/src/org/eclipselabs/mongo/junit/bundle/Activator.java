@@ -37,5 +37,5 @@ public class Activator implements BundleActivator
 		bundleContext = null;
 	}
 
-	private static BundleContext bundleContext;
+	private static volatile BundleContext bundleContext;
 }

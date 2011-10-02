@@ -48,7 +48,7 @@ import org.osgi.util.tracker.ServiceTracker;
 public class TestLogService
 {
 	@Rule
-	public static final MongoDatabase DB = new MongoDatabase(Activator.getInstance().getContext(), "junit");
+	public static final MongoDatabase DB = new MongoDatabase("junit");
 
 	@BeforeClass
 	public static void globalSetUp()

@@ -11,7 +11,6 @@ Export-Package: org.eclipselabs.mongo.emf.junit.model,
  org.eclipselabs.mongo.emf.junit.model.impl,
  org.eclipselabs.mongo.emf.junit.model.util
 Bundle-ActivationPolicy: lazy
-Bundle-Activator: org.eclipselabs.mongo.emf.junit.internal.Activator
 Import-Package: com.mongodb,
  org.bson,
  org.bson.types,

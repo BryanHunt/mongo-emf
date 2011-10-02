@@ -27,4 +27,3 @@ Import-Package: com.yourkit.api,
  org.junit.runner;version="4.9.0",
  org.junit.runners;version="4.9.0",
  org.osgi.framework;version="1.6.0"
-Bundle-Activator: org.eclipselabs.mongo.emf.perf.bundle.Activator

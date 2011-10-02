@@ -24,8 +24,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipselabs.mongo.IMongoDB;
-import org.eclipselabs.mongo.emf.junit.internal.Activator;
 import org.eclipselabs.mongo.junit.MongoDatabase;
 import org.eclipselabs.mongo.junit.MongoUtil;
 import org.junit.Before;
@@ -33,9 +31,7 @@ import org.junit.Rule;
 
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.Mongo;
 import com.mongodb.MongoException;
-import com.mongodb.MongoURI;
 
 /**
  * @author bhunt
@@ -44,18 +40,12 @@ import com.mongodb.MongoURI;
 public class TestHarness
 {
 	@Rule
-	public MongoDatabase database = new MongoDatabase(Activator.getInstance().getContext(), "junit");
+	public MongoDatabase database = new MongoDatabase("junit");
 
 	@Before
 	public void setUp() throws UnknownHostException, MongoException
 	{
-		IMongoDB mongoService = Activator.getInstance().getMongoDB();
-		assertThat(mongoService, is(notNullValue()));
-
-		Mongo mongo = mongoService.getMongo(new MongoURI("mongodb://localhost"));
-		assertThat(mongo, is(notNullValue()));
-
-		db = mongo.getDB("junit");
+		db = database.getMongoDB();
 		assertThat(db, is(notNullValue()));
 	}
 
