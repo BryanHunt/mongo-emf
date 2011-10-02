@@ -67,7 +67,7 @@ public class TestBasePerformance
 
 		System.out.println("Storing data");
 
-		controller.startCPUProfiling(ProfilingModes.CPU_TRACING, filters.toString());
+		controller.startCPUProfiling(ProfilingModes.CPU_TRACING, filters.toString(), Controller.DEFAULT_WALLTIME_SPEC);
 		resource.save(null);
 		System.out.println("Stopping profile");
 		controller.stopCPUProfiling();
@@ -78,7 +78,7 @@ public class TestBasePerformance
 
 		System.out.println("Loading data");
 
-		controller.startCPUProfiling(ProfilingModes.CPU_TRACING, filters.toString());
+		controller.startCPUProfiling(ProfilingModes.CPU_TRACING, filters.toString(), Controller.DEFAULT_WALLTIME_SPEC);
 		resource = resourceSet.getResource(uri.appendQuery(""), true);
 		Result result = (Result) resource.getContents().get(0);
 
