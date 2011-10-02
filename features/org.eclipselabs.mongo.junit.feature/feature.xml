@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipselabs.mongo.emf.junit.feature"
-      label="Mongo EMF JUnit Developer Support"
+      id="org.eclipselabs.mongo.junit.feature"
+      label="MongoDB JUnit Developer Support"
       version="0.4.0.qualifier"
       provider-name="EclipseLabs"
       license-feature="org.eclipselabs.mongo.emf.feature"

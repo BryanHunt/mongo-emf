@@ -19,14 +19,14 @@
     <module>../../../features/org.eclipselabs.emf.query.feature</module>
     <module>../../../features/org.eclipselabs.mongo.emf.feature</module>
     <module>../../../features/org.eclipselabs.mongo.emf.freemarker.feature</module>
-    <module>../../../features/org.eclipselabs.mongo.emf.junit.feature</module>
 	  <module>../../../features/org.eclipselabs.mongo.emf.log.feature</module>
+    <module>../../../features/org.eclipselabs.mongo.junit.feature</module>
   
     <module>../../../features/org.eclipselabs.emf.query.source.feature</module>
     <module>../../../features/org.eclipselabs.mongo.emf.source.feature</module>
     <module>../../../features/org.eclipselabs.mongo.emf.freemarker.source.feature</module>
-    <module>../../../features/org.eclipselabs.mongo.emf.junit.source.feature</module>
 	  <module>../../../features/org.eclipselabs.mongo.emf.log.source.feature</module>
+    <module>../../../features/org.eclipselabs.mongo.junit.source.feature</module>
 
     <module>../../../dev/org.eclipselabs.mongo.emf.repository</module>
   </modules>

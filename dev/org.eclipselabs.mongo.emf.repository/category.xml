@@ -9,9 +9,6 @@
    <feature url="features/org.eclipselabs.mongo.emf.freemarker.feature_0.4.0.qualifier.jar" id="org.eclipselabs.mongo.emf.freemarker.feature" version="0.4.0.qualifier">
       <category name="mongo-emf"/>
    </feature>
-   <feature url="features/org.eclipselabs.mongo.emf.junit.feature_0.4.0.qualifier.jar" id="org.eclipselabs.mongo.emf.junit.feature" version="0.4.0.qualifier">
-      <category name="mongo-emf"/>
-   </feature>
    <feature url="features/org.eclipselabs.mongo.emf.log.feature_0.4.0.qualifier.jar" id="org.eclipselabs.mongo.emf.log.feature" version="0.4.0.qualifier">
       <category name="mongo-emf"/>
    </feature>
@@ -29,6 +26,9 @@
    </feature>
    <feature url="features/org.eclipselabs.mongo.junit.source.feature_0.4.0.qualifier.jar" id="org.eclipselabs.mongo.junit.source.feature" version="0.4.0.qualifier">
       <category name="mongo-emf-source"/>
+   </feature>
+   <feature url="features/org.eclipselabs.mongo.junit.feature_0.4.0.qualifier.jar" id="org.eclipselabs.mongo.junit.feature" version="0.4.0.qualifier">
+      <category name="mongo-emf"/>
    </feature>
    <category-def name="mongo-emf" label="Mongo EMF Runtime">
       <description>
