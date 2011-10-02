@@ -18,6 +18,10 @@ import com.mongodb.MongoException;
 import com.mongodb.MongoURI;
 
 /**
+ * This interface provides the API for accessing a MongoDB database. It is intended to be accessed
+ * as a service in an OSGi environment. The OSGi bundle containing this interface provides and
+ * registers an OSGi service implementation.
+ * 
  * @author bhunt
  * 
  */

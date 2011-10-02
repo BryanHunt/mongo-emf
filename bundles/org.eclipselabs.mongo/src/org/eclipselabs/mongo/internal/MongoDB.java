@@ -27,7 +27,7 @@ import com.mongodb.MongoURI;
 public class MongoDB implements IMongoDB
 {
 	@Override
-	public Mongo getMongo(MongoURI uri) throws MongoException, UnknownHostException
+	public synchronized Mongo getMongo(MongoURI uri) throws MongoException, UnknownHostException
 	{
 		Mongo mongo = mongos.get(uri.toString());
 
@@ -40,5 +40,5 @@ public class MongoDB implements IMongoDB
 		return mongo;
 	}
 
-	private HashMap<String, Mongo> mongos = new HashMap<String, Mongo>();
+	private final HashMap<String, Mongo> mongos = new HashMap<String, Mongo>();
 }
