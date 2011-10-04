@@ -15,13 +15,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.URIHandler;
-import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
-import org.eclipselabs.mongo.emf.MongoResourceSetImpl;
 import org.eclipselabs.mongo.emf.perf.model.ModelFactory;
 import org.eclipselabs.mongo.emf.perf.model.ObjectGroup;
 import org.eclipselabs.mongo.emf.perf.model.TestObject1;
@@ -47,13 +43,17 @@ public class TestResourceSetPerformance
 	@Parameters
 	public static Collection<Object[]> data()
 	{
-		Object[][] data = new Object[][] { { Boolean.TRUE }, { Boolean.FALSE } };
+		Object[][] data = new Object[][] { { Boolean.FALSE, 1000 }, { Boolean.FALSE, 2000 }, { Boolean.FALSE, 3000 }, { Boolean.FALSE, 4000 }, { Boolean.FALSE, 5000 }, { Boolean.FALSE, 6000 },
+				{ Boolean.FALSE, 7000 }, { Boolean.FALSE, 8000 }, { Boolean.FALSE, 9000 }, { Boolean.FALSE, 10000 }, { Boolean.TRUE, 1000 }, { Boolean.TRUE, 2000 }, { Boolean.TRUE, 3000 },
+				{ Boolean.TRUE, 4000 }, { Boolean.TRUE, 5000 }, { Boolean.TRUE, 6000 }, { Boolean.TRUE, 7000 }, { Boolean.TRUE, 8000 }, { Boolean.TRUE, 9000 }, { Boolean.TRUE, 10000 } };
+
 		return Arrays.asList(data);
 	}
 
-	public TestResourceSetPerformance(boolean useMongoResourceSet)
+	public TestResourceSetPerformance(boolean useMongoResourceSet, int numberObjects)
 	{
 		this.useMongoResourceSet = useMongoResourceSet;
+		this.numberObjects = numberObjects;
 	}
 
 	@Test
@@ -67,7 +67,7 @@ public class TestResourceSetPerformance
 
 		ObjectGroup root = createObjectGroup(0);
 
-		for (int i = 0; i < 10000; i++)
+		for (int i = 0; i < numberObjects; i++)
 		{
 			TestObject1 object = createTestObject1(i);
 			root.getChildren().add(object);
@@ -94,7 +94,7 @@ public class TestResourceSetPerformance
 		new TreeVisitor().doSwitch(resultResource.getContents().get(0));
 		long endTime = System.currentTimeMillis();
 
-		System.out.println("Time to load children using " + (useMongoResourceSet ? "custom map" : "default map") + ": " + (endTime - startTime) + " ms");
+		System.out.println("Time to load " + numberObjects + " children using " + (useMongoResourceSet ? "custom map" : "default map") + ": " + (endTime - startTime) + " ms");
 	}
 
 	/**
@@ -141,11 +141,7 @@ public class TestResourceSetPerformance
 		ResourceSet resourceSet;
 
 		if (useMongoResourceSet)
-		{
-			resourceSet = new MongoResourceSetImpl();
-			EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-			uriHandlers.add(0, new MongoDBURIHandlerImpl());
-		}
+			resourceSet = MongoUtil.createMongoResourceSet();
 		else
 			resourceSet = MongoUtil.createResourceSet();
 
@@ -153,4 +149,5 @@ public class TestResourceSetPerformance
 	}
 
 	private boolean useMongoResourceSet;
+	private int numberObjects;
 }
