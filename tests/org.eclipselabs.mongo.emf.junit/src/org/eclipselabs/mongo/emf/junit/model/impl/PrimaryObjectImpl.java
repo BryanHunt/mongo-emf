@@ -32,6 +32,7 @@ import org.eclipselabs.mongo.emf.junit.model.TargetObject;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getIdAttribute <em>Id Attribute</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getUnsettableAttribute <em>Unsettable Attribute</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getUnsettableAttributeWithNonNullDefault <em>Unsettable Attribute With Non Null Default</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getUnsettableReference <em>Unsettable Reference</em>}</li>
@@ -43,8 +44,8 @@ import org.eclipselabs.mongo.emf.junit.model.TargetObject;
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getSingleContainmentReferenceProxies <em>Single Containment Reference Proxies</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getMultipleContainmentReferenceProxies <em>Multiple Containment Reference Proxies</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getSingleNonContainmentReferenceNoProxies <em>Single Non Containment Reference No Proxies</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getFeatureMapReferenceType2 <em>Feature Map Reference Type2</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getFeatureMapReferenceType1 <em>Feature Map Reference Type1</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getFeatureMapReferenceType2 <em>Feature Map Reference Type2</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getFeatureMapReferenceCollection <em>Feature Map Reference Collection</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getFeatureMapAttributeType1 <em>Feature Map Attribute Type1</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl#getFeatureMapAttributeType2 <em>Feature Map Attribute Type2</em>}</li>
@@ -75,6 +76,26 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getIdAttribute() <em>Id Attribute</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIdAttribute()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String ID_ATTRIBUTE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getIdAttribute() <em>Id Attribute</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIdAttribute()
+	 * @generated
+	 * @ordered
+	 */
+	protected String idAttribute = ID_ATTRIBUTE_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getUnsettableAttribute() <em>Unsettable Attribute</em>}' attribute.
@@ -295,6 +316,29 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 		name = newName;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.PRIMARY_OBJECT__NAME, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getIdAttribute()
+	{
+		return idAttribute;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIdAttribute(String newIdAttribute)
+	{
+		String oldIdAttribute = idAttribute;
+		idAttribute = newIdAttribute;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ModelPackage.PRIMARY_OBJECT__ID_ATTRIBUTE, oldIdAttribute, idAttribute));
 	}
 
 	/**
@@ -861,10 +905,10 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 				return basicSetSingleContainmentReferenceProxies(null, msgs);
 			case ModelPackage.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES:
 				return ((InternalEList<?>)getMultipleContainmentReferenceProxies()).basicRemove(otherEnd, msgs);
-			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2:
-				return ((InternalEList<?>)getFeatureMapReferenceType2()).basicRemove(otherEnd, msgs);
 			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1:
 				return ((InternalEList<?>)getFeatureMapReferenceType1()).basicRemove(otherEnd, msgs);
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2:
+				return ((InternalEList<?>)getFeatureMapReferenceType2()).basicRemove(otherEnd, msgs);
 			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION:
 				return ((InternalEList<?>)getFeatureMapReferenceCollection()).basicRemove(otherEnd, msgs);
 			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_COLLECTION:
@@ -885,6 +929,8 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 		{
 			case ModelPackage.PRIMARY_OBJECT__NAME:
 				return getName();
+			case ModelPackage.PRIMARY_OBJECT__ID_ATTRIBUTE:
+				return getIdAttribute();
 			case ModelPackage.PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE:
 				return getUnsettableAttribute();
 			case ModelPackage.PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE_WITH_NON_NULL_DEFAULT:
@@ -911,10 +957,10 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 				return getMultipleContainmentReferenceProxies();
 			case ModelPackage.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE_NO_PROXIES:
 				return getSingleNonContainmentReferenceNoProxies();
-			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2:
-				return getFeatureMapReferenceType2();
 			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1:
 				return getFeatureMapReferenceType1();
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2:
+				return getFeatureMapReferenceType2();
 			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION:
 				if (coreType) return getFeatureMapReferenceCollection();
 				return ((FeatureMap.Internal)getFeatureMapReferenceCollection()).getWrapper();
@@ -942,6 +988,9 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 		{
 			case ModelPackage.PRIMARY_OBJECT__NAME:
 				setName((String)newValue);
+				return;
+			case ModelPackage.PRIMARY_OBJECT__ID_ATTRIBUTE:
+				setIdAttribute((String)newValue);
 				return;
 			case ModelPackage.PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE:
 				setUnsettableAttribute((String)newValue);
@@ -979,13 +1028,13 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 			case ModelPackage.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE_NO_PROXIES:
 				setSingleNonContainmentReferenceNoProxies((TargetObject)newValue);
 				return;
-			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2:
-				getFeatureMapReferenceType2().clear();
-				getFeatureMapReferenceType2().addAll((Collection<? extends TargetObject>)newValue);
-				return;
 			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1:
 				getFeatureMapReferenceType1().clear();
 				getFeatureMapReferenceType1().addAll((Collection<? extends TargetObject>)newValue);
+				return;
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2:
+				getFeatureMapReferenceType2().clear();
+				getFeatureMapReferenceType2().addAll((Collection<? extends TargetObject>)newValue);
 				return;
 			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION:
 				((FeatureMap.Internal)getFeatureMapReferenceCollection()).set(newValue);
@@ -1017,6 +1066,9 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 		{
 			case ModelPackage.PRIMARY_OBJECT__NAME:
 				setName(NAME_EDEFAULT);
+				return;
+			case ModelPackage.PRIMARY_OBJECT__ID_ATTRIBUTE:
+				setIdAttribute(ID_ATTRIBUTE_EDEFAULT);
 				return;
 			case ModelPackage.PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE:
 				unsetUnsettableAttribute();
@@ -1051,11 +1103,11 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 			case ModelPackage.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE_NO_PROXIES:
 				setSingleNonContainmentReferenceNoProxies((TargetObject)null);
 				return;
-			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2:
-				getFeatureMapReferenceType2().clear();
-				return;
 			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1:
 				getFeatureMapReferenceType1().clear();
+				return;
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2:
+				getFeatureMapReferenceType2().clear();
 				return;
 			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION:
 				getFeatureMapReferenceCollection().clear();
@@ -1085,6 +1137,8 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 		{
 			case ModelPackage.PRIMARY_OBJECT__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case ModelPackage.PRIMARY_OBJECT__ID_ATTRIBUTE:
+				return ID_ATTRIBUTE_EDEFAULT == null ? idAttribute != null : !ID_ATTRIBUTE_EDEFAULT.equals(idAttribute);
 			case ModelPackage.PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE:
 				return isSetUnsettableAttribute();
 			case ModelPackage.PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE_WITH_NON_NULL_DEFAULT:
@@ -1107,10 +1161,10 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 				return multipleContainmentReferenceProxies != null && !multipleContainmentReferenceProxies.isEmpty();
 			case ModelPackage.PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE_NO_PROXIES:
 				return singleNonContainmentReferenceNoProxies != null;
-			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2:
-				return !getFeatureMapReferenceType2().isEmpty();
 			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1:
 				return !getFeatureMapReferenceType1().isEmpty();
+			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2:
+				return !getFeatureMapReferenceType2().isEmpty();
 			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION:
 				return featureMapReferenceCollection != null && !featureMapReferenceCollection.isEmpty();
 			case ModelPackage.PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE1:
@@ -1136,6 +1190,8 @@ public class PrimaryObjectImpl extends EObjectImpl implements PrimaryObject
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
+		result.append(", idAttribute: ");
+		result.append(idAttribute);
 		result.append(", unsettableAttribute: ");
 		if (unsettableAttributeESet) result.append(unsettableAttribute); else result.append("<unset>");
 		result.append(", unsettableAttributeWithNonNullDefault: ");

@@ -264,7 +264,62 @@ public class TestMongoEmfBasics extends TestHarness
 
 		TargetObject actual = MongoUtil.checkObject(targetObject);
 		assertThat(MongoUtil.getID(actual), is(id));
+	}
 
+	@Test
+	public void testIDAttribute() throws IOException
+	{
+		// Setup : Create a primary object with the ID attribute set
+
+		String ID = "Attribute ID";
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject.setIdAttribute(ID);
+
+		// Test : Store the object with the option to use the ID attribute as the MongoDB _id
+
+		HashMap<String, Object> options = new HashMap<String, Object>();
+		options.put(MongoDBURIHandlerImpl.OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY, Boolean.TRUE);
+
+		saveObject(primaryObject, createCollectionURI(primaryObject.eClass()), options);
+
+		// Verify : Check that the object was stored correctly
+
+		assertThat(MongoUtil.getID(primaryObject), is(ID));
+	}
+
+	@Test
+	public void testIDAttributeMultipleObjects() throws IOException
+	{
+		// Setup : Create two primary objects with the ID attribute set
+
+		String ID1 = "Object 1";
+		PrimaryObject primaryObject1 = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject1.setIdAttribute(ID1);
+
+		String ID2 = "Object 2";
+		PrimaryObject primaryObject2 = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject2.setIdAttribute(ID2);
+
+		// Test : Store the object with the option to use the ID attribute as the MongoDB _id
+
+		HashMap<String, Object> options = new HashMap<String, Object>();
+		options.put(MongoDBURIHandlerImpl.OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY, Boolean.TRUE);
+
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		Resource resource = resourceSet.createResource(createCollectionURI(primaryObject1.eClass()));
+		resource.getContents().add(primaryObject1);
+		resource.getContents().add(primaryObject2);
+		resource.save(options);
+
+		// Verify : Check that the objects were stored correctly
+
+		assertThat(resource.getContents().size(), is(1));
+		assertThat(resource.getContents().get(0), is(instanceOf(Result.class)));
+
+		Result result = (Result) resource.getContents().get(0);
+		assertThat(result.getValues().size(), is(2));
+		assertThat(MongoUtil.getID(result.getValues().get(0)), is(ID1));
+		assertThat(MongoUtil.getID(result.getValues().get(1)), is(ID2));
 	}
 
 	@Test

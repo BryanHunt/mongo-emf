@@ -189,6 +189,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	public static final String EXTRINSIC_ID_KEY = "_eId";
 	public static final String OPTION_PROXY_ATTRIBUTES = BinaryResourceImpl.OPTION_STYLE_PROXY_ATTRIBUTES;
 	public static final String OPTION_SERIALIZE_DEFAULT_ATTRIBUTE_VALUES = "SERIALIZE_DEFAULT";
+	public static final String OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY = "USE_ID_ATTRIBUTE_AS_PRIMARY_KEY";
 
 	private IMongoDB mongoDB;
 }

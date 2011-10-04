@@ -39,6 +39,7 @@ import org.eclipselabs.mongo.emf.junit.model.Library;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.Person;
+import org.eclipselabs.mongo.emf.junit.model.PrimaryObject;
 import org.eclipselabs.mongo.emf.junit.model.TargetObject;
 import org.eclipselabs.mongo.emf.junit.support.TestHarness;
 import org.eclipselabs.mongo.junit.MongoUtil;
@@ -85,6 +86,33 @@ public class TestMongoEmfQuery extends TestHarness
 
 		assertThat(library.getLocation(), is(notNullValue()));
 		assertThat(library.getLocation().getAddress(), is("Wastelands"));
+	}
+
+	@Test
+	public void testQueryIDAttribute() throws IOException
+	{
+		// Setup : Create a primary object with the ID attribute set
+
+		String ID = "Attribute ID";
+		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		primaryObject.setIdAttribute(ID);
+
+		// Test : Store the object with the option to use the ID attribute as the MongoDB _id
+
+		HashMap<String, Object> options = new HashMap<String, Object>();
+		options.put(MongoDBURIHandlerImpl.OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY, Boolean.TRUE);
+
+		saveObject(primaryObject, createCollectionURI(primaryObject.eClass()), options);
+
+		// Verify : Check that the object was stored correctly
+
+		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.PRIMARY_OBJECT, "idAttribute=='" + ID + "'"), true);
+		assertThat(resource, is(notNullValue()));
+		assertThat(resource.getContents().size(), is(1));
+
+		Result result = (Result) resource.getContents().get(0);
+		assertThat(result.getValues().size(), is(1));
 	}
 
 	@Test

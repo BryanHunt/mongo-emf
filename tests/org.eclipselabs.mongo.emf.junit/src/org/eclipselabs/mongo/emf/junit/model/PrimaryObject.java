@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getIdAttribute <em>Id Attribute</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getUnsettableAttribute <em>Unsettable Attribute</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getUnsettableAttributeWithNonNullDefault <em>Unsettable Attribute With Non Null Default</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getUnsettableReference <em>Unsettable Reference</em>}</li>
@@ -30,8 +31,8 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getSingleContainmentReferenceProxies <em>Single Containment Reference Proxies</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getMultipleContainmentReferenceProxies <em>Multiple Containment Reference Proxies</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getSingleNonContainmentReferenceNoProxies <em>Single Non Containment Reference No Proxies</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapReferenceType2 <em>Feature Map Reference Type2</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapReferenceType1 <em>Feature Map Reference Type1</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapReferenceType2 <em>Feature Map Reference Type2</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapReferenceCollection <em>Feature Map Reference Collection</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapAttributeType1 <em>Feature Map Attribute Type1</em>}</li>
  *   <li>{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapAttributeType2 <em>Feature Map Attribute Type2</em>}</li>
@@ -70,6 +71,32 @@ public interface PrimaryObject extends EObject
 	 * @generated
 	 */
 	void setName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Id Attribute</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Id Attribute</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Id Attribute</em>' attribute.
+	 * @see #setIdAttribute(String)
+	 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getPrimaryObject_IdAttribute()
+	 * @model id="true"
+	 * @generated
+	 */
+	String getIdAttribute();
+
+	/**
+	 * Sets the value of the '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getIdAttribute <em>Id Attribute</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Id Attribute</em>' attribute.
+	 * @see #getIdAttribute()
+	 * @generated
+	 */
+	void setIdAttribute(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Unsettable Attribute</b></em>' attribute.

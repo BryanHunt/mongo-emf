@@ -69,6 +69,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PrimaryObject">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="idAttribute" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableAttribute" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         unsettable="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unsettableAttributeWithNonNullDefault"
@@ -92,14 +94,14 @@
         upperBound="-1" eType="#//TargetObject" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="singleNonContainmentReferenceNoProxies"
         eType="#//TargetObject" resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="featureMapReferenceType2"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="featureMapReferenceType1"
         upperBound="-1" eType="#//TargetObject" volatile="true" transient="true" derived="true"
         containment="true" resolveProxies="false">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="group" value="#featureMapReferenceCollection"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="featureMapReferenceType1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="featureMapReferenceType2"
         upperBound="-1" eType="#//TargetObject" volatile="true" transient="true" derived="true"
         containment="true" resolveProxies="false">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
