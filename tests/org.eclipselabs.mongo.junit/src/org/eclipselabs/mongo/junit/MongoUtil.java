@@ -34,6 +34,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipselabs.emf.query.Result;
 import org.eclipselabs.mongo.IMongoDB;
 import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
+import org.eclipselabs.mongo.emf.MongoResourceSetImpl;
 import org.eclipselabs.mongo.internal.MongoDB;
 import org.eclipselabs.mongo.junit.bundle.Activator;
 
@@ -105,6 +106,17 @@ public class MongoUtil
 	}
 
 	/**
+	 * This function will configure a resource set to use with MongoDB.
+	 * 
+	 * @param resourceSet The resource set to configure.
+	 */
+	public static void configureResourceSet(ResourceSet resourceSet)
+	{
+		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
+		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+	}
+
+	/**
 	 * This function will create a resource set and configure it with the MongoDB URI handler.
 	 * 
 	 * @return A resource set that can be used with mongo:// URIs.
@@ -112,8 +124,19 @@ public class MongoUtil
 	public static ResourceSet createResourceSet()
 	{
 		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		configureResourceSet(resourceSet);
+		return resourceSet;
+	}
+
+	/**
+	 * This function will create a mongo resource set and configure it with the MongoDB URI handler.
+	 * 
+	 * @return A resource set that can be used with mongo:// URIs.
+	 */
+	public static ResourceSet createMongoResourceSet()
+	{
+		ResourceSet resourceSet = new MongoResourceSetImpl();
+		configureResourceSet(resourceSet);
 		return resourceSet;
 	}
 
@@ -263,5 +286,4 @@ public class MongoUtil
 				checkObject((EObject) expected.eGet(reference), (EObject) actual.eGet(reference), excludeFeatures, visited);
 		}
 	}
-
 }
