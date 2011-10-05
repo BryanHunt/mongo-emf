@@ -1,3 +1,5 @@
 This project provides an EMF URI handler implementation that can persist EMF object instances to MongoDB.
 
 The documentation for this project can be found at: https://github.com/BryanHunt/mongo-emf/wiki
+
+The p2 repositories are here: http://bryanhunt.github.com/mongo-emf/
