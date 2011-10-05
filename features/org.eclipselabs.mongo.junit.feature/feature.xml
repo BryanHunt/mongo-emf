@@ -4,8 +4,7 @@
       label="MongoDB JUnit Developer Support"
       version="0.4.0.qualifier"
       provider-name="EclipseLabs"
-      license-feature="org.eclipselabs.mongo.emf.feature"
-      license-feature-version="0.3.3.qualifier">
+      license-feature="org.eclipselabs.mongo.emf.feature">
 
    <description url="http://code.google.com/a/eclipselabs.org/p/mongo-emf/">
       Mongo EMF JUnit developer bundles.  Install this feature into your target platform if you want some utility functions that make it easier to write JUnit tests involving EMF and MongoDB.
