@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.6"?>
 
-<target name="Mongo" sequenceNumber="95">
+<target name="Mongo" sequenceNumber="106">
 <locations>
 <location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.eclipse.emf.sdk.feature.group" version="2.7.0.v20110606-0949"/>
@@ -14,17 +14,17 @@
 <repository location="http://quickiemart.springfieldusa.net/Targets/Hamcrest"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.junit.feature.feature.group" version="4.10.0.201111131747"/>
+<repository location="http://quickiemart.springfieldusa.net/Targets/JUnit4.10"/>
+</location>
+<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.freemarker.feature.feature.group" version="2.3.0.201104101347"/>
 <unit id="org.freemarker.source.feature.feature.group" version="2.3.0.201104101347"/>
 <repository location="http://quickiemart.springfieldusa.net/Targets/FreeMarker"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.junit.feature.feature.group" version="4.9.0.201107152255"/>
-<repository location="http://quickiemart.springfieldusa.net/Targets/JUnit"/>
-</location>
-<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="com.mongodb.feature.feature.group" version="2.6.5.201110012142"/>
-<repository location="http://bryanhunt.github.com/mongo-emf/mongodb/2.6.5"/>
+<unit id="com.mongodb.feature.feature.group" version="2.7.2.201111251414"/>
+<repository location="http://bryanhunt.github.com/mongo-emf/mongodb/2.7.2"/>
 </location>
 </locations>
 </target>
