@@ -32,6 +32,11 @@ import com.mongodb.DB;
 import com.mongodb.ServerAddress;
 
 /**
+ * This test assumes you have a MongoDB replica set running on localhost.
+ * 
+ * The ports are: 27020, 27021, 27022.
+ * The tags are: {"locale", "sc"}, {"locale", "in"}, {"locale", "de"}
+ * 
  * @author bhunt
  * 
  */
