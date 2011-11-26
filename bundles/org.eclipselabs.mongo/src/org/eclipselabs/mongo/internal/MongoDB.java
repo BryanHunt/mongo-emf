@@ -13,12 +13,15 @@ package org.eclipselabs.mongo.internal;
 
 import java.net.UnknownHostException;
 import java.util.HashMap;
+import java.util.List;
 
 import org.eclipselabs.mongo.IMongoDB;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
+import com.mongodb.MongoOptions;
 import com.mongodb.MongoURI;
+import com.mongodb.ServerAddress;
 
 /**
  * @author bhunt
@@ -26,6 +29,48 @@ import com.mongodb.MongoURI;
  */
 public class MongoDB implements IMongoDB
 {
+	@Override
+	public synchronized void configureMongo(MongoURI uri, List<ServerAddress> replicaSetSeeds)
+	{
+		mongos.put(uri.toString(), new Mongo(replicaSetSeeds));
+	}
+
+	@Override
+	public synchronized void configureMongo(MongoURI uri, List<ServerAddress> replicaSetSeeds, MongoOptions options)
+	{
+		mongos.put(uri.toString(), new Mongo(replicaSetSeeds, options));
+	}
+
+	@Override
+	public synchronized void configureMongo(MongoURI uri, ServerAddress addr)
+	{
+		mongos.put(uri.toString(), new Mongo(addr));
+	}
+
+	@Override
+	public synchronized void configureMongo(MongoURI uri, ServerAddress addr, MongoOptions options)
+	{
+		mongos.put(uri.toString(), new Mongo(addr, options));
+	}
+
+	@Override
+	public synchronized void configureMongo(MongoURI uri, String host) throws UnknownHostException, MongoException
+	{
+		mongos.put(uri.toString(), new Mongo(host));
+	}
+
+	@Override
+	public synchronized void configureMongo(MongoURI uri, String host, int port) throws UnknownHostException, MongoException
+	{
+		mongos.put(uri.toString(), new Mongo(host, port));
+	}
+
+	@Override
+	public synchronized void configureMongo(MongoURI uri, String host, MongoOptions options) throws UnknownHostException, MongoException
+	{
+		mongos.put(uri.toString(), new Mongo(host, options));
+	}
+
 	@Override
 	public synchronized Mongo getMongo(MongoURI uri) throws MongoException, UnknownHostException
 	{

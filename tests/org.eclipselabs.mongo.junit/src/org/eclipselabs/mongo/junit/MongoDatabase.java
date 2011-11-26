@@ -15,6 +15,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
+import java.util.List;
+
 import org.eclipselabs.mongo.IMongoDB;
 import org.eclipselabs.mongo.junit.bundle.Activator;
 import org.junit.rules.ExternalResource;
@@ -23,6 +25,7 @@ import org.osgi.util.tracker.ServiceTracker;
 import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoURI;
+import com.mongodb.ServerAddress;
 
 /**
  * This class is intended to be used as a JUnit @Rule. It will verify that
@@ -46,8 +49,21 @@ public class MongoDatabase extends ExternalResource
 
 	public MongoDatabase(String hostname, String database)
 	{
+		this(hostname, 27017, database);
+	}
+
+	public MongoDatabase(String hostname, int port, String database)
+	{
+		this(hostname, port, database, null);
+	}
+
+	public MongoDatabase(String hostname, int port, String database, List<ServerAddress> replicaSet)
+	{
 		this.hostname = hostname;
+		this.port = port;
 		this.database = database;
+		this.replicaSet = replicaSet;
+
 		mongoServiceTracker = new ServiceTracker<IMongoDB, IMongoDB>(Activator.getBundleContext(), IMongoDB.class, null);
 		mongoServiceTracker.open();
 	}
@@ -68,7 +84,12 @@ public class MongoDatabase extends ExternalResource
 		super.before();
 		mongoService = mongoServiceTracker.waitForService(1000);
 		assertThat(mongoService, is(notNullValue()));
-		Mongo mongo = mongoService.getMongo(new MongoURI("mongodb://" + hostname));
+		MongoURI uri = new MongoURI("mongodb://" + hostname + ":" + port);
+
+		if (replicaSet != null)
+			mongoService.configureMongo(uri, replicaSet);
+
+		Mongo mongo = mongoService.getMongo(uri);
 		db = mongo.getDB(database);
 	}
 
@@ -96,6 +117,8 @@ public class MongoDatabase extends ExternalResource
 	}
 
 	private String hostname;
+	private int port;
+	private List<ServerAddress> replicaSet;
 	private String database;
 	private ServiceTracker<IMongoDB, IMongoDB> mongoServiceTracker;
 	private IMongoDB mongoService;

@@ -30,6 +30,7 @@ import org.eclipselabs.mongo.internal.emf.MongoDBOutputStream;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoURI;
+import com.mongodb.ReadPreference;
 
 /**
  * This EMF URI handler interfaces to MongoDB. This URI handler can handle URIs with the "mongo"
@@ -83,7 +84,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	{
 		// It is assumed that delete is called with the URI path /database/collection/id
 
-		DBCollection collection = getCollection(mongoDB, uri);
+		DBCollection collection = getCollection(mongoDB, uri, options);
 		collection.findAndRemove(new BasicDBObject(ID_KEY, getID(uri)));
 	}
 
@@ -110,7 +111,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 		try
 		{
-			DBCollection collection = getCollection(mongoDB, uri);
+			DBCollection collection = getCollection(mongoDB, uri, options);
 			return collection.findOne(new BasicDBObject(ID_KEY, getID(uri))) != null;
 		}
 		catch (Exception exception)
@@ -119,7 +120,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		}
 	}
 
-	public static DBCollection getCollection(IMongoDB mongoDB, URI uri) throws UnknownHostException, IOException
+	public static DBCollection getCollection(IMongoDB mongoDB, URI uri, Map<?, ?> options) throws UnknownHostException, IOException
 	{
 		// We assume that the URI path has the form /database/collection/{id} making the
 		// collection segment # 1.
@@ -132,7 +133,15 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 		String port = uri.port();
 		MongoURI mongoURI = new MongoURI("mongodb://" + uri.host() + (port != null ? ":" + port : ""));
-		return mongoDB.getMongo(mongoURI).getDB(uri.segment(0)).getCollection(uri.segment(1));
+		DBCollection dbCollection = mongoDB.getMongo(mongoURI).getDB(uri.segment(0)).getCollection(uri.segment(1));
+
+		@SuppressWarnings("unchecked")
+		Map<String, String> tags = (Map<String, String>) options.get(OPTION_TAGGED_READ_PREFERENCE);
+
+		if (tags != null)
+			dbCollection.setReadPreference(new ReadPreference.TaggedReadPreference(tags));
+
+		return dbCollection;
 	}
 
 	public static Object getID(URI uri) throws IOException
@@ -190,6 +199,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	public static final String OPTION_PROXY_ATTRIBUTES = BinaryResourceImpl.OPTION_STYLE_PROXY_ATTRIBUTES;
 	public static final String OPTION_SERIALIZE_DEFAULT_ATTRIBUTE_VALUES = "SERIALIZE_DEFAULT";
 	public static final String OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY = "USE_ID_ATTRIBUTE_AS_PRIMARY_KEY";
+	public static final String OPTION_TAGGED_READ_PREFERENCE = "TAGGED_READ_PREFERENCE";
 
 	private IMongoDB mongoDB;
 }

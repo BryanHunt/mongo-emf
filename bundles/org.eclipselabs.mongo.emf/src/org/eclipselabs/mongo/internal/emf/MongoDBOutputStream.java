@@ -63,7 +63,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 	public void close() throws IOException
 	{
 		super.close();
-		DBCollection collection = MongoDBURIHandlerImpl.getCollection(mongoDB, uri);
+		DBCollection collection = MongoDBURIHandlerImpl.getCollection(mongoDB, uri, options);
 
 		// We need to set up the XMLResource.URIHandler so that proxy URIs are handled properly.
 

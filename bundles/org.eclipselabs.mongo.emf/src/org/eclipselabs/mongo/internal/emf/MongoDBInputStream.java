@@ -93,7 +93,7 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 		// MongoDB, otherwise simply get the object from MongoDB using the id.
 
 		String query = uri.query();
-		DBCollection collection = MongoDBURIHandlerImpl.getCollection(mongoDB, uri);
+		DBCollection collection = MongoDBURIHandlerImpl.getCollection(mongoDB, uri, options);
 		EList<EObject> contents = resource.getContents();
 
 		if (query != null)
