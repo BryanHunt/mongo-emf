@@ -314,6 +314,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 		long timeStamp = System.currentTimeMillis();
 		dbObject.put(MongoDBURIHandlerImpl.TIME_STAMP_KEY, timeStamp);
 		response.put(URIConverter.RESPONSE_TIME_STAMP_PROPERTY, timeStamp);
+		WriteConcern writeConcern = (WriteConcern) options.get(MongoDBURIHandlerImpl.OPTION_WRITE_CONCERN);
 
 		if (id == null)
 		{
@@ -322,7 +323,6 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 
 			Boolean useIdAttributeAsPrimaryKey = (Boolean) options.get(MongoDBURIHandlerImpl.OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY);
 			EAttribute idAttribute = eObject.eClass().getEIDAttribute();
-			WriteConcern writeConcern = (WriteConcern) options.get(MongoDBURIHandlerImpl.OPTION_WRITE_CONCERN);
 
 			if (useIdAttributeAsPrimaryKey != null && useIdAttributeAsPrimaryKey && idAttribute != null)
 			{
@@ -365,7 +365,11 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 			// be inserted.
 
 			dbObject.put("_id", id);
-			collection.save(dbObject);
+
+			if (writeConcern == null)
+				collection.save(dbObject);
+			else
+				collection.save(dbObject, writeConcern);
 		}
 	}
 
