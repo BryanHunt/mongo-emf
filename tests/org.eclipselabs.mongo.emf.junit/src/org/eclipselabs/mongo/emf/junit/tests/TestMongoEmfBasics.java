@@ -56,6 +56,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+import com.mongodb.WriteConcern;
+
 /**
  * @author bhunt
  * 
@@ -243,6 +245,26 @@ public class TestMongoEmfBasics extends TestHarness
 
 		TargetObject actual = MongoUtil.checkObject(targetObject);
 		assertThat(MongoUtil.getID(actual), is(id));
+	}
+
+	@Test
+	public void testTargetObjectWithWriteConcern() throws IOException
+	{
+		// Setup : Create a target object
+
+		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		targetObject.setSingleAttribute("junit");
+
+		// Test : Store the object to MongoDB
+
+		HashMap<String, Object> options = new HashMap<String, Object>(1);
+		options.put(MongoDBURIHandlerImpl.OPTION_WRITE_CONCERN, WriteConcern.SAFE);
+
+		saveObject(targetObject, createCollectionURI(targetObject.eClass()), options);
+
+		// Verify : Check that the object was stored correctly.
+
+		MongoUtil.checkObject(targetObject);
 	}
 
 	@Test

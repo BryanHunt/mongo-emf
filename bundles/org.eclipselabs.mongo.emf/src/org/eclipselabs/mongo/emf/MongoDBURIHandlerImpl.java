@@ -200,6 +200,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	public static final String OPTION_SERIALIZE_DEFAULT_ATTRIBUTE_VALUES = "SERIALIZE_DEFAULT";
 	public static final String OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY = "USE_ID_ATTRIBUTE_AS_PRIMARY_KEY";
 	public static final String OPTION_TAGGED_READ_PREFERENCE = "TAGGED_READ_PREFERENCE";
+	public static final String OPTION_WRITE_CONCERN = "WRITE_CONCERN";
 
 	private IMongoDB mongoDB;
 }

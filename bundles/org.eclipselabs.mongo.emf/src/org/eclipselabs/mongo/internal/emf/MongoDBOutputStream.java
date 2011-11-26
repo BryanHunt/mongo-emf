@@ -43,6 +43,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
+import com.mongodb.WriteConcern;
 
 /**
  * @author bhunt
@@ -277,7 +278,13 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 			dbObjects.add(dbObject);
 		}
 
-		collection.insert(dbObjects);
+		WriteConcern writeConcern = (WriteConcern) options.get(MongoDBURIHandlerImpl.OPTION_WRITE_CONCERN);
+
+		if (writeConcern == null)
+			collection.insert(dbObjects);
+		else
+			collection.insert(dbObjects, writeConcern);
+
 		URI baseURI = resource.getURI().trimSegments(1);
 		InternalEObject[] eObjects = contents.toArray(new InternalEObject[contents.size()]);
 		Result result = QueryFactory.eINSTANCE.createResult();
@@ -315,6 +322,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 
 			Boolean useIdAttributeAsPrimaryKey = (Boolean) options.get(MongoDBURIHandlerImpl.OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY);
 			EAttribute idAttribute = eObject.eClass().getEIDAttribute();
+			WriteConcern writeConcern = (WriteConcern) options.get(MongoDBURIHandlerImpl.OPTION_WRITE_CONCERN);
 
 			if (useIdAttributeAsPrimaryKey != null && useIdAttributeAsPrimaryKey && idAttribute != null)
 			{
@@ -322,13 +330,21 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 
 				id = eObject.eGet(idAttribute);
 				dbObject.put("_id", id);
-				collection.insert(dbObject);
+
+				if (writeConcern == null)
+					collection.insert(dbObject);
+				else
+					collection.insert(dbObject, writeConcern);
 			}
 			else
 			{
 				// The id was not specified, so we are creating an object and letting MongoDB generate the id
 
-				collection.insert(dbObject);
+				if (writeConcern == null)
+					collection.insert(dbObject);
+				else
+					collection.insert(dbObject, writeConcern);
+
 				id = dbObject.get(MongoDBURIHandlerImpl.ID_KEY);
 			}
 
