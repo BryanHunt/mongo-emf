@@ -98,6 +98,8 @@ public class TestMongoEmfBasics extends TestHarness
 		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EBYTE));
 		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EBYTE_OBJECT));
 		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EBYTE_ARRAY));
+		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.ESHORT));
+		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.ESHORT_OBJECT));
 		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EINT));
 		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EINTEGER_OBJECT));
 		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.ELONG));
