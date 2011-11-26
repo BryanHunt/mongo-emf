@@ -37,6 +37,14 @@ import com.mongodb.MongoException;
  */
 public abstract class BaseTestHarness
 {
+	public BaseTestHarness()
+	{}
+
+	public BaseTestHarness(int port)
+	{
+		this.port = port;
+	}
+
 	@Before
 	public void setUp() throws UnknownHostException, MongoException
 	{
@@ -46,7 +54,7 @@ public abstract class BaseTestHarness
 
 	protected URI createCollectionURI(EClass eClass)
 	{
-		return URI.createURI("mongo://localhost/junit/" + eClass.getName() + "/");
+		return URI.createURI("mongo://localhost" + (port != null ? ":" + port : "") + "/junit/" + eClass.getName() + "/");
 	}
 
 	protected abstract DB createDatabase();
@@ -86,4 +94,5 @@ public abstract class BaseTestHarness
 	}
 
 	private DB db;
+	private Integer port;
 }

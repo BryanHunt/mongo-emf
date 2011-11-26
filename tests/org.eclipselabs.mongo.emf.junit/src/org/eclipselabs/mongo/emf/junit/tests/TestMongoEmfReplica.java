@@ -40,6 +40,11 @@ public class TestMongoEmfReplica extends BaseTestHarness
 	@Rule
 	public MongoDatabase database = new MongoDatabase("localhost", 27021, "junit", replicaSet);
 
+	public TestMongoEmfReplica()
+	{
+		super(27021);
+	}
+
 	@Test
 	public void testReplicaRead() throws IOException
 	{
@@ -57,7 +62,7 @@ public class TestMongoEmfReplica extends BaseTestHarness
 		ResourceSet actualResourceSet = MongoUtil.createResourceSet();
 
 		HashMap<String, String> tags = new HashMap<String, String>(1);
-		tags.put("locale", "in");
+		tags.put("locale", "sc");
 
 		actualResourceSet.getLoadOptions().put(MongoDBURIHandlerImpl.OPTION_TAGGED_READ_PREFERENCE, tags);
 		Resource actualResource = actualResourceSet.getResource(targetObject.eResource().getURI(), true);
