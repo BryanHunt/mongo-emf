@@ -35,7 +35,7 @@ import com.mongodb.ServerAddress;
  * This test assumes you have a MongoDB replica set running on localhost.
  * 
  * The ports are: 27020, 27021, 27022.
- * The tags are: {"locale", "sc"}, {"locale", "in"}, {"locale", "de"}
+ * The tags are: {"locale", "us"}, {"locale", "in"}, {"locale", "de"}
  * 
  * @author bhunt
  * 
@@ -67,7 +67,7 @@ public class TestMongoEmfReplica extends BaseTestHarness
 		ResourceSet actualResourceSet = MongoUtil.createResourceSet();
 
 		HashMap<String, String> tags = new HashMap<String, String>(1);
-		tags.put("locale", "sc");
+		tags.put("locale", "in");
 
 		actualResourceSet.getLoadOptions().put(MongoDBURIHandlerImpl.OPTION_TAGGED_READ_PREFERENCE, tags);
 		Resource actualResource = actualResourceSet.getResource(targetObject.eResource().getURI(), true);
