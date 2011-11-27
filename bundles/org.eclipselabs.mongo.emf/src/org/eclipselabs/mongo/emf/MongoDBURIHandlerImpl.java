@@ -120,6 +120,17 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		}
 	}
 
+	/**
+	 * This function locates the MongoDB collection instance corresponding to the collection identifier extracted from the URI. The URI path must have exactly 3 segments and be of the form
+	 * mongo://host:[port]/database/collection/{id} where id is optional.
+	 * 
+	 * @param mongoDB the MongoDB service
+	 * @param uri the MongoDB collection identifier
+	 * @param options the load or save options as appropriate
+	 * @return the MongoDB collection corresponding to the URI
+	 * @throws UnknownHostException if the host specified in the URI can't be found
+	 * @throws IOException if the URI is malformed or the collection could not otherwise be resolved
+	 */
 	public static DBCollection getCollection(IMongoDB mongoDB, URI uri, Map<?, ?> options) throws UnknownHostException, IOException
 	{
 		// We assume that the URI path has the form /database/collection/{id} making the
@@ -144,6 +155,14 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		return dbCollection;
 	}
 
+	/**
+	 * This function extracts the object ID from the given URI. The URI path must have exactly 3 segments and be of the form
+	 * mongo://host:[port]/database/collection/{id} where id is optional.
+	 * 
+	 * @param uri
+	 * @return the object ID from the given URI or null if the id was not specified
+	 * @throws IOException if the URI path is not exactly three segments
+	 */
 	public static Object getID(URI uri) throws IOException
 	{
 		// Require that the URI path has the form /database/collection/{id} making the id segment # 2.
@@ -166,6 +185,12 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		}
 	}
 
+	/**
+	 * This function determines whether or not the given EDataType can be represented natively by MongoDB.
+	 * 
+	 * @param dataType the EMF data type to check
+	 * @return true if the data type can be represneted natively by MongoDB; false otherwise
+	 */
 	public static boolean isNativeType(EDataType dataType)
 	{
 		String instanceClassName = dataType.getInstanceClassName();
@@ -191,15 +216,72 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		//@formatter:on
 	}
 
-	public static final String TIME_STAMP_KEY = "_timeStamp";
+	/**
+	 * MongoDB ID field identifier. Not intended to be used by clients.
+	 */
 	public static final String ID_KEY = "_id";
+
+	/**
+	 * MongoDB eClass field identifier. Not intended to be used by clients.
+	 */
 	public static final String ECLASS_KEY = "_eClass";
+
+	/**
+	 * MongoDB eProxyURI field identifier. Not intended to be used by clients.
+	 */
 	public static final String PROXY_KEY = "_eProxyURI";
+
+	/**
+	 * MongoDB Extrensic ID field identifier. Not intended to be used by clients.
+	 */
 	public static final String EXTRINSIC_ID_KEY = "_eId";
+
+	/**
+	 * MongoDB Timestamp field identifier. Not intended to be used by clients.
+	 */
+	public static final String TIME_STAMP_KEY = "_timeStamp";
+
+	/**
+	 * When you load an object with cross-document references, they will be proxies. When you access the reference, EMF will resolve the proxy and you can then access the attributes. This can cause
+	 * performance problems for example when expanding a tree where you only need a name attribute to display the children and then only resolve the next child to be expanded. Setting this option to
+	 * Boolean.TRUE will cause the proxy instance to have its attribute values populated so that you can display the child names in the tree without resolving the proxy.
+	 * 
+	 * Value type: Boolean
+	 */
 	public static final String OPTION_PROXY_ATTRIBUTES = BinaryResourceImpl.OPTION_STYLE_PROXY_ATTRIBUTES;
-	public static final String OPTION_SERIALIZE_DEFAULT_ATTRIBUTE_VALUES = "SERIALIZE_DEFAULT";
-	public static final String OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY = "USE_ID_ATTRIBUTE_AS_PRIMARY_KEY";
+
+	/**
+	 * This option may be used when you wish to read from a particular server in a MongoDB replica set that has been tagged. <code>
+	 * HashMap<String, String> tags = new HashMap<String, String>(1);
+	 * tags.put("locale", "in");
+	 * 
+	 * resourceSet.getLoadOptions().put(MongoDBURIHandlerImpl.OPTION_TAGGED_READ_PREFERENCE, tags);
+	 * </code>
+	 * 
+	 * Value type: Map<String, String>
+	 */
 	public static final String OPTION_TAGGED_READ_PREFERENCE = "TAGGED_READ_PREFERENCE";
+
+	/**
+	 * EMF's default serialization is designed to conserve space by not serializing attributes that are set to their default value. This is a problem when attempting to query objects by an attributes
+	 * default value. By setting this option to Boolean.TRUE, all attribute values will be stored to MongoDB.
+	 * 
+	 * Value type: Boolean
+	 */
+	public static final String OPTION_SERIALIZE_DEFAULT_ATTRIBUTE_VALUES = "SERIALIZE_DEFAULT_ATTRIBUTE_VALUES";
+
+	/**
+	 * If it is set to Boolean.TRUE and the ID was not specified in the URI, the value of the ID attribute will be used as the MongoDB _id if it exists.
+	 * 
+	 * Value type: Boolean
+	 */
+	public static final String OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY = "USE_ID_ATTRIBUTE_AS_PRIMARY_KEY";
+
+	/**
+	 * If set, the value must be an instance of WriteConcern and will be passed to MongoDB when the object is inserted into the database, or updated.
+	 * 
+	 * Value type: WriteConcern
+	 */
 	public static final String OPTION_WRITE_CONCERN = "WRITE_CONCERN";
 
 	private IMongoDB mongoDB;
