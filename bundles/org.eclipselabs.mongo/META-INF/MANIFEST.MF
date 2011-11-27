@@ -4,8 +4,9 @@ Bundle-Name: %Bundle-Name.0
 Bundle-SymbolicName: org.eclipselabs.mongo
 Bundle-Version: 0.4.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Service-Component: OSGI-INF/mongo.xml
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipselabs.mongo,
  org.eclipselabs.mongo.internal;x-friends:="org.eclipselabs.mongo.junit"
-Import-Package: com.mongodb
+Import-Package: com.mongodb,
+ org.osgi.framework;version="1.6.0"
+Bundle-Activator: org.eclipselabs.mongo.internal.Activator

@@ -12,6 +12,7 @@
 package org.eclipselabs.mongo.internal.emf;
 
 import org.eclipselabs.mongo.IMongoDB;
+import org.eclipselabs.mongo.emf.IMongoEmfQueryEngine;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
@@ -28,25 +29,23 @@ public class Activator implements BundleActivator
 		return mongoTracker.getService();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
-	 */
+	public IMongoEmfQueryEngine getQueryEngine()
+	{
+		return queryEngineTracker.getService();
+	}
+
 	@Override
 	public void start(BundleContext context) throws Exception
 	{
 		mongoTracker = new ServiceTracker<IMongoDB, IMongoDB>(context, IMongoDB.class, null);
 		mongoTracker.open();
 
+		queryEngineTracker = new ServiceTracker<IMongoEmfQueryEngine, IMongoEmfQueryEngine>(context, IMongoEmfQueryEngine.class, null);
+		queryEngineTracker.open();
+
 		instance = this;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
-	 */
 	@Override
 	public void stop(BundleContext context) throws Exception
 	{
@@ -54,8 +53,12 @@ public class Activator implements BundleActivator
 
 		if (mongoTracker != null)
 			mongoTracker.close();
+
+		if (queryEngineTracker != null)
+			queryEngineTracker.close();
 	}
 
 	private static Activator instance;
 	private ServiceTracker<IMongoDB, IMongoDB> mongoTracker;
+	private ServiceTracker<IMongoEmfQueryEngine, IMongoEmfQueryEngine> queryEngineTracker;
 }

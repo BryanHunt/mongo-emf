@@ -36,20 +36,15 @@ import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipselabs.emf.query.BinaryOperation;
-import org.eclipselabs.emf.query.Expression;
-import org.eclipselabs.emf.query.Literal;
 import org.eclipselabs.emf.query.QueryFactory;
 import org.eclipselabs.emf.query.Result;
-import org.eclipselabs.emf.query.util.ExpressionBuilder;
-import org.eclipselabs.emf.query.util.QuerySwitch;
 import org.eclipselabs.mongo.IMongoDB;
+import org.eclipselabs.mongo.emf.IMongoEmfQueryEngine;
 import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
-import com.mongodb.QueryOperators;
 
 /**
  * @author bhunt
@@ -57,16 +52,13 @@ import com.mongodb.QueryOperators;
  */
 public class MongoDBInputStream extends InputStream implements URIConverter.Loadable
 {
-	private IMongoDB mongoDB;
-	private URI uri;
-	private Map<?, ?> options;
-	private Map<Object, Object> response;
-	private static Map<String, EClass> eClassCache = new HashMap<String, EClass>();
-	private boolean proxyAttributes;
-
-	public MongoDBInputStream(IMongoDB mongoDB, URI uri, Map<?, ?> options, Map<Object, Object> response)
+	public MongoDBInputStream(IMongoDB mongoDB, IMongoEmfQueryEngine queryEngine, URI uri, Map<?, ?> options, Map<Object, Object> response) throws IOException
 	{
+		if (queryEngine == null)
+			throw new IOException("The MongoEMF query engine could not be found");
+
 		this.mongoDB = mongoDB;
+		this.queryEngine = queryEngine;
 		this.uri = uri;
 		this.options = options;
 		this.response = response;
@@ -92,16 +84,15 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 		// If the URI contains a query string, use it to locate a collection of objects from
 		// MongoDB, otherwise simply get the object from MongoDB using the id.
 
-		String query = uri.query();
 		DBCollection collection = MongoDBURIHandlerImpl.getCollection(mongoDB, uri, options);
 		EList<EObject> contents = resource.getContents();
 
-		if (query != null)
+		if (uri.query() != null)
 		{
 			Result result = QueryFactory.eINSTANCE.createResult();
 			InternalEList<EObject> values = (InternalEList<EObject>) result.getValues();
 
-			for (DBObject dbObject : collection.find(buildDBObjectQuery(new ExpressionBuilder(URI.decode(query)).parseExpression())))
+			for (DBObject dbObject : collection.find(queryEngine.buildDBObjectQuery(uri)))
 				values.addUnique(buildEObject(collection, dbObject, resource, uriHandler, true));
 
 			contents.add(result);
@@ -341,206 +332,6 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 	}
 
 	/**
-	 * This function builds a DBObject to be used as a query to MongoDB from the EMF Expression
-	 * 
-	 * @param expression the query expression
-	 * @return the DBObject representation of the query
-	 */
-	private DBObject buildDBObjectQuery(Expression expression)
-	{
-		final DBObject dbObject = new BasicDBObject();
-
-		if (expression != null)
-		{
-			new QuerySwitch<Object>()
-			{
-				Object getValue(Literal literal)
-				{
-					return literal.getValue() == null ? literal.getLiteralValue() : literal.getValue();
-				}
-
-				@Override
-				public Object caseBinaryOperation(BinaryOperation binaryOperation)
-				{
-					Expression leftOperand = binaryOperation.getLeftOperand();
-					String operator = binaryOperation.getOperator();
-
-					if ("==".equals(operator))
-					{
-						Expression rightOperand = binaryOperation.getRightOperand();
-						String property = ExpressionBuilder.toString(leftOperand);
-
-						if (MongoDBURIHandlerImpl.ID_KEY.equals(property))
-						{
-							dbObject.put(property, new ObjectId(((Literal) rightOperand).getLiteralValue()));
-						}
-						else if (rightOperand instanceof Literal)
-						{
-							dbObject.put(property, getValue((Literal) rightOperand));
-						}
-						else if ("null".equals(ExpressionBuilder.toString(rightOperand)))
-						{
-							DBObject notExists = new BasicDBObject();
-							notExists.put("$exists", Boolean.FALSE);
-							dbObject.put(property, notExists);
-						}
-						else
-						{
-							// TODO: What to do?
-						}
-					}
-					else if ("!=".equals(operator))
-					{
-						Expression rightOperand = binaryOperation.getRightOperand();
-						String property = ExpressionBuilder.toString(leftOperand);
-						if (rightOperand instanceof Literal)
-						{
-							DBObject notEqual = new BasicDBObject();
-							notEqual.put("$ne", getValue((Literal) rightOperand));
-							dbObject.put(property, notEqual);
-						}
-						else if ("null".equals(ExpressionBuilder.toString(rightOperand)))
-						{
-							DBObject exists = new BasicDBObject();
-							exists.put("$exists", Boolean.TRUE);
-							dbObject.put(property, exists);
-						}
-						else
-						{
-							// TODO: What to do?
-						}
-					}
-					else if ("<".equals(operator) || "<=".equals(operator) || ">".equals(operator) || ">=".equals(operator))
-					{
-						Expression rightOperand = binaryOperation.getRightOperand();
-						String property = ExpressionBuilder.toString(leftOperand);
-						if (rightOperand instanceof Literal)
-						{
-							DBObject compare = new BasicDBObject();
-							compare.put("<".equals(operator) ? QueryOperators.LT : "<=".equals(operator) ? QueryOperators.LTE : ">".equals(operator) ? QueryOperators.GT : QueryOperators.GTE,
-									getValue((Literal) rightOperand));
-							dbObject.put(property, compare);
-						}
-						else
-						{
-							// TODO: What to do?
-						}
-					}
-					else if ("||".equals(operator))
-					{
-						DBObject leftObject = buildDBObjectQuery(leftOperand);
-						DBObject rightObject = buildDBObjectQuery(binaryOperation.getRightOperand());
-						@SuppressWarnings("unchecked")
-						List<Object> or = (List<Object>) leftObject.get("$or");
-						if (or != null)
-						{
-							or.add(rightObject);
-							dbObject.putAll(leftObject);
-						}
-						else
-						{
-							or = new ArrayList<Object>();
-							or.add(leftObject);
-							or.add(rightObject);
-							dbObject.put("$or", or);
-						}
-					}
-					else if ("&&".equals(operator))
-					{
-						dbObject.putAll(buildDBObjectQuery(leftOperand));
-						DBObject rightObject = buildDBObjectQuery(binaryOperation.getRightOperand());
-						for (String field : rightObject.keySet())
-						{
-							Object rightValue = rightObject.get(field);
-							Object leftValue = dbObject.get(field);
-							if (leftValue instanceof DBObject)
-							{
-								DBObject leftDBObject = (DBObject) leftValue;
-								if (rightValue instanceof DBObject)
-								{
-									DBObject rightDBObject = (DBObject) rightValue;
-									if (leftDBObject.containsField("$nin") && rightDBObject.containsField("$ne"))
-									{
-										@SuppressWarnings("unchecked")
-										List<Object> values = (List<Object>) leftDBObject.get("$nin");
-										values.add(rightDBObject.get("$ne"));
-									}
-									else if (leftDBObject.containsField("$ne") && rightDBObject.containsField("$ne"))
-									{
-										DBObject nin = new BasicDBObject();
-										List<Object> values = new ArrayList<Object>();
-										values.add(leftDBObject.get("$ne"));
-										values.add(rightDBObject.get("$ne"));
-										nin.put("$nin", values);
-										dbObject.put(field, nin);
-									}
-									else
-									{
-										leftDBObject.putAll(rightDBObject);
-									}
-								}
-								else
-								{
-									Object all = leftDBObject.get("$all");
-									if (all instanceof List<?>)
-									{
-										@SuppressWarnings("unchecked")
-										List<Object> allList = (List<Object>) all;
-										allList.add(rightValue);
-									}
-									else
-									{
-										// What to do?
-									}
-								}
-							}
-							else if (leftValue instanceof List<?>)
-							{
-								@SuppressWarnings("unchecked")
-								List<Object> leftListValue = (List<Object>) leftValue;
-								if (rightValue instanceof List<?>)
-								{
-									leftListValue.addAll((List<?>) rightValue);
-								}
-								else
-								{
-									leftListValue.add(rightValue);
-								}
-							}
-							else if (leftValue != null)
-							{
-								if (rightValue instanceof List<?>)
-								{
-									@SuppressWarnings("unchecked")
-									List<Object> rightListValue = (List<Object>) rightValue;
-									rightListValue.add(0, leftValue);
-									dbObject.put(field, rightListValue);
-								}
-								else
-								{
-									List<Object> listValue = new ArrayList<Object>();
-									listValue.add(leftValue);
-									listValue.add(rightValue);
-									DBObject in = new BasicDBObject("$all", listValue);
-									dbObject.put(field, in);
-								}
-							}
-							else
-							{
-								dbObject.put(field, rightValue);
-							}
-						}
-					}
-
-					return null;
-				}
-			}.doSwitch(expression);
-		}
-
-		return dbObject;
-	}
-
-	/**
 	 * This function converts the raw value read from MongoDB into the correct type for
 	 * the given datatype.
 	 * 
@@ -596,4 +387,12 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 
 		return EcoreUtil.create(eClass);
 	}
+
+	private IMongoDB mongoDB;
+	private IMongoEmfQueryEngine queryEngine;
+	private URI uri;
+	private Map<?, ?> options;
+	private Map<Object, Object> response;
+	private static Map<String, EClass> eClassCache = new HashMap<String, EClass>();
+	private boolean proxyAttributes;
 }

@@ -57,7 +57,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	 */
 	public MongoDBURIHandlerImpl()
 	{
-		this(Activator.getInstance().getMongoDB());
+		this(Activator.getInstance().getMongoDB(), Activator.getInstance().getQueryEngine());
 	}
 
 	/**
@@ -66,9 +66,10 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	 * 
 	 * @param mongoDB the MongoDB service
 	 */
-	public MongoDBURIHandlerImpl(IMongoDB mongoDB)
+	public MongoDBURIHandlerImpl(IMongoDB mongoDB, IMongoEmfQueryEngine queryEngine)
 	{
 		this.mongoDB = mongoDB;
+		this.queryEngine = queryEngine;
 	}
 
 	@Override
@@ -100,7 +101,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	@Override
 	public InputStream createInputStream(final URI uri, final Map<?, ?> options) throws IOException
 	{
-		return new MongoDBInputStream(mongoDB, uri, options, getResponse(options));
+		return new MongoDBInputStream(mongoDB, queryEngine, uri, options, getResponse(options));
 	}
 
 	@Override
@@ -285,4 +286,5 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	public static final String OPTION_WRITE_CONCERN = "WRITE_CONCERN";
 
 	private IMongoDB mongoDB;
+	private IMongoEmfQueryEngine queryEngine;
 }
