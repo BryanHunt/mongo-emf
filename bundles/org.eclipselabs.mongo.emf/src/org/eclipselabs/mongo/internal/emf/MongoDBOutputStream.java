@@ -324,27 +324,23 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 			Boolean useIdAttributeAsPrimaryKey = (Boolean) options.get(MongoDBURIHandlerImpl.OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY);
 			EAttribute idAttribute = eObject.eClass().getEIDAttribute();
 
-			if (useIdAttributeAsPrimaryKey != null && useIdAttributeAsPrimaryKey && idAttribute != null)
+			boolean idSpecifiedByClient = useIdAttributeAsPrimaryKey != null && useIdAttributeAsPrimaryKey && idAttribute != null;
+
+			if (idSpecifiedByClient)
 			{
 				// Use the ID attribute value as the id
-
 				id = eObject.eGet(idAttribute);
 				dbObject.put("_id", id);
-
-				if (writeConcern == null)
-					collection.insert(dbObject);
-				else
-					collection.insert(dbObject, writeConcern);
 			}
+
+			if (writeConcern == null)
+				collection.insert(dbObject);
 			else
+				collection.insert(dbObject, writeConcern);
+
+			if (!idSpecifiedByClient)
 			{
 				// The id was not specified, so we are creating an object and letting MongoDB generate the id
-
-				if (writeConcern == null)
-					collection.insert(dbObject);
-				else
-					collection.insert(dbObject, writeConcern);
-
 				id = dbObject.get(MongoDBURIHandlerImpl.ID_KEY);
 			}
 
