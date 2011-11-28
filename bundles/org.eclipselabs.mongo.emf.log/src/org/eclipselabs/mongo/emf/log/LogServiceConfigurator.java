@@ -37,6 +37,12 @@ public class LogServiceConfigurator
 		}
 	}
 
+	public static void unconfigureLogService() throws IOException
+	{
+		if (config != null)
+			config.delete();
+	}
+
 	private LogServiceConfigurator()
 	{}
 
@@ -57,7 +63,7 @@ public class LogServiceConfigurator
 
 			try
 			{
-				Configuration config = configAdmin.getConfiguration("org.eclipselabs.mongo.emf.log", null);
+				config = configAdmin.getConfiguration("org.eclipselabs.mongo.emf.log", null);
 				Hashtable<String, Object> properties = new Hashtable<String, Object>(2);
 				properties.put("baseURI", baseURI.toString());
 				properties.put("logLevel", Integer.valueOf(logLevel));
@@ -80,4 +86,6 @@ public class LogServiceConfigurator
 		private URI baseURI;
 		private int logLevel;
 	}
+
+	private static volatile Configuration config;
 }

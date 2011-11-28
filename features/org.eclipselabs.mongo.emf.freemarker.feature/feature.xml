@@ -2,15 +2,16 @@
 <feature
       id="org.eclipselabs.mongo.emf.freemarker.feature"
       label="Mongo EMF FreeMarker Support"
-      version="0.4.0.qualifier"
-      provider-name="EclipseLabs">
+      version="0.5.0.qualifier"
+      provider-name="EclipseLabs"
+      license-feature="org.eclipselabs.mongo.emf.feature">
 
-   <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+   <description url="https://github.com/BryanHunt/mongo-emf/wiki">
+      MongoEMF Freemarker support
    </description>
 
-   <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+   <copyright>
+      Copyright (C) 2010 Bryan Hunt &amp; Ed Merks.  All rights reserved.
    </copyright>
 
    <license url="http://www.example.com/license">

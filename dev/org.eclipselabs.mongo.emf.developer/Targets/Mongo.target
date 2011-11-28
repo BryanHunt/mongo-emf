@@ -1,21 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.6"?>
 
-<target name="Mongo" sequenceNumber="106">
+<target name="Mongo" sequenceNumber="110">
 <locations>
-<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.emf.sdk.feature.group" version="2.7.0.v20110606-0949"/>
-<unit id="org.eclipse.equinox.sdk.feature.group" version="3.7.0.v20110502-7M7W8Z8eNV4UqfbhicjDN-ROgjNc"/>
-<unit id="org.eclipse.pde.feature.group" version="3.7.0.v20110504-0800-7b7qFVpFEx2XnmYtj_9RfO7"/>
-<repository location="http://download.eclipse.org/releases/indigo"/>
-</location>
 <location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.hamcrest.feature.feature.group" version="1.3.0.201107152246"/>
 <repository location="http://quickiemart.springfieldusa.net/Targets/Hamcrest"/>
-</location>
-<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.junit.feature.feature.group" version="4.10.0.201111131747"/>
-<repository location="http://quickiemart.springfieldusa.net/Targets/JUnit4.10"/>
 </location>
 <location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.freemarker.feature.feature.group" version="2.3.0.201104101347"/>
@@ -25,6 +15,16 @@
 <location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="com.mongodb.feature.feature.group" version="2.7.2.201111251414"/>
 <repository location="http://bryanhunt.github.com/mongo-emf/mongodb/2.7.2"/>
+</location>
+<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.emf.sdk.feature.group" version="2.7.1.v20110913-1526"/>
+<unit id="org.eclipse.equinox.sdk.feature.group" version="3.7.1.R37x_v20110907-7M7W8h8eNV4Vrz-hz01A7SL_MhZP"/>
+<unit id="org.eclipse.pde.feature.group" version="3.7.1.r37x_v20110810-0800-7b7qFVtFEx2XnmZ4jlM5mjM"/>
+<repository location="http://download.eclipse.org/releases/indigo"/>
+</location>
+<location includeAllPlatforms="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.junit.feature.feature.group" version="4.9.0.201107152255"/>
+<repository location="http://quickiemart.springfieldusa.net/Targets/JUnit"/>
 </location>
 </locations>
 </target>

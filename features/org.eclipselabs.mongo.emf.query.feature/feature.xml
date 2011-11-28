@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipselabs.emf.query.feature"
-      label="Mongo EMF Query Engine"
+      id="org.eclipselabs.mongo.emf.query.feature"
+      label="MongoEMF Query Engine"
       version="0.5.0.qualifier"
       provider-name="EclipseLabs"
       license-feature="org.eclipselabs.mongo.emf.feature">
 
    <description url="https://github.com/BryanHunt/mongo-emf/wiki">
-      EMF query model
+      MongoEMF query engine.
    </description>
 
-   <copyright>
+   <copyright url="http://www.example.com/copyright">
       Copyright (C) 2010 Bryan Hunt &amp; Ed Merks.  All rights reserved.
    </copyright>
 
@@ -18,8 +18,17 @@
       [Enter License Description here.]
    </license>
 
+   <requires>
+      <import plugin="com.mongodb"/>
+      <import plugin="org.eclipse.emf.common"/>
+      <import plugin="org.eclipse.emf.ecore"/>
+      <import plugin="org.eclipselabs.emf.query"/>
+      <import plugin="org.eclipselabs.mongo.emf"/>
+      <import plugin="org.eclipse.osgi"/>
+   </requires>
+
    <plugin
-         id="org.eclipselabs.emf.query"
+         id="org.eclipselabs.mongo.emf.query"
          download-size="0"
          install-size="0"
          version="0.0.0"

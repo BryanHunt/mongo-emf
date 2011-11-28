@@ -17,6 +17,7 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.util.Collection;
 
 import org.eclipse.emf.common.util.URI;
@@ -155,13 +156,20 @@ public class TestLogService
 	}
 
 	@Test
-	public void testConfigureLogService() throws InterruptedException
+	public void testConfigureLogService() throws InterruptedException, IOException
 	{
-		LogServiceConfigurator.configureLogService(URI.createURI("mongo://localhost/junit/logs/"), LogLevel.LOG_ERROR_VALUE);
-		ServiceTracker<IMongoLogService, IMongoLogService> logServiceTracker = new ServiceTracker<IMongoLogService, IMongoLogService>(Activator.getInstance().getContext(), IMongoLogService.class, null);
-		logServiceTracker.open();
-		IMongoLogService logService = logServiceTracker.waitForService(2000);
-		assertThat(logService, is(notNullValue()));
+		try
+		{
+			LogServiceConfigurator.configureLogService(URI.createURI("mongo://localhost/junit/logs/"), LogLevel.LOG_ERROR_VALUE);
+			ServiceTracker<IMongoLogService, IMongoLogService> logServiceTracker = new ServiceTracker<IMongoLogService, IMongoLogService>(Activator.getInstance().getContext(), IMongoLogService.class, null);
+			logServiceTracker.open();
+			IMongoLogService logService = logServiceTracker.waitForService(2000);
+			assertThat(logService, is(notNullValue()));
+		}
+		finally
+		{
+			LogServiceConfigurator.unconfigureLogService();
+		}
 	}
 
 	private static final String DB_LOGS = "logs";

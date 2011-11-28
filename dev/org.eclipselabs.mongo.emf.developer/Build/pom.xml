@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>mongo-emf</groupId>
   <artifactId>build</artifactId>
-  <version>0.4.0-SNAPSHOT</version>
+  <version>0.5.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <modules>
@@ -11,6 +11,7 @@
     <module>../../../bundles/org.eclipselabs.mongo.emf</module>
     <module>../../../bundles/org.eclipselabs.mongo.emf.freemarker</module>
     <module>../../../bundles/org.eclipselabs.mongo.emf.log</module>
+    <module>../../../bundles/org.eclipselabs.mongo.emf.query</module>
     
     <module>../../../tests/org.eclipselabs.mongo.junit</module>
     <module>../../../tests/org.eclipselabs.mongo.emf.junit</module>
@@ -20,51 +21,26 @@
     <module>../../../features/org.eclipselabs.mongo.emf.feature</module>
     <module>../../../features/org.eclipselabs.mongo.emf.freemarker.feature</module>
 	  <module>../../../features/org.eclipselabs.mongo.emf.log.feature</module>
+	  <module>../../../features/org.eclipselabs.mongo.emf.query.feature</module>	  
     <module>../../../features/org.eclipselabs.mongo.junit.feature</module>
   
     <module>../../../features/org.eclipselabs.emf.query.source.feature</module>
     <module>../../../features/org.eclipselabs.mongo.emf.source.feature</module>
     <module>../../../features/org.eclipselabs.mongo.emf.freemarker.source.feature</module>
 	  <module>../../../features/org.eclipselabs.mongo.emf.log.source.feature</module>
+	  <module>../../../features/org.eclipselabs.mongo.emf.query.source.feature</module>	  
     <module>../../../features/org.eclipselabs.mongo.junit.source.feature</module>
 
     <module>../../../dev/org.eclipselabs.mongo.emf.repository</module>
   </modules>
 
   <properties>
-  	<tycho-version>0.12.0</tycho-version>
+  	<tycho-version>0.13.0</tycho-version>
   	<targets>/Users/bhunt/Documents/Programming/Code/Targets</targets>
 	  <project.build.sourceEncoding>MacRoman</project.build.sourceEncoding>
   </properties>
   
-  <repositories>
-    <repository>
-      <id>helios</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/releases/indigo</url>
-    </repository>
-    <repository>
-      <id>MongoDB</id>
-      <layout>p2</layout>
-      <url>http://quickiemart.springfieldusa.net/Targets/MongoDB/</url>
-    </repository> 
-    <repository>
-      <id>Hamcrest</id>
-      <layout>p2</layout>
-      <url>http://quickiemart.springfieldusa.net/Targets/Hamcrest/</url>
-    </repository>
-     <repository>
-      <id>JUnit</id>
-      <layout>p2</layout>
-      <url>http://quickiemart.springfieldusa.net/Targets/JUnit/</url>
-    </repository> 
-    <repository>
-      <id>Restlet</id>
-      <layout>p2</layout>
-      <url>http://quickiemart.springfieldusa.net/Targets/FreeMarker/</url>
-    </repository> 
-  </repositories>
-
+ 
   <build>
  	<sourceDirectory>src</sourceDirectory>
     <plugins>
@@ -107,7 +83,14 @@
         <configuration>
           <!-- recommended: use p2-based target platform resolver -->
           <resolver>p2</resolver>
-          <pomDependenciesConsider>true</pomDependenciesConsider>
+              <target>
+                <artifact>
+                  <groupId>${project.groupId}</groupId>
+                  <artifactId>${project.artifactId}</artifactId>
+                  <version>${project.version}</version>
+                  <classifier>../../dev/org.eclipselabs.mongo.emf.developer/Targets/Mongo</classifier>
+                </artifact>
+              </target>
           <!-- configure the p2 target environments for multi-platform build -->
           <environments>
             <environment>

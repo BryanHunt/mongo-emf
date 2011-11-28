@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipselabs.mongo.emf.source.feature"
-      label="Mongo EMF Core Runtime Source"
+      id="org.eclipselabs.mongo.emf.query.source.feature"
+      label="MongoEMF Query Engine Source"
       version="0.5.0.qualifier"
       provider-name="EclipseLabs">
 
@@ -18,24 +18,9 @@
    </license>
 
    <plugin
-         id="org.eclipselabs.emf.query.source"
+         id="org.eclipselabs.mongo.emf.query.source"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-
-   <plugin
-         id="org.eclipselabs.mongo.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipselabs.mongo.emf.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
 </feature>

@@ -2,11 +2,12 @@
 <feature
       id="org.eclipselabs.mongo.emf.feature"
       label="Mongo EMF Core Runtime"
-      version="0.4.0.qualifier"
+      version="0.5.0.qualifier"
       provider-name="EclipseLabs">
 
-   <description url="http://code.google.com/a/eclipselabs.org/p/mongo-emf/">
-      Mongo EMF runtime.  This feature contains the necessary bundles to persist EMF objects to MongoDB.
+   <description url="https://github.com/BryanHunt/mongo-emf/wiki">
+      Mongo EMF runtime.  This feature contains the necessary bundles
+to persist EMF objects to MongoDB.
    </description>
 
    <copyright>
