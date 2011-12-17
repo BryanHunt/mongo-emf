@@ -38,8 +38,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipselabs.emf.query.QueryFactory;
 import org.eclipselabs.emf.query.Result;
-import org.eclipselabs.mongo.IMongoDB;
-import org.eclipselabs.mongo.emf.IMongoEmfQueryEngine;
+import org.eclipselabs.mongo.emf.IMongoEmfConverter;
 import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 
 import com.mongodb.BasicDBObject;
@@ -52,13 +51,9 @@ import com.mongodb.DBObject;
  */
 public class MongoDBInputStream extends InputStream implements URIConverter.Loadable
 {
-	public MongoDBInputStream(IMongoDB mongoDB, IMongoEmfQueryEngine queryEngine, URI uri, Map<?, ?> options, Map<Object, Object> response) throws IOException
+	public MongoDBInputStream(MongoDBURIHandlerImpl handler, URI uri, Map<?, ?> options, Map<Object, Object> response) throws IOException
 	{
-		if (queryEngine == null)
-			throw new IOException("The MongoEMF query engine could not be found");
-
-		this.mongoDB = mongoDB;
-		this.queryEngine = queryEngine;
+		this.handler = handler;
 		this.uri = uri;
 		this.options = options;
 		this.response = response;
@@ -84,7 +79,7 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 		// If the URI contains a query string, use it to locate a collection of objects from
 		// MongoDB, otherwise simply get the object from MongoDB using the id.
 
-		DBCollection collection = MongoDBURIHandlerImpl.getCollection(mongoDB, uri, options);
+		DBCollection collection = MongoDBURIHandlerImpl.getCollection(handler.getMongoDB(), uri, options);
 		EList<EObject> contents = resource.getContents();
 
 		if (uri.query() != null)
@@ -92,7 +87,7 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 			Result result = QueryFactory.eINSTANCE.createResult();
 			InternalEList<EObject> values = (InternalEList<EObject>) result.getValues();
 
-			for (DBObject dbObject : collection.find(queryEngine.buildDBObjectQuery(uri)))
+			for (DBObject dbObject : collection.find(handler.getQueryEngine().buildDBObjectQuery(uri)))
 				values.addUnique(buildEObject(collection, dbObject, resource, uriHandler, true));
 
 			contents.add(result);
@@ -199,12 +194,11 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 			else if (attribute.isMany() && !MongoDBURIHandlerImpl.isNativeType(attribute.getEAttributeType()))
 			{
 				ArrayList<Object> values = new ArrayList<Object>();
-				ArrayList<String> rawValues = (ArrayList<String>) value;
-
 				EDataType eDataType = attribute.getEAttributeType();
+				IMongoEmfConverter converter = handler.getConverter(eDataType);
 
-				for (String rawValue : rawValues)
-					values.add(EcoreUtil.createFromString(eDataType, rawValue));
+				for (Object dbValue : (ArrayList<Object>) value)
+					values.add(converter.convertMongoDBValueToEMFValue(eDataType, dbValue));
 
 				eObject.eSet(attribute, values);
 			}
@@ -345,7 +339,7 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 		{
 			// Types not native to MongoDB are stored as strings and must be converted to the proper object type by EMF
 
-			value = EcoreUtil.createFromString(eDataType, (String) value);
+			value = handler.getConverter(eDataType).convertMongoDBValueToEMFValue(eDataType, value);
 		}
 		else if (value != null)
 		{
@@ -388,8 +382,7 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 		return EcoreUtil.create(eClass);
 	}
 
-	private IMongoDB mongoDB;
-	private IMongoEmfQueryEngine queryEngine;
+	private MongoDBURIHandlerImpl handler;
 	private URI uri;
 	private Map<?, ?> options;
 	private Map<Object, Object> response;

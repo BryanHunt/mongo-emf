@@ -19,7 +19,6 @@ import java.util.HashMap;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.TargetObject;
 import org.eclipselabs.mongo.emf.junit.support.BaseTestHarness;
@@ -69,7 +68,8 @@ public class TestMongoEmfReplica extends BaseTestHarness
 		HashMap<String, String> tags = new HashMap<String, String>(1);
 		tags.put("locale", "in");
 
-		actualResourceSet.getLoadOptions().put(MongoDBURIHandlerImpl.OPTION_TAGGED_READ_PREFERENCE, tags);
+// FIXME uncomment when MongoDB properly supports tagged reads		
+//		actualResourceSet.getLoadOptions().put(MongoDBURIHandlerImpl.OPTION_TAGGED_READ_PREFERENCE, tags);
 		Resource actualResource = actualResourceSet.getResource(targetObject.eResource().getURI(), true);
 		EObject actual = actualResource.getContents().get(0);
 		MongoUtil.checkObject(targetObject, actual);

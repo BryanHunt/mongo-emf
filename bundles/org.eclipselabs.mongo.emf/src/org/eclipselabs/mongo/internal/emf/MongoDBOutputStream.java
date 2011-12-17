@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipselabs.emf.query.QueryFactory;
 import org.eclipselabs.emf.query.Result;
-import org.eclipselabs.mongo.IMongoDB;
+import org.eclipselabs.mongo.emf.IMongoEmfConverter;
 import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 
 import com.mongodb.BasicDBObject;
@@ -51,9 +51,9 @@ import com.mongodb.WriteConcern;
  */
 public class MongoDBOutputStream extends ByteArrayOutputStream implements URIConverter.Saveable
 {
-	public MongoDBOutputStream(IMongoDB mongoDB, URI uri, Map<?, ?> options, Map<Object, Object> response)
+	public MongoDBOutputStream(MongoDBURIHandlerImpl handler, URI uri, Map<?, ?> options, Map<Object, Object> response)
 	{
-		this.mongoDB = mongoDB;
+		this.handler = handler;
 		this.uri = uri;
 		this.options = options;
 		this.response = response;
@@ -64,7 +64,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 	public void close() throws IOException
 	{
 		super.close();
-		DBCollection collection = MongoDBURIHandlerImpl.getCollection(mongoDB, uri, options);
+		DBCollection collection = MongoDBURIHandlerImpl.getCollection(handler.getMongoDB(), uri, options);
 
 		// We need to set up the XMLResource.URIHandler so that proxy URIs are handled properly.
 
@@ -162,10 +162,11 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 					if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
 					{
 						EList<?> rawValues = (EList<?>) value;
-						ArrayList<String> values = new ArrayList<String>(rawValues.size());
+						ArrayList<Object> values = new ArrayList<Object>(rawValues.size());
+						IMongoEmfConverter converter = handler.getConverter(eDataType);
 
 						for (Object rawValue : rawValues)
-							values.add(EcoreUtil.convertToString(eDataType, rawValue));
+							values.add(converter.convertEMFValueToMongoDBValue(eDataType, rawValue));
 
 						value = values;
 					}
@@ -246,8 +247,9 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 	private Object getDBAttributeValue(EAttribute attribute, Object rawValue)
 	{
 		EDataType eDataType = attribute.getEAttributeType();
+
 		if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
-			return EcoreUtil.convertToString(eDataType, rawValue);
+			return handler.getConverter(eDataType).convertEMFValueToMongoDBValue(eDataType, rawValue);
 
 		return rawValue;
 	}
@@ -272,7 +274,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 				EAttribute idAttribute = eObject.eClass().getEIDAttribute();
 
 				if (idAttribute != null)
-					dbObject.put("_id", eObject.eGet(idAttribute));
+					dbObject.put(MongoDBURIHandlerImpl.ID_KEY, eObject.eGet(idAttribute));
 			}
 
 			dbObjects.add(dbObject);
@@ -330,7 +332,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 			{
 				// Use the ID attribute value as the id
 				id = eObject.eGet(idAttribute);
-				dbObject.put("_id", id);
+				dbObject.put(MongoDBURIHandlerImpl.ID_KEY, id);
 			}
 
 			if (writeConcern == null)
@@ -360,7 +362,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 			// object. If the object already exists, then it will be updated; otherwise it will
 			// be inserted.
 
-			dbObject.put("_id", id);
+			dbObject.put(MongoDBURIHandlerImpl.ID_KEY, id);
 
 			if (writeConcern == null)
 				collection.save(dbObject);
@@ -369,7 +371,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 		}
 	}
 
-	private IMongoDB mongoDB;
+	private MongoDBURIHandlerImpl handler;
 	private Map<?, ?> options;
 	private Resource resource;
 	private Map<Object, Object> response;
