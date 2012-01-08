@@ -11,14 +11,9 @@
 
 package org.eclipselabs.mongo.emf;
 
-import java.util.HashMap;
-
-import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.EContentAdapter;
 
 /**
  * This implementation of ResourceSet gives better performance when loading many
@@ -30,64 +25,41 @@ import org.eclipse.emf.ecore.util.EContentAdapter;
  * @author bhunt
  * 
  */
-public class MongoResourceSetImpl extends ResourceSetImpl
+public class SharedMongoResourceSetImpl extends MongoResourceSetImpl
 {
-	public MongoResourceSetImpl()
+	public SharedMongoResourceSetImpl()
 	{
-		setURIResourceMap(new HashMap<URI, Resource>());
-		getURIConverter();
+		// Call getResources() to create the resources instance in the base class.
+		// We will synchronize on the instance variable later, so it must be created now.
 
-		eAdapters().add(new EContentAdapter()
-		{
-			@Override
-			protected void setTarget(Resource target)
-			{
-				URI uri = target.getURI();
-
-				if (uri != null)
-					addCachedResource(uriConverter.normalize(uri), target);
-			}
-
-			@Override
-			protected void unsetTarget(Resource target)
-			{
-				URI uri = target.getURI();
-
-				if (uri != null)
-					removeCachedResource(uriConverter.normalize(uri));
-			}
-
-			@Override
-			protected void selfAdapt(Notification notification)
-			{
-				Object notifier = notification.getNotifier();
-
-				if (notifier instanceof ResourceSet)
-				{
-					if (notification.getFeatureID(ResourceSet.class) == ResourceSet.RESOURCE_SET__RESOURCES)
-						handleContainment(notification);
-				}
-				else if (notifier instanceof Resource)
-				{
-					if (notification.getFeatureID(Resource.class) == Resource.RESOURCE__URI)
-					{
-						Object oldURI = notification.getOldValue();
-
-						if (oldURI != null)
-							removeCachedResource(uriConverter.normalize((URI) oldURI));
-
-						Object newURI = notification.getNewValue();
-
-						if (newURI != null)
-							addCachedResource(uriConverter.normalize((URI) newURI), (Resource) notifier);
-					}
-				}
-			}
-		});
+		getResources();
 	}
 
 	@Override
-	public Resource getResource(URI uri, boolean loadOnDemand)
+	public Resource createResource(URI uri, String contentType)
+	{
+		Resource.Factory resourceFactory = getResourceFactoryRegistry().getFactory(uri, contentType);
+
+		if (resourceFactory != null)
+		{
+			Resource result = resourceFactory.createResource(uri);
+			EList<Resource> localResources = getResources();
+
+			synchronized (localResources)
+			{
+				localResources.add(result);
+			}
+
+			return result;
+		}
+		else
+		{
+			return null;
+		}
+	}
+
+	@Override
+	public synchronized Resource getResource(URI uri, boolean loadOnDemand)
 	{
 		URI normalizedURI = uriConverter.normalize(uri);
 		Resource resource = getCachedResource(normalizedURI);
@@ -117,16 +89,25 @@ public class MongoResourceSetImpl extends ResourceSetImpl
 
 	protected void addCachedResource(URI uri, Resource resource)
 	{
-		uriResourceMap.put(uri, resource);
+		synchronized (uriResourceMap)
+		{
+			uriResourceMap.put(uri, resource);
+		}
 	}
 
 	protected Resource getCachedResource(URI uri)
 	{
-		return uriResourceMap.get(uri);
+		synchronized (uriResourceMap)
+		{
+			return uriResourceMap.get(uri);
+		}
 	}
 
 	protected void removeCachedResource(URI uri)
 	{
-		uriResourceMap.remove(uri);
+		synchronized (uriResourceMap)
+		{
+			uriResourceMap.remove(uri);
+		}
 	}
 }
