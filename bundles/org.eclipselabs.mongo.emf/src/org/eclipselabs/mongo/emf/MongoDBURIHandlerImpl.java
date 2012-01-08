@@ -77,7 +77,10 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	}
 
 	/**
-	 * Adds the converter and makes it available for consideration when serializing and de-serializing an object
+	 * Adds the converter and makes it available for consideration when serializing and de-serializing an object.
+	 * Converters are considered in the order in which they are added with the last one added being first. The
+	 * default converter is added by the constructor and will therefore be considered last. The first converter
+	 * where isConverterForType() returns true is the one used to convert the value.
 	 * 
 	 * @param converter the converter to add
 	 */
