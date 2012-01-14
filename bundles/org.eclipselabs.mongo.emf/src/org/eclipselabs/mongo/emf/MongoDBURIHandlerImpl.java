@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.UnknownHostException;
-import java.util.LinkedList;
 import java.util.Map;
 
 import org.bson.types.ObjectId;
@@ -25,7 +24,7 @@ import org.eclipse.emf.ecore.resource.impl.BinaryResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
 import org.eclipselabs.mongo.IMongoDB;
 import org.eclipselabs.mongo.internal.emf.Activator;
-import org.eclipselabs.mongo.internal.emf.DefaultMongoEmfConverter;
+import org.eclipselabs.mongo.internal.emf.ConverterService;
 import org.eclipselabs.mongo.internal.emf.MongoDBInputStream;
 import org.eclipselabs.mongo.internal.emf.MongoDBOutputStream;
 
@@ -50,7 +49,7 @@ import com.mongodb.MongoURI;
  * @author bhunt
  * 
  */
-public class MongoDBURIHandlerImpl extends URIHandlerImpl
+public class MongoDBURIHandlerImpl extends URIHandlerImpl implements IConverterService
 {
 	/**
 	 * This constructor can be used in an OSGi environment and will get the IMongoDB service from the
@@ -71,9 +70,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	{
 		this.mongoDB = mongoDB;
 		this.queryEngine = queryEngine;
-		this.converters = new LinkedList<IMongoEmfConverter>();
-
-		converters.add(new DefaultMongoEmfConverter());
+		this.converterService = new ConverterService();
 	}
 
 	/**
@@ -84,11 +81,10 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	 * 
 	 * @param converter the converter to add
 	 */
+	@Override
 	public void addConverter(IMongoEmfConverter converter)
 	{
-		// The converter must be added at the beginning of the list so that the default converter is considered last
-
-		converters.addFirst(converter);
+		converterService.addConverter(converter);
 	}
 
 	@Override
@@ -97,6 +93,18 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		// This handler should only accept URIs with the scheme "mongo"
 
 		return "mongo".equalsIgnoreCase(uri.scheme());
+	}
+
+	@Override
+	public Object convertEMFValueToMongoDBValue(EDataType eDataType, Object emfValue)
+	{
+		return converterService.convertEMFValueToMongoDBValue(eDataType, emfValue);
+	}
+
+	@Override
+	public Object convertMongoDBValueToEMFValue(EDataType eDataType, Object value)
+	{
+		return converterService.convertMongoDBValueToEMFValue(eDataType, value);
 	}
 
 	@Override
@@ -120,17 +128,10 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	 * @param eDataType the data type needing conversion
 	 * @return the converter for the specified data type
 	 */
+	@Override
 	public IMongoEmfConverter getConverter(EDataType eDataType)
 	{
-		for (IMongoEmfConverter converter : converters)
-		{
-			if (converter.isConverterForType(eDataType))
-				return converter;
-		}
-
-		// We should never return null since the list of converters always contains a default converter
-
-		throw new IllegalStateException("The default converter was not found - this should never happen");
+		return converterService.getConverter(eDataType);
 	}
 
 	/**
@@ -182,9 +183,10 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	 * 
 	 * @param converter the converter to remove
 	 */
+	@Override
 	public void removeConverter(IMongoEmfConverter converter)
 	{
-		converters.remove(converter);
+		converterService.removeConverter(converter);
 	}
 
 	/**
@@ -355,5 +357,5 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 	private IMongoDB mongoDB;
 	private IMongoEmfQueryEngine queryEngine;
-	private LinkedList<IMongoEmfConverter> converters;
+	private IConverterService converterService;
 }

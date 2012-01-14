@@ -14,32 +14,21 @@ package org.eclipselabs.mongo.internal.emf;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.FeatureMap;
-import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipselabs.emf.query.QueryFactory;
 import org.eclipselabs.emf.query.Result;
-import org.eclipselabs.mongo.emf.IMongoEmfConverter;
 import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 
-import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
@@ -57,7 +46,6 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 		this.uri = uri;
 		this.options = options;
 		this.response = response;
-		this.serializeDefault = false;
 	}
 
 	@Override
@@ -84,14 +72,17 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 		uriHandler.setBaseURI(resource.getURI());
 
 		Boolean serializeOption = (Boolean) options.get(MongoDBURIHandlerImpl.OPTION_SERIALIZE_DEFAULT_ATTRIBUTE_VALUES);
+		boolean serializeDefault = false;
 
 		if (serializeOption != null)
 			serializeDefault = serializeOption;
 
+		builder = new DBObjectBuilder(handler, uriHandler, serializeDefault);
+
 		if (resource.getContents().size() == 1)
-			saveSingleObject(collection, uriHandler, id, response);
+			saveSingleObject(collection, id, response);
 		else
-			saveMultipleObjects(collection, uriHandler, response);
+			saveMultipleObjects(collection, response);
 	}
 
 	@Override
@@ -100,161 +91,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 		this.resource = resource;
 	}
 
-	private DBObject buildDBObject(DB db, EObject eObject, XMLResource.URIHandler uriHandler) throws IOException
-	{
-		// Build a MongoDB object from the EMF object.
-
-		BasicDBObject dbObject = new BasicDBObject();
-		EClass eClass = eObject.eClass();
-
-		// We have to add the URI of the class to the object so that we can
-		// reconstruct the EMF object when we read it back out of MongoDB.
-
-		dbObject.put(MongoDBURIHandlerImpl.ECLASS_KEY, EcoreUtil.getURI(eClass).toString());
-
-		// Save the XML extrinsic id if necessary
-
-		Resource resource = eObject.eResource();
-
-		if (resource instanceof XMLResource)
-		{
-			String id = ((XMLResource) resource).getID(eObject);
-
-			if (id != null)
-				dbObject.put(MongoDBURIHandlerImpl.EXTRINSIC_ID_KEY, id);
-		}
-
-		// All attributes are mapped as key / value pairs with the key being the attribute name.
-
-		for (EAttribute attribute : eClass.getEAllAttributes())
-		{
-			if (!attribute.isTransient() && (eObject.eIsSet(attribute) || (!attribute.isUnsettable() && serializeDefault)))
-			{
-				Object value = eObject.eGet(attribute);
-
-				if (FeatureMapUtil.isFeatureMap(attribute))
-				{
-					FeatureMap.Internal featureMap = (FeatureMap.Internal) value;
-					Iterator<FeatureMap.Entry> iterator = featureMap.basicIterator();
-					ArrayList<DBObject> dbFeatureMap = new ArrayList<DBObject>();
-
-					while (iterator.hasNext())
-					{
-						DBObject dbEntry = new BasicDBObject();
-						FeatureMap.Entry entry = iterator.next();
-						EStructuralFeature feature = entry.getEStructuralFeature();
-						dbEntry.put("key", EcoreUtil.getURI(feature).toString());
-
-						if (feature instanceof EAttribute)
-							dbEntry.put("value", getDBAttributeValue((EAttribute) feature, entry.getValue()));
-						else
-							dbEntry.put("value", buildDBReference(db, (EReference) feature, (EObject) entry.getValue(), uriHandler));
-
-						dbFeatureMap.add(dbEntry);
-					}
-
-					value = dbFeatureMap;
-				}
-				else if (attribute.isMany())
-				{
-					EDataType eDataType = attribute.getEAttributeType();
-
-					if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
-					{
-						EList<?> rawValues = (EList<?>) value;
-						ArrayList<Object> values = new ArrayList<Object>(rawValues.size());
-						IMongoEmfConverter converter = handler.getConverter(eDataType);
-
-						for (Object rawValue : rawValues)
-							values.add(converter.convertEMFValueToMongoDBValue(eDataType, rawValue));
-
-						value = values;
-					}
-				}
-				else
-					value = getDBAttributeValue(attribute, value);
-
-				dbObject.put(attribute.getName(), value);
-			}
-		}
-
-		// All references are mapped as key / value pairs with the key being the reference name.
-
-		for (EReference reference : eClass.getEAllReferences())
-		{
-			if (!reference.isTransient() && eObject.eIsSet(reference))
-			{
-				Object value = eObject.eGet(reference, false);
-
-				if (reference.isMany())
-				{
-					// One to many reference
-
-					@SuppressWarnings("unchecked")
-					List<EObject> targetObjects = ((InternalEList<EObject>) value).basicList();
-					ArrayList<Object> dbReferences = new ArrayList<Object>(targetObjects.size());
-
-					for (EObject targetObject : targetObjects)
-						dbReferences.add(buildDBReference(db, reference, targetObject, uriHandler));
-
-					value = dbReferences;
-				}
-				else if (value != null)
-				{
-					// One to one reference
-
-					EObject targetObject = (EObject) value;
-
-					value = buildDBReference(db, reference, targetObject, uriHandler);
-				}
-
-				dbObject.put(reference.getName(), value);
-			}
-		}
-
-		return dbObject;
-	}
-
-	private Object buildDBReference(DB db, EReference eReference, EObject targetObject, XMLResource.URIHandler uriHandler) throws IOException
-	{
-		InternalEObject internalEObject = (InternalEObject) targetObject;
-		URI eProxyURI = internalEObject.eProxyURI();
-
-		if (eProxyURI != null)
-		{
-			BasicDBObject dbObject = new BasicDBObject(2);
-			dbObject.put(MongoDBURIHandlerImpl.PROXY_KEY, uriHandler.deresolve(eProxyURI).toString());
-			dbObject.put(MongoDBURIHandlerImpl.ECLASS_KEY, EcoreUtil.getURI(targetObject.eClass()).toString());
-			return dbObject;
-		}
-		else if (!eReference.isContainment() || (eReference.isResolveProxies() && internalEObject.eDirectResource() != null))
-		{
-			// Cross-document containment, or non-containment reference - build a proxy
-
-			BasicDBObject dbObject = new BasicDBObject(2);
-			dbObject.put(MongoDBURIHandlerImpl.PROXY_KEY, uriHandler.deresolve(EcoreUtil.getURI(targetObject)).toString());
-			dbObject.put(MongoDBURIHandlerImpl.ECLASS_KEY, EcoreUtil.getURI(targetObject.eClass()).toString());
-			return dbObject;
-		}
-		else
-		{
-			// Non cross-document containment reference - build a MongoDB embedded object
-
-			return buildDBObject(db, targetObject, uriHandler);
-		}
-	}
-
-	private Object getDBAttributeValue(EAttribute attribute, Object rawValue)
-	{
-		EDataType eDataType = attribute.getEAttributeType();
-
-		if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
-			return handler.getConverter(eDataType).convertEMFValueToMongoDBValue(eDataType, rawValue);
-
-		return rawValue;
-	}
-
-	private void saveMultipleObjects(DBCollection collection, XMLResource.URIHandler uriHandler, Map<Object, Object> response) throws IOException
+	private void saveMultipleObjects(DBCollection collection, Map<Object, Object> response) throws IOException
 	{
 		EList<EObject> contents = resource.getContents();
 		ArrayList<DBObject> dbObjects = new ArrayList<DBObject>(contents.size());
@@ -266,7 +103,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 
 		for (EObject eObject : contents)
 		{
-			DBObject dbObject = buildDBObject(db, eObject, uriHandler);
+			DBObject dbObject = builder.buildDBObject(db, eObject);
 			dbObject.put(MongoDBURIHandlerImpl.TIME_STAMP_KEY, timeStamp);
 
 			if (useIdAttributeAsPrimaryKey != null && useIdAttributeAsPrimaryKey)
@@ -304,12 +141,12 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 		contents.add(result);
 	}
 
-	private void saveSingleObject(DBCollection collection, XMLResource.URIHandler uriHandler, Object id, Map<Object, Object> response) throws IOException
+	private void saveSingleObject(DBCollection collection, Object id, Map<Object, Object> response) throws IOException
 	{
 		// Build a MongoDB object from the EMF object.
 
 		EObject eObject = resource.getContents().get(0);
-		DBObject dbObject = buildDBObject(collection.getDB(), eObject, uriHandler);
+		DBObject dbObject = builder.buildDBObject(collection.getDB(), eObject);
 
 		// The timestamp needs to be persisted with the object, and set in the response
 
@@ -376,5 +213,5 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 	private Resource resource;
 	private Map<Object, Object> response;
 	private URI uri;
-	private boolean serializeDefault;
+	private DBObjectBuilder builder;
 }
