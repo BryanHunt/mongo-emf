@@ -47,6 +47,7 @@ import com.mongodb.DBObject;
 public class EObjectBuilder
 {
 	/**
+	 * Constructs an object builder without an EClass cache.
 	 * 
 	 * @param converterService the service to use when converting attribute values
 	 * @param uriHandler the handler for creating proxy URIs
@@ -58,11 +59,12 @@ public class EObjectBuilder
 	}
 
 	/**
+	 * Constructs an object builder with an optional EClass cache.
 	 * 
 	 * @param converterService the service to use when converting attribute values
 	 * @param uriHandler the handler for creating proxy URIs
 	 * @param includeAttributesForProxyReferences true if you want attribute values to be set on proxy references; false otherwise
-	 * @param eClassCache the cache to use to EClass lookups when building the EObject instance
+	 * @param eClassCache the cache to use to EClass lookups when building the EObject instance - may be null
 	 */
 	public EObjectBuilder(IConverterService converterService, XMLResource.URIHandler uriHandler, boolean includeAttributesForProxyReferences, Map<String, EClass> eClassCache)
 	{
