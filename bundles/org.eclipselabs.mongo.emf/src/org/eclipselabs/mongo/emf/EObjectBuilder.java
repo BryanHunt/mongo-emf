@@ -37,8 +37,12 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 
 /**
- * @author bhunt
+ * This class builds EMF EObjects from a MongoDB DBObject. This builder is designed to be extensible,
+ * but you must be aware of the assumptions made by each of the functions in the builder.
  * 
+ * This class is thread safe.
+ * 
+ * @author bhunt
  */
 public class EObjectBuilder
 {

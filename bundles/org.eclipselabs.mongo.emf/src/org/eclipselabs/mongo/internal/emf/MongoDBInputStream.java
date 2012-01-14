@@ -13,10 +13,12 @@ package org.eclipselabs.mongo.internal.emf;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
@@ -61,7 +63,7 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 			uriHandler.setBaseURI(resource.getURI());
 
 		boolean proxyAttributes = Boolean.TRUE.equals(options.get(MongoDBURIHandlerImpl.OPTION_PROXY_ATTRIBUTES));
-		EObjectBuilder builder = new EObjectBuilder(handler, uriHandler, proxyAttributes);
+		EObjectBuilder builder = new EObjectBuilder(handler, uriHandler, proxyAttributes, eClassCache);
 
 		// If the URI contains a query string, use it to locate a collection of objects from
 		// MongoDB, otherwise simply get the object from MongoDB using the id.
@@ -108,4 +110,5 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 	private Map<?, ?> options;
 	private Map<Object, Object> response;
 	private MongoDBURIHandlerImpl handler;
+	private HashMap<String, EClass> eClassCache = new HashMap<String, EClass>();
 }
