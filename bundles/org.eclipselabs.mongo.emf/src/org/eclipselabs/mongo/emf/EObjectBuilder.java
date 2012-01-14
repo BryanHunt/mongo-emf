@@ -12,7 +12,6 @@
 package org.eclipselabs.mongo.emf;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,6 +49,18 @@ public class EObjectBuilder
 	 * @param includeAttributesForProxyReferences true if you want attribute values to be set on proxy references; false otherwise
 	 */
 	public EObjectBuilder(IConverterService converterService, XMLResource.URIHandler uriHandler, boolean includeAttributesForProxyReferences)
+	{
+		this(converterService, uriHandler, includeAttributesForProxyReferences, null);
+	}
+
+	/**
+	 * 
+	 * @param converterService the service to use when converting attribute values
+	 * @param uriHandler the handler for creating proxy URIs
+	 * @param includeAttributesForProxyReferences true if you want attribute values to be set on proxy references; false otherwise
+	 * @param eClassCache the cache to use to EClass lookups when building the EObject instance
+	 */
+	public EObjectBuilder(IConverterService converterService, XMLResource.URIHandler uriHandler, boolean includeAttributesForProxyReferences, Map<String, EClass> eClassCache)
 	{
 		this.converterService = converterService;
 		this.uriHandler = uriHandler;
@@ -337,24 +348,41 @@ public class EObjectBuilder
 	protected EObject createEObject(ResourceSet resourceSet, DBObject dbObject)
 	{
 		String eClassURI = (String) dbObject.get(MongoDBURIHandlerImpl.ECLASS_KEY);
-		EClass eClass;
+		EClass eClass = getEClass(resourceSet, eClassURI);
+		return EcoreUtil.create(eClass);
+	}
 
-		synchronized (eClassCache)
+	/**
+	 * Finds the EClass for the given URI
+	 * 
+	 * @param resourceSet the resource set used to locate the EClass if it was not
+	 *          found in the cache
+	 * @param eClassURI the URI of the EClass
+	 * @return the EClass instance for the given URI
+	 */
+	protected EClass getEClass(ResourceSet resourceSet, String eClassURI)
+	{
+		if (eClassCache != null)
 		{
-			eClass = eClassCache.get(eClassURI);
-
-			if (eClass == null)
+			synchronized (eClassCache)
 			{
-				eClass = (EClass) resourceSet.getEObject(URI.createURI(eClassURI), true);
-				eClassCache.put(eClassURI, eClass);
+				EClass eClass = eClassCache.get(eClassURI);
+
+				if (eClass == null)
+				{
+					eClass = (EClass) resourceSet.getEObject(URI.createURI(eClassURI), true);
+					eClassCache.put(eClassURI, eClass);
+				}
+
+				return eClass;
 			}
 		}
 
-		return EcoreUtil.create(eClass);
+		return (EClass) resourceSet.getEObject(URI.createURI(eClassURI), true);
 	}
 
 	private IConverterService converterService;
 	private XMLResource.URIHandler uriHandler;
-	private static Map<String, EClass> eClassCache = new HashMap<String, EClass>();
+	private Map<String, EClass> eClassCache;
 	private boolean includeAttributesForProxyReferences;
 }

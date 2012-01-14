@@ -44,17 +44,11 @@ import com.mongodb.DBObject;
  */
 public class DBObjectBuilder
 {
-	/**
-	 * @param converterService
-	 * @param options
-	 * @param resource
-	 * @param serializeDefault
-	 */
-	public DBObjectBuilder(IConverterService converterService, XMLResource.URIHandler uriHandler, boolean serializeDefault)
+	public DBObjectBuilder(IConverterService converterService, XMLResource.URIHandler uriHandler, boolean serializeDefaultAttributeValues)
 	{
 		this.converterService = converterService;
 		this.uriHandler = uriHandler;
-		this.serializeDefault = serializeDefault;
+		this.serializeDefaultAttributeValues = serializeDefaultAttributeValues;
 	}
 
 	public DBObject buildDBObject(DB db, EObject eObject) throws IOException
@@ -85,7 +79,7 @@ public class DBObjectBuilder
 
 		for (EAttribute attribute : eClass.getEAllAttributes())
 		{
-			if (!attribute.isTransient() && (eObject.eIsSet(attribute) || (!attribute.isUnsettable() && serializeDefault)))
+			if (!attribute.isTransient() && (eObject.eIsSet(attribute) || (!attribute.isUnsettable() && serializeDefaultAttributeValues)))
 			{
 				Object value = eObject.eGet(attribute);
 
@@ -103,9 +97,9 @@ public class DBObjectBuilder
 						dbEntry.put("key", EcoreUtil.getURI(feature).toString());
 
 						if (feature instanceof EAttribute)
-							dbEntry.put("value", getDBAttributeValue((EAttribute) feature, entry.getValue()));
+							dbEntry.put("value", buildAttributeValue((EAttribute) feature, entry.getValue()));
 						else
-							dbEntry.put("value", buildDBReference(db, (EReference) feature, (EObject) entry.getValue()));
+							dbEntry.put("value", buildReference(db, (EReference) feature, (EObject) entry.getValue()));
 
 						dbFeatureMap.add(dbEntry);
 					}
@@ -128,7 +122,7 @@ public class DBObjectBuilder
 					}
 				}
 				else
-					value = getDBAttributeValue(attribute, value);
+					value = buildAttributeValue(attribute, value);
 
 				dbObject.put(attribute.getName(), value);
 			}
@@ -151,7 +145,7 @@ public class DBObjectBuilder
 					ArrayList<Object> dbReferences = new ArrayList<Object>(targetObjects.size());
 
 					for (EObject targetObject : targetObjects)
-						dbReferences.add(buildDBReference(db, reference, targetObject));
+						dbReferences.add(buildReference(db, reference, targetObject));
 
 					value = dbReferences;
 				}
@@ -161,7 +155,7 @@ public class DBObjectBuilder
 
 					EObject targetObject = (EObject) value;
 
-					value = buildDBReference(db, reference, targetObject);
+					value = buildReference(db, reference, targetObject);
 				}
 
 				dbObject.put(reference.getName(), value);
@@ -171,7 +165,7 @@ public class DBObjectBuilder
 		return dbObject;
 	}
 
-	protected Object buildDBReference(DB db, EReference eReference, EObject targetObject) throws IOException
+	protected Object buildReference(DB db, EReference eReference, EObject targetObject) throws IOException
 	{
 		InternalEObject internalEObject = (InternalEObject) targetObject;
 		URI eProxyURI = internalEObject.eProxyURI();
@@ -200,7 +194,7 @@ public class DBObjectBuilder
 		}
 	}
 
-	protected Object getDBAttributeValue(EAttribute attribute, Object rawValue)
+	protected Object buildAttributeValue(EAttribute attribute, Object rawValue)
 	{
 		EDataType eDataType = attribute.getEAttributeType();
 
@@ -212,5 +206,5 @@ public class DBObjectBuilder
 
 	private IConverterService converterService;
 	private XMLResource.URIHandler uriHandler;
-	private boolean serializeDefault;
+	private boolean serializeDefaultAttributeValues;
 }

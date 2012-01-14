@@ -157,7 +157,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl implements IConverterS
 	{
 		// It is assumed that delete is called with the URI path /database/collection/id
 
-		DBCollection collection = getCollection(mongoDB, uri, options);
+		DBCollection collection = getCollection(uri, options);
 		collection.findAndRemove(new BasicDBObject(ID_KEY, getID(uri)));
 	}
 
@@ -169,7 +169,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl implements IConverterS
 
 		try
 		{
-			DBCollection collection = getCollection(mongoDB, uri, options);
+			DBCollection collection = getCollection(uri, options);
 			return collection.findOne(new BasicDBObject(ID_KEY, getID(uri))) != null;
 		}
 		catch (Exception exception)
@@ -200,7 +200,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl implements IConverterS
 	 * @throws UnknownHostException if the host specified in the URI can't be found
 	 * @throws IOException if the URI is malformed or the collection could not otherwise be resolved
 	 */
-	public static DBCollection getCollection(IMongoDB mongoDB, URI uri, Map<?, ?> options) throws UnknownHostException, IOException
+	public DBCollection getCollection(URI uri, Map<?, ?> options) throws UnknownHostException, IOException
 	{
 		// We assume that the URI path has the form /database/collection/{id} making the
 		// collection segment # 1.

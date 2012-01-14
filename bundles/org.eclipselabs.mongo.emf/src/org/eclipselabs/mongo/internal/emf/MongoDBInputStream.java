@@ -66,7 +66,7 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 		// If the URI contains a query string, use it to locate a collection of objects from
 		// MongoDB, otherwise simply get the object from MongoDB using the id.
 
-		DBCollection collection = MongoDBURIHandlerImpl.getCollection(handler.getMongoDB(), uri, options);
+		DBCollection collection = handler.getCollection(uri, options);
 		EList<EObject> contents = resource.getContents();
 
 		if (uri.query() != null)
