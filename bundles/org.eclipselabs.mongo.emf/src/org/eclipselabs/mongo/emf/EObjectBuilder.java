@@ -9,7 +9,7 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.internal.emf;
+package org.eclipselabs.mongo.emf;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,8 +32,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipselabs.mongo.emf.IConverterService;
-import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -45,13 +43,31 @@ import com.mongodb.DBObject;
  */
 public class EObjectBuilder
 {
-	public EObjectBuilder(IConverterService converterService, XMLResource.URIHandler uriHandler, boolean proxyAttributes)
+	/**
+	 * 
+	 * @param converterService the service to use when converting attribute values
+	 * @param uriHandler the handler for creating proxy URIs
+	 * @param includeAttributesForProxyReferences true if you want attribute values to be set on proxy references; false otherwise
+	 */
+	public EObjectBuilder(IConverterService converterService, XMLResource.URIHandler uriHandler, boolean includeAttributesForProxyReferences)
 	{
 		this.converterService = converterService;
 		this.uriHandler = uriHandler;
-		this.proxyAttributes = proxyAttributes;
+		this.includeAttributesForProxyReferences = includeAttributesForProxyReferences;
 	}
 
+	/**
+	 * Build an EMF EObject from the supplied DBObject from MongoDB.
+	 * 
+	 * @param collection the MongoDB collection containing the DBObject
+	 * @param dbObject the object read from MongoDB
+	 * @param resource the resource that will contain the EMF Object
+	 *          This function will not add the created to the supplied resource
+	 *          to support the case where the user wishes to return a collection
+	 *          of objects such as the result of a query.
+	 * @param isProxy true if the object is to be built as a proxy; false otherwise
+	 * @return the newly created EMF object instance
+	 */
 	public EObject buildEObject(DBCollection collection, DBObject dbObject, Resource resource, boolean isProxy)
 	{
 		// Build an empty EMF object to hold the data from the MongodDB object
@@ -96,90 +112,114 @@ public class EObjectBuilder
 	}
 
 	/**
-	 * @param collection
-	 * @param dbObject
-	 * @param resource
-	 * @param uriHandler
-	 * @param resourceSet
-	 * @param eObject
-	 * @param attribute
+	 * Builds an attribute value from the DBObject, converting the value if necessary.
+	 * Feature maps are delegated to buildFeatureMap() and non-native arrays to
+	 * buildAttributeArray(). The converter service is used for value conversion.
+	 * Attribute values are expected to be mapped in the DBObject using the attribute
+	 * name as the key.
+	 * 
+	 * @param collection the MongoDB collection containing the DBObject
+	 * @param dbObject the object read from MongoDB
+	 * @param resource the resource that will contain the EMF Object
+	 * @param eObject the EMF object being built
+	 * @param attribute the attribute to set on the EMF object
 	 */
+	@SuppressWarnings("unchecked")
 	protected void buildAttribute(DBCollection collection, DBObject dbObject, Resource resource, EObject eObject, EAttribute attribute)
 	{
+		// Attributes are mapped as key / value pairs with the key being the attribute name.
+
 		if (!attribute.isTransient() && dbObject.containsField(attribute.getName()))
 		{
-			// Attributes are mapped as key / value pairs with the key being the attribute name.
-
 			Object value = dbObject.get(attribute.getName());
 
 			if (FeatureMapUtil.isFeatureMap(attribute))
-				buildFeatureMap(collection, resource, eObject, attribute, value);
+				buildFeatureMap(collection, resource, eObject, attribute, (List<DBObject>) value);
 			else if (attribute.isMany() && !MongoDBURIHandlerImpl.isNativeType(attribute.getEAttributeType()))
-				buildAttributeArray(eObject, attribute, value);
+				buildAttributeArray(eObject, attribute, (List<Object>) value);
 			else
 				eObject.eSet(attribute, converterService.convertMongoDBValueToEMFValue(attribute.getEAttributeType(), value));
 		}
 	}
 
 	/**
-	 * @param eObject
-	 * @param attribute
-	 * @param value
+	 * Builds a multi-value attribute from a collection of values. Each value is
+	 * converted using the converter service.
+	 * 
+	 * @param eObject the EMF object being built
+	 * @param attribute the attribute to set on the EMF object
+	 * @param values the raw, unconverted, collection of values of the attribute
 	 */
-	@SuppressWarnings("unchecked")
-	protected void buildAttributeArray(EObject eObject, EAttribute attribute, Object value)
+	protected void buildAttributeArray(EObject eObject, EAttribute attribute, List<Object> values)
 	{
-		ArrayList<Object> values = new ArrayList<Object>();
+		ArrayList<Object> convertedValues = new ArrayList<Object>();
 		EDataType eDataType = attribute.getEAttributeType();
 
-		for (Object dbValue : (ArrayList<Object>) value)
-			values.add(converterService.convertMongoDBValueToEMFValue(eDataType, dbValue));
+		for (Object dbValue : values)
+			convertedValues.add(converterService.convertMongoDBValueToEMFValue(eDataType, dbValue));
 
-		eObject.eSet(attribute, values);
+		eObject.eSet(attribute, convertedValues);
 	}
 
 	/**
-	 * @param collection
-	 * @param dbObject
-	 * @param resource
-	 * @param uriHandler
-	 * @param eObject
-	 * @param reference
+	 * Builds a reference value from the DBObject. References with cardinality greater
+	 * than one are expected to be stored as a java.util.List of DBObject. References
+	 * with cardinality equal to one are expected to be stored as a DBObject.
+	 * Reference values are expected to be mapped in the DBObject using the reference
+	 * name as the key. Building of the referenced object is delegated to
+	 * buildReferencedObject().
+	 * 
+	 * @param collection the MongoDB collection containing the DBObject
+	 * @param dbObject the object read from MongoDB
+	 * @param resource the resource that will contain the EMF Object
+	 * @param eObject the EMF object being built
+	 * @param reference the reference to set on the EMF object
 	 */
 	protected void buildReference(DBCollection collection, DBObject dbObject, Resource resource, EObject eObject, EReference reference)
 	{
 		// References are mapped as key / value pairs with the key being the reference name.
 
-		String field = reference.getName();
-
-		if (!reference.isTransient() && dbObject.containsField(field))
+		if (!reference.isTransient() && dbObject.containsField(reference.getName()))
 		{
 			boolean isResolveProxies = reference.isResolveProxies();
 
 			if (reference.isMany())
 			{
 				@SuppressWarnings("unchecked")
-				List<DBObject> dbReferences = (List<DBObject>) dbObject.get(field);
+				List<DBObject> dbReferences = (List<DBObject>) dbObject.get(reference.getName());
 
 				@SuppressWarnings("unchecked")
 				EList<EObject> eObjects = (EList<EObject>) eObject.eGet(reference);
 
 				for (DBObject dbReference : dbReferences)
 				{
-					EObject target = buildReference(collection, dbReference, resource, isResolveProxies);
+					EObject target = buildReferencedObject(collection, dbReference, resource, isResolveProxies);
 					eObjects.add(target);
 				}
 			}
 			else
 			{
-				DBObject dbReference = (DBObject) dbObject.get(field);
-				EObject target = buildReference(collection, dbReference, resource, isResolveProxies);
+				DBObject dbReference = (DBObject) dbObject.get(reference.getName());
+				EObject target = buildReferencedObject(collection, dbReference, resource, isResolveProxies);
 				eObject.eSet(reference, target);
 			}
 		}
 	}
 
-	protected EObject buildReference(DBCollection collection, DBObject dbReference, Resource resource, boolean referenceResolvesProxies)
+	/**
+	 * Builds the EObject for a reference. The EObject may be a proxy. The reference
+	 * value is assumed to be stored in the DBObject as { PROXY_KEY : String } where the
+	 * string is an EMF proxy URI. If the proxy URI is not null, the proxy EObject is
+	 * built by delegating to buildProxy(). If the proxy URI is null, the referenced
+	 * object is treated as an embedded reference and is built by delegating to buildEObject().
+	 * 
+	 * @param collection the MongoDB collection containing the DBObject
+	 * @param dbReference the DBObject containing the referenced object / proxy
+	 * @param resource the resource that will contain the EMF Object
+	 * @param referenceResolvesProxies true if the references resolves proxies; false otherwise
+	 * @return
+	 */
+	protected EObject buildReferencedObject(DBCollection collection, DBObject dbReference, Resource resource, boolean referenceResolvesProxies)
 	{
 		if (dbReference == null)
 			return null;
@@ -195,18 +235,21 @@ public class EObjectBuilder
 	}
 
 	/**
-	 * @param collection
-	 * @param resource
-	 * @param eObject
-	 * @param attribute
-	 * @param value
+	 * Builds a feature map from the attribute value. Feature maps
+	 * of references are delegated to buildReferencedObject to build
+	 * the referenced object.
+	 * 
+	 * @param collection the MongoDB collection containing the DBObject
+	 * @param resource the resource that will contain the EMF Object
+	 * @param eObject the EMF object being built
+	 * @param attribute the attribute to set on the EMF object
+	 * @param values the values extracted from the database as a list
 	 */
-	@SuppressWarnings("unchecked")
-	protected void buildFeatureMap(DBCollection collection, Resource resource, EObject eObject, EAttribute attribute, Object value)
+	protected void buildFeatureMap(DBCollection collection, Resource resource, EObject eObject, EAttribute attribute, List<DBObject> values)
 	{
 		FeatureMap.Internal featureMap = (FeatureMap.Internal) eObject.eGet(attribute);
 
-		for (DBObject entry : (ArrayList<DBObject>) value)
+		for (DBObject entry : values)
 		{
 			EStructuralFeature feature = (EStructuralFeature) resource.getResourceSet().getEObject(URI.createURI((String) entry.get("key")), true);
 
@@ -216,29 +259,28 @@ public class EObjectBuilder
 			{
 				EReference reference = (EReference) feature;
 				DBObject dbReference = (DBObject) entry.get("value");
-				EObject target = buildReference(collection, dbReference, resource, reference.isResolveProxies());
+				EObject target = buildReferencedObject(collection, dbReference, resource, reference.isResolveProxies());
 				featureMap.add(feature, target);
 			}
 		}
 	}
 
 	/**
-	 * This function builds an EMF proxy object from the reference DBObject
+	 * Builds an EMF proxy object from the reference DBObject
 	 * 
 	 * @param collection the collection containing the referencing object
 	 * @param dbReference the MongoDB reference - must be of the form { ECLASS_KEY : eClassURI, PROXY_KEY : proxyURI }
 	 * @param resourceSet the resource set to use for building the proxy
-	 * @param uriHandler the resource URI handler used to resolve the relative proxy URI
-	 * @param referenceResolvedProxies flag indicating that the reference resolves proxies
+	 * @param referenceResolvesProxies true if the reference resolves proxies; false otherwise
 	 * @return the proxy object when referenceResolvedProxies is true, the resolved object otherwise
 	 */
-	protected EObject buildProxy(DBCollection collection, DBObject dbReference, ResourceSet resourceSet, boolean referenceResolvedProxies)
+	protected EObject buildProxy(DBCollection collection, DBObject dbReference, ResourceSet resourceSet, boolean referenceResolvesProxies)
 	{
 		EObject eObject;
 		URI proxyURI = URI.createURI((String) dbReference.get(MongoDBURIHandlerImpl.PROXY_KEY));
 		URI resolvedProxyURI = uriHandler.resolve(proxyURI);
 
-		if (!referenceResolvedProxies)
+		if (!referenceResolvesProxies)
 		{
 			// When referenceResolvedProxies is false, we must resolve the proxy in place and get the referenced object
 
@@ -250,7 +292,7 @@ public class EObjectBuilder
 
 			((InternalEObject) eObject).eSetProxyURI(resolvedProxyURI);
 
-			if (proxyAttributes && proxyURI.isRelative() && "/".equals(proxyURI.fragment()))
+			if (includeAttributesForProxyReferences && proxyURI.isRelative() && "/".equals(proxyURI.fragment()))
 			{
 				DBCollection referenceCollection = null;
 
@@ -314,5 +356,5 @@ public class EObjectBuilder
 	private IConverterService converterService;
 	private XMLResource.URIHandler uriHandler;
 	private static Map<String, EClass> eClassCache = new HashMap<String, EClass>();
-	private boolean proxyAttributes;
+	private boolean includeAttributesForProxyReferences;
 }
