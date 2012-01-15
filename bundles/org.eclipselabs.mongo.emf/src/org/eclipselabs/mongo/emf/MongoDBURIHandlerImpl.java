@@ -65,9 +65,15 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	 */
 	public MongoDBURIHandlerImpl(IMongoDB mongoDB, IMongoEmfQueryEngine queryEngine)
 	{
+		if (mongoDB == null)
+			throw new NullPointerException("MongoDB service is unavailable");
+
 		this.mongoDB = mongoDB;
 		this.queryEngine = queryEngine;
 		this.converterService = createConverterService();
+
+		if (converterService == null)
+			throw new NullPointerException("The converter service was not created");
 	}
 
 	@Override
@@ -139,9 +145,6 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 
 		if (uri.segmentCount() != 3)
 			throw new IOException("The URI is not of the form 'mongo:/database/collection/{id}");
-
-		if (mongoDB == null)
-			throw new IOException("MongoDB service is unavailable");
 
 		String port = uri.port();
 		MongoURI mongoURI = new MongoURI("mongodb://" + uri.host() + (port != null ? ":" + port : ""));

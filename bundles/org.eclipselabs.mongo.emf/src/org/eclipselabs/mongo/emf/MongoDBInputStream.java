@@ -39,6 +39,12 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 {
 	public MongoDBInputStream(IConverterService converterService, IMongoEmfQueryEngine queryEngine, DBCollection collection, URI uri, Map<?, ?> options, Map<Object, Object> response) throws IOException
 	{
+		if (converterService == null)
+			throw new NullPointerException("The converter service must not be null");
+
+		if (collection != null)
+			throw new NullPointerException("The database collection must not be null");
+
 		this.converterService = converterService;
 		this.queryEngine = queryEngine;
 		this.collection = collection;
@@ -72,6 +78,9 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 
 		if (uri.query() != null)
 		{
+			if (queryEngine == null)
+				throw new IOException("The query engine was not found");
+
 			Result result = QueryFactory.eINSTANCE.createResult();
 			InternalEList<EObject> values = (InternalEList<EObject>) result.getValues();
 

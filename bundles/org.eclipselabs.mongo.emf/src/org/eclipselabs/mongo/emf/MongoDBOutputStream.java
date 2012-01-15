@@ -40,6 +40,12 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 {
 	public MongoDBOutputStream(IConverterService converterService, DBCollection collection, URI uri, Map<?, ?> options, Map<Object, Object> response)
 	{
+		if (converterService == null)
+			throw new NullPointerException("The converter service must not be null");
+
+		if (collection != null)
+			throw new NullPointerException("The database collection must not be null");
+
 		this.converterService = converterService;
 		this.collection = collection;
 		this.uri = uri;
