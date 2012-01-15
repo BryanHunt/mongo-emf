@@ -16,6 +16,8 @@ import java.util.LinkedList;
 import org.eclipse.emf.ecore.EDataType;
 
 /**
+ * This class is thread safe
+ * 
  * @author bhunt
  * 
  */
@@ -28,7 +30,7 @@ public class ConverterService implements IConverterService
 	}
 
 	@Override
-	public void addConverter(IMongoEmfConverter converter)
+	public synchronized void addConverter(IMongoEmfConverter converter)
 	{
 		// The converter must be added at the beginning of the list so that the default converter is considered last
 
@@ -36,7 +38,7 @@ public class ConverterService implements IConverterService
 	}
 
 	@Override
-	public IMongoEmfConverter getConverter(EDataType eDataType)
+	public synchronized IMongoEmfConverter getConverter(EDataType eDataType)
 	{
 		for (IMongoEmfConverter converter : converters)
 		{
@@ -50,7 +52,7 @@ public class ConverterService implements IConverterService
 	}
 
 	@Override
-	public void removeConverter(IMongoEmfConverter converter)
+	public synchronized void removeConverter(IMongoEmfConverter converter)
 	{
 		converters.remove(converter);
 	}
