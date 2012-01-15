@@ -42,7 +42,7 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 		if (converterService == null)
 			throw new NullPointerException("The converter service must not be null");
 
-		if (collection != null)
+		if (collection == null)
 			throw new NullPointerException("The database collection must not be null");
 
 		this.converterService = converterService;
