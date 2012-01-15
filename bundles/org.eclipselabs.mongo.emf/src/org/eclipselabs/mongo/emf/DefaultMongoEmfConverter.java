@@ -9,11 +9,10 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.internal.emf;
+package org.eclipselabs.mongo.emf;
 
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipselabs.mongo.emf.IMongoEmfConverter;
 
 /**
  * @author bhunt

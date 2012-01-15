@@ -9,7 +9,7 @@
  *    Bryan Hunt & Ed Merks - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.internal.emf;
+package org.eclipselabs.mongo.emf;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,8 +26,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipselabs.emf.query.QueryFactory;
 import org.eclipselabs.emf.query.Result;
-import org.eclipselabs.mongo.emf.EObjectBuilder;
-import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -39,9 +37,11 @@ import com.mongodb.DBObject;
  */
 public class MongoDBInputStream extends InputStream implements URIConverter.Loadable
 {
-	public MongoDBInputStream(MongoDBURIHandlerImpl handler, URI uri, Map<?, ?> options, Map<Object, Object> response) throws IOException
+	public MongoDBInputStream(IConverterService converterService, IMongoEmfQueryEngine queryEngine, DBCollection collection, URI uri, Map<?, ?> options, Map<Object, Object> response) throws IOException
 	{
-		this.handler = handler;
+		this.converterService = converterService;
+		this.queryEngine = queryEngine;
+		this.collection = collection;
 		this.uri = uri;
 		this.options = options;
 		this.response = response;
@@ -62,13 +62,12 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 		else
 			uriHandler.setBaseURI(resource.getURI());
 
-		boolean proxyAttributes = Boolean.TRUE.equals(options.get(MongoDBURIHandlerImpl.OPTION_PROXY_ATTRIBUTES));
-		EObjectBuilder builder = new EObjectBuilder(handler, uriHandler, proxyAttributes, eClassCache);
+		boolean includeAttributesForProxyReferences = Boolean.TRUE.equals(options.get(MongoDBURIHandlerImpl.OPTION_PROXY_ATTRIBUTES));
+		EObjectBuilder builder = createObjectBuilder(converterService, uriHandler, includeAttributesForProxyReferences);
 
 		// If the URI contains a query string, use it to locate a collection of objects from
 		// MongoDB, otherwise simply get the object from MongoDB using the id.
 
-		DBCollection collection = handler.getCollection(uri, options);
 		EList<EObject> contents = resource.getContents();
 
 		if (uri.query() != null)
@@ -76,7 +75,7 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 			Result result = QueryFactory.eINSTANCE.createResult();
 			InternalEList<EObject> values = (InternalEList<EObject>) result.getValues();
 
-			for (DBObject dbObject : collection.find(handler.getQueryEngine().buildDBObjectQuery(uri)))
+			for (DBObject dbObject : collection.find(queryEngine.buildDBObjectQuery(uri)))
 				values.addUnique(builder.buildEObject(collection, dbObject, resource, true));
 
 			contents.add(result);
@@ -106,9 +105,16 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 		return 0;
 	}
 
+	protected EObjectBuilder createObjectBuilder(IConverterService converterService, XMLResource.URIHandler uriHandler, boolean includeAttributesForProxyReferences)
+	{
+		return new EObjectBuilder(converterService, uriHandler, includeAttributesForProxyReferences, eClassCache);
+	}
+
 	private URI uri;
 	private Map<?, ?> options;
 	private Map<Object, Object> response;
-	private MongoDBURIHandlerImpl handler;
+	private IConverterService converterService;
+	private IMongoEmfQueryEngine queryEngine;
+	private DBCollection collection;
 	private HashMap<String, EClass> eClassCache = new HashMap<String, EClass>();
 }

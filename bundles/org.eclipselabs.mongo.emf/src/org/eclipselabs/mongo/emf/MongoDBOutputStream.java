@@ -9,7 +9,7 @@
  *    Bryan Hunt & Ed Merks - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.internal.emf;
+package org.eclipselabs.mongo.emf;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -27,8 +27,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipselabs.emf.query.QueryFactory;
 import org.eclipselabs.emf.query.Result;
-import org.eclipselabs.mongo.emf.DBObjectBuilder;
-import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
@@ -40,9 +38,10 @@ import com.mongodb.WriteConcern;
  */
 public class MongoDBOutputStream extends ByteArrayOutputStream implements URIConverter.Saveable
 {
-	public MongoDBOutputStream(MongoDBURIHandlerImpl handler, URI uri, Map<?, ?> options, Map<Object, Object> response)
+	public MongoDBOutputStream(IConverterService converterService, DBCollection collection, URI uri, Map<?, ?> options, Map<Object, Object> response)
 	{
-		this.handler = handler;
+		this.converterService = converterService;
+		this.collection = collection;
 		this.uri = uri;
 		this.options = options;
 		this.response = response;
@@ -52,7 +51,6 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 	public void close() throws IOException
 	{
 		super.close();
-		DBCollection collection = handler.getCollection(uri, options);
 
 		// We need to set up the XMLResource.URIHandler so that proxy URIs are handled properly.
 
@@ -72,17 +70,17 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 		uriHandler.setBaseURI(resource.getURI());
 
 		Boolean serializeOption = (Boolean) options.get(MongoDBURIHandlerImpl.OPTION_SERIALIZE_DEFAULT_ATTRIBUTE_VALUES);
-		boolean serializeDefault = false;
+		boolean serializeDefaultAttributeValues = false;
 
 		if (serializeOption != null)
-			serializeDefault = serializeOption;
+			serializeDefaultAttributeValues = serializeOption;
 
-		builder = new DBObjectBuilder(handler, uriHandler, serializeDefault);
+		builder = createBuilder(uriHandler, serializeDefaultAttributeValues);
 
 		if (resource.getContents().size() == 1)
-			saveSingleObject(collection, id, response);
+			saveSingleObject(id);
 		else
-			saveMultipleObjects(collection, response);
+			saveMultipleObjects();
 	}
 
 	@Override
@@ -91,7 +89,12 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 		this.resource = resource;
 	}
 
-	private void saveMultipleObjects(DBCollection collection, Map<Object, Object> response) throws IOException
+	protected DBObjectBuilder createBuilder(XMLResource.URIHandler uriHandler, boolean serializeDefaultAttributeValues)
+	{
+		return new DBObjectBuilder(converterService, uriHandler, serializeDefaultAttributeValues);
+	}
+
+	private void saveMultipleObjects() throws IOException
 	{
 		EList<EObject> contents = resource.getContents();
 		ArrayList<DBObject> dbObjects = new ArrayList<DBObject>(contents.size());
@@ -140,7 +143,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 		contents.add(result);
 	}
 
-	private void saveSingleObject(DBCollection collection, Object id, Map<Object, Object> response) throws IOException
+	private void saveSingleObject(Object id) throws IOException
 	{
 		// Build a MongoDB object from the EMF object.
 
@@ -207,7 +210,8 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 		}
 	}
 
-	private MongoDBURIHandlerImpl handler;
+	private IConverterService converterService;
+	private DBCollection collection;
 	private Map<?, ?> options;
 	private Resource resource;
 	private Map<Object, Object> response;

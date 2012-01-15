@@ -23,6 +23,6 @@ Import-Package: com.mongodb,
  org.osgi.framework;version="1.6.0",
  org.osgi.util.tracker;version="1.5.0"
 Export-Package: org.eclipselabs.mongo.emf,
- org.eclipselabs.mongo.internal.emf;x-friends:="org.eclipselabs.mongo.emf.junit"
-Bundle-Activator: org.eclipselabs.mongo.internal.emf.Activator
+ org.eclipselabs.mongo.emf.bundle;x-friends:="org.eclipselabs.mongo.emf.junit"
+Bundle-Activator: org.eclipselabs.mongo.emf.bundle.Activator
 Bundle-ActivationPolicy: lazy

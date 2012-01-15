@@ -9,7 +9,7 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.internal.emf;
+package org.eclipselabs.mongo.emf.bundle;
 
 import org.eclipselabs.mongo.IMongoDB;
 import org.eclipselabs.mongo.emf.IMongoEmfQueryEngine;
