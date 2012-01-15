@@ -35,13 +35,16 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 
 /**
- * @author bhunt
+ * This class builds a DBObject from an EMFObject. This builder is designed to be extensible,
+ * but you must be aware of the assumptions made by each of the functions in the builder.
  * 
+ * This class is thread safe.
+ * 
+ * @author bhunt
  */
 public class DBObjectBuilder
 {
 	/**
-	 * 
 	 * @param converterService the service to use when converting attribute values
 	 * @param uriHandler the handler for creating proxy URIs
 	 * @param serializeDefaultAttributeValues true causes default attribute values to be written to the DBObject;
