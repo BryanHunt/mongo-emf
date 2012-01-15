@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipselabs.emf.query.QueryFactory;
 import org.eclipselabs.emf.query.Result;
+import org.eclipselabs.mongo.emf.DBObjectBuilder;
 import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 
 import com.mongodb.DBCollection;

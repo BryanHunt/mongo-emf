@@ -9,9 +9,8 @@
  *    Bryan Hunt & Ed Merks - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.internal.emf;
+package org.eclipselabs.mongo.emf;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -31,8 +30,6 @@ import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipselabs.mongo.emf.IConverterService;
-import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -43,6 +40,13 @@ import com.mongodb.DBObject;
  */
 public class DBObjectBuilder
 {
+	/**
+	 * 
+	 * @param converterService the service to use when converting attribute values
+	 * @param uriHandler the handler for creating proxy URIs
+	 * @param serializeDefaultAttributeValues true causes default attribute values to be written to the DBObject;
+	 *          false causes default attribute values to be skipped
+	 */
 	public DBObjectBuilder(IConverterService converterService, XMLResource.URIHandler uriHandler, boolean serializeDefaultAttributeValues)
 	{
 		this.converterService = converterService;
@@ -50,7 +54,13 @@ public class DBObjectBuilder
 		this.serializeDefaultAttributeValues = serializeDefaultAttributeValues;
 	}
 
-	public DBObject buildDBObject(EObject eObject) throws IOException
+	/**
+	 * Build a DBObject from the supplied EMF object.
+	 * 
+	 * @param eObject the EMF object to serialize
+	 * @return the newly created DBObject
+	 */
+	public DBObject buildDBObject(EObject eObject)
 	{
 		// Build a MongoDB object from the EMF object.
 
@@ -64,7 +74,7 @@ public class DBObjectBuilder
 
 		// Save the XML extrinsic id if necessary
 
-		buildExtrensicID(eObject, dbObject, eObject.eResource());
+		buildExtrensicID(eObject, dbObject);
 
 		// All attributes are mapped as key / value pairs with the key being the attribute name.
 
@@ -86,63 +96,82 @@ public class DBObjectBuilder
 	}
 
 	/**
-	 * @param eObject
-	 * @param dbObject
-	 * @param attribute
-	 * @throws IOException
+	 * Serializes the attribute from the EMF object into the DBObject
+	 * Feature maps are delegated to buildFeatureMap() and non-native arrays to
+	 * buildAttributeArray(). The converter service is used for value conversion.
+	 * Attribute values are mapped in the DBObject using the attribute
+	 * name as the key.
+	 * 
+	 * @param eObject the EMF object to serialize
+	 * @param dbObject the MongoDB object being built
+	 * @param attribute the attribute to serialize from the EMF object
 	 */
-	protected void buildAttribute(EObject eObject, BasicDBObject dbObject, EAttribute attribute) throws IOException
+	protected void buildAttribute(EObject eObject, DBObject dbObject, EAttribute attribute)
 	{
 		Object value = eObject.eGet(attribute);
 
 		if (FeatureMapUtil.isFeatureMap(attribute))
-			value = buildFeatureMap(value);
+			buildFeatureMap(dbObject, attribute, value);
 		else if (attribute.isMany())
-		{
-			EDataType eDataType = attribute.getEAttributeType();
-
-			if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
-				value = buildAttributeArray(value, eDataType);
-		}
+			buildAttributeArray(dbObject, attribute, value);
 		else
-			value = buildAttributeValue(attribute, value);
-
-		dbObject.put(attribute.getName(), value);
+			buildAttributeValue(dbObject, attribute, value);
 	}
 
 	/**
-	 * @param value
-	 * @param eDataType
-	 * @return
+	 * Serializes an attribute as a java.util.ArrayList. Each value is
+	 * converted using the converter service.
+	 * 
+	 * @param dbObject the MongoDB object being built
+	 * @param attribute the attribute to serialize from the EMF object
+	 * @param values the attribute values to serialize
 	 */
-	protected Object buildAttributeArray(Object value, EDataType eDataType)
-	{
-		EList<?> rawValues = (EList<?>) value;
-		ArrayList<Object> values = new ArrayList<Object>(rawValues.size());
-
-		for (Object rawValue : rawValues)
-			values.add(convertEMFValueToMongoDBValue(eDataType, rawValue));
-
-		return values;
-	}
-
-	protected Object buildAttributeValue(EAttribute attribute, Object rawValue)
+	protected void buildAttributeArray(DBObject dbObject, EAttribute attribute, Object values)
 	{
 		EDataType eDataType = attribute.getEAttributeType();
 
 		if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
-			return convertEMFValueToMongoDBValue(eDataType, rawValue);
+		{
+			EList<?> eValues = (EList<?>) values;
+			ArrayList<Object> convertedValues = new ArrayList<Object>(eValues.size());
 
-		return rawValue;
+			for (Object rawValue : eValues)
+				convertedValues.add(convertEMFValueToMongoDBValue(attribute.getEAttributeType(), rawValue));
+
+			dbObject.put(attribute.getName(), convertedValues);
+		}
+		else
+			dbObject.put(attribute.getName(), values);
 	}
 
 	/**
-	 * @param eObject
-	 * @param dbObject
-	 * @param resource
+	 * Converts the attribute value if needed
+	 * 
+	 * @param dbObject the MongoDB object being built
+	 * @param attribute the attribute to serialize from the EMF object
+	 * @param value the value of the attribute from the EMF object
 	 */
-	protected void buildExtrensicID(EObject eObject, BasicDBObject dbObject, Resource resource)
+	protected void buildAttributeValue(DBObject dbObject, EAttribute attribute, Object value)
 	{
+		EDataType eDataType = attribute.getEAttributeType();
+
+		if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
+			dbObject.put(attribute.getName(), convertEMFValueToMongoDBValue(eDataType, value));
+		else
+			dbObject.put(attribute.getName(), value);
+	}
+
+	/**
+	 * Sets the extrensic ID if it exists and the resource is of type XMLResource. The
+	 * extrensic ID is mapped to the key EXTRINSIC_ID_KEY.
+	 * 
+	 * @param eObject the EMF object to serialize
+	 * @param dbObject the MongoDB object being built
+	 */
+	protected void buildExtrensicID(EObject eObject, DBObject dbObject)
+	{
+		Resource resource = eObject.eResource();
+
 		if (resource instanceof XMLResource)
 		{
 			String id = ((XMLResource) resource).getID(eObject);
@@ -153,11 +182,15 @@ public class DBObjectBuilder
 	}
 
 	/**
-	 * @param value
-	 * @return
-	 * @throws IOException
+	 * Serializes a feature map from the attribute value. Feature maps
+	 * of references are delegated to buildReferencedObject to build
+	 * the referenced object.
+	 * 
+	 * @param dbObject the MongoDB object being built
+	 * @param attribute the emf attribute being serialized
+	 * @param value the feature map
 	 */
-	protected Object buildFeatureMap(Object value) throws IOException
+	protected void buildFeatureMap(DBObject dbObject, EAttribute attribute, Object value)
 	{
 		FeatureMap.Internal featureMap = (FeatureMap.Internal) value;
 		Iterator<FeatureMap.Entry> iterator = featureMap.basicIterator();
@@ -171,23 +204,34 @@ public class DBObjectBuilder
 			dbEntry.put("key", EcoreUtil.getURI(feature).toString());
 
 			if (feature instanceof EAttribute)
-				dbEntry.put("value", buildAttributeValue((EAttribute) feature, entry.getValue()));
+			{
+				EDataType eDataType = ((EAttribute) feature).getEAttributeType();
+
+				if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
+					dbEntry.put("value", convertEMFValueToMongoDBValue(eDataType, entry.getValue()));
+				else
+					dbEntry.put("value", entry.getValue());
+			}
 			else
-				dbEntry.put("value", buildReferenceValue((EReference) feature, (EObject) entry.getValue()));
+				dbEntry.put("value", buildReferencedObject((EReference) feature, (EObject) entry.getValue()));
 
 			dbFeatureMap.add(dbEntry);
 		}
 
-		return dbFeatureMap;
+		dbObject.put(attribute.getName(), dbFeatureMap);
 	}
 
 	/**
-	 * @param eObject
-	 * @param dbObject
+	 * Serializes a reference value from the EMF object. References with cardinality greater
+	 * than one are stored as a java.util.ArrayList. Reference values are mapped in the
+	 * DBObject using the reference name as the key. Building of the referenced object is
+	 * delegated to buildReferencedObject().
+	 * 
+	 * @param eObject the EMF object to serialize
+	 * @param dbObject the MongoDB object being built
 	 * @param reference
-	 * @throws IOException
 	 */
-	protected void buildReference(EObject eObject, BasicDBObject dbObject, EReference reference) throws IOException
+	protected void buildReference(EObject eObject, DBObject dbObject, EReference reference)
 	{
 		Object value = eObject.eGet(reference, false);
 
@@ -200,7 +244,7 @@ public class DBObjectBuilder
 			ArrayList<Object> dbReferences = new ArrayList<Object>(targetObjects.size());
 
 			for (EObject targetObject : targetObjects)
-				dbReferences.add(buildReferenceValue(reference, targetObject));
+				dbReferences.add(buildReferencedObject(reference, targetObject));
 
 			value = dbReferences;
 		}
@@ -209,13 +253,20 @@ public class DBObjectBuilder
 			// One to one reference
 
 			EObject targetObject = (EObject) value;
-			value = buildReferenceValue(reference, targetObject);
+			value = buildReferencedObject(reference, targetObject);
 		}
 
 		dbObject.put(reference.getName(), value);
 	}
 
-	protected Object buildReferenceValue(EReference eReference, EObject targetObject) throws IOException
+	/**
+	 * Serializes a reference as an embedded object or a proxy as appropriate
+	 * 
+	 * @param eReference the reference to serialize
+	 * @param targetObject to referenced object
+	 * @return the serialized object / proxy
+	 */
+	protected DBObject buildReferencedObject(EReference eReference, EObject targetObject)
 	{
 		InternalEObject internalEObject = (InternalEObject) targetObject;
 		URI eProxyURI = internalEObject.eProxyURI();
@@ -244,6 +295,13 @@ public class DBObjectBuilder
 		}
 	}
 
+	/**
+	 * Converts the EMF value into a MongoDB value using the converter service
+	 * 
+	 * @param eDataType the value type
+	 * @param emfValue the value
+	 * @return the converted value
+	 */
 	protected Object convertEMFValueToMongoDBValue(EDataType eDataType, Object emfValue)
 	{
 		return converterService.getConverter(eDataType).convertEMFValueToMongoDBValue(eDataType, emfValue);

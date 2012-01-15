@@ -149,13 +149,10 @@ public class EObjectBuilder
 
 			if (FeatureMapUtil.isFeatureMap(attribute))
 				buildFeatureMap(collection, resource, eObject, attribute, (List<DBObject>) value);
-			else if (attribute.isMany() && !MongoDBURIHandlerImpl.isNativeType(attribute.getEAttributeType()))
-				buildAttributeArray(eObject, attribute, (List<Object>) value);
+			else if (attribute.isMany())
+				buildAttributeArray(eObject, attribute, value);
 			else
-			{
-				EDataType eDataType = attribute.getEAttributeType();
-				eObject.eSet(attribute, convertMongoDBValueToEMFValue(eDataType, value));
-			}
+				buildAttributeValue(eObject, attribute, value);
 		}
 	}
 
@@ -167,15 +164,35 @@ public class EObjectBuilder
 	 * @param attribute the attribute to set on the EMF object
 	 * @param values the raw, unconverted, collection of values of the attribute
 	 */
-	protected void buildAttributeArray(EObject eObject, EAttribute attribute, List<Object> values)
+	protected void buildAttributeArray(EObject eObject, EAttribute attribute, Object values)
 	{
-		ArrayList<Object> convertedValues = new ArrayList<Object>();
+		if (!MongoDBURIHandlerImpl.isNativeType(attribute.getEAttributeType()))
+		{
+			@SuppressWarnings("unchecked")
+			List<Object> eValues = (List<Object>) values;
+			ArrayList<Object> convertedValues = new ArrayList<Object>(eValues.size());
+			EDataType eDataType = attribute.getEAttributeType();
+
+			for (Object dbValue : eValues)
+				convertedValues.add(convertMongoDBValueToEMFValue(eDataType, dbValue));
+
+			eObject.eSet(attribute, convertedValues);
+		}
+		else
+			eObject.eSet(attribute, values);
+	}
+
+	/**
+	 * Sets the attribute value on the EMF object after converting it using the converter service.
+	 * 
+	 * @param eObject the EMF object being built
+	 * @param attribute the attribute to set on the EMF object
+	 * @param value the value read from MongoDB
+	 */
+	protected void buildAttributeValue(EObject eObject, EAttribute attribute, Object value)
+	{
 		EDataType eDataType = attribute.getEAttributeType();
-
-		for (Object dbValue : values)
-			convertedValues.add(convertMongoDBValueToEMFValue(eDataType, dbValue));
-
-		eObject.eSet(attribute, convertedValues);
+		eObject.eSet(attribute, convertMongoDBValueToEMFValue(eDataType, value));
 	}
 
 	/**
@@ -192,6 +209,40 @@ public class EObjectBuilder
 
 		if (id != null && resource instanceof XMLResource)
 			((XMLResource) resource).setID(eObject, id);
+	}
+
+	/**
+	 * Builds a feature map from the attribute value. Feature maps
+	 * of references are delegated to buildReferencedObject to build
+	 * the referenced object.
+	 * 
+	 * @param collection the MongoDB collection containing the DBObject
+	 * @param resource the resource that will contain the EMF Object
+	 * @param eObject the EMF object being built
+	 * @param attribute the attribute to set on the EMF object
+	 * @param values the values extracted from the database as a list
+	 */
+	protected void buildFeatureMap(DBCollection collection, Resource resource, EObject eObject, EAttribute attribute, List<DBObject> values)
+	{
+		FeatureMap.Internal featureMap = (FeatureMap.Internal) eObject.eGet(attribute);
+
+		for (DBObject entry : values)
+		{
+			EStructuralFeature feature = (EStructuralFeature) resource.getResourceSet().getEObject(URI.createURI((String) entry.get("key")), true);
+
+			if (feature instanceof EAttribute)
+			{
+				EDataType eDataType = ((EAttribute) feature).getEAttributeType();
+				featureMap.add(feature, convertMongoDBValueToEMFValue(eDataType, entry.get("value")));
+			}
+			else
+			{
+				EReference reference = (EReference) feature;
+				DBObject dbReference = (DBObject) entry.get("value");
+				EObject target = buildReferencedObject(collection, dbReference, resource, reference.isResolveProxies());
+				featureMap.add(feature, target);
+			}
+		}
 	}
 
 	/**
@@ -272,40 +323,6 @@ public class EObjectBuilder
 	}
 
 	/**
-	 * Builds a feature map from the attribute value. Feature maps
-	 * of references are delegated to buildReferencedObject to build
-	 * the referenced object.
-	 * 
-	 * @param collection the MongoDB collection containing the DBObject
-	 * @param resource the resource that will contain the EMF Object
-	 * @param eObject the EMF object being built
-	 * @param attribute the attribute to set on the EMF object
-	 * @param values the values extracted from the database as a list
-	 */
-	protected void buildFeatureMap(DBCollection collection, Resource resource, EObject eObject, EAttribute attribute, List<DBObject> values)
-	{
-		FeatureMap.Internal featureMap = (FeatureMap.Internal) eObject.eGet(attribute);
-
-		for (DBObject entry : values)
-		{
-			EStructuralFeature feature = (EStructuralFeature) resource.getResourceSet().getEObject(URI.createURI((String) entry.get("key")), true);
-
-			if (feature instanceof EAttribute)
-			{
-				EDataType eDataType = ((EAttribute) feature).getEAttributeType();
-				featureMap.add(feature, convertMongoDBValueToEMFValue(eDataType, entry.get("value")));
-			}
-			else
-			{
-				EReference reference = (EReference) feature;
-				DBObject dbReference = (DBObject) entry.get("value");
-				EObject target = buildReferencedObject(collection, dbReference, resource, reference.isResolveProxies());
-				featureMap.add(feature, target);
-			}
-		}
-	}
-
-	/**
 	 * Builds an EMF proxy object from the reference DBObject
 	 * 
 	 * @param collection the collection containing the referencing object
@@ -365,6 +382,13 @@ public class EObjectBuilder
 		return eObject;
 	}
 
+	/**
+	 * Converts the MongoDB value into an EMF value using the converter service
+	 * 
+	 * @param eDataType the value type
+	 * @param dbValue the value
+	 * @return the converted value
+	 */
 	protected Object convertMongoDBValueToEMFValue(EDataType eDataType, Object dbValue)
 	{
 		if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
