@@ -96,18 +96,6 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl implements IConverterS
 	}
 
 	@Override
-	public Object convertEMFValueToMongoDBValue(EDataType eDataType, Object emfValue)
-	{
-		return converterService.convertEMFValueToMongoDBValue(eDataType, emfValue);
-	}
-
-	@Override
-	public Object convertMongoDBValueToEMFValue(EDataType eDataType, Object value)
-	{
-		return converterService.convertMongoDBValueToEMFValue(eDataType, value);
-	}
-
-	@Override
 	public OutputStream createOutputStream(final URI uri, final Map<?, ?> options) throws IOException
 	{
 		// This function may be called with a URI path with or without an id. If an id is not specified

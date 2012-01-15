@@ -152,7 +152,10 @@ public class EObjectBuilder
 			else if (attribute.isMany() && !MongoDBURIHandlerImpl.isNativeType(attribute.getEAttributeType()))
 				buildAttributeArray(eObject, attribute, (List<Object>) value);
 			else
-				eObject.eSet(attribute, converterService.convertMongoDBValueToEMFValue(attribute.getEAttributeType(), value));
+			{
+				EDataType eDataType = attribute.getEAttributeType();
+				eObject.eSet(attribute, convertMongoDBValueToEMFValue(eDataType, value));
+			}
 		}
 	}
 
@@ -170,7 +173,7 @@ public class EObjectBuilder
 		EDataType eDataType = attribute.getEAttributeType();
 
 		for (Object dbValue : values)
-			convertedValues.add(converterService.convertMongoDBValueToEMFValue(eDataType, dbValue));
+			convertedValues.add(convertMongoDBValueToEMFValue(eDataType, dbValue));
 
 		eObject.eSet(attribute, convertedValues);
 	}
@@ -288,7 +291,10 @@ public class EObjectBuilder
 			EStructuralFeature feature = (EStructuralFeature) resource.getResourceSet().getEObject(URI.createURI((String) entry.get("key")), true);
 
 			if (feature instanceof EAttribute)
-				featureMap.add(feature, converterService.convertMongoDBValueToEMFValue(((EAttribute) feature).getEAttributeType(), entry.get("value")));
+			{
+				EDataType eDataType = ((EAttribute) feature).getEAttributeType();
+				featureMap.add(feature, convertMongoDBValueToEMFValue(eDataType, entry.get("value")));
+			}
 			else
 			{
 				EReference reference = (EReference) feature;
@@ -357,6 +363,32 @@ public class EObjectBuilder
 		}
 
 		return eObject;
+	}
+
+	protected Object convertMongoDBValueToEMFValue(EDataType eDataType, Object dbValue)
+	{
+		if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
+		{
+			// Types not native to MongoDB are stored as strings and must be converted to the proper object type by EMF
+
+			dbValue = converterService.getConverter(eDataType).convertMongoDBValueToEMFValue(eDataType, dbValue);
+		}
+		else if (dbValue != null)
+		{
+			// If the type is a byte, float, or short, it must be converted from the native MongoDB type
+			// It is valid to use == for string comparison in this case.
+
+			String instanceClassName = eDataType.getInstanceClassName();
+
+			if (instanceClassName == "byte" || instanceClassName == "java.lang.Byte")
+				dbValue = ((Integer) dbValue).byteValue();
+			else if (instanceClassName == "float" || instanceClassName == "java.lang.Float")
+				dbValue = ((Double) dbValue).floatValue();
+			else if (instanceClassName == "short" || instanceClassName == "java.lang.Short")
+				dbValue = ((Integer) dbValue).shortValue();
+		}
+
+		return dbValue;
 	}
 
 	/**

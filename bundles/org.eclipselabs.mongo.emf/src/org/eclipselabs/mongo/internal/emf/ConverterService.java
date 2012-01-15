@@ -16,7 +16,6 @@ import java.util.LinkedList;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipselabs.mongo.emf.IConverterService;
 import org.eclipselabs.mongo.emf.IMongoEmfConverter;
-import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 
 /**
  * @author bhunt
@@ -36,39 +35,6 @@ public class ConverterService implements IConverterService
 		// The converter must be added at the beginning of the list so that the default converter is considered last
 
 		converters.addFirst(converter);
-	}
-
-	@Override
-	public Object convertEMFValueToMongoDBValue(EDataType eDataType, Object emfValue)
-	{
-		return getConverter(eDataType).convertEMFValueToMongoDBValue(eDataType, emfValue);
-	}
-
-	@Override
-	public Object convertMongoDBValueToEMFValue(EDataType eDataType, Object value)
-	{
-		if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
-		{
-			// Types not native to MongoDB are stored as strings and must be converted to the proper object type by EMF
-
-			value = getConverter(eDataType).convertMongoDBValueToEMFValue(eDataType, value);
-		}
-		else if (value != null)
-		{
-			// If the type is a byte, float, or short, it must be converted from the native MongoDB type
-			// It is valid to use == for string comparison in this case.
-
-			String instanceClassName = eDataType.getInstanceClassName();
-
-			if (instanceClassName == "byte" || instanceClassName == "java.lang.Byte")
-				value = ((Integer) value).byteValue();
-			else if (instanceClassName == "float" || instanceClassName == "java.lang.Float")
-				value = ((Double) value).floatValue();
-			else if (instanceClassName == "short" || instanceClassName == "java.lang.Short")
-				value = ((Integer) value).shortValue();
-		}
-
-		return value;
 	}
 
 	@Override

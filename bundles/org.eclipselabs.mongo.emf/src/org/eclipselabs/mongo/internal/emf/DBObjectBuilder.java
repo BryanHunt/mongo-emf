@@ -96,47 +96,44 @@ public class DBObjectBuilder
 		Object value = eObject.eGet(attribute);
 
 		if (FeatureMapUtil.isFeatureMap(attribute))
-		{
-			FeatureMap.Internal featureMap = (FeatureMap.Internal) value;
-			Iterator<FeatureMap.Entry> iterator = featureMap.basicIterator();
-			ArrayList<DBObject> dbFeatureMap = new ArrayList<DBObject>();
-
-			while (iterator.hasNext())
-			{
-				DBObject dbEntry = new BasicDBObject();
-				FeatureMap.Entry entry = iterator.next();
-				EStructuralFeature feature = entry.getEStructuralFeature();
-				dbEntry.put("key", EcoreUtil.getURI(feature).toString());
-
-				if (feature instanceof EAttribute)
-					dbEntry.put("value", buildAttributeValue((EAttribute) feature, entry.getValue()));
-				else
-					dbEntry.put("value", buildReference((EReference) feature, (EObject) entry.getValue()));
-
-				dbFeatureMap.add(dbEntry);
-			}
-
-			value = dbFeatureMap;
-		}
+			value = buildFeatureMap(value);
 		else if (attribute.isMany())
 		{
 			EDataType eDataType = attribute.getEAttributeType();
 
 			if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
-			{
-				EList<?> rawValues = (EList<?>) value;
-				ArrayList<Object> values = new ArrayList<Object>(rawValues.size());
-
-				for (Object rawValue : rawValues)
-					values.add(converterService.convertEMFValueToMongoDBValue(eDataType, rawValue));
-
-				value = values;
-			}
+				value = buildAttributeArray(value, eDataType);
 		}
 		else
 			value = buildAttributeValue(attribute, value);
 
 		dbObject.put(attribute.getName(), value);
+	}
+
+	/**
+	 * @param value
+	 * @param eDataType
+	 * @return
+	 */
+	protected Object buildAttributeArray(Object value, EDataType eDataType)
+	{
+		EList<?> rawValues = (EList<?>) value;
+		ArrayList<Object> values = new ArrayList<Object>(rawValues.size());
+
+		for (Object rawValue : rawValues)
+			values.add(convertEMFValueToMongoDBValue(eDataType, rawValue));
+
+		return values;
+	}
+
+	protected Object buildAttributeValue(EAttribute attribute, Object rawValue)
+	{
+		EDataType eDataType = attribute.getEAttributeType();
+	
+		if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
+			return convertEMFValueToMongoDBValue(eDataType, rawValue);
+	
+		return rawValue;
 	}
 
 	/**
@@ -153,6 +150,35 @@ public class DBObjectBuilder
 			if (id != null)
 				dbObject.put(MongoDBURIHandlerImpl.EXTRINSIC_ID_KEY, id);
 		}
+	}
+
+	/**
+	 * @param value
+	 * @return
+	 * @throws IOException
+	 */
+	protected Object buildFeatureMap(Object value) throws IOException
+	{
+		FeatureMap.Internal featureMap = (FeatureMap.Internal) value;
+		Iterator<FeatureMap.Entry> iterator = featureMap.basicIterator();
+		ArrayList<DBObject> dbFeatureMap = new ArrayList<DBObject>();
+
+		while (iterator.hasNext())
+		{
+			DBObject dbEntry = new BasicDBObject();
+			FeatureMap.Entry entry = iterator.next();
+			EStructuralFeature feature = entry.getEStructuralFeature();
+			dbEntry.put("key", EcoreUtil.getURI(feature).toString());
+
+			if (feature instanceof EAttribute)
+				dbEntry.put("value", buildAttributeValue((EAttribute) feature, entry.getValue()));
+			else
+				dbEntry.put("value", buildReferenceValue((EReference) feature, (EObject) entry.getValue()));
+
+			dbFeatureMap.add(dbEntry);
+		}
+
+		return dbFeatureMap;
 	}
 
 	/**
@@ -174,7 +200,7 @@ public class DBObjectBuilder
 			ArrayList<Object> dbReferences = new ArrayList<Object>(targetObjects.size());
 
 			for (EObject targetObject : targetObjects)
-				dbReferences.add(buildReference(reference, targetObject));
+				dbReferences.add(buildReferenceValue(reference, targetObject));
 
 			value = dbReferences;
 		}
@@ -183,13 +209,13 @@ public class DBObjectBuilder
 			// One to one reference
 
 			EObject targetObject = (EObject) value;
-			value = buildReference(reference, targetObject);
+			value = buildReferenceValue(reference, targetObject);
 		}
 
 		dbObject.put(reference.getName(), value);
 	}
 
-	protected Object buildReference(EReference eReference, EObject targetObject) throws IOException
+	protected Object buildReferenceValue(EReference eReference, EObject targetObject) throws IOException
 	{
 		InternalEObject internalEObject = (InternalEObject) targetObject;
 		URI eProxyURI = internalEObject.eProxyURI();
@@ -218,14 +244,9 @@ public class DBObjectBuilder
 		}
 	}
 
-	protected Object buildAttributeValue(EAttribute attribute, Object rawValue)
+	protected Object convertEMFValueToMongoDBValue(EDataType eDataType, Object emfValue)
 	{
-		EDataType eDataType = attribute.getEAttributeType();
-
-		if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
-			return converterService.convertEMFValueToMongoDBValue(eDataType, rawValue);
-
-		return rawValue;
+		return converterService.getConverter(eDataType).convertEMFValueToMongoDBValue(eDataType, emfValue);
 	}
 
 	private IConverterService converterService;

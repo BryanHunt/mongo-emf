@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EDataType;
  */
 public interface IConverterService
 {
-
 	/**
 	 * Adds the converter and makes it available for consideration when serializing and de-serializing an object.
 	 * Converters are considered in the order in which they are added with the last one added being first. The
@@ -29,28 +28,6 @@ public interface IConverterService
 	 * @param converter the converter to add
 	 */
 	void addConverter(IMongoEmfConverter converter);
-
-	/**
-	 * Convert a value from EMF of the specified type to a value stored in MongoDB.
-	 * 
-	 * An example might be converting an EDataType of java.util.Calendar to a long
-	 * that is stored in MongoDB
-	 * 
-	 * @param eDataType the EMF type that the value needs to be converted from
-	 * @param emfValue the value from the EMF object
-	 * @return the value that will be stored in MongoDB
-	 */
-	Object convertEMFValueToMongoDBValue(EDataType eDataType, Object emfValue);
-
-	/**
-	 * This function converts the raw value read from MongoDB into the correct type for
-	 * the given datatype.
-	 * 
-	 * @param eDataType the EMF datatype to convert to
-	 * @param value the raw MongoDB value to convert from
-	 * @return the converted value
-	 */
-	Object convertMongoDBValueToEMFValue(EDataType eDataType, Object value);
 
 	/**
 	 * Locates an appropriate converter for a given EDataType
