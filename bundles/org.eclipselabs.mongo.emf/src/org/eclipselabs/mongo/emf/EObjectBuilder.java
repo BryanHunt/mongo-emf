@@ -93,6 +93,19 @@ public class EObjectBuilder
 		// as the result of a query.
 
 		EObject eObject = createEObject(resource.getResourceSet(), dbObject);
+		EClass eClass = eObject.eClass();
+
+		// Load the XML extrinsic id if necessary
+
+		buildExtransicID(dbObject, resource, eObject);
+
+		// All attributes are mapped as key / value pairs with the key being the attribute name.
+
+		for (EAttribute attribute : eClass.getEAllAttributes())
+		{
+			if (!isProxy || !FeatureMapUtil.isFeatureMap(attribute))
+				buildAttribute(collection, dbObject, resource, eObject, attribute);
+		}
 
 		// isProxy will be set to true when the object is being returned as
 		// part of a collection such as the result of a query.
@@ -101,29 +114,13 @@ public class EObjectBuilder
 		{
 			URI proxyURI = URI.createURI("../" + collection.getName() + "/" + dbObject.get(MongoDBURIHandlerImpl.ID_KEY) + "#/");
 			((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(proxyURI));
+			return eObject;
 		}
 
-		// Load the XML extrinsic id if necessary
+		// All references are mapped as key / value pairs with the key being the reference name.
 
-		String id = (String) dbObject.get(MongoDBURIHandlerImpl.EXTRINSIC_ID_KEY);
-
-		if (id != null && resource instanceof XMLResource)
-			((XMLResource) resource).setID(eObject, id);
-
-		// Extract all features from the database object and populate the EObject
-
-		for (EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures())
-		{
-			if (feature instanceof EAttribute)
-			{
-				EAttribute attribute = (EAttribute) feature;
-
-				if (!isProxy || !FeatureMapUtil.isFeatureMap(attribute))
-					buildAttribute(collection, dbObject, resource, eObject, attribute);
-			}
-			else if (!isProxy)
-				buildReference(collection, dbObject, resource, eObject, (EReference) feature);
-		}
+		for (EReference reference : eClass.getEAllReferences())
+			buildReference(collection, dbObject, resource, eObject, reference);
 
 		return eObject;
 	}
@@ -179,6 +176,22 @@ public class EObjectBuilder
 	}
 
 	/**
+	 * Sets the extrensic ID if it exists and the resource is of type XMLResource. The
+	 * extrensic ID is expected to be mapped to the key EXTRINSIC_ID_KEY.
+	 * 
+	 * @param dbObject the object read from MongoDB
+	 * @param resource the resource that will contain the EMF Object
+	 * @param eObject the EMF object being built
+	 */
+	protected void buildExtransicID(DBObject dbObject, Resource resource, EObject eObject)
+	{
+		String id = (String) dbObject.get(MongoDBURIHandlerImpl.EXTRINSIC_ID_KEY);
+
+		if (id != null && resource instanceof XMLResource)
+			((XMLResource) resource).setID(eObject, id);
+	}
+
+	/**
 	 * Builds a reference value from the DBObject. References with cardinality greater
 	 * than one are expected to be stored as a java.util.List of DBObject. References
 	 * with cardinality equal to one are expected to be stored as a DBObject.
@@ -202,6 +215,8 @@ public class EObjectBuilder
 
 			if (reference.isMany())
 			{
+				// One to many reference
+
 				@SuppressWarnings("unchecked")
 				List<DBObject> dbReferences = (List<DBObject>) dbObject.get(reference.getName());
 
@@ -216,6 +231,8 @@ public class EObjectBuilder
 			}
 			else
 			{
+				// One to one reference
+
 				DBObject dbReference = (DBObject) dbObject.get(reference.getName());
 				EObject target = buildReferencedObject(collection, dbReference, resource, isResolveProxies);
 				eObject.eSet(reference, target);

@@ -35,7 +35,6 @@ import org.eclipselabs.mongo.emf.IConverterService;
 import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
 import com.mongodb.DBObject;
 
 /**
@@ -51,7 +50,7 @@ public class DBObjectBuilder
 		this.serializeDefaultAttributeValues = serializeDefaultAttributeValues;
 	}
 
-	public DBObject buildDBObject(DB db, EObject eObject) throws IOException
+	public DBObject buildDBObject(EObject eObject) throws IOException
 	{
 		// Build a MongoDB object from the EMF object.
 
@@ -65,67 +64,14 @@ public class DBObjectBuilder
 
 		// Save the XML extrinsic id if necessary
 
-		Resource resource = eObject.eResource();
-
-		if (resource instanceof XMLResource)
-		{
-			String id = ((XMLResource) resource).getID(eObject);
-
-			if (id != null)
-				dbObject.put(MongoDBURIHandlerImpl.EXTRINSIC_ID_KEY, id);
-		}
+		buildExtrensicID(eObject, dbObject, eObject.eResource());
 
 		// All attributes are mapped as key / value pairs with the key being the attribute name.
 
 		for (EAttribute attribute : eClass.getEAllAttributes())
 		{
 			if (!attribute.isTransient() && (eObject.eIsSet(attribute) || (!attribute.isUnsettable() && serializeDefaultAttributeValues)))
-			{
-				Object value = eObject.eGet(attribute);
-
-				if (FeatureMapUtil.isFeatureMap(attribute))
-				{
-					FeatureMap.Internal featureMap = (FeatureMap.Internal) value;
-					Iterator<FeatureMap.Entry> iterator = featureMap.basicIterator();
-					ArrayList<DBObject> dbFeatureMap = new ArrayList<DBObject>();
-
-					while (iterator.hasNext())
-					{
-						DBObject dbEntry = new BasicDBObject();
-						FeatureMap.Entry entry = iterator.next();
-						EStructuralFeature feature = entry.getEStructuralFeature();
-						dbEntry.put("key", EcoreUtil.getURI(feature).toString());
-
-						if (feature instanceof EAttribute)
-							dbEntry.put("value", buildAttributeValue((EAttribute) feature, entry.getValue()));
-						else
-							dbEntry.put("value", buildReference(db, (EReference) feature, (EObject) entry.getValue()));
-
-						dbFeatureMap.add(dbEntry);
-					}
-
-					value = dbFeatureMap;
-				}
-				else if (attribute.isMany())
-				{
-					EDataType eDataType = attribute.getEAttributeType();
-
-					if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
-					{
-						EList<?> rawValues = (EList<?>) value;
-						ArrayList<Object> values = new ArrayList<Object>(rawValues.size());
-
-						for (Object rawValue : rawValues)
-							values.add(converterService.convertEMFValueToMongoDBValue(eDataType, rawValue));
-
-						value = values;
-					}
-				}
-				else
-					value = buildAttributeValue(attribute, value);
-
-				dbObject.put(attribute.getName(), value);
-			}
+				buildAttribute(eObject, dbObject, attribute);
 		}
 
 		// All references are mapped as key / value pairs with the key being the reference name.
@@ -133,39 +79,117 @@ public class DBObjectBuilder
 		for (EReference reference : eClass.getEAllReferences())
 		{
 			if (!reference.isTransient() && eObject.eIsSet(reference))
-			{
-				Object value = eObject.eGet(reference, false);
-
-				if (reference.isMany())
-				{
-					// One to many reference
-
-					@SuppressWarnings("unchecked")
-					List<EObject> targetObjects = ((InternalEList<EObject>) value).basicList();
-					ArrayList<Object> dbReferences = new ArrayList<Object>(targetObjects.size());
-
-					for (EObject targetObject : targetObjects)
-						dbReferences.add(buildReference(db, reference, targetObject));
-
-					value = dbReferences;
-				}
-				else if (value != null)
-				{
-					// One to one reference
-
-					EObject targetObject = (EObject) value;
-
-					value = buildReference(db, reference, targetObject);
-				}
-
-				dbObject.put(reference.getName(), value);
-			}
+				buildReference(eObject, dbObject, reference);
 		}
 
 		return dbObject;
 	}
 
-	protected Object buildReference(DB db, EReference eReference, EObject targetObject) throws IOException
+	/**
+	 * @param eObject
+	 * @param dbObject
+	 * @param attribute
+	 * @throws IOException
+	 */
+	protected void buildAttribute(EObject eObject, BasicDBObject dbObject, EAttribute attribute) throws IOException
+	{
+		Object value = eObject.eGet(attribute);
+
+		if (FeatureMapUtil.isFeatureMap(attribute))
+		{
+			FeatureMap.Internal featureMap = (FeatureMap.Internal) value;
+			Iterator<FeatureMap.Entry> iterator = featureMap.basicIterator();
+			ArrayList<DBObject> dbFeatureMap = new ArrayList<DBObject>();
+
+			while (iterator.hasNext())
+			{
+				DBObject dbEntry = new BasicDBObject();
+				FeatureMap.Entry entry = iterator.next();
+				EStructuralFeature feature = entry.getEStructuralFeature();
+				dbEntry.put("key", EcoreUtil.getURI(feature).toString());
+
+				if (feature instanceof EAttribute)
+					dbEntry.put("value", buildAttributeValue((EAttribute) feature, entry.getValue()));
+				else
+					dbEntry.put("value", buildReference((EReference) feature, (EObject) entry.getValue()));
+
+				dbFeatureMap.add(dbEntry);
+			}
+
+			value = dbFeatureMap;
+		}
+		else if (attribute.isMany())
+		{
+			EDataType eDataType = attribute.getEAttributeType();
+
+			if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
+			{
+				EList<?> rawValues = (EList<?>) value;
+				ArrayList<Object> values = new ArrayList<Object>(rawValues.size());
+
+				for (Object rawValue : rawValues)
+					values.add(converterService.convertEMFValueToMongoDBValue(eDataType, rawValue));
+
+				value = values;
+			}
+		}
+		else
+			value = buildAttributeValue(attribute, value);
+
+		dbObject.put(attribute.getName(), value);
+	}
+
+	/**
+	 * @param eObject
+	 * @param dbObject
+	 * @param resource
+	 */
+	protected void buildExtrensicID(EObject eObject, BasicDBObject dbObject, Resource resource)
+	{
+		if (resource instanceof XMLResource)
+		{
+			String id = ((XMLResource) resource).getID(eObject);
+
+			if (id != null)
+				dbObject.put(MongoDBURIHandlerImpl.EXTRINSIC_ID_KEY, id);
+		}
+	}
+
+	/**
+	 * @param eObject
+	 * @param dbObject
+	 * @param reference
+	 * @throws IOException
+	 */
+	protected void buildReference(EObject eObject, BasicDBObject dbObject, EReference reference) throws IOException
+	{
+		Object value = eObject.eGet(reference, false);
+
+		if (reference.isMany())
+		{
+			// One to many reference
+
+			@SuppressWarnings("unchecked")
+			List<EObject> targetObjects = ((InternalEList<EObject>) value).basicList();
+			ArrayList<Object> dbReferences = new ArrayList<Object>(targetObjects.size());
+
+			for (EObject targetObject : targetObjects)
+				dbReferences.add(buildReference(reference, targetObject));
+
+			value = dbReferences;
+		}
+		else if (value != null)
+		{
+			// One to one reference
+
+			EObject targetObject = (EObject) value;
+			value = buildReference(reference, targetObject);
+		}
+
+		dbObject.put(reference.getName(), value);
+	}
+
+	protected Object buildReference(EReference eReference, EObject targetObject) throws IOException
 	{
 		InternalEObject internalEObject = (InternalEObject) targetObject;
 		URI eProxyURI = internalEObject.eProxyURI();
@@ -190,7 +214,7 @@ public class DBObjectBuilder
 		{
 			// Non cross-document containment reference - build a MongoDB embedded object
 
-			return buildDBObject(db, targetObject);
+			return buildDBObject(targetObject);
 		}
 	}
 

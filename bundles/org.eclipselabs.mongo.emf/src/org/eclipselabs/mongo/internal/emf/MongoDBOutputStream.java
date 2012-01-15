@@ -29,7 +29,6 @@ import org.eclipselabs.emf.query.QueryFactory;
 import org.eclipselabs.emf.query.Result;
 import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
 
-import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.WriteConcern;
@@ -98,12 +97,11 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 		long timeStamp = System.currentTimeMillis();
 		response.put(URIConverter.RESPONSE_TIME_STAMP_PROPERTY, timeStamp);
 
-		DB db = collection.getDB();
 		Boolean useIdAttributeAsPrimaryKey = (Boolean) options.get(MongoDBURIHandlerImpl.OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY);
 
 		for (EObject eObject : contents)
 		{
-			DBObject dbObject = builder.buildDBObject(db, eObject);
+			DBObject dbObject = builder.buildDBObject(eObject);
 			dbObject.put(MongoDBURIHandlerImpl.TIME_STAMP_KEY, timeStamp);
 
 			if (useIdAttributeAsPrimaryKey != null && useIdAttributeAsPrimaryKey)
@@ -146,7 +144,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 		// Build a MongoDB object from the EMF object.
 
 		EObject eObject = resource.getContents().get(0);
-		DBObject dbObject = builder.buildDBObject(collection.getDB(), eObject);
+		DBObject dbObject = builder.buildDBObject(eObject);
 
 		// The timestamp needs to be persisted with the object, and set in the response
 
