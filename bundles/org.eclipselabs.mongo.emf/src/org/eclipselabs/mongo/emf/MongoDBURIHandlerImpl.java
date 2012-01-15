@@ -67,7 +67,7 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 	{
 		this.mongoDB = mongoDB;
 		this.queryEngine = queryEngine;
-		this.converterService = new ConverterService();
+		this.converterService = createConverterService();
 	}
 
 	@Override
@@ -155,6 +155,11 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 //			dbCollection.setReadPreference(new ReadPreference.TaggedReadPreference(tags));
 
 		return dbCollection;
+	}
+
+	protected ConverterService createConverterService()
+	{
+		return new ConverterService();
 	}
 
 	/**
