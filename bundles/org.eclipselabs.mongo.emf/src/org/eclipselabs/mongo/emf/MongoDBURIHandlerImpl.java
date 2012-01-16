@@ -160,6 +160,11 @@ public class MongoDBURIHandlerImpl extends URIHandlerImpl
 		return dbCollection;
 	}
 
+	public IConverterService getConverterService()
+	{
+		return converterService;
+	}
+
 	protected ConverterService createConverterService()
 	{
 		return new ConverterService();
