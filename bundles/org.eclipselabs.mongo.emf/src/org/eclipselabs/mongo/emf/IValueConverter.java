@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EDataType;
  * @author bhunt
  * 
  */
-public interface IMongoEmfConverter
+public interface IValueConverter
 {
 	/**
 	 * Convert a value from MongoDB to a value used by EMF of the specified type.

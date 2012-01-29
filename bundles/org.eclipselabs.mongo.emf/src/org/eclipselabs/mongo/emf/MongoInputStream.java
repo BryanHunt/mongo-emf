@@ -35,9 +35,9 @@ import com.mongodb.DBObject;
  * @author bhunt
  * 
  */
-public class MongoDBInputStream extends InputStream implements URIConverter.Loadable
+public class MongoInputStream extends InputStream implements URIConverter.Loadable
 {
-	public MongoDBInputStream(IConverterService converterService, IMongoEmfQueryEngine queryEngine, DBCollection collection, URI uri, Map<?, ?> options, Map<Object, Object> response) throws IOException
+	public MongoInputStream(IConverterService converterService, IEObjectBuilderFactory builderFactory, IQueryEngine queryEngine, DBCollection collection, URI uri, Map<?, ?> options, Map<Object, Object> response) throws IOException
 	{
 		if (converterService == null)
 			throw new NullPointerException("The converter service must not be null");
@@ -46,6 +46,7 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 			throw new NullPointerException("The database collection must not be null");
 
 		this.converterService = converterService;
+		this.builderFactory = builderFactory;
 		this.queryEngine = queryEngine;
 		this.collection = collection;
 		this.uri = uri;
@@ -68,8 +69,8 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 		else
 			uriHandler.setBaseURI(resource.getURI());
 
-		boolean includeAttributesForProxyReferences = Boolean.TRUE.equals(options.get(MongoDBURIHandlerImpl.OPTION_PROXY_ATTRIBUTES));
-		EObjectBuilder builder = createObjectBuilder(converterService, uriHandler, includeAttributesForProxyReferences);
+		boolean includeAttributesForProxyReferences = Boolean.TRUE.equals(options.get(MongoURIHandlerImpl.OPTION_PROXY_ATTRIBUTES));
+		EObjectBuilder builder = builderFactory.createObjectBuilder(converterService, uriHandler, includeAttributesForProxyReferences, eClassCache);
 
 		// If the URI contains a query string, use it to locate a collection of objects from
 		// MongoDB, otherwise simply get the object from MongoDB using the id.
@@ -91,7 +92,7 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 		}
 		else
 		{
-			DBObject dbObject = collection.findOne(new BasicDBObject(MongoDBURIHandlerImpl.ID_KEY, MongoDBURIHandlerImpl.getID(uri)));
+			DBObject dbObject = collection.findOne(new BasicDBObject(MongoURIHandlerImpl.ID_KEY, MongoURIHandlerImpl.getID(uri)));
 
 			if (dbObject != null)
 			{
@@ -100,7 +101,7 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 				if (eObject != null)
 					contents.add(eObject);
 
-				response.put(URIConverter.RESPONSE_TIME_STAMP_PROPERTY, dbObject.get(MongoDBURIHandlerImpl.TIME_STAMP_KEY));
+				response.put(URIConverter.RESPONSE_TIME_STAMP_PROPERTY, dbObject.get(MongoURIHandlerImpl.TIME_STAMP_KEY));
 			}
 		}
 	}
@@ -114,16 +115,12 @@ public class MongoDBInputStream extends InputStream implements URIConverter.Load
 		return 0;
 	}
 
-	protected EObjectBuilder createObjectBuilder(IConverterService converterService, XMLResource.URIHandler uriHandler, boolean includeAttributesForProxyReferences)
-	{
-		return new EObjectBuilder(converterService, uriHandler, includeAttributesForProxyReferences, eClassCache);
-	}
-
 	private URI uri;
 	private Map<?, ?> options;
 	private Map<Object, Object> response;
 	private IConverterService converterService;
-	private IMongoEmfQueryEngine queryEngine;
+	private IQueryEngine queryEngine;
 	private DBCollection collection;
 	private HashMap<String, EClass> eClassCache = new HashMap<String, EClass>();
+	private IEObjectBuilderFactory builderFactory;
 }

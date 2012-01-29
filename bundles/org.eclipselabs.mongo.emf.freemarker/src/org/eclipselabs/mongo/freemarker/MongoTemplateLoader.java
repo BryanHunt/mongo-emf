@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipselabs.emf.query.Result;
-import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
+import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
 
 import freemarker.cache.TemplateLoader;
 
@@ -62,7 +62,7 @@ public class MongoTemplateLoader implements TemplateLoader
 		this.baseURI = baseURI;
 		resourceSet = new ResourceSetImpl();
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		uriHandlers.add(0, new MongoURIHandlerImpl());
 		loadTemplates();
 	}
 
@@ -84,7 +84,7 @@ public class MongoTemplateLoader implements TemplateLoader
 		this.baseURI = baseURI;
 		this.resourceSet = resourceSet;
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		uriHandlers.add(0, new MongoURIHandlerImpl());
 		loadTemplates();
 	}
 

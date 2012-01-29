@@ -112,7 +112,7 @@ public class EObjectBuilder
 
 		if (isProxy)
 		{
-			URI proxyURI = URI.createURI("../" + collection.getName() + "/" + dbObject.get(MongoDBURIHandlerImpl.ID_KEY) + "#/");
+			URI proxyURI = URI.createURI("../" + collection.getName() + "/" + dbObject.get(MongoURIHandlerImpl.ID_KEY) + "#/");
 			((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(proxyURI));
 			return eObject;
 		}
@@ -166,7 +166,7 @@ public class EObjectBuilder
 	 */
 	protected void buildAttributeArray(EObject eObject, EAttribute attribute, Object values)
 	{
-		if (!MongoDBURIHandlerImpl.isNativeType(attribute.getEAttributeType()))
+		if (!MongoURIHandlerImpl.isNativeType(attribute.getEAttributeType()))
 		{
 			@SuppressWarnings("unchecked")
 			List<Object> eValues = (List<Object>) values;
@@ -205,7 +205,7 @@ public class EObjectBuilder
 	 */
 	protected void buildExtransicID(DBObject dbObject, Resource resource, EObject eObject)
 	{
-		String id = (String) dbObject.get(MongoDBURIHandlerImpl.EXTRINSIC_ID_KEY);
+		String id = (String) dbObject.get(MongoURIHandlerImpl.EXTRINSIC_ID_KEY);
 
 		if (id != null && resource instanceof XMLResource)
 			((XMLResource) resource).setID(eObject, id);
@@ -314,7 +314,7 @@ public class EObjectBuilder
 
 		// Build an EMF reference from the data in MongoDB.
 
-		String proxy = (String) dbReference.get(MongoDBURIHandlerImpl.PROXY_KEY);
+		String proxy = (String) dbReference.get(MongoURIHandlerImpl.PROXY_KEY);
 
 		if (proxy == null)
 			return buildEObject(collection, dbReference, resource, false);
@@ -334,7 +334,7 @@ public class EObjectBuilder
 	protected EObject buildProxy(DBCollection collection, DBObject dbReference, ResourceSet resourceSet, boolean referenceResolvesProxies)
 	{
 		EObject eObject;
-		URI proxyURI = URI.createURI((String) dbReference.get(MongoDBURIHandlerImpl.PROXY_KEY));
+		URI proxyURI = URI.createURI((String) dbReference.get(MongoURIHandlerImpl.PROXY_KEY));
 		URI resolvedProxyURI = uriHandler.resolve(proxyURI);
 
 		if (!referenceResolvesProxies)
@@ -364,7 +364,7 @@ public class EObjectBuilder
 
 				if (referenceCollection != null)
 				{
-					DBObject referenceDBObject = new BasicDBObject(MongoDBURIHandlerImpl.ID_KEY, new ObjectId(proxyURI.lastSegment()));
+					DBObject referenceDBObject = new BasicDBObject(MongoURIHandlerImpl.ID_KEY, new ObjectId(proxyURI.lastSegment()));
 					DBObject referencedDBObject = referenceCollection.findOne(referenceDBObject);
 
 					if (referencedDBObject != null)
@@ -391,7 +391,7 @@ public class EObjectBuilder
 	 */
 	protected Object convertMongoDBValueToEMFValue(EDataType eDataType, Object dbValue)
 	{
-		if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
+		if (!MongoURIHandlerImpl.isNativeType(eDataType))
 		{
 			// Types not native to MongoDB are stored as strings and must be converted to the proper object type by EMF
 
@@ -426,7 +426,7 @@ public class EObjectBuilder
 	 */
 	protected EObject createEObject(ResourceSet resourceSet, DBObject dbObject)
 	{
-		String eClassURI = (String) dbObject.get(MongoDBURIHandlerImpl.ECLASS_KEY);
+		String eClassURI = (String) dbObject.get(MongoURIHandlerImpl.ECLASS_KEY);
 		EClass eClass = getEClass(resourceSet, eClassURI);
 		return EcoreUtil.create(eClass);
 	}

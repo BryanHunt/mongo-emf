@@ -14,6 +14,7 @@ package org.eclipselabs.mongo.emf;
 import java.util.LinkedList;
 
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipselabs.mongo.emf.bundle.DefaultMongoEmfConverter;
 
 /**
  * This class is thread safe
@@ -25,12 +26,12 @@ public class ConverterService implements IConverterService
 {
 	public ConverterService()
 	{
-		this.converters = new LinkedList<IMongoEmfConverter>();
+		this.converters = new LinkedList<IValueConverter>();
 		converters.add(new DefaultMongoEmfConverter());
 	}
 
 	@Override
-	public synchronized void addConverter(IMongoEmfConverter converter)
+	public synchronized void addConverter(IValueConverter converter)
 	{
 		// The converter must be added at the beginning of the list so that the default converter is considered last
 
@@ -38,9 +39,9 @@ public class ConverterService implements IConverterService
 	}
 
 	@Override
-	public synchronized IMongoEmfConverter getConverter(EDataType eDataType)
+	public synchronized IValueConverter getConverter(EDataType eDataType)
 	{
-		for (IMongoEmfConverter converter : converters)
+		for (IValueConverter converter : converters)
 		{
 			if (converter.isConverterForType(eDataType))
 				return converter;
@@ -52,10 +53,10 @@ public class ConverterService implements IConverterService
 	}
 
 	@Override
-	public synchronized void removeConverter(IMongoEmfConverter converter)
+	public synchronized void removeConverter(IValueConverter converter)
 	{
 		converters.remove(converter);
 	}
 
-	private LinkedList<IMongoEmfConverter> converters;
+	private LinkedList<IValueConverter> converters;
 }

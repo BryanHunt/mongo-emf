@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipselabs.emf.query.Result;
 import org.eclipselabs.mongo.IMongoDB;
-import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
+import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
 import org.eclipselabs.mongo.emf.MongoResourceSetImpl;
 import org.eclipselabs.mongo.internal.MongoDB;
 import org.eclipselabs.mongo.junit.bundle.Activator;
@@ -113,7 +113,7 @@ public class MongoUtil
 	public static void configureResourceSet(ResourceSet resourceSet)
 	{
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		uriHandlers.add(0, new MongoURIHandlerImpl());
 	}
 
 	/**

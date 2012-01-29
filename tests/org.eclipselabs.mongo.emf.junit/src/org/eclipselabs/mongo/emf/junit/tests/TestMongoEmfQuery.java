@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipselabs.emf.query.Result;
-import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
+import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
 import org.eclipselabs.mongo.emf.junit.model.ETypes;
 import org.eclipselabs.mongo.emf.junit.model.Library;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
@@ -100,7 +100,7 @@ public class TestMongoEmfQuery extends TestHarness
 		// Test : Store the object with the option to use the ID attribute as the MongoDB _id
 
 		HashMap<String, Object> options = new HashMap<String, Object>();
-		options.put(MongoDBURIHandlerImpl.OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY, Boolean.TRUE);
+		options.put(MongoURIHandlerImpl.OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY, Boolean.TRUE);
 
 		saveObject(primaryObject, createCollectionURI(primaryObject.eClass()), options);
 
@@ -309,7 +309,7 @@ public class TestMongoEmfQuery extends TestHarness
 		Resource resource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.ETYPES));
 		resource.getContents().add(eTypes);
 		HashMap<String, Object> options = new HashMap<String, Object>(1);
-		options.put(MongoDBURIHandlerImpl.OPTION_SERIALIZE_DEFAULT_ATTRIBUTE_VALUES, Boolean.TRUE);
+		options.put(MongoURIHandlerImpl.OPTION_SERIALIZE_DEFAULT_ATTRIBUTE_VALUES, Boolean.TRUE);
 		resource.save(options);
 
 		eTypes = ModelFactory.eINSTANCE.createETypes();

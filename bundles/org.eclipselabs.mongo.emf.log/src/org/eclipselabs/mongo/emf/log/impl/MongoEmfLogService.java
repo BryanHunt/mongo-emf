@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipselabs.emf.query.Expression;
 import org.eclipselabs.emf.query.Result;
 import org.eclipselabs.emf.query.util.ExpressionBuilder;
-import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
+import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
 import org.eclipselabs.mongo.emf.log.IMongoLogService;
 import org.eclipselabs.mongo.emf.log.LogEntry;
 import org.eclipselabs.mongo.emf.log.LogFactory;
@@ -75,7 +75,7 @@ public class MongoEmfLogService implements IMongoLogService, LogListener
 		resource.getContents().add(logEntry);
 
 		HashMap<String, Object> options = new HashMap<String, Object>(1);
-		options.put(MongoDBURIHandlerImpl.OPTION_SERIALIZE_DEFAULT_ATTRIBUTE_VALUES, Boolean.TRUE);
+		options.put(MongoURIHandlerImpl.OPTION_SERIALIZE_DEFAULT_ATTRIBUTE_VALUES, Boolean.TRUE);
 
 		try
 		{
@@ -115,7 +115,7 @@ public class MongoEmfLogService implements IMongoLogService, LogListener
 	{
 		ResourceSet resourceSet = new ResourceSetImpl();
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		uriHandlers.add(0, new MongoURIHandlerImpl());
 		return resourceSet;
 	}
 

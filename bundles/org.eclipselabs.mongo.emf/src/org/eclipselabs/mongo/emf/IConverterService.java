@@ -27,7 +27,7 @@ public interface IConverterService
 	 * 
 	 * @param converter the converter to add
 	 */
-	void addConverter(IMongoEmfConverter converter);
+	void addConverter(IValueConverter converter);
 
 	/**
 	 * Locates an appropriate converter for a given EDataType
@@ -35,13 +35,13 @@ public interface IConverterService
 	 * @param eDataType the data type needing conversion
 	 * @return the converter for the specified data type
 	 */
-	IMongoEmfConverter getConverter(EDataType eDataType);
+	IValueConverter getConverter(EDataType eDataType);
 
 	/**
 	 * Removes the converter and the converter will no longer be considered during serialization and de-serialization of an object.
 	 * 
 	 * @param converter the converter to remove
 	 */
-	void removeConverter(IMongoEmfConverter converter);
+	void removeConverter(IValueConverter converter);
 
 }

@@ -21,8 +21,8 @@ import org.eclipselabs.emf.query.Expression;
 import org.eclipselabs.emf.query.Literal;
 import org.eclipselabs.emf.query.util.ExpressionBuilder;
 import org.eclipselabs.emf.query.util.QuerySwitch;
-import org.eclipselabs.mongo.emf.IMongoEmfQueryEngine;
-import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
+import org.eclipselabs.mongo.emf.IQueryEngine;
+import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -32,7 +32,7 @@ import com.mongodb.QueryOperators;
  * @author merks
  * 
  */
-public class QueryEngine implements IMongoEmfQueryEngine
+public class QueryEngine implements IQueryEngine
 {
 
 	@Override
@@ -65,7 +65,7 @@ public class QueryEngine implements IMongoEmfQueryEngine
 						Expression rightOperand = binaryOperation.getRightOperand();
 						String property = ExpressionBuilder.toString(leftOperand);
 
-						if (MongoDBURIHandlerImpl.ID_KEY.equals(property))
+						if (MongoURIHandlerImpl.ID_KEY.equals(property))
 						{
 							dbObject.put(property, new ObjectId(((Literal) rightOperand).getLiteralValue()));
 						}

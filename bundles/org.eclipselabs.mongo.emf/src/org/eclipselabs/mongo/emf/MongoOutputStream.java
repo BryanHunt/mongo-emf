@@ -36,9 +36,9 @@ import com.mongodb.WriteConcern;
  * @author bhunt
  * 
  */
-public class MongoDBOutputStream extends ByteArrayOutputStream implements URIConverter.Saveable
+public class MongoOutputStream extends ByteArrayOutputStream implements URIConverter.Saveable
 {
-	public MongoDBOutputStream(IConverterService converterService, DBCollection collection, URI uri, Map<?, ?> options, Map<Object, Object> response)
+	public MongoOutputStream(IConverterService converterService, IDBObjectBuilderFactory builderFactory, DBCollection collection, URI uri, Map<?, ?> options, Map<Object, Object> response)
 	{
 		if (converterService == null)
 			throw new NullPointerException("The converter service must not be null");
@@ -51,6 +51,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 		this.uri = uri;
 		this.options = options;
 		this.response = response;
+		this.builderFactory = builderFactory;
 	}
 
 	@Override
@@ -65,7 +66,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 		if (uriHandler == null)
 			uriHandler = new org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl();
 
-		Object id = MongoDBURIHandlerImpl.getID(uri);
+		Object id = MongoURIHandlerImpl.getID(uri);
 
 		// If the id was not specified, we append a dummy id to the resource URI so that all of the
 		// relative proxies will be generated correctly.
@@ -75,13 +76,13 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 
 		uriHandler.setBaseURI(resource.getURI());
 
-		Boolean serializeOption = (Boolean) options.get(MongoDBURIHandlerImpl.OPTION_SERIALIZE_DEFAULT_ATTRIBUTE_VALUES);
+		Boolean serializeOption = (Boolean) options.get(MongoURIHandlerImpl.OPTION_SERIALIZE_DEFAULT_ATTRIBUTE_VALUES);
 		boolean serializeDefaultAttributeValues = false;
 
 		if (serializeOption != null)
 			serializeDefaultAttributeValues = serializeOption;
 
-		builder = createBuilder(uriHandler, serializeDefaultAttributeValues);
+		builder = builderFactory.createBuilder(converterService, uriHandler, serializeDefaultAttributeValues);
 
 		if (resource.getContents().size() == 1)
 			saveSingleObject(id);
@@ -95,11 +96,6 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 		this.resource = resource;
 	}
 
-	protected DBObjectBuilder createBuilder(XMLResource.URIHandler uriHandler, boolean serializeDefaultAttributeValues)
-	{
-		return new DBObjectBuilder(converterService, uriHandler, serializeDefaultAttributeValues);
-	}
-
 	private void saveMultipleObjects() throws IOException
 	{
 		EList<EObject> contents = resource.getContents();
@@ -107,25 +103,25 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 		long timeStamp = System.currentTimeMillis();
 		response.put(URIConverter.RESPONSE_TIME_STAMP_PROPERTY, timeStamp);
 
-		Boolean useIdAttributeAsPrimaryKey = (Boolean) options.get(MongoDBURIHandlerImpl.OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY);
+		Boolean useIdAttributeAsPrimaryKey = (Boolean) options.get(MongoURIHandlerImpl.OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY);
 
 		for (EObject eObject : contents)
 		{
 			DBObject dbObject = builder.buildDBObject(eObject);
-			dbObject.put(MongoDBURIHandlerImpl.TIME_STAMP_KEY, timeStamp);
+			dbObject.put(MongoURIHandlerImpl.TIME_STAMP_KEY, timeStamp);
 
 			if (useIdAttributeAsPrimaryKey != null && useIdAttributeAsPrimaryKey)
 			{
 				EAttribute idAttribute = eObject.eClass().getEIDAttribute();
 
 				if (idAttribute != null)
-					dbObject.put(MongoDBURIHandlerImpl.ID_KEY, eObject.eGet(idAttribute));
+					dbObject.put(MongoURIHandlerImpl.ID_KEY, eObject.eGet(idAttribute));
 			}
 
 			dbObjects.add(dbObject);
 		}
 
-		WriteConcern writeConcern = (WriteConcern) options.get(MongoDBURIHandlerImpl.OPTION_WRITE_CONCERN);
+		WriteConcern writeConcern = (WriteConcern) options.get(MongoURIHandlerImpl.OPTION_WRITE_CONCERN);
 
 		if (writeConcern == null)
 			collection.insert(dbObjects);
@@ -140,7 +136,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 		for (int i = 0; i < dbObjects.size(); i++)
 		{
 			InternalEObject internalEObject = eObjects[i];
-			internalEObject.eSetProxyURI(baseURI.appendSegment(dbObjects.get(i).get(MongoDBURIHandlerImpl.ID_KEY).toString()).appendFragment("/"));
+			internalEObject.eSetProxyURI(baseURI.appendSegment(dbObjects.get(i).get(MongoURIHandlerImpl.ID_KEY).toString()).appendFragment("/"));
 			internalEObject.eAdapters().clear();
 			values.addUnique(internalEObject);
 		}
@@ -159,16 +155,16 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 		// The timestamp needs to be persisted with the object, and set in the response
 
 		long timeStamp = System.currentTimeMillis();
-		dbObject.put(MongoDBURIHandlerImpl.TIME_STAMP_KEY, timeStamp);
+		dbObject.put(MongoURIHandlerImpl.TIME_STAMP_KEY, timeStamp);
 		response.put(URIConverter.RESPONSE_TIME_STAMP_PROPERTY, timeStamp);
-		WriteConcern writeConcern = (WriteConcern) options.get(MongoDBURIHandlerImpl.OPTION_WRITE_CONCERN);
+		WriteConcern writeConcern = (WriteConcern) options.get(MongoURIHandlerImpl.OPTION_WRITE_CONCERN);
 
 		if (id == null)
 		{
 			// The id was not specified in the URI, so we can let MongoDB generate the id or use the value
 			// of the ID attribute
 
-			Boolean useIdAttributeAsPrimaryKey = (Boolean) options.get(MongoDBURIHandlerImpl.OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY);
+			Boolean useIdAttributeAsPrimaryKey = (Boolean) options.get(MongoURIHandlerImpl.OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY);
 			EAttribute idAttribute = eObject.eClass().getEIDAttribute();
 
 			boolean idSpecifiedByClient = useIdAttributeAsPrimaryKey != null && useIdAttributeAsPrimaryKey && idAttribute != null;
@@ -177,7 +173,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 			{
 				// Use the ID attribute value as the id
 				id = eObject.eGet(idAttribute);
-				dbObject.put(MongoDBURIHandlerImpl.ID_KEY, id);
+				dbObject.put(MongoURIHandlerImpl.ID_KEY, id);
 			}
 
 			if (writeConcern == null)
@@ -188,7 +184,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 			if (!idSpecifiedByClient)
 			{
 				// The id was not specified, so we are creating an object and letting MongoDB generate the id
-				id = dbObject.get(MongoDBURIHandlerImpl.ID_KEY);
+				id = dbObject.get(MongoURIHandlerImpl.ID_KEY);
 			}
 
 			// Modify the EMF Resource URI to include the id generated by MongoDB or specified in the ID attribute
@@ -207,7 +203,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 			// object. If the object already exists, then it will be updated; otherwise it will
 			// be inserted.
 
-			dbObject.put(MongoDBURIHandlerImpl.ID_KEY, id);
+			dbObject.put(MongoURIHandlerImpl.ID_KEY, id);
 
 			if (writeConcern == null)
 				collection.save(dbObject);
@@ -217,6 +213,7 @@ public class MongoDBOutputStream extends ByteArrayOutputStream implements URICon
 	}
 
 	private IConverterService converterService;
+	private IDBObjectBuilderFactory builderFactory;
 	private DBCollection collection;
 	private Map<?, ?> options;
 	private Resource resource;

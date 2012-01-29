@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipselabs.emf.mongo.examples.model.Child;
 import org.eclipselabs.emf.mongo.examples.model.ModelFactory;
 import org.eclipselabs.emf.mongo.examples.model.Parent;
-import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
+import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
@@ -52,7 +52,7 @@ public class Activator implements BundleActivator
 			System.out.print(".");
 			ResourceSet resourceSet = new ResourceSetImpl();
 			EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-			uriHandlers.add(0, new MongoDBURIHandlerImpl());
+			uriHandlers.add(0, new MongoURIHandlerImpl());
 
 			Parent parent = ModelFactory.eINSTANCE.createParent();
 			parent.setName("Parent " + i);
@@ -82,7 +82,7 @@ public class Activator implements BundleActivator
 
 		ResourceSet resourceSet = new ResourceSetImpl();
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoDBURIHandlerImpl());
+		uriHandlers.add(0, new MongoURIHandlerImpl());
 
 		startTime = System.currentTimeMillis();
 		Resource resource = resourceSet.getResource(firstParent, true);

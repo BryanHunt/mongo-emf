@@ -12,7 +12,7 @@
 package org.eclipselabs.mongo.emf.bundle;
 
 import org.eclipselabs.mongo.IMongoDB;
-import org.eclipselabs.mongo.emf.IMongoEmfQueryEngine;
+import org.eclipselabs.mongo.emf.IQueryEngine;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
@@ -29,7 +29,7 @@ public class Activator implements BundleActivator
 		return mongoTracker.getService();
 	}
 
-	public IMongoEmfQueryEngine getQueryEngine()
+	public IQueryEngine getQueryEngine()
 	{
 		return queryEngineTracker.getService();
 	}
@@ -40,7 +40,7 @@ public class Activator implements BundleActivator
 		mongoTracker = new ServiceTracker<IMongoDB, IMongoDB>(context, IMongoDB.class, null);
 		mongoTracker.open();
 
-		queryEngineTracker = new ServiceTracker<IMongoEmfQueryEngine, IMongoEmfQueryEngine>(context, IMongoEmfQueryEngine.class, null);
+		queryEngineTracker = new ServiceTracker<IQueryEngine, IQueryEngine>(context, IQueryEngine.class, null);
 		queryEngineTracker.open();
 
 		instance = this;
@@ -60,5 +60,5 @@ public class Activator implements BundleActivator
 
 	private static Activator instance;
 	private ServiceTracker<IMongoDB, IMongoDB> mongoTracker;
-	private ServiceTracker<IMongoEmfQueryEngine, IMongoEmfQueryEngine> queryEngineTracker;
+	private ServiceTracker<IQueryEngine, IQueryEngine> queryEngineTracker;
 }

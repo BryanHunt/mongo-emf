@@ -44,7 +44,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.eclipselabs.emf.query.Result;
-import org.eclipselabs.mongo.emf.MongoDBURIHandlerImpl;
+import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
 import org.eclipselabs.mongo.emf.junit.model.ETypes;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
@@ -70,17 +70,17 @@ public class TestMongoEmfBasics extends TestHarness
 	@Test
 	public void testGetID() throws IOException
 	{
-		assertThat(MongoDBURIHandlerImpl.getID(URI.createURI("mongo://localhost/db/collection/")), is(nullValue()));
+		assertThat(MongoURIHandlerImpl.getID(URI.createURI("mongo://localhost/db/collection/")), is(nullValue()));
 
 		{
-			Object id = MongoDBURIHandlerImpl.getID(URI.createURI("mongo://localhost/db/collection/id"));
+			Object id = MongoURIHandlerImpl.getID(URI.createURI("mongo://localhost/db/collection/id"));
 			assertThat(id, is(instanceOf(String.class)));
 			assertThat((String) id, is("id"));
 		}
 
 		{
 			ObjectId objectID = new ObjectId();
-			Object id = MongoDBURIHandlerImpl.getID(URI.createURI("mongo://localhost/db/collection/" + objectID));
+			Object id = MongoURIHandlerImpl.getID(URI.createURI("mongo://localhost/db/collection/" + objectID));
 			assertThat(id, is(instanceOf(ObjectId.class)));
 			assertThat((ObjectId) id, is(objectID));
 		}
@@ -89,29 +89,29 @@ public class TestMongoEmfBasics extends TestHarness
 	@Test(expected = IOException.class)
 	public void testGetBadID() throws IOException
 	{
-		MongoDBURIHandlerImpl.getID(URI.createURI("mongo://localhost/db/collection"));
+		MongoURIHandlerImpl.getID(URI.createURI("mongo://localhost/db/collection"));
 	}
 
 	@Test
 	public void testNativeTypes()
 	{
-		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EBOOLEAN));
-		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EBOOLEAN_OBJECT));
-		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EBYTE));
-		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EBYTE_OBJECT));
-		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EBYTE_ARRAY));
-		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.ESHORT));
-		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.ESHORT_OBJECT));
-		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EINT));
-		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EINTEGER_OBJECT));
-		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.ELONG));
-		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.ELONG_OBJECT));
-		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EDOUBLE));
-		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EDOUBLE_OBJECT));
-		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EFLOAT));
-		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EFLOAT_OBJECT));
-		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.EDATE));
-		assertTrue(MongoDBURIHandlerImpl.isNativeType(EcorePackage.Literals.ESTRING));
+		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EBOOLEAN));
+		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EBOOLEAN_OBJECT));
+		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EBYTE));
+		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EBYTE_OBJECT));
+		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EBYTE_ARRAY));
+		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.ESHORT));
+		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.ESHORT_OBJECT));
+		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EINT));
+		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EINTEGER_OBJECT));
+		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.ELONG));
+		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.ELONG_OBJECT));
+		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EDOUBLE));
+		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EDOUBLE_OBJECT));
+		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EFLOAT));
+		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EFLOAT_OBJECT));
+		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EDATE));
+		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.ESTRING));
 	}
 
 	@Test(expected = IOException.class)
@@ -258,7 +258,7 @@ public class TestMongoEmfBasics extends TestHarness
 		// Test : Store the object to MongoDB
 
 		HashMap<String, Object> options = new HashMap<String, Object>(1);
-		options.put(MongoDBURIHandlerImpl.OPTION_WRITE_CONCERN, WriteConcern.SAFE);
+		options.put(MongoURIHandlerImpl.OPTION_WRITE_CONCERN, WriteConcern.SAFE);
 
 		saveObject(targetObject, createCollectionURI(targetObject.eClass()), options);
 
@@ -302,7 +302,7 @@ public class TestMongoEmfBasics extends TestHarness
 		// Test : Store the object with the option to use the ID attribute as the MongoDB _id
 
 		HashMap<String, Object> options = new HashMap<String, Object>();
-		options.put(MongoDBURIHandlerImpl.OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY, Boolean.TRUE);
+		options.put(MongoURIHandlerImpl.OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY, Boolean.TRUE);
 
 		saveObject(primaryObject, createCollectionURI(primaryObject.eClass()), options);
 
@@ -327,7 +327,7 @@ public class TestMongoEmfBasics extends TestHarness
 		// Test : Store the object with the option to use the ID attribute as the MongoDB _id
 
 		HashMap<String, Object> options = new HashMap<String, Object>();
-		options.put(MongoDBURIHandlerImpl.OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY, Boolean.TRUE);
+		options.put(MongoURIHandlerImpl.OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY, Boolean.TRUE);
 
 		ResourceSet resourceSet = MongoUtil.createResourceSet();
 		Resource resource = resourceSet.createResource(createCollectionURI(primaryObject1.eClass()));
@@ -576,6 +576,6 @@ public class TestMongoEmfBasics extends TestHarness
 	public void testReadInputStream() throws IOException
 	{
 		// Simply for coverage
-		new MongoDBURIHandlerImpl().createInputStream(URI.createURI("mongo://localhost/junit/junit/id"), Collections.emptyMap()).read();
+		new MongoURIHandlerImpl().createInputStream(URI.createURI("mongo://localhost/junit/junit/id"), Collections.emptyMap()).read();
 	}
 }

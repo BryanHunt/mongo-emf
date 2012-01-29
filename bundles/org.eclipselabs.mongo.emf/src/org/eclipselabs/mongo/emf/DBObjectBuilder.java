@@ -73,7 +73,7 @@ public class DBObjectBuilder
 		// We have to add the URI of the class to the object so that we can
 		// reconstruct the EMF object when we read it back out of MongoDB.
 
-		dbObject.put(MongoDBURIHandlerImpl.ECLASS_KEY, EcoreUtil.getURI(eClass).toString());
+		dbObject.put(MongoURIHandlerImpl.ECLASS_KEY, EcoreUtil.getURI(eClass).toString());
 
 		// Save the XML extrinsic id if necessary
 
@@ -133,7 +133,7 @@ public class DBObjectBuilder
 	{
 		EDataType eDataType = attribute.getEAttributeType();
 
-		if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
+		if (!MongoURIHandlerImpl.isNativeType(eDataType))
 		{
 			EList<?> eValues = (EList<?>) values;
 			ArrayList<Object> convertedValues = new ArrayList<Object>(eValues.size());
@@ -158,7 +158,7 @@ public class DBObjectBuilder
 	{
 		EDataType eDataType = attribute.getEAttributeType();
 
-		if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
+		if (!MongoURIHandlerImpl.isNativeType(eDataType))
 			dbObject.put(attribute.getName(), convertEMFValueToMongoDBValue(eDataType, value));
 		else
 			dbObject.put(attribute.getName(), value);
@@ -180,7 +180,7 @@ public class DBObjectBuilder
 			String id = ((XMLResource) resource).getID(eObject);
 
 			if (id != null)
-				dbObject.put(MongoDBURIHandlerImpl.EXTRINSIC_ID_KEY, id);
+				dbObject.put(MongoURIHandlerImpl.EXTRINSIC_ID_KEY, id);
 		}
 	}
 
@@ -210,7 +210,7 @@ public class DBObjectBuilder
 			{
 				EDataType eDataType = ((EAttribute) feature).getEAttributeType();
 
-				if (!MongoDBURIHandlerImpl.isNativeType(eDataType))
+				if (!MongoURIHandlerImpl.isNativeType(eDataType))
 					dbEntry.put("value", convertEMFValueToMongoDBValue(eDataType, entry.getValue()));
 				else
 					dbEntry.put("value", entry.getValue());
@@ -277,8 +277,8 @@ public class DBObjectBuilder
 		if (eProxyURI != null)
 		{
 			BasicDBObject dbObject = new BasicDBObject(2);
-			dbObject.put(MongoDBURIHandlerImpl.PROXY_KEY, uriHandler.deresolve(eProxyURI).toString());
-			dbObject.put(MongoDBURIHandlerImpl.ECLASS_KEY, EcoreUtil.getURI(targetObject.eClass()).toString());
+			dbObject.put(MongoURIHandlerImpl.PROXY_KEY, uriHandler.deresolve(eProxyURI).toString());
+			dbObject.put(MongoURIHandlerImpl.ECLASS_KEY, EcoreUtil.getURI(targetObject.eClass()).toString());
 			return dbObject;
 		}
 		else if (!eReference.isContainment() || (eReference.isResolveProxies() && internalEObject.eDirectResource() != null))
@@ -286,8 +286,8 @@ public class DBObjectBuilder
 			// Cross-document containment, or non-containment reference - build a proxy
 
 			BasicDBObject dbObject = new BasicDBObject(2);
-			dbObject.put(MongoDBURIHandlerImpl.PROXY_KEY, uriHandler.deresolve(EcoreUtil.getURI(targetObject)).toString());
-			dbObject.put(MongoDBURIHandlerImpl.ECLASS_KEY, EcoreUtil.getURI(targetObject.eClass()).toString());
+			dbObject.put(MongoURIHandlerImpl.PROXY_KEY, uriHandler.deresolve(EcoreUtil.getURI(targetObject)).toString());
+			dbObject.put(MongoURIHandlerImpl.ECLASS_KEY, EcoreUtil.getURI(targetObject.eClass()).toString());
 			return dbObject;
 		}
 		else

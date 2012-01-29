@@ -19,7 +19,7 @@ import com.mongodb.DBObject;
  * @author bhunt
  * 
  */
-public interface IMongoEmfQueryEngine
+public interface IQueryEngine
 {
 	/**
 	 * This function builds a DBObject to be used as a query to MongoDB from the EMF query
