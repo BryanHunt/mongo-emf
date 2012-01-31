@@ -46,6 +46,11 @@ import com.mongodb.MongoURI;
  * mongo://localhost/data/people/
  * mongo://localhost/data/people/4d0a3e259095b5b334a59df0
  * 
+ * This class has the ability to use a custom converter service, builders, and streams. Each component
+ * has a set function for the appropriate factory. Unless you are customizing how EMF objects are
+ * serialized and de-serialized in MongoDB, you should not call these functions as default factories
+ * are provided.
+ * 
  * @author bhunt
  * 
  */
@@ -169,29 +174,32 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 		return dbCollection;
 	}
 
+	/**
+	 * @param converterServiceFactory for factory for your custom converter service
+	 */
 	public void setConverterServiceFactory(IConverterServiceFactory converterServiceFactory)
 	{
 		this.converterServiceFactory = converterServiceFactory;
 	}
 
 	/**
-	 * @param eObjectBuilderFactory the eObjectBuilderFactory to set
+	 * @param eObjectBuilderFactory the factory for your custom EObjectBuilder
 	 */
-	public void seteObjectBuilderFactory(IEObjectBuilderFactory eObjectBuilderFactory)
+	public void setEObjectBuilderFactory(IEObjectBuilderFactory eObjectBuilderFactory)
 	{
 		this.eObjectBuilderFactory = eObjectBuilderFactory;
 	}
 
 	/**
-	 * @param dbObjectBuilderFactory the dbObjectBuilderFactory to set
+	 * @param dbObjectBuilderFactory the factory for your custom DBObjectBuilder
 	 */
-	public void setDbObjectBuilderFactory(IDBObjectBuilderFactory dbObjectBuilderFactory)
+	public void setDBObjectBuilderFactory(IDBObjectBuilderFactory dbObjectBuilderFactory)
 	{
 		this.dbObjectBuilderFactory = dbObjectBuilderFactory;
 	}
 
 	/**
-	 * @param inputStreamFactory the inputStreamFactory to set
+	 * @param inputStreamFactory the factory for your custom InputStream
 	 */
 	public void setInputStreamFactory(IInputStreamFactory inputStreamFactory)
 	{
@@ -199,7 +207,7 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 	}
 
 	/**
-	 * @param outputStreamFactory the outputStreamFactory to set
+	 * @param outputStreamFactory the factory for your custom OutputStream
 	 */
 	public void setOutputStreamFactory(IOutputStreamFactory outputStreamFactory)
 	{

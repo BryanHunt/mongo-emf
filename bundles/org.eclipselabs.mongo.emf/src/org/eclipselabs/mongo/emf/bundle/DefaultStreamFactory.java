@@ -23,8 +23,6 @@ import org.eclipselabs.mongo.emf.IEObjectBuilderFactory;
 import org.eclipselabs.mongo.emf.IInputStreamFactory;
 import org.eclipselabs.mongo.emf.IQueryEngine;
 import org.eclipselabs.mongo.emf.IOutputStreamFactory;
-import org.eclipselabs.mongo.emf.MongoInputStream;
-import org.eclipselabs.mongo.emf.MongoOutputStream;
 
 import com.mongodb.DBCollection;
 

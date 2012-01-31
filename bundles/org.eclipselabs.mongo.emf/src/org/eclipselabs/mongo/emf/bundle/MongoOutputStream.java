@@ -9,7 +9,7 @@
  *    Bryan Hunt & Ed Merks - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf;
+package org.eclipselabs.mongo.emf.bundle;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -27,6 +27,10 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipselabs.emf.query.QueryFactory;
 import org.eclipselabs.emf.query.Result;
+import org.eclipselabs.mongo.emf.DBObjectBuilder;
+import org.eclipselabs.mongo.emf.IConverterService;
+import org.eclipselabs.mongo.emf.IDBObjectBuilderFactory;
+import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
 
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;

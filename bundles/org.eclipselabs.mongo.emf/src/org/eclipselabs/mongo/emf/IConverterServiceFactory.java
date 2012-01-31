@@ -12,10 +12,17 @@
 package org.eclipselabs.mongo.emf;
 
 /**
- * @author bhunt
+ * This interface provides the API for the converter service factory. If you wish to use a custom
+ * converter service, you must create a factory class for your service that implements this interface.
  * 
+ * @author bhunt
  */
 public interface IConverterServiceFactory
 {
-	ConverterService createConverterService();
+	/**
+	 * Constructs a converter service
+	 * 
+	 * @return an instance of your custom converter service
+	 */
+	IConverterService createConverterService();
 }

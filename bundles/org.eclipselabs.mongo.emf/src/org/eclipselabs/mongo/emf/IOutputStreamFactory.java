@@ -19,10 +19,23 @@ import org.eclipse.emf.common.util.URI;
 import com.mongodb.DBCollection;
 
 /**
- * @author bhunt
+ * This interface provides the API for for the OutputStream factory. If you wish to use a custom OutputStream,
+ * you must create a factory class for your stream that implements this interface.
  * 
+ * @author bhunt
  */
 public interface IOutputStreamFactory
 {
+	/**
+	 * Constructs the OutputStream
+	 * 
+	 * @param converterService the converter service to use for converting non-native values
+	 * @param dbObjectBuilderFactory the factory to use for creating the DBObjectBuilder
+	 * @param uri the URI of the resource
+	 * @param options the EMF load options
+	 * @param collection the MongoDB collection specified in the URI
+	 * @param response the EMF response
+	 * @return the stream for saving the EMF object to MongoDB
+	 */
 	OutputStream createOutputStream(IConverterService converterService, IDBObjectBuilderFactory dbObjectBuilderFactory, URI uri, Map<?, ?> options, DBCollection collection, Map<Object, Object> response);
 }
