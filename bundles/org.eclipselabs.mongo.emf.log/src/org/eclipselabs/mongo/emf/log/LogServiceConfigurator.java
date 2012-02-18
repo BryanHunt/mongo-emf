@@ -28,7 +28,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 public class LogServiceConfigurator
 {
-	public static void configureLogService(URI baseURI, int logLevel)
+	public static synchronized void configureLogService(URI baseURI, int logLevel)
 	{
 		if (configAdminServiceTracker == null)
 		{
