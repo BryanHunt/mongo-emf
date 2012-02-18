@@ -71,6 +71,7 @@ public class EObjectBuilder
 		this.converterService = converterService;
 		this.uriHandler = uriHandler;
 		this.includeAttributesForProxyReferences = includeAttributesForProxyReferences;
+		this.eClassCache = eClassCache;
 	}
 
 	/**
