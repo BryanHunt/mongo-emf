@@ -135,7 +135,7 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 			DBCollection collection = getCollection(uri, options);
 			return collection.findOne(new BasicDBObject(ID_KEY, getID(uri))) != null;
 		}
-		catch (Exception exception)
+		catch (Throwable exception)
 		{
 			return false;
 		}
