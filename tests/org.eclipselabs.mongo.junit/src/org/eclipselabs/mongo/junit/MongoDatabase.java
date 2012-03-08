@@ -17,6 +17,7 @@ import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipselabs.mongo.IMongoDB;
 import org.eclipselabs.mongo.junit.bundle.Activator;
 import org.junit.rules.ExternalResource;
@@ -69,8 +70,19 @@ public class MongoDatabase extends ExternalResource
 		this.database = database;
 		this.replicaSet = replicaSet;
 
+		baseURI = URI.createURI("mongo://" + hostname + (port == 27017 ? "" : ":" + port) + "/" + database);
 		mongoServiceTracker = new ServiceTracker<IMongoDB, IMongoDB>(Activator.getBundleContext(), IMongoDB.class, null);
 		mongoServiceTracker.open();
+	}
+
+	public URI createCollectionURI(String collection)
+	{
+		return baseURI.appendSegments(new String[] { collection, "" });
+	}
+
+	public URI createObjectURI(String collection, String id)
+	{
+		return baseURI.appendSegments(new String[] { collection, id });
 	}
 
 	public DB getMongoDB()
@@ -128,4 +140,5 @@ public class MongoDatabase extends ExternalResource
 	private ServiceTracker<IMongoDB, IMongoDB> mongoServiceTracker;
 	private IMongoDB mongoService;
 	private DB db;
+	private URI baseURI;
 }
