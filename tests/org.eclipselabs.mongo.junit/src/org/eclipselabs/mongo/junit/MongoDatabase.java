@@ -42,6 +42,11 @@ import com.mongodb.ServerAddress;
  */
 public class MongoDatabase extends ExternalResource
 {
+	public MongoDatabase()
+	{
+		this("junit");
+	}
+
 	public MongoDatabase(String database)
 	{
 		this("localhost", database);
