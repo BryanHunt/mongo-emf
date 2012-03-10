@@ -2,7 +2,7 @@
 <feature
       id="org.eclipselabs.mongo.emf.query.source.feature"
       label="MongoEMF Query Engine Source"
-      version="0.5.0.qualifier"
+      version="0.5.1.qualifier"
       provider-name="EclipseLabs">
 
    <description url="http://www.example.com/description">
@@ -23,4 +23,5 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
 </feature>

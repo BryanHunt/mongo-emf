@@ -2,7 +2,7 @@
 <feature
       id="org.eclipselabs.mongo.emf.source.feature"
       label="Mongo EMF Core Runtime Source"
-      version="0.5.0.qualifier"
+      version="0.5.1.qualifier"
       provider-name="EclipseLabs">
 
    <description url="http://www.example.com/description">
