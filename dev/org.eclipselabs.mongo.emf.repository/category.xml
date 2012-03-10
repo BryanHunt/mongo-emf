@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipselabs.emf.query.feature_0.5.1.qualifier.jar" id="org.eclipselabs.emf.query.feature" version="0.5.1.qualifier">
-      <category name="mongo-emf"/>
-   </feature>
    <feature url="features/org.eclipselabs.mongo.emf.feature_0.5.1.qualifier.jar" id="org.eclipselabs.mongo.emf.feature" version="0.5.1.qualifier">
       <category name="mongo-emf"/>
    </feature>
@@ -13,6 +10,9 @@
       <category name="mongo-emf"/>
    </feature>
    <feature url="features/org.eclipselabs.mongo.junit.feature_0.5.1.qualifier.jar" id="org.eclipselabs.mongo.junit.feature" version="0.5.1.qualifier">
+      <category name="mongo-emf"/>
+   </feature>
+   <feature url="features/org.eclipselabs.mongo.emf.query.feature_0.5.1.qualifier.jar" id="org.eclipselabs.mongo.emf.query.feature" version="0.5.1.qualifier">
       <category name="mongo-emf"/>
    </feature>
    <category-def name="mongo-emf" label="Mongo EMF Runtime">
