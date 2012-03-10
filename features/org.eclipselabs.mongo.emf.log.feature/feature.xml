@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipselabs.mongo.emf.log.feature"
-      label="Mongo EMF Log Support"
+      label="MongoEMF OSGi Logging Support"
       version="0.5.1.qualifier"
       provider-name="EclipseLabs"
       license-feature="org.eclipselabs.mongo.emf.feature">
