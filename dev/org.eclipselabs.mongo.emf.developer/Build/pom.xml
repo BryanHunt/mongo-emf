@@ -13,8 +13,8 @@
     <module>../../../bundles/org.eclipselabs.mongo.emf.freemarker</module>
     <module>../../../bundles/org.eclipselabs.mongo.emf.log</module>
     <module>../../../bundles/org.eclipselabs.mongo.emf.query</module>
+    <module>../../../bundles/org.eclipselabs.mongo.junit</module>
     
-    <module>../../../tests/org.eclipselabs.mongo.junit</module>
     <module>../../../tests/org.eclipselabs.mongo.emf.junit</module>
     <module>../../../tests/org.eclipselabs.mongo.emf.log.junit</module>
     
