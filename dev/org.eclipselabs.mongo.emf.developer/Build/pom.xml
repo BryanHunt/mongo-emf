@@ -18,7 +18,6 @@
     <module>../../../tests/org.eclipselabs.mongo.emf.junit</module>
     <module>../../../tests/org.eclipselabs.mongo.emf.log.junit</module>
     
-    <module>../../../features/org.eclipselabs.emf.query.feature</module>
     <module>../../../features/org.eclipselabs.mongo.emf.feature</module>
     <module>../../../features/org.eclipselabs.mongo.emf.freemarker.feature</module>
 	  <module>../../../features/org.eclipselabs.mongo.emf.log.feature</module>
