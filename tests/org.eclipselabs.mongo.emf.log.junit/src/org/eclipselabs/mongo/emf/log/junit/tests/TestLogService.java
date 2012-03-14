@@ -67,7 +67,7 @@ public class TestLogService
 	{
 		mongoLogService.setLogLevel(LogLevel.LOG_DEBUG);
 		osgiLogService.log(LogService.LOG_DEBUG, "debug");
-		Thread.sleep(500);
+		Thread.sleep(1000);
 		Collection<LogEntry> logEntries = MongoUtil.getObjects(MongoUtil.createResourceSet(), "junit", DB_LOGS);
 
 		for (LogEntry entry : logEntries)
@@ -84,7 +84,7 @@ public class TestLogService
 	{
 		mongoLogService.setLogLevel(LogLevel.LOG_ERROR);
 		osgiLogService.log(LogService.LOG_ERROR, "error");
-		Thread.sleep(100);
+		Thread.sleep(1000);
 		LogEntry logEntry = MongoUtil.getObject(MongoUtil.createResourceSet(), "junit", DB_LOGS);
 		assertThat(logEntry, is(notNullValue()));
 		assertThat(logEntry.getMessage(), is("error"));
