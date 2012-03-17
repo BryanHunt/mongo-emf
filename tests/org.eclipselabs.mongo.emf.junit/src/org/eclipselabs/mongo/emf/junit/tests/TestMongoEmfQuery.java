@@ -50,7 +50,6 @@ import org.junit.Test;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
-import com.mongodb.MongoException;
 
 /**
  * @author bhunt
@@ -59,7 +58,7 @@ import com.mongodb.MongoException;
 public class TestMongoEmfQuery extends TestHarness
 {
 	@Before
-	public void setUp() throws UnknownHostException, MongoException
+	public void setUp() throws UnknownHostException
 	{
 		super.setUp();
 
@@ -93,9 +92,9 @@ public class TestMongoEmfQuery extends TestHarness
 	{
 		// Setup : Create a primary object with the ID attribute set
 
-		String ID = "Attribute ID";
+		String id = "Attribute ID";
 		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
-		primaryObject.setIdAttribute(ID);
+		primaryObject.setIdAttribute(id);
 
 		// Test : Store the object with the option to use the ID attribute as the MongoDB _id
 
@@ -107,7 +106,7 @@ public class TestMongoEmfQuery extends TestHarness
 		// Verify : Check that the object was stored correctly
 
 		ResourceSet resourceSet = MongoUtil.createResourceSet();
-		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.PRIMARY_OBJECT, "idAttribute=='" + ID + "'"), true);
+		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.PRIMARY_OBJECT, "idAttribute=='" + id + "'"), true);
 		assertThat(resource, is(notNullValue()));
 		assertThat(resource.getContents().size(), is(1));
 

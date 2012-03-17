@@ -14,6 +14,7 @@ package org.eclipselabs.mongo.internal;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipselabs.mongo.IMongoDB;
 
@@ -85,5 +86,5 @@ public class MongoDB implements IMongoDB
 		return mongo;
 	}
 
-	private final HashMap<String, Mongo> mongos = new HashMap<String, Mongo>();
+	private final Map<String, Mongo> mongos = new HashMap<String, Mongo>();
 }

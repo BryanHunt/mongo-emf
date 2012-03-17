@@ -392,11 +392,13 @@ public class EObjectBuilder
 	 */
 	protected Object convertMongoDBValueToEMFValue(EDataType eDataType, Object dbValue)
 	{
+		Object convertedValue = dbValue;
+
 		if (!MongoURIHandlerImpl.isNativeType(eDataType))
 		{
 			// Types not native to MongoDB are stored as strings and must be converted to the proper object type by EMF
 
-			dbValue = converterService.getConverter(eDataType).convertMongoDBValueToEMFValue(eDataType, dbValue);
+			convertedValue = converterService.getConverter(eDataType).convertMongoDBValueToEMFValue(eDataType, dbValue);
 		}
 		else if (dbValue != null)
 		{
@@ -406,14 +408,14 @@ public class EObjectBuilder
 			String instanceClassName = eDataType.getInstanceClassName();
 
 			if (instanceClassName == "byte" || instanceClassName == "java.lang.Byte")
-				dbValue = ((Integer) dbValue).byteValue();
+				convertedValue = ((Integer) dbValue).byteValue();
 			else if (instanceClassName == "float" || instanceClassName == "java.lang.Float")
-				dbValue = ((Double) dbValue).floatValue();
+				convertedValue = ((Double) dbValue).floatValue();
 			else if (instanceClassName == "short" || instanceClassName == "java.lang.Short")
-				dbValue = ((Integer) dbValue).shortValue();
+				convertedValue = ((Integer) dbValue).shortValue();
 		}
 
-		return dbValue;
+		return convertedValue;
 	}
 
 	/**

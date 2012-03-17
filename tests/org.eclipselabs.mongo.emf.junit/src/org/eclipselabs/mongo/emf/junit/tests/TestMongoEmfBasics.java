@@ -180,7 +180,7 @@ public class TestMongoEmfBasics extends TestHarness
 		// Setup
 
 		ETypes eTypes = ModelFactory.eINSTANCE.createETypes();
-		eTypes.setEBigDecimal(new BigDecimal(1));
+		eTypes.setEBigDecimal(BigDecimal.ONE);
 		eTypes.setEBigInteger(new BigInteger(2, new Random()));
 		eTypes.setEBoolean(true);
 		eTypes.setEByte((byte) 3);
@@ -295,9 +295,9 @@ public class TestMongoEmfBasics extends TestHarness
 	{
 		// Setup : Create a primary object with the ID attribute set
 
-		String ID = "Attribute ID";
+		String id = "Attribute ID";
 		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
-		primaryObject.setIdAttribute(ID);
+		primaryObject.setIdAttribute(id);
 
 		// Test : Store the object with the option to use the ID attribute as the MongoDB _id
 
@@ -308,7 +308,7 @@ public class TestMongoEmfBasics extends TestHarness
 
 		// Verify : Check that the object was stored correctly
 
-		assertThat(MongoUtil.getID(primaryObject), is(ID));
+		assertThat(MongoUtil.getID(primaryObject), is(id));
 	}
 
 	@Test
@@ -316,13 +316,13 @@ public class TestMongoEmfBasics extends TestHarness
 	{
 		// Setup : Create two primary objects with the ID attribute set
 
-		String ID1 = "Object 1";
+		String id1 = "Object 1";
 		PrimaryObject primaryObject1 = ModelFactory.eINSTANCE.createPrimaryObject();
-		primaryObject1.setIdAttribute(ID1);
+		primaryObject1.setIdAttribute(id1);
 
-		String ID2 = "Object 2";
+		String id2 = "Object 2";
 		PrimaryObject primaryObject2 = ModelFactory.eINSTANCE.createPrimaryObject();
-		primaryObject2.setIdAttribute(ID2);
+		primaryObject2.setIdAttribute(id2);
 
 		// Test : Store the object with the option to use the ID attribute as the MongoDB _id
 
@@ -342,8 +342,8 @@ public class TestMongoEmfBasics extends TestHarness
 
 		Result result = (Result) resource.getContents().get(0);
 		assertThat(result.getValues().size(), is(2));
-		assertThat(MongoUtil.getID(result.getValues().get(0)), is(ID1));
-		assertThat(MongoUtil.getID(result.getValues().get(1)), is(ID2));
+		assertThat(MongoUtil.getID(result.getValues().get(0)), is(id1));
+		assertThat(MongoUtil.getID(result.getValues().get(1)), is(id2));
 	}
 
 	@Test

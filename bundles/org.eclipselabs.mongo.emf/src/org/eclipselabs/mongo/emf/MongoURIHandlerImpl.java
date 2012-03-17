@@ -152,7 +152,7 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 	 * @throws UnknownHostException if the host specified in the URI can't be found
 	 * @throws IOException if the URI is malformed or the collection could not otherwise be resolved
 	 */
-	public DBCollection getCollection(URI uri, Map<?, ?> options) throws UnknownHostException, IOException
+	public DBCollection getCollection(URI uri, Map<?, ?> options) throws IOException
 	{
 		// We assume that the URI path has the form /database/collection/{id} making the
 		// collection segment # 1.

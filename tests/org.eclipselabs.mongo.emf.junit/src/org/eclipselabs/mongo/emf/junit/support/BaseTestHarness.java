@@ -17,7 +17,7 @@ import static org.junit.Assert.assertThat;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
@@ -29,7 +29,6 @@ import org.junit.Before;
 
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.MongoException;
 
 /**
  * @author bhunt
@@ -46,7 +45,7 @@ public abstract class BaseTestHarness
 	}
 
 	@Before
-	public void setUp() throws UnknownHostException, MongoException
+	public void setUp() throws UnknownHostException
 	{
 		db = createDatabase();
 		assertThat(db, is(notNullValue()));
@@ -80,13 +79,13 @@ public abstract class BaseTestHarness
 		saveObject(resourceSet, object, createCollectionURI(object.eClass()), null);
 	}
 
-	protected void saveObject(EObject object, URI uri, HashMap<String, Object> options) throws IOException
+	protected void saveObject(EObject object, URI uri, Map<String, Object> options) throws IOException
 	{
 		ResourceSet resourceSet = MongoUtil.createResourceSet();
 		saveObject(resourceSet, object, uri, options);
 	}
 
-	private void saveObject(ResourceSet resourceSet, EObject object, URI uri, HashMap<String, Object> options) throws IOException
+	private void saveObject(ResourceSet resourceSet, EObject object, URI uri, Map<String, Object> options) throws IOException
 	{
 		Resource resource = resourceSet.createResource(uri);
 		resource.getContents().add(object);

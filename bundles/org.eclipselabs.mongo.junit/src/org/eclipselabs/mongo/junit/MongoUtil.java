@@ -33,8 +33,8 @@ import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipselabs.emf.query.Result;
 import org.eclipselabs.mongo.IMongoDB;
-import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
 import org.eclipselabs.mongo.emf.MongoResourceSetImpl;
+import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
 import org.eclipselabs.mongo.internal.MongoDB;
 import org.eclipselabs.mongo.junit.bundle.Activator;
 
@@ -286,4 +286,7 @@ public class MongoUtil
 				checkObject((EObject) expected.eGet(reference), (EObject) actual.eGet(reference), excludeFeatures, visited);
 		}
 	}
+
+	private MongoUtil()
+	{}
 }

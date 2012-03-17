@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -81,7 +82,7 @@ public class TestMongoEmfReplica extends BaseTestHarness
 		return database.getMongoDB();
 	}
 
-	private static ArrayList<ServerAddress> replicaSet = new ArrayList<ServerAddress>();
+	private static List<ServerAddress> replicaSet = new ArrayList<ServerAddress>();
 
 	static
 	{

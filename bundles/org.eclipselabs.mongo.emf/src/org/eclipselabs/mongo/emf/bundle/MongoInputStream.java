@@ -126,6 +126,6 @@ public class MongoInputStream extends InputStream implements URIConverter.Loadab
 	private IConverterService converterService;
 	private IQueryEngine queryEngine;
 	private DBCollection collection;
-	private HashMap<String, EClass> eClassCache = new HashMap<String, EClass>();
+	private Map<String, EClass> eClassCache = new HashMap<String, EClass>();
 	private IEObjectBuilderFactory builderFactory;
 }
