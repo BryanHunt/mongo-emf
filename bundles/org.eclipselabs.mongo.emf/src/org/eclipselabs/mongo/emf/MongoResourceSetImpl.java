@@ -68,20 +68,17 @@ public class MongoResourceSetImpl extends ResourceSetImpl
 					if (notification.getFeatureID(ResourceSet.class) == ResourceSet.RESOURCE_SET__RESOURCES)
 						handleContainment(notification);
 				}
-				else if (notifier instanceof Resource)
+				else if (notifier instanceof Resource && notification.getFeatureID(Resource.class) == Resource.RESOURCE__URI)
 				{
-					if (notification.getFeatureID(Resource.class) == Resource.RESOURCE__URI)
-					{
-						Object oldURI = notification.getOldValue();
+					Object oldURI = notification.getOldValue();
 
-						if (oldURI != null)
-							uriResourceMap.remove(uriConverter.normalize((URI) oldURI));
+					if (oldURI != null)
+						uriResourceMap.remove(uriConverter.normalize((URI) oldURI));
 
-						Object newURI = notification.getNewValue();
+					Object newURI = notification.getNewValue();
 
-						if (newURI != null)
-							uriResourceMap.put(uriConverter.normalize((URI) newURI), (Resource) notifier);
-					}
+					if (newURI != null)
+						uriResourceMap.put(uriConverter.normalize((URI) newURI), (Resource) notifier);
 				}
 			}
 		});

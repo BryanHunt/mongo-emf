@@ -12,6 +12,7 @@
 package org.eclipselabs.mongo.emf.log;
 
 import java.io.IOException;
+import java.util.Dictionary;
 import java.util.Hashtable;
 
 import org.eclipse.emf.common.util.URI;
@@ -64,7 +65,7 @@ public class LogServiceConfigurator
 			try
 			{
 				config = configAdmin.getConfiguration("org.eclipselabs.mongo.emf.log", null);
-				Hashtable<String, Object> properties = new Hashtable<String, Object>(2);
+				Dictionary<String, Object> properties = new Hashtable<String, Object>(2);
 				properties.put("baseURI", baseURI.toString());
 				properties.put("logLevel", Integer.valueOf(logLevel));
 				config.update(properties);
