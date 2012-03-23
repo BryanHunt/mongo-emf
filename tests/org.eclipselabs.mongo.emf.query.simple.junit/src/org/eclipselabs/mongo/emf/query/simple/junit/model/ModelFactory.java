@@ -1,14 +1,13 @@
 /**
  */
+package org.eclipselabs.mongo.emf.query.simple.junit.model;
 
-package org.eclipselabs.mongo.emf.junit.model;
-
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
+
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
@@ -16,7 +15,7 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage
+ * @see org.eclipselabs.mongo.emf.query.simple.junit.model.ModelPackage
  * @generated
  */
 public class ModelFactory extends EFactoryImpl
@@ -39,7 +38,7 @@ public class ModelFactory extends EFactoryImpl
 	{
 		try
 		{
-			ModelFactory theModelFactory = (ModelFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipselabs.org/mongo/emf/junit"); 
+			ModelFactory theModelFactory = (ModelFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipselabs.org/mongo/emf/query/simple/junit"); 
 			if (theModelFactory != null)
 			{
 				return theModelFactory;
@@ -73,9 +72,11 @@ public class ModelFactory extends EFactoryImpl
 	{
 		switch (eClass.getClassifierID())
 		{
-			case ModelPackage.ETYPES: return createETypes();
-			case ModelPackage.PRIMARY_OBJECT: return createPrimaryObject();
-			case ModelPackage.TARGET_OBJECT: return createTargetObject();
+			case ModelPackage.PERSON: return createPerson();
+			case ModelPackage.BOOK: return createBook();
+			case ModelPackage.LIBRARY: return createLibrary();
+			case ModelPackage.LOCATION: return createLocation();
+			case ModelPackage.MAPPED_LIBRARY: return createMappedLibrary();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -86,16 +87,10 @@ public class ModelFactory extends EFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public Object createFromString(EDataType eDataType, String initialValue)
+	public Person createPerson()
 	{
-		switch (eDataType.getClassifierID())
-		{
-			case ModelPackage.URI:
-				return createURIFromString(eDataType, initialValue);
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-		}
+		Person person = new Person();
+		return person;
 	}
 
 	/**
@@ -103,16 +98,10 @@ public class ModelFactory extends EFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public String convertToString(EDataType eDataType, Object instanceValue)
+	public Book createBook()
 	{
-		switch (eDataType.getClassifierID())
-		{
-			case ModelPackage.URI:
-				return convertURIToString(eDataType, instanceValue);
-			default:
-				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
-		}
+		Book book = new Book();
+		return book;
 	}
 
 	/**
@@ -120,10 +109,10 @@ public class ModelFactory extends EFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ETypes createETypes()
+	public Library createLibrary()
 	{
-		ETypes eTypes = new ETypes();
-		return eTypes;
+		Library library = new Library();
+		return library;
 	}
 
 	/**
@@ -131,10 +120,10 @@ public class ModelFactory extends EFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public PrimaryObject createPrimaryObject()
+	public Location createLocation()
 	{
-		PrimaryObject primaryObject = new PrimaryObject();
-		return primaryObject;
+		Location location = new Location();
+		return location;
 	}
 
 	/**
@@ -142,31 +131,10 @@ public class ModelFactory extends EFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public TargetObject createTargetObject()
+	public MappedLibrary createMappedLibrary()
 	{
-		TargetObject targetObject = new TargetObject();
-		return targetObject;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * 
-	 * @generated NOT
-	 */
-	public URI createURIFromString(EDataType eDataType, String initialValue)
-	{
-		return URI.createURI(initialValue);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String convertURIToString(EDataType eDataType, Object instanceValue)
-	{
-		return super.convertToString(eDataType, instanceValue);
+		MappedLibrary mappedLibrary = new MappedLibrary();
+		return mappedLibrary;
 	}
 
 	/**

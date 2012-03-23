@@ -1,49 +1,45 @@
-/*******************************************************************************
- * Copyright (c) 2010 Bryan Hunt.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Bryan Hunt - initial API and implementation
- *******************************************************************************/
-
-package org.eclipselabs.mongo.emf.junit.model.impl;
+/**
+ */
+package org.eclipselabs.mongo.emf.query.simple.junit.model;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipselabs.mongo.emf.junit.model.Book;
-import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
-import org.eclipselabs.mongo.emf.junit.model.Person;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Book</b></em>'.
+ * A representation of the model object '<em><b>Book</b></em>'.
  * <!-- end-user-doc -->
+ *
  * <p>
- * The following features are implemented:
+ * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.BookImpl#getTitle <em>Title</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.BookImpl#getAuthors <em>Authors</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.BookImpl#getTags <em>Tags</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.BookImpl#getData <em>Data</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.query.simple.junit.model.Book#getTitle <em>Title</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.query.simple.junit.model.Book#getAuthors <em>Authors</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.query.simple.junit.model.Book#getTags <em>Tags</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.query.simple.junit.model.Book#getData <em>Data</em>}</li>
  * </ul>
  * </p>
  *
+ * @see org.eclipselabs.mongo.emf.query.simple.junit.model.ModelPackage#getBook()
+ * @model kind="class"
  * @generated
  */
-public class BookImpl extends EObjectImpl implements Book
+public class Book extends EObjectImpl implements EObject
 {
 	/**
 	 * The default value of the '{@link #getTitle() <em>Title</em>}' attribute.
@@ -100,7 +96,7 @@ public class BookImpl extends EObjectImpl implements Book
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected BookImpl()
+	protected Book()
 	{
 		super();
 	}
@@ -117,8 +113,17 @@ public class BookImpl extends EObjectImpl implements Book
 	}
 
 	/**
+	 * Returns the value of the '<em><b>Title</b></em>' attribute.
 	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Title</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
 	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Title</em>' attribute.
+	 * @see #setTitle(String)
+	 * @see org.eclipselabs.mongo.emf.query.simple.junit.model.ModelPackage#getBook_Title()
+	 * @model
 	 * @generated
 	 */
 	public String getTitle()
@@ -127,8 +132,11 @@ public class BookImpl extends EObjectImpl implements Book
 	}
 
 	/**
+	 * Sets the value of the '{@link org.eclipselabs.mongo.emf.query.simple.junit.model.Book#getTitle <em>Title</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Title</em>' attribute.
+	 * @see #getTitle()
 	 * @generated
 	 */
 	public void setTitle(String newTitle)
@@ -140,8 +148,19 @@ public class BookImpl extends EObjectImpl implements Book
 	}
 
 	/**
+	 * Returns the value of the '<em><b>Authors</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipselabs.mongo.emf.query.simple.junit.model.Person}.
+	 * It is bidirectional and its opposite is '{@link org.eclipselabs.mongo.emf.query.simple.junit.model.Person#getBooks <em>Books</em>}'.
 	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Authors</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
 	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Authors</em>' reference list.
+	 * @see org.eclipselabs.mongo.emf.query.simple.junit.model.ModelPackage#getBook_Authors()
+	 * @see org.eclipselabs.mongo.emf.query.simple.junit.model.Person#getBooks
+	 * @model opposite="books"
 	 * @generated
 	 */
 	public EList<Person> getAuthors()
@@ -154,8 +173,17 @@ public class BookImpl extends EObjectImpl implements Book
 	}
 
 	/**
+	 * Returns the value of the '<em><b>Tags</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.String}.
 	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Tags</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
 	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Tags</em>' attribute list.
+	 * @see org.eclipselabs.mongo.emf.query.simple.junit.model.ModelPackage#getBook_Tags()
+	 * @model
 	 * @generated
 	 */
 	public EList<String> getTags()
@@ -168,8 +196,17 @@ public class BookImpl extends EObjectImpl implements Book
 	}
 
 	/**
+	 * Returns the value of the '<em><b>Data</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.Character}.
 	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Data</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
 	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Data</em>' attribute list.
+	 * @see org.eclipselabs.mongo.emf.query.simple.junit.model.ModelPackage#getBook_Data()
+	 * @model
 	 * @generated
 	 */
 	public EList<Character> getData()
@@ -335,4 +372,4 @@ public class BookImpl extends EObjectImpl implements Book
 		return result.toString();
 	}
 
-} //BookImpl
+} // Book

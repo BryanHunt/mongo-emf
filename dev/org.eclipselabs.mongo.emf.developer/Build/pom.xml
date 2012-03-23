@@ -18,6 +18,7 @@
     <module>../../../bundles/org.eclipselabs.mongo.junit</module>
     
     <module>../../../tests/org.eclipselabs.mongo.emf.junit</module>
+    <module>../../../tests/org.eclipselabs.mongo.emf.query.simple.junit</module>
     <module>../../../tests/org.eclipselabs.mongo.emf.log.junit</module>
     
     <module>../../../features/org.eclipselabs.mongo.emf.feature</module>

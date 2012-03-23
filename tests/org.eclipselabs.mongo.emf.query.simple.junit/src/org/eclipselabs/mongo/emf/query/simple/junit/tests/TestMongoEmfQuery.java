@@ -9,7 +9,7 @@
  *    Bryan Hunt & Ed Merks - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf.junit.tests;
+package org.eclipselabs.mongo.emf.query.simple.junit.tests;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -35,13 +35,12 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipselabs.emf.query.Result;
 import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
 import org.eclipselabs.mongo.emf.junit.model.ETypes;
-import org.eclipselabs.mongo.emf.junit.model.Library;
-import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
-import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
-import org.eclipselabs.mongo.emf.junit.model.Person;
 import org.eclipselabs.mongo.emf.junit.model.PrimaryObject;
 import org.eclipselabs.mongo.emf.junit.model.TargetObject;
 import org.eclipselabs.mongo.emf.junit.support.TestHarness;
+import org.eclipselabs.mongo.emf.query.simple.junit.model.Library;
+import org.eclipselabs.mongo.emf.query.simple.junit.model.ModelPackage;
+import org.eclipselabs.mongo.emf.query.simple.junit.model.Person;
 import org.eclipselabs.mongo.junit.MongoUtil;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -93,7 +92,7 @@ public class TestMongoEmfQuery extends TestHarness
 		// Setup : Create a primary object with the ID attribute set
 
 		String id = "Attribute ID";
-		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
+		PrimaryObject primaryObject = org.eclipselabs.mongo.emf.junit.model.ModelFactory.eINSTANCE.createPrimaryObject();
 		primaryObject.setIdAttribute(id);
 
 		// Test : Store the object with the option to use the ID attribute as the MongoDB _id
@@ -106,7 +105,7 @@ public class TestMongoEmfQuery extends TestHarness
 		// Verify : Check that the object was stored correctly
 
 		ResourceSet resourceSet = MongoUtil.createResourceSet();
-		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.PRIMARY_OBJECT, "idAttribute=='" + id + "'"), true);
+		Resource resource = resourceSet.getResource(createQueryURI(org.eclipselabs.mongo.emf.junit.model.ModelPackage.Literals.PRIMARY_OBJECT, "idAttribute=='" + id + "'"), true);
 		assertThat(resource, is(notNullValue()));
 		assertThat(resource.getContents().size(), is(1));
 
@@ -301,25 +300,25 @@ public class TestMongoEmfQuery extends TestHarness
 	@Test
 	public void testQueryDefaultAttribute() throws IOException
 	{
-		ETypes eTypes = ModelFactory.eINSTANCE.createETypes();
+		ETypes eTypes = org.eclipselabs.mongo.emf.junit.model.ModelFactory.eINSTANCE.createETypes();
 		eTypes.setELong(1);
 
 		ResourceSet resourceSet = MongoUtil.createResourceSet();
-		Resource resource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.ETYPES));
+		Resource resource = resourceSet.createResource(createCollectionURI(org.eclipselabs.mongo.emf.junit.model.ModelPackage.Literals.ETYPES));
 		resource.getContents().add(eTypes);
 		HashMap<String, Object> options = new HashMap<String, Object>(1);
 		options.put(MongoURIHandlerImpl.OPTION_SERIALIZE_DEFAULT_ATTRIBUTE_VALUES, Boolean.TRUE);
 		resource.save(options);
 
-		eTypes = ModelFactory.eINSTANCE.createETypes();
+		eTypes = org.eclipselabs.mongo.emf.junit.model.ModelFactory.eINSTANCE.createETypes();
 		eTypes.setEInt(1);
 
-		resource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.ETYPES));
+		resource = resourceSet.createResource(createCollectionURI(org.eclipselabs.mongo.emf.junit.model.ModelPackage.Literals.ETYPES));
 		resource.getContents().add(eTypes);
 		resource.save(null);
 
 		resourceSet = MongoUtil.createResourceSet();
-		resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.ETYPES, "eInt == 0"), true);
+		resource = resourceSet.getResource(createQueryURI(org.eclipselabs.mongo.emf.junit.model.ModelPackage.Literals.ETYPES, "eInt == 0"), true);
 		Result result = (Result) resource.getContents().get(0);
 		assertThat(result.getValues().size(), is(1));
 		ETypes target = (ETypes) result.getValues().get(0);
@@ -333,16 +332,17 @@ public class TestMongoEmfQuery extends TestHarness
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DAY_OF_MONTH, 1);
 
-		ETypes eTypes = ModelFactory.eINSTANCE.createETypes();
+		ETypes eTypes = org.eclipselabs.mongo.emf.junit.model.ModelFactory.eINSTANCE.createETypes();
 		eTypes.setEDate(calendar.getTime());
 
 		ResourceSet resourceSet = MongoUtil.createResourceSet();
-		Resource resource = resourceSet.createResource(createCollectionURI(ModelPackage.Literals.ETYPES));
+		Resource resource = resourceSet.createResource(createCollectionURI(org.eclipselabs.mongo.emf.junit.model.ModelPackage.Literals.ETYPES));
 		resource.getContents().add(eTypes);
 		resource.save(null);
 
 		resourceSet = MongoUtil.createResourceSet();
-		resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.ETYPES, "eDate >= " + EcoreFactory.eINSTANCE.convertToString(EcorePackage.Literals.EDATE, new Date())), true);
+		resource = resourceSet.getResource(
+				createQueryURI(org.eclipselabs.mongo.emf.junit.model.ModelPackage.Literals.ETYPES, "eDate >= " + EcoreFactory.eINSTANCE.convertToString(EcorePackage.Literals.EDATE, new Date())), true);
 		Result result = (Result) resource.getContents().get(0);
 		assertThat(result.getValues().size(), is(1));
 	}
@@ -353,7 +353,7 @@ public class TestMongoEmfQuery extends TestHarness
 	{
 		// Setup : Create and save a target object.
 
-		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
+		TargetObject targetObject = org.eclipselabs.mongo.emf.junit.model.ModelFactory.eINSTANCE.createTargetObject();
 		targetObject.setSingleAttribute("junit");
 		saveObject(targetObject);
 

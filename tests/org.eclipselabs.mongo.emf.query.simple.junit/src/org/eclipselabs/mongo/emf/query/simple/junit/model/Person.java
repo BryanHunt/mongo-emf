@@ -1,46 +1,42 @@
-/*******************************************************************************
- * Copyright (c) 2010 Bryan Hunt.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Bryan Hunt - initial API and implementation
- *******************************************************************************/
-
-package org.eclipselabs.mongo.emf.junit.model.impl;
+/**
+ */
+package org.eclipselabs.mongo.emf.query.simple.junit.model;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipselabs.mongo.emf.junit.model.Book;
-import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
-import org.eclipselabs.mongo.emf.junit.model.Person;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Person</b></em>'.
+ * A representation of the model object '<em><b>Person</b></em>'.
  * <!-- end-user-doc -->
+ *
  * <p>
- * The following features are implemented:
+ * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PersonImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.PersonImpl#getBooks <em>Books</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.query.simple.junit.model.Person#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.query.simple.junit.model.Person#getBooks <em>Books</em>}</li>
  * </ul>
  * </p>
  *
+ * @see org.eclipselabs.mongo.emf.query.simple.junit.model.ModelPackage#getPerson()
+ * @model kind="class"
  * @generated
  */
-public class PersonImpl extends EObjectImpl implements Person
+public class Person extends EObjectImpl implements EObject
 {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -77,7 +73,7 @@ public class PersonImpl extends EObjectImpl implements Person
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected PersonImpl()
+	protected Person()
 	{
 		super();
 	}
@@ -94,8 +90,17 @@ public class PersonImpl extends EObjectImpl implements Person
 	}
 
 	/**
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
 	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see #setName(String)
+	 * @see org.eclipselabs.mongo.emf.query.simple.junit.model.ModelPackage#getPerson_Name()
+	 * @model
 	 * @generated
 	 */
 	public String getName()
@@ -104,8 +109,11 @@ public class PersonImpl extends EObjectImpl implements Person
 	}
 
 	/**
+	 * Sets the value of the '{@link org.eclipselabs.mongo.emf.query.simple.junit.model.Person#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Name</em>' attribute.
+	 * @see #getName()
 	 * @generated
 	 */
 	public void setName(String newName)
@@ -117,8 +125,19 @@ public class PersonImpl extends EObjectImpl implements Person
 	}
 
 	/**
+	 * Returns the value of the '<em><b>Books</b></em>' reference list.
+	 * The list contents are of type {@link org.eclipselabs.mongo.emf.query.simple.junit.model.Book}.
+	 * It is bidirectional and its opposite is '{@link org.eclipselabs.mongo.emf.query.simple.junit.model.Book#getAuthors <em>Authors</em>}'.
 	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Books</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
 	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Books</em>' reference list.
+	 * @see org.eclipselabs.mongo.emf.query.simple.junit.model.ModelPackage#getPerson_Books()
+	 * @see org.eclipselabs.mongo.emf.query.simple.junit.model.Book#getAuthors
+	 * @model opposite="authors"
 	 * @generated
 	 */
 	public EList<Book> getBooks()
@@ -258,4 +277,4 @@ public class PersonImpl extends EObjectImpl implements Person
 		return result.toString();
 	}
 
-} //PersonImpl
+} // Person

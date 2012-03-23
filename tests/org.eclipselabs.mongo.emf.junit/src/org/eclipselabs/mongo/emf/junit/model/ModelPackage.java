@@ -1,14 +1,5 @@
-/*******************************************************************************
- * Copyright (c) 2010 Bryan Hunt.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Bryan Hunt - initial API and implementation
- *******************************************************************************/
-
+/**
+ */
 package org.eclipselabs.mongo.emf.junit.model;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -16,6 +7,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,7 +24,7 @@ import org.eclipse.emf.ecore.EReference;
  * @model kind="package"
  * @generated
  */
-public interface ModelPackage extends EPackage
+public class ModelPackage extends EPackageImpl
 {
 	/**
 	 * The package name.
@@ -40,7 +32,7 @@ public interface ModelPackage extends EPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "model";
+	public static final String eNAME = "model";
 
 	/**
 	 * The package namespace URI.
@@ -48,7 +40,7 @@ public interface ModelPackage extends EPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.eclipselabs.org/mongo/emf/junit";
+	public static final String eNS_URI = "http://www.eclipselabs.org/mongo/emf/junit";
 
 	/**
 	 * The package namespace name.
@@ -56,7 +48,7 @@ public interface ModelPackage extends EPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "org.eclipselabs.mongo.emf.junit";
+	public static final String eNS_PREFIX = "org.eclipselabs.mongo.emf.junit";
 
 	/**
 	 * The singleton instance of the package.
@@ -64,201 +56,17 @@ public interface ModelPackage extends EPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	ModelPackage eINSTANCE = org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl.init();
+	public static final ModelPackage eINSTANCE = org.eclipselabs.mongo.emf.junit.model.ModelPackage.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.PersonImpl <em>Person</em>}' class.
+	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.junit.model.ETypes <em>ETypes</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipselabs.mongo.emf.junit.model.impl.PersonImpl
-	 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getPerson()
+	 * @see org.eclipselabs.mongo.emf.junit.model.ETypes
+	 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getETypes()
 	 * @generated
 	 */
-	int PERSON = 0;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PERSON__NAME = 0;
-
-	/**
-	 * The feature id for the '<em><b>Books</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PERSON__BOOKS = 1;
-
-	/**
-	 * The number of structural features of the '<em>Person</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PERSON_FEATURE_COUNT = 2;
-
-	/**
-	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.BookImpl <em>Book</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipselabs.mongo.emf.junit.model.impl.BookImpl
-	 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getBook()
-	 * @generated
-	 */
-	int BOOK = 1;
-
-	/**
-	 * The feature id for the '<em><b>Title</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BOOK__TITLE = 0;
-
-	/**
-	 * The feature id for the '<em><b>Authors</b></em>' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BOOK__AUTHORS = 1;
-
-	/**
-	 * The feature id for the '<em><b>Tags</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BOOK__TAGS = 2;
-
-	/**
-	 * The feature id for the '<em><b>Data</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BOOK__DATA = 3;
-
-	/**
-	 * The number of structural features of the '<em>Book</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BOOK_FEATURE_COUNT = 4;
-
-	/**
-	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.LibraryImpl <em>Library</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipselabs.mongo.emf.junit.model.impl.LibraryImpl
-	 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getLibrary()
-	 * @generated
-	 */
-	int LIBRARY = 2;
-
-	/**
-	 * The feature id for the '<em><b>Books</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIBRARY__BOOKS = 0;
-
-	/**
-	 * The feature id for the '<em><b>Location</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIBRARY__LOCATION = 1;
-
-	/**
-	 * The feature id for the '<em><b>Latest Book</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIBRARY__LATEST_BOOK = 2;
-
-	/**
-	 * The number of structural features of the '<em>Library</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LIBRARY_FEATURE_COUNT = 3;
-
-	/**
-	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.LocationImpl <em>Location</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipselabs.mongo.emf.junit.model.impl.LocationImpl
-	 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getLocation()
-	 * @generated
-	 */
-	int LOCATION = 3;
-
-	/**
-	 * The feature id for the '<em><b>Address</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOCATION__ADDRESS = 0;
-
-	/**
-	 * The feature id for the '<em><b>Featured Book</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOCATION__FEATURED_BOOK = 1;
-
-	/**
-	 * The feature id for the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOCATION__ID = 2;
-
-	/**
-	 * The number of structural features of the '<em>Location</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int LOCATION_FEATURE_COUNT = 3;
-
-	/**
-	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl <em>ETypes</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl
-	 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getETypes()
-	 * @generated
-	 */
-	int ETYPES = 4;
+	public static final int ETYPES = 0;
 
 	/**
 	 * The feature id for the '<em><b>EBig Decimal</b></em>' attribute.
@@ -267,7 +75,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ETYPES__EBIG_DECIMAL = 0;
+	public static final int ETYPES__EBIG_DECIMAL = 0;
 
 	/**
 	 * The feature id for the '<em><b>EBig Integer</b></em>' attribute.
@@ -276,7 +84,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ETYPES__EBIG_INTEGER = 1;
+	public static final int ETYPES__EBIG_INTEGER = 1;
 
 	/**
 	 * The feature id for the '<em><b>EBoolean</b></em>' attribute.
@@ -285,7 +93,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ETYPES__EBOOLEAN = 2;
+	public static final int ETYPES__EBOOLEAN = 2;
 
 	/**
 	 * The feature id for the '<em><b>EByte</b></em>' attribute.
@@ -294,7 +102,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ETYPES__EBYTE = 3;
+	public static final int ETYPES__EBYTE = 3;
 
 	/**
 	 * The feature id for the '<em><b>EByte Array</b></em>' attribute.
@@ -303,7 +111,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ETYPES__EBYTE_ARRAY = 4;
+	public static final int ETYPES__EBYTE_ARRAY = 4;
 
 	/**
 	 * The feature id for the '<em><b>EChar</b></em>' attribute.
@@ -312,7 +120,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ETYPES__ECHAR = 5;
+	public static final int ETYPES__ECHAR = 5;
 
 	/**
 	 * The feature id for the '<em><b>EDate</b></em>' attribute.
@@ -321,7 +129,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ETYPES__EDATE = 6;
+	public static final int ETYPES__EDATE = 6;
 
 	/**
 	 * The feature id for the '<em><b>EDouble</b></em>' attribute.
@@ -330,7 +138,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ETYPES__EDOUBLE = 7;
+	public static final int ETYPES__EDOUBLE = 7;
 
 	/**
 	 * The feature id for the '<em><b>EFloat</b></em>' attribute.
@@ -339,7 +147,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ETYPES__EFLOAT = 8;
+	public static final int ETYPES__EFLOAT = 8;
 
 	/**
 	 * The feature id for the '<em><b>EInt</b></em>' attribute.
@@ -348,7 +156,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ETYPES__EINT = 9;
+	public static final int ETYPES__EINT = 9;
 
 	/**
 	 * The feature id for the '<em><b>ELong</b></em>' attribute.
@@ -357,7 +165,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ETYPES__ELONG = 10;
+	public static final int ETYPES__ELONG = 10;
 
 	/**
 	 * The feature id for the '<em><b>EShort</b></em>' attribute.
@@ -366,7 +174,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ETYPES__ESHORT = 11;
+	public static final int ETYPES__ESHORT = 11;
 
 	/**
 	 * The feature id for the '<em><b>EString</b></em>' attribute.
@@ -375,7 +183,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ETYPES__ESTRING = 12;
+	public static final int ETYPES__ESTRING = 12;
 
 	/**
 	 * The feature id for the '<em><b>Uris</b></em>' attribute list.
@@ -384,7 +192,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ETYPES__URIS = 13;
+	public static final int ETYPES__URIS = 13;
 
 	/**
 	 * The number of structural features of the '<em>ETypes</em>' class.
@@ -393,72 +201,17 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int ETYPES_FEATURE_COUNT = 14;
+	public static final int ETYPES_FEATURE_COUNT = 14;
 
 	/**
-	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.MappedLibraryImpl <em>Mapped Library</em>}' class.
+	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject <em>Primary Object</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipselabs.mongo.emf.junit.model.impl.MappedLibraryImpl
-	 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getMappedLibrary()
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject
+	 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getPrimaryObject()
 	 * @generated
 	 */
-	int MAPPED_LIBRARY = 5;
-
-	/**
-	 * The feature id for the '<em><b>Location</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPED_LIBRARY__LOCATION = 0;
-
-	/**
-	 * The feature id for the '<em><b>Rare Books</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPED_LIBRARY__RARE_BOOKS = 1;
-
-	/**
-	 * The feature id for the '<em><b>Regular Books</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPED_LIBRARY__REGULAR_BOOKS = 2;
-
-	/**
-	 * The feature id for the '<em><b>Books</b></em>' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPED_LIBRARY__BOOKS = 3;
-
-	/**
-	 * The number of structural features of the '<em>Mapped Library</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MAPPED_LIBRARY_FEATURE_COUNT = 4;
-
-	/**
-	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl <em>Primary Object</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl
-	 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getPrimaryObject()
-	 * @generated
-	 */
-	int PRIMARY_OBJECT = 6;
+	public static final int PRIMARY_OBJECT = 1;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -467,7 +220,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__NAME = 0;
+	public static final int PRIMARY_OBJECT__NAME = 0;
 
 	/**
 	 * The feature id for the '<em><b>Id Attribute</b></em>' attribute.
@@ -476,7 +229,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__ID_ATTRIBUTE = 1;
+	public static final int PRIMARY_OBJECT__ID_ATTRIBUTE = 1;
 
 	/**
 	 * The feature id for the '<em><b>Unsettable Attribute</b></em>' attribute.
@@ -485,7 +238,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE = 2;
+	public static final int PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE = 2;
 
 	/**
 	 * The feature id for the '<em><b>Unsettable Attribute With Non Null Default</b></em>' attribute.
@@ -494,7 +247,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE_WITH_NON_NULL_DEFAULT = 3;
+	public static final int PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE_WITH_NON_NULL_DEFAULT = 3;
 
 	/**
 	 * The feature id for the '<em><b>Unsettable Reference</b></em>' reference.
@@ -503,7 +256,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__UNSETTABLE_REFERENCE = 4;
+	public static final int PRIMARY_OBJECT__UNSETTABLE_REFERENCE = 4;
 
 	/**
 	 * The feature id for the '<em><b>Containment Reference Same Collectioin</b></em>' containment reference.
@@ -512,7 +265,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__CONTAINMENT_REFERENCE_SAME_COLLECTIOIN = 5;
+	public static final int PRIMARY_OBJECT__CONTAINMENT_REFERENCE_SAME_COLLECTIOIN = 5;
 
 	/**
 	 * The feature id for the '<em><b>Single Non Containment Reference</b></em>' reference.
@@ -521,7 +274,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE = 6;
+	public static final int PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE = 6;
 
 	/**
 	 * The feature id for the '<em><b>Multiple Non Containment Reference</b></em>' reference list.
@@ -530,7 +283,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE = 7;
+	public static final int PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE = 7;
 
 	/**
 	 * The feature id for the '<em><b>Single Containment Reference No Proxies</b></em>' containment reference.
@@ -539,7 +292,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_NO_PROXIES = 8;
+	public static final int PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_NO_PROXIES = 8;
 
 	/**
 	 * The feature id for the '<em><b>Multiple Containment Reference No Proxies</b></em>' containment reference list.
@@ -548,7 +301,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_NO_PROXIES = 9;
+	public static final int PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_NO_PROXIES = 9;
 
 	/**
 	 * The feature id for the '<em><b>Single Containment Reference Proxies</b></em>' containment reference.
@@ -557,7 +310,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES = 10;
+	public static final int PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES = 10;
 
 	/**
 	 * The feature id for the '<em><b>Multiple Containment Reference Proxies</b></em>' containment reference list.
@@ -566,7 +319,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES = 11;
+	public static final int PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES = 11;
 
 	/**
 	 * The feature id for the '<em><b>Single Non Containment Reference No Proxies</b></em>' reference.
@@ -575,7 +328,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE_NO_PROXIES = 12;
+	public static final int PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE_NO_PROXIES = 12;
 
 	/**
 	 * The feature id for the '<em><b>Feature Map Reference Type1</b></em>' containment reference list.
@@ -584,7 +337,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1 = 13;
+	public static final int PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1 = 13;
 
 	/**
 	 * The feature id for the '<em><b>Feature Map Reference Type2</b></em>' containment reference list.
@@ -593,7 +346,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2 = 14;
+	public static final int PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2 = 14;
 
 	/**
 	 * The feature id for the '<em><b>Feature Map Reference Collection</b></em>' attribute list.
@@ -602,7 +355,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION = 15;
+	public static final int PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION = 15;
 
 	/**
 	 * The feature id for the '<em><b>Feature Map Attribute Type1</b></em>' attribute list.
@@ -611,7 +364,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE1 = 16;
+	public static final int PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE1 = 16;
 
 	/**
 	 * The feature id for the '<em><b>Feature Map Attribute Type2</b></em>' attribute list.
@@ -620,7 +373,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE2 = 17;
+	public static final int PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE2 = 17;
 
 	/**
 	 * The feature id for the '<em><b>Feature Map Attribute Collection</b></em>' attribute list.
@@ -629,7 +382,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_COLLECTION = 18;
+	public static final int PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_COLLECTION = 18;
 
 	/**
 	 * The number of structural features of the '<em>Primary Object</em>' class.
@@ -638,17 +391,17 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int PRIMARY_OBJECT_FEATURE_COUNT = 19;
+	public static final int PRIMARY_OBJECT_FEATURE_COUNT = 19;
 
 	/**
-	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.TargetObjectImpl <em>Target Object</em>}' class.
+	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.junit.model.TargetObject <em>Target Object</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipselabs.mongo.emf.junit.model.impl.TargetObjectImpl
-	 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getTargetObject()
+	 * @see org.eclipselabs.mongo.emf.junit.model.TargetObject
+	 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getTargetObject()
 	 * @generated
 	 */
-	int TARGET_OBJECT = 7;
+	public static final int TARGET_OBJECT = 2;
 
 	/**
 	 * The feature id for the '<em><b>Single Attribute</b></em>' attribute.
@@ -657,7 +410,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TARGET_OBJECT__SINGLE_ATTRIBUTE = 0;
+	public static final int TARGET_OBJECT__SINGLE_ATTRIBUTE = 0;
 
 	/**
 	 * The feature id for the '<em><b>Array Attribute</b></em>' attribute list.
@@ -666,7 +419,7 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TARGET_OBJECT__ARRAY_ATTRIBUTE = 1;
+	public static final int TARGET_OBJECT__ARRAY_ATTRIBUTE = 1;
 
 	/**
 	 * The number of structural features of the '<em>Target Object</em>' class.
@@ -675,189 +428,109 @@ public interface ModelPackage extends EPackage
 	 * @generated
 	 * @ordered
 	 */
-	int TARGET_OBJECT_FEATURE_COUNT = 2;
+	public static final int TARGET_OBJECT_FEATURE_COUNT = 2;
 
 	/**
 	 * The meta object id for the '<em>URI</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.common.util.URI
-	 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getURI()
+	 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getURI()
 	 * @generated
 	 */
-	int URI = 8;
+	public static final int URI = 3;
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.junit.model.Person <em>Person</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Person</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.Person
 	 * @generated
 	 */
-	EClass getPerson();
+	private EClass eTypesEClass = null;
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.Person#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.Person#getName()
-	 * @see #getPerson()
 	 * @generated
 	 */
-	EAttribute getPerson_Name();
+	private EClass primaryObjectEClass = null;
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.eclipselabs.mongo.emf.junit.model.Person#getBooks <em>Books</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Books</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.Person#getBooks()
-	 * @see #getPerson()
 	 * @generated
 	 */
-	EReference getPerson_Books();
+	private EClass targetObjectEClass = null;
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.junit.model.Book <em>Book</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Book</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.Book
 	 * @generated
 	 */
-	EClass getBook();
+	private EDataType uriEDataType = null;
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.Book#getTitle <em>Title</em>}'.
+	 * Creates an instance of the model <b>Package</b>, registered with
+	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
+	 * package URI value.
+	 * <p>Note: the correct way to create the package is via the static
+	 * factory method {@link #init init()}, which also performs
+	 * initialization of the package, or returns the registered package,
+	 * if one already exists.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Title</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.Book#getTitle()
-	 * @see #getBook()
+	 * @see org.eclipse.emf.ecore.EPackage.Registry
+	 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#eNS_URI
+	 * @see #init()
 	 * @generated
 	 */
-	EAttribute getBook_Title();
+	private ModelPackage()
+	{
+		super(eNS_URI, ModelFactory.eINSTANCE);
+	}
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.eclipselabs.mongo.emf.junit.model.Book#getAuthors <em>Authors</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Authors</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.Book#getAuthors()
-	 * @see #getBook()
 	 * @generated
 	 */
-	EReference getBook_Authors();
+	private static boolean isInited = false;
 
 	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipselabs.mongo.emf.junit.model.Book#getTags <em>Tags</em>}'.
+	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+	 * 
+	 * <p>This method is used to initialize {@link ModelPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Tags</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.Book#getTags()
-	 * @see #getBook()
+	 * @see #eNS_URI
+	 * @see #createPackageContents()
+	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	EAttribute getBook_Tags();
+	public static ModelPackage init()
+	{
+		if (isInited) return (ModelPackage)EPackage.Registry.INSTANCE.getEPackage(ModelPackage.eNS_URI);
 
-	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipselabs.mongo.emf.junit.model.Book#getData <em>Data</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Data</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.Book#getData()
-	 * @see #getBook()
-	 * @generated
-	 */
-	EAttribute getBook_Data();
+		// Obtain or create and register package
+		ModelPackage theModelPackage = (ModelPackage)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ModelPackage ? EPackage.Registry.INSTANCE.get(eNS_URI) : new ModelPackage());
 
-	/**
-	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.junit.model.Library <em>Library</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Library</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.Library
-	 * @generated
-	 */
-	EClass getLibrary();
+		isInited = true;
 
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.junit.model.Library#getBooks <em>Books</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Books</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.Library#getBooks()
-	 * @see #getLibrary()
-	 * @generated
-	 */
-	EReference getLibrary_Books();
+		// Create package meta-data objects
+		theModelPackage.createPackageContents();
 
-	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipselabs.mongo.emf.junit.model.Library#getLocation <em>Location</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Location</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.Library#getLocation()
-	 * @see #getLibrary()
-	 * @generated
-	 */
-	EReference getLibrary_Location();
+		// Initialize created meta-data
+		theModelPackage.initializePackageContents();
 
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipselabs.mongo.emf.junit.model.Library#getLatestBook <em>Latest Book</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Latest Book</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.Library#getLatestBook()
-	 * @see #getLibrary()
-	 * @generated
-	 */
-	EReference getLibrary_LatestBook();
+		// Mark meta-data to indicate it can't be changed
+		theModelPackage.freeze();
 
-	/**
-	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.junit.model.Location <em>Location</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Location</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.Location
-	 * @generated
-	 */
-	EClass getLocation();
+  
+		// Update the registry and return the package
+		EPackage.Registry.INSTANCE.put(ModelPackage.eNS_URI, theModelPackage);
+		return theModelPackage;
+	}
 
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.Location#getAddress <em>Address</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Address</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.Location#getAddress()
-	 * @see #getLocation()
-	 * @generated
-	 */
-	EAttribute getLocation_Address();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipselabs.mongo.emf.junit.model.Location#getFeaturedBook <em>Featured Book</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Featured Book</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.Location#getFeaturedBook()
-	 * @see #getLocation()
-	 * @generated
-	 */
-	EReference getLocation_FeaturedBook();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.Location#getId <em>Id</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Id</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.Location#getId()
-	 * @see #getLocation()
-	 * @generated
-	 */
-	EAttribute getLocation_Id();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.junit.model.ETypes <em>ETypes</em>}'.
@@ -867,7 +540,10 @@ public interface ModelPackage extends EPackage
 	 * @see org.eclipselabs.mongo.emf.junit.model.ETypes
 	 * @generated
 	 */
-	EClass getETypes();
+	public EClass getETypes()
+	{
+		return eTypesEClass;
+	}
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEBigDecimal <em>EBig Decimal</em>}'.
@@ -878,7 +554,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getETypes()
 	 * @generated
 	 */
-	EAttribute getETypes_EBigDecimal();
+	public EAttribute getETypes_EBigDecimal()
+	{
+		return (EAttribute)eTypesEClass.getEStructuralFeatures().get(0);
+	}
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEBigInteger <em>EBig Integer</em>}'.
@@ -889,7 +568,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getETypes()
 	 * @generated
 	 */
-	EAttribute getETypes_EBigInteger();
+	public EAttribute getETypes_EBigInteger()
+	{
+		return (EAttribute)eTypesEClass.getEStructuralFeatures().get(1);
+	}
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#isEBoolean <em>EBoolean</em>}'.
@@ -900,7 +582,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getETypes()
 	 * @generated
 	 */
-	EAttribute getETypes_EBoolean();
+	public EAttribute getETypes_EBoolean()
+	{
+		return (EAttribute)eTypesEClass.getEStructuralFeatures().get(2);
+	}
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEByte <em>EByte</em>}'.
@@ -911,7 +596,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getETypes()
 	 * @generated
 	 */
-	EAttribute getETypes_EByte();
+	public EAttribute getETypes_EByte()
+	{
+		return (EAttribute)eTypesEClass.getEStructuralFeatures().get(3);
+	}
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEByteArray <em>EByte Array</em>}'.
@@ -922,7 +610,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getETypes()
 	 * @generated
 	 */
-	EAttribute getETypes_EByteArray();
+	public EAttribute getETypes_EByteArray()
+	{
+		return (EAttribute)eTypesEClass.getEStructuralFeatures().get(4);
+	}
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEChar <em>EChar</em>}'.
@@ -933,7 +624,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getETypes()
 	 * @generated
 	 */
-	EAttribute getETypes_EChar();
+	public EAttribute getETypes_EChar()
+	{
+		return (EAttribute)eTypesEClass.getEStructuralFeatures().get(5);
+	}
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEDate <em>EDate</em>}'.
@@ -944,7 +638,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getETypes()
 	 * @generated
 	 */
-	EAttribute getETypes_EDate();
+	public EAttribute getETypes_EDate()
+	{
+		return (EAttribute)eTypesEClass.getEStructuralFeatures().get(6);
+	}
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEDouble <em>EDouble</em>}'.
@@ -955,7 +652,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getETypes()
 	 * @generated
 	 */
-	EAttribute getETypes_EDouble();
+	public EAttribute getETypes_EDouble()
+	{
+		return (EAttribute)eTypesEClass.getEStructuralFeatures().get(7);
+	}
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEFloat <em>EFloat</em>}'.
@@ -966,7 +666,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getETypes()
 	 * @generated
 	 */
-	EAttribute getETypes_EFloat();
+	public EAttribute getETypes_EFloat()
+	{
+		return (EAttribute)eTypesEClass.getEStructuralFeatures().get(8);
+	}
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEInt <em>EInt</em>}'.
@@ -977,7 +680,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getETypes()
 	 * @generated
 	 */
-	EAttribute getETypes_EInt();
+	public EAttribute getETypes_EInt()
+	{
+		return (EAttribute)eTypesEClass.getEStructuralFeatures().get(9);
+	}
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getELong <em>ELong</em>}'.
@@ -988,7 +694,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getETypes()
 	 * @generated
 	 */
-	EAttribute getETypes_ELong();
+	public EAttribute getETypes_ELong()
+	{
+		return (EAttribute)eTypesEClass.getEStructuralFeatures().get(10);
+	}
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEShort <em>EShort</em>}'.
@@ -999,7 +708,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getETypes()
 	 * @generated
 	 */
-	EAttribute getETypes_EShort();
+	public EAttribute getETypes_EShort()
+	{
+		return (EAttribute)eTypesEClass.getEStructuralFeatures().get(11);
+	}
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getEString <em>EString</em>}'.
@@ -1010,7 +722,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getETypes()
 	 * @generated
 	 */
-	EAttribute getETypes_EString();
+	public EAttribute getETypes_EString()
+	{
+		return (EAttribute)eTypesEClass.getEStructuralFeatures().get(12);
+	}
 
 	/**
 	 * Returns the meta object for the attribute list '{@link org.eclipselabs.mongo.emf.junit.model.ETypes#getUris <em>Uris</em>}'.
@@ -1021,39 +736,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getETypes()
 	 * @generated
 	 */
-	EAttribute getETypes_Uris();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.junit.model.MappedLibrary <em>Mapped Library</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Mapped Library</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.MappedLibrary
-	 * @generated
-	 */
-	EClass getMappedLibrary();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipselabs.mongo.emf.junit.model.MappedLibrary#getLocation <em>Location</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Location</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.MappedLibrary#getLocation()
-	 * @see #getMappedLibrary()
-	 * @generated
-	 */
-	EReference getMappedLibrary_Location();
-
-	/**
-	 * Returns the meta object for the attribute list '{@link org.eclipselabs.mongo.emf.junit.model.MappedLibrary#getBooks <em>Books</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute list '<em>Books</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.MappedLibrary#getBooks()
-	 * @see #getMappedLibrary()
-	 * @generated
-	 */
-	EAttribute getMappedLibrary_Books();
+	public EAttribute getETypes_Uris()
+	{
+		return (EAttribute)eTypesEClass.getEStructuralFeatures().get(13);
+	}
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject <em>Primary Object</em>}'.
@@ -1063,7 +749,10 @@ public interface ModelPackage extends EPackage
 	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject
 	 * @generated
 	 */
-	EClass getPrimaryObject();
+	public EClass getPrimaryObject()
+	{
+		return primaryObjectEClass;
+	}
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getName <em>Name</em>}'.
@@ -1074,7 +763,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getPrimaryObject()
 	 * @generated
 	 */
-	EAttribute getPrimaryObject_Name();
+	public EAttribute getPrimaryObject_Name()
+	{
+		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(0);
+	}
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getIdAttribute <em>Id Attribute</em>}'.
@@ -1085,7 +777,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getPrimaryObject()
 	 * @generated
 	 */
-	EAttribute getPrimaryObject_IdAttribute();
+	public EAttribute getPrimaryObject_IdAttribute()
+	{
+		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(1);
+	}
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getUnsettableAttribute <em>Unsettable Attribute</em>}'.
@@ -1096,7 +791,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getPrimaryObject()
 	 * @generated
 	 */
-	EAttribute getPrimaryObject_UnsettableAttribute();
+	public EAttribute getPrimaryObject_UnsettableAttribute()
+	{
+		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(2);
+	}
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getUnsettableAttributeWithNonNullDefault <em>Unsettable Attribute With Non Null Default</em>}'.
@@ -1107,7 +805,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getPrimaryObject()
 	 * @generated
 	 */
-	EAttribute getPrimaryObject_UnsettableAttributeWithNonNullDefault();
+	public EAttribute getPrimaryObject_UnsettableAttributeWithNonNullDefault()
+	{
+		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(3);
+	}
 
 	/**
 	 * Returns the meta object for the reference '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getUnsettableReference <em>Unsettable Reference</em>}'.
@@ -1118,7 +819,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getPrimaryObject()
 	 * @generated
 	 */
-	EReference getPrimaryObject_UnsettableReference();
+	public EReference getPrimaryObject_UnsettableReference()
+	{
+		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(4);
+	}
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getContainmentReferenceSameCollectioin <em>Containment Reference Same Collectioin</em>}'.
@@ -1129,7 +833,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getPrimaryObject()
 	 * @generated
 	 */
-	EReference getPrimaryObject_ContainmentReferenceSameCollectioin();
+	public EReference getPrimaryObject_ContainmentReferenceSameCollectioin()
+	{
+		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(5);
+	}
 
 	/**
 	 * Returns the meta object for the reference '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getSingleNonContainmentReference <em>Single Non Containment Reference</em>}'.
@@ -1140,7 +847,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getPrimaryObject()
 	 * @generated
 	 */
-	EReference getPrimaryObject_SingleNonContainmentReference();
+	public EReference getPrimaryObject_SingleNonContainmentReference()
+	{
+		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(6);
+	}
 
 	/**
 	 * Returns the meta object for the reference list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getMultipleNonContainmentReference <em>Multiple Non Containment Reference</em>}'.
@@ -1151,7 +861,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getPrimaryObject()
 	 * @generated
 	 */
-	EReference getPrimaryObject_MultipleNonContainmentReference();
+	public EReference getPrimaryObject_MultipleNonContainmentReference()
+	{
+		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(7);
+	}
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getSingleContainmentReferenceNoProxies <em>Single Containment Reference No Proxies</em>}'.
@@ -1162,7 +875,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getPrimaryObject()
 	 * @generated
 	 */
-	EReference getPrimaryObject_SingleContainmentReferenceNoProxies();
+	public EReference getPrimaryObject_SingleContainmentReferenceNoProxies()
+	{
+		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(8);
+	}
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getMultipleContainmentReferenceNoProxies <em>Multiple Containment Reference No Proxies</em>}'.
@@ -1173,7 +889,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getPrimaryObject()
 	 * @generated
 	 */
-	EReference getPrimaryObject_MultipleContainmentReferenceNoProxies();
+	public EReference getPrimaryObject_MultipleContainmentReferenceNoProxies()
+	{
+		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(9);
+	}
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getSingleContainmentReferenceProxies <em>Single Containment Reference Proxies</em>}'.
@@ -1184,7 +903,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getPrimaryObject()
 	 * @generated
 	 */
-	EReference getPrimaryObject_SingleContainmentReferenceProxies();
+	public EReference getPrimaryObject_SingleContainmentReferenceProxies()
+	{
+		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(10);
+	}
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getMultipleContainmentReferenceProxies <em>Multiple Containment Reference Proxies</em>}'.
@@ -1195,7 +917,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getPrimaryObject()
 	 * @generated
 	 */
-	EReference getPrimaryObject_MultipleContainmentReferenceProxies();
+	public EReference getPrimaryObject_MultipleContainmentReferenceProxies()
+	{
+		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(11);
+	}
 
 	/**
 	 * Returns the meta object for the reference '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getSingleNonContainmentReferenceNoProxies <em>Single Non Containment Reference No Proxies</em>}'.
@@ -1206,18 +931,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getPrimaryObject()
 	 * @generated
 	 */
-	EReference getPrimaryObject_SingleNonContainmentReferenceNoProxies();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapReferenceType2 <em>Feature Map Reference Type2</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Feature Map Reference Type2</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapReferenceType2()
-	 * @see #getPrimaryObject()
-	 * @generated
-	 */
-	EReference getPrimaryObject_FeatureMapReferenceType2();
+	public EReference getPrimaryObject_SingleNonContainmentReferenceNoProxies()
+	{
+		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(12);
+	}
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapReferenceType1 <em>Feature Map Reference Type1</em>}'.
@@ -1228,7 +945,24 @@ public interface ModelPackage extends EPackage
 	 * @see #getPrimaryObject()
 	 * @generated
 	 */
-	EReference getPrimaryObject_FeatureMapReferenceType1();
+	public EReference getPrimaryObject_FeatureMapReferenceType1()
+	{
+		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(13);
+	}
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapReferenceType2 <em>Feature Map Reference Type2</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Feature Map Reference Type2</em>'.
+	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapReferenceType2()
+	 * @see #getPrimaryObject()
+	 * @generated
+	 */
+	public EReference getPrimaryObject_FeatureMapReferenceType2()
+	{
+		return (EReference)primaryObjectEClass.getEStructuralFeatures().get(14);
+	}
 
 	/**
 	 * Returns the meta object for the attribute list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapReferenceCollection <em>Feature Map Reference Collection</em>}'.
@@ -1239,7 +973,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getPrimaryObject()
 	 * @generated
 	 */
-	EAttribute getPrimaryObject_FeatureMapReferenceCollection();
+	public EAttribute getPrimaryObject_FeatureMapReferenceCollection()
+	{
+		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(15);
+	}
 
 	/**
 	 * Returns the meta object for the attribute list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapAttributeType1 <em>Feature Map Attribute Type1</em>}'.
@@ -1250,7 +987,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getPrimaryObject()
 	 * @generated
 	 */
-	EAttribute getPrimaryObject_FeatureMapAttributeType1();
+	public EAttribute getPrimaryObject_FeatureMapAttributeType1()
+	{
+		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(16);
+	}
 
 	/**
 	 * Returns the meta object for the attribute list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapAttributeType2 <em>Feature Map Attribute Type2</em>}'.
@@ -1261,7 +1001,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getPrimaryObject()
 	 * @generated
 	 */
-	EAttribute getPrimaryObject_FeatureMapAttributeType2();
+	public EAttribute getPrimaryObject_FeatureMapAttributeType2()
+	{
+		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(17);
+	}
 
 	/**
 	 * Returns the meta object for the attribute list '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject#getFeatureMapAttributeCollection <em>Feature Map Attribute Collection</em>}'.
@@ -1272,7 +1015,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getPrimaryObject()
 	 * @generated
 	 */
-	EAttribute getPrimaryObject_FeatureMapAttributeCollection();
+	public EAttribute getPrimaryObject_FeatureMapAttributeCollection()
+	{
+		return (EAttribute)primaryObjectEClass.getEStructuralFeatures().get(18);
+	}
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.junit.model.TargetObject <em>Target Object</em>}'.
@@ -1282,7 +1028,10 @@ public interface ModelPackage extends EPackage
 	 * @see org.eclipselabs.mongo.emf.junit.model.TargetObject
 	 * @generated
 	 */
-	EClass getTargetObject();
+	public EClass getTargetObject()
+	{
+		return targetObjectEClass;
+	}
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.junit.model.TargetObject#getSingleAttribute <em>Single Attribute</em>}'.
@@ -1293,7 +1042,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getTargetObject()
 	 * @generated
 	 */
-	EAttribute getTargetObject_SingleAttribute();
+	public EAttribute getTargetObject_SingleAttribute()
+	{
+		return (EAttribute)targetObjectEClass.getEStructuralFeatures().get(0);
+	}
 
 	/**
 	 * Returns the meta object for the attribute list '{@link org.eclipselabs.mongo.emf.junit.model.TargetObject#getArrayAttribute <em>Array Attribute</em>}'.
@@ -1304,7 +1056,10 @@ public interface ModelPackage extends EPackage
 	 * @see #getTargetObject()
 	 * @generated
 	 */
-	EAttribute getTargetObject_ArrayAttribute();
+	public EAttribute getTargetObject_ArrayAttribute()
+	{
+		return (EAttribute)targetObjectEClass.getEStructuralFeatures().get(1);
+	}
 
 	/**
 	 * Returns the meta object for data type '{@link org.eclipse.emf.common.util.URI <em>URI</em>}'.
@@ -1315,29 +1070,10 @@ public interface ModelPackage extends EPackage
 	 * @model instanceClass="org.eclipse.emf.common.util.URI"
 	 * @generated
 	 */
-	EDataType getURI();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.junit.model.MappedLibrary#getRareBooks <em>Rare Books</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Rare Books</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.MappedLibrary#getRareBooks()
-	 * @see #getMappedLibrary()
-	 * @generated
-	 */
-	EReference getMappedLibrary_RareBooks();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipselabs.mongo.emf.junit.model.MappedLibrary#getRegularBooks <em>Regular Books</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Regular Books</em>'.
-	 * @see org.eclipselabs.mongo.emf.junit.model.MappedLibrary#getRegularBooks()
-	 * @see #getMappedLibrary()
-	 * @generated
-	 */
-	EReference getMappedLibrary_RegularBooks();
+	public EDataType getURI()
+	{
+		return uriEDataType;
+	}
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1346,7 +1082,211 @@ public interface ModelPackage extends EPackage
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
-	ModelFactory getModelFactory();
+	public ModelFactory getModelFactory()
+	{
+		return (ModelFactory)getEFactoryInstance();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private boolean isCreated = false;
+
+	/**
+	 * Creates the meta-model objects for the package.  This method is
+	 * guarded to have no affect on any invocation but its first.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void createPackageContents()
+	{
+		if (isCreated) return;
+		isCreated = true;
+
+		// Create classes and their features
+		eTypesEClass = createEClass(ETYPES);
+		createEAttribute(eTypesEClass, ETYPES__EBIG_DECIMAL);
+		createEAttribute(eTypesEClass, ETYPES__EBIG_INTEGER);
+		createEAttribute(eTypesEClass, ETYPES__EBOOLEAN);
+		createEAttribute(eTypesEClass, ETYPES__EBYTE);
+		createEAttribute(eTypesEClass, ETYPES__EBYTE_ARRAY);
+		createEAttribute(eTypesEClass, ETYPES__ECHAR);
+		createEAttribute(eTypesEClass, ETYPES__EDATE);
+		createEAttribute(eTypesEClass, ETYPES__EDOUBLE);
+		createEAttribute(eTypesEClass, ETYPES__EFLOAT);
+		createEAttribute(eTypesEClass, ETYPES__EINT);
+		createEAttribute(eTypesEClass, ETYPES__ELONG);
+		createEAttribute(eTypesEClass, ETYPES__ESHORT);
+		createEAttribute(eTypesEClass, ETYPES__ESTRING);
+		createEAttribute(eTypesEClass, ETYPES__URIS);
+
+		primaryObjectEClass = createEClass(PRIMARY_OBJECT);
+		createEAttribute(primaryObjectEClass, PRIMARY_OBJECT__NAME);
+		createEAttribute(primaryObjectEClass, PRIMARY_OBJECT__ID_ATTRIBUTE);
+		createEAttribute(primaryObjectEClass, PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE);
+		createEAttribute(primaryObjectEClass, PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE_WITH_NON_NULL_DEFAULT);
+		createEReference(primaryObjectEClass, PRIMARY_OBJECT__UNSETTABLE_REFERENCE);
+		createEReference(primaryObjectEClass, PRIMARY_OBJECT__CONTAINMENT_REFERENCE_SAME_COLLECTIOIN);
+		createEReference(primaryObjectEClass, PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE);
+		createEReference(primaryObjectEClass, PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE);
+		createEReference(primaryObjectEClass, PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_NO_PROXIES);
+		createEReference(primaryObjectEClass, PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_NO_PROXIES);
+		createEReference(primaryObjectEClass, PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES);
+		createEReference(primaryObjectEClass, PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES);
+		createEReference(primaryObjectEClass, PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE_NO_PROXIES);
+		createEReference(primaryObjectEClass, PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1);
+		createEReference(primaryObjectEClass, PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2);
+		createEAttribute(primaryObjectEClass, PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION);
+		createEAttribute(primaryObjectEClass, PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE1);
+		createEAttribute(primaryObjectEClass, PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE2);
+		createEAttribute(primaryObjectEClass, PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_COLLECTION);
+
+		targetObjectEClass = createEClass(TARGET_OBJECT);
+		createEAttribute(targetObjectEClass, TARGET_OBJECT__SINGLE_ATTRIBUTE);
+		createEAttribute(targetObjectEClass, TARGET_OBJECT__ARRAY_ATTRIBUTE);
+
+		// Create data types
+		uriEDataType = createEDataType(URI);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private boolean isInitialized = false;
+
+	/**
+	 * Complete the initialization of the package and its meta-model.  This
+	 * method is guarded to have no affect on any invocation but its first.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void initializePackageContents()
+	{
+		if (isInitialized) return;
+		isInitialized = true;
+
+		// Initialize package
+		setName(eNAME);
+		setNsPrefix(eNS_PREFIX);
+		setNsURI(eNS_URI);
+
+		// Create type parameters
+
+		// Set bounds for type parameters
+
+		// Add supertypes to classes
+
+		// Initialize classes and features; add operations and parameters
+		initEClass(eTypesEClass, ETypes.class, "ETypes", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getETypes_EBigDecimal(), ecorePackage.getEBigDecimal(), "eBigDecimal", null, 0, 1, ETypes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getETypes_EBigInteger(), ecorePackage.getEBigInteger(), "eBigInteger", null, 0, 1, ETypes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getETypes_EBoolean(), ecorePackage.getEBoolean(), "eBoolean", null, 0, 1, ETypes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getETypes_EByte(), ecorePackage.getEByte(), "eByte", null, 0, 1, ETypes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getETypes_EByteArray(), ecorePackage.getEByteArray(), "eByteArray", null, 0, 1, ETypes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getETypes_EChar(), ecorePackage.getEChar(), "eChar", null, 0, 1, ETypes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getETypes_EDate(), ecorePackage.getEDate(), "eDate", null, 0, 1, ETypes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getETypes_EDouble(), ecorePackage.getEDouble(), "eDouble", null, 0, 1, ETypes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getETypes_EFloat(), ecorePackage.getEFloat(), "eFloat", null, 0, 1, ETypes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getETypes_EInt(), ecorePackage.getEInt(), "eInt", null, 0, 1, ETypes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getETypes_ELong(), ecorePackage.getELong(), "eLong", null, 0, 1, ETypes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getETypes_EShort(), ecorePackage.getEShort(), "eShort", null, 0, 1, ETypes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getETypes_EString(), ecorePackage.getEString(), "eString", null, 0, 1, ETypes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getETypes_Uris(), this.getURI(), "uris", null, 0, -1, ETypes.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(primaryObjectEClass, PrimaryObject.class, "PrimaryObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getPrimaryObject_Name(), ecorePackage.getEString(), "name", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPrimaryObject_IdAttribute(), ecorePackage.getEString(), "idAttribute", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPrimaryObject_UnsettableAttribute(), ecorePackage.getEString(), "unsettableAttribute", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPrimaryObject_UnsettableAttributeWithNonNullDefault(), ecorePackage.getEString(), "unsettableAttributeWithNonNullDefault", "junit", 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPrimaryObject_UnsettableReference(), this.getTargetObject(), null, "unsettableReference", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPrimaryObject_ContainmentReferenceSameCollectioin(), this.getPrimaryObject(), null, "containmentReferenceSameCollectioin", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPrimaryObject_SingleNonContainmentReference(), this.getTargetObject(), null, "singleNonContainmentReference", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPrimaryObject_MultipleNonContainmentReference(), this.getTargetObject(), null, "multipleNonContainmentReference", null, 0, -1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPrimaryObject_SingleContainmentReferenceNoProxies(), this.getTargetObject(), null, "singleContainmentReferenceNoProxies", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPrimaryObject_MultipleContainmentReferenceNoProxies(), this.getTargetObject(), null, "multipleContainmentReferenceNoProxies", null, 0, -1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPrimaryObject_SingleContainmentReferenceProxies(), this.getTargetObject(), null, "singleContainmentReferenceProxies", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPrimaryObject_MultipleContainmentReferenceProxies(), this.getTargetObject(), null, "multipleContainmentReferenceProxies", null, 0, -1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPrimaryObject_SingleNonContainmentReferenceNoProxies(), this.getTargetObject(), null, "singleNonContainmentReferenceNoProxies", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getPrimaryObject_FeatureMapReferenceType1(), this.getTargetObject(), null, "featureMapReferenceType1", null, 0, -1, PrimaryObject.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEReference(getPrimaryObject_FeatureMapReferenceType2(), this.getTargetObject(), null, "featureMapReferenceType2", null, 0, -1, PrimaryObject.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPrimaryObject_FeatureMapReferenceCollection(), ecorePackage.getEFeatureMapEntry(), "featureMapReferenceCollection", null, 0, 1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPrimaryObject_FeatureMapAttributeType1(), ecorePackage.getEString(), "featureMapAttributeType1", null, 0, -1, PrimaryObject.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPrimaryObject_FeatureMapAttributeType2(), ecorePackage.getEString(), "featureMapAttributeType2", null, 0, -1, PrimaryObject.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPrimaryObject_FeatureMapAttributeCollection(), ecorePackage.getEFeatureMapEntry(), "featureMapAttributeCollection", null, 0, -1, PrimaryObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(targetObjectEClass, TargetObject.class, "TargetObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getTargetObject_SingleAttribute(), ecorePackage.getEString(), "singleAttribute", null, 0, 1, TargetObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTargetObject_ArrayAttribute(), ecorePackage.getEString(), "arrayAttribute", null, 0, -1, TargetObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		// Initialize data types
+		initEDataType(uriEDataType, org.eclipse.emf.common.util.URI.class, "URI", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+
+		// Create resource
+		createResource(eNS_URI);
+
+		// Create annotations
+		// http:///org/eclipse/emf/ecore/util/ExtendedMetaData
+		createExtendedMetaDataAnnotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>http:///org/eclipse/emf/ecore/util/ExtendedMetaData</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createExtendedMetaDataAnnotations()
+	{
+		String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";		
+		addAnnotation
+		  (getPrimaryObject_FeatureMapReferenceType1(), 
+		   source, 
+		   new String[] 
+		   {
+			 "group", "#featureMapReferenceCollection"
+		   });		
+		addAnnotation
+		  (getPrimaryObject_FeatureMapReferenceType2(), 
+		   source, 
+		   new String[] 
+		   {
+			 "group", "#featureMapReferenceCollection"
+		   });		
+		addAnnotation
+		  (getPrimaryObject_FeatureMapReferenceCollection(), 
+		   source, 
+		   new String[] 
+		   {
+			 "kind", "group"
+		   });		
+		addAnnotation
+		  (getPrimaryObject_FeatureMapAttributeType1(), 
+		   source, 
+		   new String[] 
+		   {
+			 "group", "#featureMapAttributeCollection"
+		   });		
+		addAnnotation
+		  (getPrimaryObject_FeatureMapAttributeType2(), 
+		   source, 
+		   new String[] 
+		   {
+			 "group", "#featureMapAttributeCollection"
+		   });		
+		addAnnotation
+		  (getPrimaryObject_FeatureMapAttributeCollection(), 
+		   source, 
+		   new String[] 
+		   {
+			 "kind", "group"
+		   });
+	}
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1360,153 +1300,17 @@ public interface ModelPackage extends EPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	interface Literals
+	public interface Literals
 	{
 		/**
-		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.PersonImpl <em>Person</em>}' class.
+		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.junit.model.ETypes <em>ETypes</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipselabs.mongo.emf.junit.model.impl.PersonImpl
-		 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getPerson()
+		 * @see org.eclipselabs.mongo.emf.junit.model.ETypes
+		 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getETypes()
 		 * @generated
 		 */
-		EClass PERSON = eINSTANCE.getPerson();
-
-		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute PERSON__NAME = eINSTANCE.getPerson_Name();
-
-		/**
-		 * The meta object literal for the '<em><b>Books</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference PERSON__BOOKS = eINSTANCE.getPerson_Books();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.BookImpl <em>Book</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipselabs.mongo.emf.junit.model.impl.BookImpl
-		 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getBook()
-		 * @generated
-		 */
-		EClass BOOK = eINSTANCE.getBook();
-
-		/**
-		 * The meta object literal for the '<em><b>Title</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute BOOK__TITLE = eINSTANCE.getBook_Title();
-
-		/**
-		 * The meta object literal for the '<em><b>Authors</b></em>' reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference BOOK__AUTHORS = eINSTANCE.getBook_Authors();
-
-		/**
-		 * The meta object literal for the '<em><b>Tags</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute BOOK__TAGS = eINSTANCE.getBook_Tags();
-
-		/**
-		 * The meta object literal for the '<em><b>Data</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute BOOK__DATA = eINSTANCE.getBook_Data();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.LibraryImpl <em>Library</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipselabs.mongo.emf.junit.model.impl.LibraryImpl
-		 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getLibrary()
-		 * @generated
-		 */
-		EClass LIBRARY = eINSTANCE.getLibrary();
-
-		/**
-		 * The meta object literal for the '<em><b>Books</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference LIBRARY__BOOKS = eINSTANCE.getLibrary_Books();
-
-		/**
-		 * The meta object literal for the '<em><b>Location</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference LIBRARY__LOCATION = eINSTANCE.getLibrary_Location();
-
-		/**
-		 * The meta object literal for the '<em><b>Latest Book</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference LIBRARY__LATEST_BOOK = eINSTANCE.getLibrary_LatestBook();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.LocationImpl <em>Location</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipselabs.mongo.emf.junit.model.impl.LocationImpl
-		 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getLocation()
-		 * @generated
-		 */
-		EClass LOCATION = eINSTANCE.getLocation();
-
-		/**
-		 * The meta object literal for the '<em><b>Address</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute LOCATION__ADDRESS = eINSTANCE.getLocation_Address();
-
-		/**
-		 * The meta object literal for the '<em><b>Featured Book</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference LOCATION__FEATURED_BOOK = eINSTANCE.getLocation_FeaturedBook();
-
-		/**
-		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute LOCATION__ID = eINSTANCE.getLocation_Id();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl <em>ETypes</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipselabs.mongo.emf.junit.model.impl.ETypesImpl
-		 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getETypes()
-		 * @generated
-		 */
-		EClass ETYPES = eINSTANCE.getETypes();
+		public static final EClass ETYPES = eINSTANCE.getETypes();
 
 		/**
 		 * The meta object literal for the '<em><b>EBig Decimal</b></em>' attribute feature.
@@ -1514,7 +1318,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ETYPES__EBIG_DECIMAL = eINSTANCE.getETypes_EBigDecimal();
+		public static final EAttribute ETYPES__EBIG_DECIMAL = eINSTANCE.getETypes_EBigDecimal();
 
 		/**
 		 * The meta object literal for the '<em><b>EBig Integer</b></em>' attribute feature.
@@ -1522,7 +1326,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ETYPES__EBIG_INTEGER = eINSTANCE.getETypes_EBigInteger();
+		public static final EAttribute ETYPES__EBIG_INTEGER = eINSTANCE.getETypes_EBigInteger();
 
 		/**
 		 * The meta object literal for the '<em><b>EBoolean</b></em>' attribute feature.
@@ -1530,7 +1334,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ETYPES__EBOOLEAN = eINSTANCE.getETypes_EBoolean();
+		public static final EAttribute ETYPES__EBOOLEAN = eINSTANCE.getETypes_EBoolean();
 
 		/**
 		 * The meta object literal for the '<em><b>EByte</b></em>' attribute feature.
@@ -1538,7 +1342,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ETYPES__EBYTE = eINSTANCE.getETypes_EByte();
+		public static final EAttribute ETYPES__EBYTE = eINSTANCE.getETypes_EByte();
 
 		/**
 		 * The meta object literal for the '<em><b>EByte Array</b></em>' attribute feature.
@@ -1546,7 +1350,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ETYPES__EBYTE_ARRAY = eINSTANCE.getETypes_EByteArray();
+		public static final EAttribute ETYPES__EBYTE_ARRAY = eINSTANCE.getETypes_EByteArray();
 
 		/**
 		 * The meta object literal for the '<em><b>EChar</b></em>' attribute feature.
@@ -1554,7 +1358,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ETYPES__ECHAR = eINSTANCE.getETypes_EChar();
+		public static final EAttribute ETYPES__ECHAR = eINSTANCE.getETypes_EChar();
 
 		/**
 		 * The meta object literal for the '<em><b>EDate</b></em>' attribute feature.
@@ -1562,7 +1366,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ETYPES__EDATE = eINSTANCE.getETypes_EDate();
+		public static final EAttribute ETYPES__EDATE = eINSTANCE.getETypes_EDate();
 
 		/**
 		 * The meta object literal for the '<em><b>EDouble</b></em>' attribute feature.
@@ -1570,7 +1374,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ETYPES__EDOUBLE = eINSTANCE.getETypes_EDouble();
+		public static final EAttribute ETYPES__EDOUBLE = eINSTANCE.getETypes_EDouble();
 
 		/**
 		 * The meta object literal for the '<em><b>EFloat</b></em>' attribute feature.
@@ -1578,7 +1382,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ETYPES__EFLOAT = eINSTANCE.getETypes_EFloat();
+		public static final EAttribute ETYPES__EFLOAT = eINSTANCE.getETypes_EFloat();
 
 		/**
 		 * The meta object literal for the '<em><b>EInt</b></em>' attribute feature.
@@ -1586,7 +1390,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ETYPES__EINT = eINSTANCE.getETypes_EInt();
+		public static final EAttribute ETYPES__EINT = eINSTANCE.getETypes_EInt();
 
 		/**
 		 * The meta object literal for the '<em><b>ELong</b></em>' attribute feature.
@@ -1594,7 +1398,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ETYPES__ELONG = eINSTANCE.getETypes_ELong();
+		public static final EAttribute ETYPES__ELONG = eINSTANCE.getETypes_ELong();
 
 		/**
 		 * The meta object literal for the '<em><b>EShort</b></em>' attribute feature.
@@ -1602,7 +1406,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ETYPES__ESHORT = eINSTANCE.getETypes_EShort();
+		public static final EAttribute ETYPES__ESHORT = eINSTANCE.getETypes_EShort();
 
 		/**
 		 * The meta object literal for the '<em><b>EString</b></em>' attribute feature.
@@ -1610,7 +1414,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ETYPES__ESTRING = eINSTANCE.getETypes_EString();
+		public static final EAttribute ETYPES__ESTRING = eINSTANCE.getETypes_EString();
 
 		/**
 		 * The meta object literal for the '<em><b>Uris</b></em>' attribute list feature.
@@ -1618,43 +1422,17 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ETYPES__URIS = eINSTANCE.getETypes_Uris();
+		public static final EAttribute ETYPES__URIS = eINSTANCE.getETypes_Uris();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.MappedLibraryImpl <em>Mapped Library</em>}' class.
+		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject <em>Primary Object</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipselabs.mongo.emf.junit.model.impl.MappedLibraryImpl
-		 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getMappedLibrary()
+		 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject
+		 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getPrimaryObject()
 		 * @generated
 		 */
-		EClass MAPPED_LIBRARY = eINSTANCE.getMappedLibrary();
-
-		/**
-		 * The meta object literal for the '<em><b>Location</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference MAPPED_LIBRARY__LOCATION = eINSTANCE.getMappedLibrary_Location();
-
-		/**
-		 * The meta object literal for the '<em><b>Books</b></em>' attribute list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute MAPPED_LIBRARY__BOOKS = eINSTANCE.getMappedLibrary_Books();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl <em>Primary Object</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipselabs.mongo.emf.junit.model.impl.PrimaryObjectImpl
-		 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getPrimaryObject()
-		 * @generated
-		 */
-		EClass PRIMARY_OBJECT = eINSTANCE.getPrimaryObject();
+		public static final EClass PRIMARY_OBJECT = eINSTANCE.getPrimaryObject();
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -1662,7 +1440,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PRIMARY_OBJECT__NAME = eINSTANCE.getPrimaryObject_Name();
+		public static final EAttribute PRIMARY_OBJECT__NAME = eINSTANCE.getPrimaryObject_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Id Attribute</b></em>' attribute feature.
@@ -1670,7 +1448,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PRIMARY_OBJECT__ID_ATTRIBUTE = eINSTANCE.getPrimaryObject_IdAttribute();
+		public static final EAttribute PRIMARY_OBJECT__ID_ATTRIBUTE = eINSTANCE.getPrimaryObject_IdAttribute();
 
 		/**
 		 * The meta object literal for the '<em><b>Unsettable Attribute</b></em>' attribute feature.
@@ -1678,7 +1456,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE = eINSTANCE.getPrimaryObject_UnsettableAttribute();
+		public static final EAttribute PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE = eINSTANCE.getPrimaryObject_UnsettableAttribute();
 
 		/**
 		 * The meta object literal for the '<em><b>Unsettable Attribute With Non Null Default</b></em>' attribute feature.
@@ -1686,7 +1464,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE_WITH_NON_NULL_DEFAULT = eINSTANCE.getPrimaryObject_UnsettableAttributeWithNonNullDefault();
+		public static final EAttribute PRIMARY_OBJECT__UNSETTABLE_ATTRIBUTE_WITH_NON_NULL_DEFAULT = eINSTANCE.getPrimaryObject_UnsettableAttributeWithNonNullDefault();
 
 		/**
 		 * The meta object literal for the '<em><b>Unsettable Reference</b></em>' reference feature.
@@ -1694,7 +1472,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference PRIMARY_OBJECT__UNSETTABLE_REFERENCE = eINSTANCE.getPrimaryObject_UnsettableReference();
+		public static final EReference PRIMARY_OBJECT__UNSETTABLE_REFERENCE = eINSTANCE.getPrimaryObject_UnsettableReference();
 
 		/**
 		 * The meta object literal for the '<em><b>Containment Reference Same Collectioin</b></em>' containment reference feature.
@@ -1702,7 +1480,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference PRIMARY_OBJECT__CONTAINMENT_REFERENCE_SAME_COLLECTIOIN = eINSTANCE.getPrimaryObject_ContainmentReferenceSameCollectioin();
+		public static final EReference PRIMARY_OBJECT__CONTAINMENT_REFERENCE_SAME_COLLECTIOIN = eINSTANCE.getPrimaryObject_ContainmentReferenceSameCollectioin();
 
 		/**
 		 * The meta object literal for the '<em><b>Single Non Containment Reference</b></em>' reference feature.
@@ -1710,7 +1488,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE = eINSTANCE.getPrimaryObject_SingleNonContainmentReference();
+		public static final EReference PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE = eINSTANCE.getPrimaryObject_SingleNonContainmentReference();
 
 		/**
 		 * The meta object literal for the '<em><b>Multiple Non Containment Reference</b></em>' reference list feature.
@@ -1718,7 +1496,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE = eINSTANCE.getPrimaryObject_MultipleNonContainmentReference();
+		public static final EReference PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE = eINSTANCE.getPrimaryObject_MultipleNonContainmentReference();
 
 		/**
 		 * The meta object literal for the '<em><b>Single Containment Reference No Proxies</b></em>' containment reference feature.
@@ -1726,7 +1504,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_NO_PROXIES = eINSTANCE.getPrimaryObject_SingleContainmentReferenceNoProxies();
+		public static final EReference PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_NO_PROXIES = eINSTANCE.getPrimaryObject_SingleContainmentReferenceNoProxies();
 
 		/**
 		 * The meta object literal for the '<em><b>Multiple Containment Reference No Proxies</b></em>' containment reference list feature.
@@ -1734,7 +1512,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_NO_PROXIES = eINSTANCE.getPrimaryObject_MultipleContainmentReferenceNoProxies();
+		public static final EReference PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_NO_PROXIES = eINSTANCE.getPrimaryObject_MultipleContainmentReferenceNoProxies();
 
 		/**
 		 * The meta object literal for the '<em><b>Single Containment Reference Proxies</b></em>' containment reference feature.
@@ -1742,7 +1520,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES = eINSTANCE.getPrimaryObject_SingleContainmentReferenceProxies();
+		public static final EReference PRIMARY_OBJECT__SINGLE_CONTAINMENT_REFERENCE_PROXIES = eINSTANCE.getPrimaryObject_SingleContainmentReferenceProxies();
 
 		/**
 		 * The meta object literal for the '<em><b>Multiple Containment Reference Proxies</b></em>' containment reference list feature.
@@ -1750,7 +1528,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES = eINSTANCE.getPrimaryObject_MultipleContainmentReferenceProxies();
+		public static final EReference PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES = eINSTANCE.getPrimaryObject_MultipleContainmentReferenceProxies();
 
 		/**
 		 * The meta object literal for the '<em><b>Single Non Containment Reference No Proxies</b></em>' reference feature.
@@ -1758,15 +1536,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE_NO_PROXIES = eINSTANCE.getPrimaryObject_SingleNonContainmentReferenceNoProxies();
-
-		/**
-		 * The meta object literal for the '<em><b>Feature Map Reference Type2</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2 = eINSTANCE.getPrimaryObject_FeatureMapReferenceType2();
+		public static final EReference PRIMARY_OBJECT__SINGLE_NON_CONTAINMENT_REFERENCE_NO_PROXIES = eINSTANCE.getPrimaryObject_SingleNonContainmentReferenceNoProxies();
 
 		/**
 		 * The meta object literal for the '<em><b>Feature Map Reference Type1</b></em>' containment reference list feature.
@@ -1774,7 +1544,15 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1 = eINSTANCE.getPrimaryObject_FeatureMapReferenceType1();
+		public static final EReference PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE1 = eINSTANCE.getPrimaryObject_FeatureMapReferenceType1();
+
+		/**
+		 * The meta object literal for the '<em><b>Feature Map Reference Type2</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EReference PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_TYPE2 = eINSTANCE.getPrimaryObject_FeatureMapReferenceType2();
 
 		/**
 		 * The meta object literal for the '<em><b>Feature Map Reference Collection</b></em>' attribute list feature.
@@ -1782,7 +1560,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION = eINSTANCE.getPrimaryObject_FeatureMapReferenceCollection();
+		public static final EAttribute PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION = eINSTANCE.getPrimaryObject_FeatureMapReferenceCollection();
 
 		/**
 		 * The meta object literal for the '<em><b>Feature Map Attribute Type1</b></em>' attribute list feature.
@@ -1790,7 +1568,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE1 = eINSTANCE.getPrimaryObject_FeatureMapAttributeType1();
+		public static final EAttribute PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE1 = eINSTANCE.getPrimaryObject_FeatureMapAttributeType1();
 
 		/**
 		 * The meta object literal for the '<em><b>Feature Map Attribute Type2</b></em>' attribute list feature.
@@ -1798,7 +1576,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE2 = eINSTANCE.getPrimaryObject_FeatureMapAttributeType2();
+		public static final EAttribute PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_TYPE2 = eINSTANCE.getPrimaryObject_FeatureMapAttributeType2();
 
 		/**
 		 * The meta object literal for the '<em><b>Feature Map Attribute Collection</b></em>' attribute list feature.
@@ -1806,17 +1584,17 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_COLLECTION = eINSTANCE.getPrimaryObject_FeatureMapAttributeCollection();
+		public static final EAttribute PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_COLLECTION = eINSTANCE.getPrimaryObject_FeatureMapAttributeCollection();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.junit.model.impl.TargetObjectImpl <em>Target Object</em>}' class.
+		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.junit.model.TargetObject <em>Target Object</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipselabs.mongo.emf.junit.model.impl.TargetObjectImpl
-		 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getTargetObject()
+		 * @see org.eclipselabs.mongo.emf.junit.model.TargetObject
+		 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getTargetObject()
 		 * @generated
 		 */
-		EClass TARGET_OBJECT = eINSTANCE.getTargetObject();
+		public static final EClass TARGET_OBJECT = eINSTANCE.getTargetObject();
 
 		/**
 		 * The meta object literal for the '<em><b>Single Attribute</b></em>' attribute feature.
@@ -1824,7 +1602,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute TARGET_OBJECT__SINGLE_ATTRIBUTE = eINSTANCE.getTargetObject_SingleAttribute();
+		public static final EAttribute TARGET_OBJECT__SINGLE_ATTRIBUTE = eINSTANCE.getTargetObject_SingleAttribute();
 
 		/**
 		 * The meta object literal for the '<em><b>Array Attribute</b></em>' attribute list feature.
@@ -1832,33 +1610,17 @@ public interface ModelPackage extends EPackage
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute TARGET_OBJECT__ARRAY_ATTRIBUTE = eINSTANCE.getTargetObject_ArrayAttribute();
+		public static final EAttribute TARGET_OBJECT__ARRAY_ATTRIBUTE = eINSTANCE.getTargetObject_ArrayAttribute();
 
 		/**
 		 * The meta object literal for the '<em>URI</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see org.eclipse.emf.common.util.URI
-		 * @see org.eclipselabs.mongo.emf.junit.model.impl.ModelPackageImpl#getURI()
+		 * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage#getURI()
 		 * @generated
 		 */
-		EDataType URI = eINSTANCE.getURI();
-
-		/**
-		 * The meta object literal for the '<em><b>Rare Books</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference MAPPED_LIBRARY__RARE_BOOKS = eINSTANCE.getMappedLibrary_RareBooks();
-
-		/**
-		 * The meta object literal for the '<em><b>Regular Books</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference MAPPED_LIBRARY__REGULAR_BOOKS = eINSTANCE.getMappedLibrary_RegularBooks();
+		public static final EDataType URI = eINSTANCE.getURI();
 
 	}
 

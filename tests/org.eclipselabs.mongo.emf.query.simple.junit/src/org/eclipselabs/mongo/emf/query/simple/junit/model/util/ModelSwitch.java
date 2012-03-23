@@ -1,23 +1,13 @@
-/*******************************************************************************
- * Copyright (c) 2010 Bryan Hunt.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Bryan Hunt - initial API and implementation
- *******************************************************************************/
-
-package org.eclipselabs.mongo.emf.junit.model.util;
+/**
+ */
+package org.eclipselabs.mongo.emf.query.simple.junit.model.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipselabs.mongo.emf.junit.model.ETypes;
-import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
-import org.eclipselabs.mongo.emf.junit.model.PrimaryObject;
-import org.eclipselabs.mongo.emf.junit.model.TargetObject;
+
+import org.eclipselabs.mongo.emf.query.simple.junit.model.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,7 +19,7 @@ import org.eclipselabs.mongo.emf.junit.model.TargetObject;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage
+ * @see org.eclipselabs.mongo.emf.query.simple.junit.model.ModelPackage
  * @generated
  */
 public class ModelSwitch<T> extends Switch<T>
@@ -82,24 +72,38 @@ public class ModelSwitch<T> extends Switch<T>
 	{
 		switch (classifierID)
 		{
-			case ModelPackage.ETYPES:
+			case ModelPackage.PERSON:
 			{
-				ETypes eTypes = (ETypes)theEObject;
-				T result = caseETypes(eTypes);
+				Person person = (Person)theEObject;
+				T result = casePerson(person);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ModelPackage.PRIMARY_OBJECT:
+			case ModelPackage.BOOK:
 			{
-				PrimaryObject primaryObject = (PrimaryObject)theEObject;
-				T result = casePrimaryObject(primaryObject);
+				Book book = (Book)theEObject;
+				T result = caseBook(book);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ModelPackage.TARGET_OBJECT:
+			case ModelPackage.LIBRARY:
 			{
-				TargetObject targetObject = (TargetObject)theEObject;
-				T result = caseTargetObject(targetObject);
+				Library library = (Library)theEObject;
+				T result = caseLibrary(library);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ModelPackage.LOCATION:
+			{
+				Location location = (Location)theEObject;
+				T result = caseLocation(location);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ModelPackage.MAPPED_LIBRARY:
+			{
+				MappedLibrary mappedLibrary = (MappedLibrary)theEObject;
+				T result = caseMappedLibrary(mappedLibrary);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -108,49 +112,81 @@ public class ModelSwitch<T> extends Switch<T>
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>ETypes</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Person</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>ETypes</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Person</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseETypes(ETypes object)
+	public T casePerson(Person object)
 	{
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Primary Object</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Book</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Primary Object</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Book</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T casePrimaryObject(PrimaryObject object)
+	public T caseBook(Book object)
 	{
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Target Object</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Library</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Target Object</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Library</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseTargetObject(TargetObject object)
+	public T caseLibrary(Library object)
+	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Location</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Location</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseLocation(Location object)
+	{
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Mapped Library</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Mapped Library</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseMappedLibrary(MappedLibrary object)
 	{
 		return null;
 	}

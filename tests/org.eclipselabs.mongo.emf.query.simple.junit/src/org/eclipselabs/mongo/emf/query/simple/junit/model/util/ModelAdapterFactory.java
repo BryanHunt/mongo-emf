@@ -1,31 +1,22 @@
-/*******************************************************************************
- * Copyright (c) 2010 Bryan Hunt.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Bryan Hunt - initial API and implementation
- *******************************************************************************/
-
-package org.eclipselabs.mongo.emf.junit.model.util;
+/**
+ */
+package org.eclipselabs.mongo.emf.query.simple.junit.model.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
+
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
+
 import org.eclipse.emf.ecore.EObject;
-import org.eclipselabs.mongo.emf.junit.model.ETypes;
-import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
-import org.eclipselabs.mongo.emf.junit.model.PrimaryObject;
-import org.eclipselabs.mongo.emf.junit.model.TargetObject;
+
+import org.eclipselabs.mongo.emf.query.simple.junit.model.*;
 
 /**
  * <!-- begin-user-doc -->
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see org.eclipselabs.mongo.emf.junit.model.ModelPackage
+ * @see org.eclipselabs.mongo.emf.query.simple.junit.model.ModelPackage
  * @generated
  */
 public class ModelAdapterFactory extends AdapterFactoryImpl
@@ -84,19 +75,29 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 		new ModelSwitch<Adapter>()
 		{
 			@Override
-			public Adapter caseETypes(ETypes object)
+			public Adapter casePerson(Person object)
 			{
-				return createETypesAdapter();
+				return createPersonAdapter();
 			}
 			@Override
-			public Adapter casePrimaryObject(PrimaryObject object)
+			public Adapter caseBook(Book object)
 			{
-				return createPrimaryObjectAdapter();
+				return createBookAdapter();
 			}
 			@Override
-			public Adapter caseTargetObject(TargetObject object)
+			public Adapter caseLibrary(Library object)
 			{
-				return createTargetObjectAdapter();
+				return createLibraryAdapter();
+			}
+			@Override
+			public Adapter caseLocation(Location object)
+			{
+				return createLocationAdapter();
+			}
+			@Override
+			public Adapter caseMappedLibrary(MappedLibrary object)
+			{
+				return createMappedLibraryAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object)
@@ -121,46 +122,76 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipselabs.mongo.emf.junit.model.ETypes <em>ETypes</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipselabs.mongo.emf.query.simple.junit.model.Person <em>Person</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipselabs.mongo.emf.junit.model.ETypes
+	 * @see org.eclipselabs.mongo.emf.query.simple.junit.model.Person
 	 * @generated
 	 */
-	public Adapter createETypesAdapter()
+	public Adapter createPersonAdapter()
 	{
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipselabs.mongo.emf.junit.model.PrimaryObject <em>Primary Object</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipselabs.mongo.emf.query.simple.junit.model.Book <em>Book</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipselabs.mongo.emf.junit.model.PrimaryObject
+	 * @see org.eclipselabs.mongo.emf.query.simple.junit.model.Book
 	 * @generated
 	 */
-	public Adapter createPrimaryObjectAdapter()
+	public Adapter createBookAdapter()
 	{
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipselabs.mongo.emf.junit.model.TargetObject <em>Target Object</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipselabs.mongo.emf.query.simple.junit.model.Library <em>Library</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipselabs.mongo.emf.junit.model.TargetObject
+	 * @see org.eclipselabs.mongo.emf.query.simple.junit.model.Library
 	 * @generated
 	 */
-	public Adapter createTargetObjectAdapter()
+	public Adapter createLibraryAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipselabs.mongo.emf.query.simple.junit.model.Location <em>Location</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipselabs.mongo.emf.query.simple.junit.model.Location
+	 * @generated
+	 */
+	public Adapter createLocationAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipselabs.mongo.emf.query.simple.junit.model.MappedLibrary <em>Mapped Library</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipselabs.mongo.emf.query.simple.junit.model.MappedLibrary
+	 * @generated
+	 */
+	public Adapter createMappedLibraryAdapter()
 	{
 		return null;
 	}

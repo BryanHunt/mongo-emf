@@ -1,48 +1,43 @@
-/*******************************************************************************
- * Copyright (c) 2010 Bryan Hunt.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Bryan Hunt - initial API and implementation
- *******************************************************************************/
-
-package org.eclipselabs.mongo.emf.junit.model.impl;
+/**
+ */
+package org.eclipselabs.mongo.emf.query.simple.junit.model;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipselabs.mongo.emf.junit.model.Book;
-import org.eclipselabs.mongo.emf.junit.model.Library;
-import org.eclipselabs.mongo.emf.junit.model.Location;
-import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Library</b></em>'.
+ * A representation of the model object '<em><b>Library</b></em>'.
  * <!-- end-user-doc -->
+ *
  * <p>
- * The following features are implemented:
+ * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.LibraryImpl#getBooks <em>Books</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.LibraryImpl#getLocation <em>Location</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.LibraryImpl#getLatestBook <em>Latest Book</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.query.simple.junit.model.Library#getBooks <em>Books</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.query.simple.junit.model.Library#getLocation <em>Location</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.query.simple.junit.model.Library#getLatestBook <em>Latest Book</em>}</li>
  * </ul>
  * </p>
  *
+ * @see org.eclipselabs.mongo.emf.query.simple.junit.model.ModelPackage#getLibrary()
+ * @model kind="class"
  * @generated
  */
-public class LibraryImpl extends EObjectImpl implements Library
+public class Library extends EObjectImpl implements EObject
 {
 	/**
 	 * The cached value of the '{@link #getBooks() <em>Books</em>}' containment reference list.
@@ -79,7 +74,7 @@ public class LibraryImpl extends EObjectImpl implements Library
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected LibraryImpl()
+	protected Library()
 	{
 		super();
 	}
@@ -96,8 +91,17 @@ public class LibraryImpl extends EObjectImpl implements Library
 	}
 
 	/**
+	 * Returns the value of the '<em><b>Books</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipselabs.mongo.emf.query.simple.junit.model.Book}.
 	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Books</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
 	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Books</em>' containment reference list.
+	 * @see org.eclipselabs.mongo.emf.query.simple.junit.model.ModelPackage#getLibrary_Books()
+	 * @model containment="true"
 	 * @generated
 	 */
 	public EList<Book> getBooks()
@@ -110,38 +114,20 @@ public class LibraryImpl extends EObjectImpl implements Library
 	}
 
 	/**
+	 * Returns the value of the '<em><b>Location</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Location</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
 	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Location</em>' containment reference.
+	 * @see #setLocation(Location)
+	 * @see org.eclipselabs.mongo.emf.query.simple.junit.model.ModelPackage#getLibrary_Location()
+	 * @model containment="true"
 	 * @generated
 	 */
 	public Location getLocation()
-	{
-		if (location != null && location.eIsProxy())
-		{
-			InternalEObject oldLocation = (InternalEObject)location;
-			location = (Location)eResolveProxy(oldLocation);
-			if (location != oldLocation)
-			{
-				InternalEObject newLocation = (InternalEObject)location;
-				NotificationChain msgs = oldLocation.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.LIBRARY__LOCATION, null, null);
-				if (newLocation.eInternalContainer() == null)
-				{
-					msgs = newLocation.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ModelPackage.LIBRARY__LOCATION, null, msgs);
-				}
-				if (msgs != null) msgs.dispatch();
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.LIBRARY__LOCATION, oldLocation, location));
-			}
-		}
-		return location;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Location basicGetLocation()
 	{
 		return location;
 	}
@@ -164,8 +150,11 @@ public class LibraryImpl extends EObjectImpl implements Library
 	}
 
 	/**
+	 * Sets the value of the '{@link org.eclipselabs.mongo.emf.query.simple.junit.model.Library#getLocation <em>Location</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Location</em>' containment reference.
+	 * @see #getLocation()
 	 * @generated
 	 */
 	public void setLocation(Location newLocation)
@@ -185,8 +174,17 @@ public class LibraryImpl extends EObjectImpl implements Library
 	}
 
 	/**
+	 * Returns the value of the '<em><b>Latest Book</b></em>' reference.
 	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Latest Book</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
 	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Latest Book</em>' reference.
+	 * @see #setLatestBook(Book)
+	 * @see org.eclipselabs.mongo.emf.query.simple.junit.model.ModelPackage#getLibrary_LatestBook()
+	 * @model
 	 * @generated
 	 */
 	public Book getLatestBook()
@@ -215,8 +213,11 @@ public class LibraryImpl extends EObjectImpl implements Library
 	}
 
 	/**
+	 * Sets the value of the '{@link org.eclipselabs.mongo.emf.query.simple.junit.model.Library#getLatestBook <em>Latest Book</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Latest Book</em>' reference.
+	 * @see #getLatestBook()
 	 * @generated
 	 */
 	public void setLatestBook(Book newLatestBook)
@@ -258,8 +259,7 @@ public class LibraryImpl extends EObjectImpl implements Library
 			case ModelPackage.LIBRARY__BOOKS:
 				return getBooks();
 			case ModelPackage.LIBRARY__LOCATION:
-				if (resolve) return getLocation();
-				return basicGetLocation();
+				return getLocation();
 			case ModelPackage.LIBRARY__LATEST_BOOK:
 				if (resolve) return getLatestBook();
 				return basicGetLatestBook();
@@ -335,4 +335,4 @@ public class LibraryImpl extends EObjectImpl implements Library
 		return super.eIsSet(featureID);
 	}
 
-} //LibraryImpl
+} // Library

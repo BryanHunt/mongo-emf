@@ -17,13 +17,15 @@ import org.junit.Rule;
 import com.mongodb.DB;
 
 /**
- * @author bhunt
+ * This class was introduced because the replica test needs to set up a replica set
+ * instead of a single database.
  * 
+ * @author bhunt
  */
 public class TestHarness extends BaseTestHarness
 {
 	@Rule
-	public MongoDatabase database = new MongoDatabase("junit");
+	public MongoDatabase database = new MongoDatabase();
 
 	@Override
 	protected DB createDatabase()

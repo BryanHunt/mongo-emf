@@ -1,45 +1,45 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
-package org.eclipselabs.mongo.emf.junit.model.impl;
+package org.eclipselabs.mongo.emf.query.simple.junit.model;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+
 import org.eclipse.emf.ecore.util.BasicFeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipselabs.mongo.emf.junit.model.Book;
-import org.eclipselabs.mongo.emf.junit.model.Location;
-import org.eclipselabs.mongo.emf.junit.model.MappedLibrary;
-import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Mapped Library</b></em>'.
+ * A representation of the model object '<em><b>Mapped Library</b></em>'.
  * <!-- end-user-doc -->
+ *
  * <p>
- * The following features are implemented:
+ * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.MappedLibraryImpl#getLocation <em>Location</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.MappedLibraryImpl#getRareBooks <em>Rare Books</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.MappedLibraryImpl#getRegularBooks <em>Regular Books</em>}</li>
- *   <li>{@link org.eclipselabs.mongo.emf.junit.model.impl.MappedLibraryImpl#getBooks <em>Books</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.query.simple.junit.model.MappedLibrary#getLocation <em>Location</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.query.simple.junit.model.MappedLibrary#getRareBooks <em>Rare Books</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.query.simple.junit.model.MappedLibrary#getRegularBooks <em>Regular Books</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.query.simple.junit.model.MappedLibrary#getBooks <em>Books</em>}</li>
  * </ul>
  * </p>
  *
+ * @see org.eclipselabs.mongo.emf.query.simple.junit.model.ModelPackage#getMappedLibrary()
+ * @model kind="class"
  * @generated
  */
-public class MappedLibraryImpl extends EObjectImpl implements MappedLibrary
+public class MappedLibrary extends EObjectImpl implements EObject
 {
 	/**
 	 * The cached value of the '{@link #getLocation() <em>Location</em>}' containment reference.
@@ -66,7 +66,7 @@ public class MappedLibraryImpl extends EObjectImpl implements MappedLibrary
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected MappedLibraryImpl()
+	protected MappedLibrary()
 	{
 		super();
 	}
@@ -83,38 +83,20 @@ public class MappedLibraryImpl extends EObjectImpl implements MappedLibrary
 	}
 
 	/**
+	 * Returns the value of the '<em><b>Location</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Location</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
 	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Location</em>' containment reference.
+	 * @see #setLocation(Location)
+	 * @see org.eclipselabs.mongo.emf.query.simple.junit.model.ModelPackage#getMappedLibrary_Location()
+	 * @model containment="true"
 	 * @generated
 	 */
 	public Location getLocation()
-	{
-		if (location != null && location.eIsProxy())
-		{
-			InternalEObject oldLocation = (InternalEObject)location;
-			location = (Location)eResolveProxy(oldLocation);
-			if (location != oldLocation)
-			{
-				InternalEObject newLocation = (InternalEObject)location;
-				NotificationChain msgs = oldLocation.eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ModelPackage.MAPPED_LIBRARY__LOCATION, null, null);
-				if (newLocation.eInternalContainer() == null)
-				{
-					msgs = newLocation.eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ModelPackage.MAPPED_LIBRARY__LOCATION, null, msgs);
-				}
-				if (msgs != null) msgs.dispatch();
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ModelPackage.MAPPED_LIBRARY__LOCATION, oldLocation, location));
-			}
-		}
-		return location;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Location basicGetLocation()
 	{
 		return location;
 	}
@@ -137,8 +119,11 @@ public class MappedLibraryImpl extends EObjectImpl implements MappedLibrary
 	}
 
 	/**
+	 * Sets the value of the '{@link org.eclipselabs.mongo.emf.query.simple.junit.model.MappedLibrary#getLocation <em>Location</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Location</em>' containment reference.
+	 * @see #getLocation()
 	 * @generated
 	 */
 	public void setLocation(Location newLocation)
@@ -158,8 +143,58 @@ public class MappedLibraryImpl extends EObjectImpl implements MappedLibrary
 	}
 
 	/**
+	 * Returns the value of the '<em><b>Rare Books</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipselabs.mongo.emf.query.simple.junit.model.Book}.
 	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Rare Books</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
 	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Rare Books</em>' containment reference list.
+	 * @see org.eclipselabs.mongo.emf.query.simple.junit.model.ModelPackage#getMappedLibrary_RareBooks()
+	 * @model containment="true" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="group='#books'"
+	 * @generated
+	 */
+	public EList<Book> getRareBooks()
+	{
+		return getBooks().list(ModelPackage.Literals.MAPPED_LIBRARY__RARE_BOOKS);
+	}
+
+	/**
+	 * Returns the value of the '<em><b>Regular Books</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipselabs.mongo.emf.query.simple.junit.model.Book}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Regular Books</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Regular Books</em>' containment reference list.
+	 * @see org.eclipselabs.mongo.emf.query.simple.junit.model.ModelPackage#getMappedLibrary_RegularBooks()
+	 * @model containment="true" transient="true" volatile="true" derived="true"
+	 *        extendedMetaData="group='#books'"
+	 * @generated
+	 */
+	public EList<Book> getRegularBooks()
+	{
+		return getBooks().list(ModelPackage.Literals.MAPPED_LIBRARY__REGULAR_BOOKS);
+	}
+
+	/**
+	 * Returns the value of the '<em><b>Books</b></em>' attribute list.
+	 * The list contents are of type {@link org.eclipse.emf.ecore.util.FeatureMap.Entry}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Books</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Books</em>' attribute list.
+	 * @see org.eclipselabs.mongo.emf.query.simple.junit.model.ModelPackage#getMappedLibrary_Books()
+	 * @model dataType="org.eclipse.emf.ecore.EFeatureMapEntry" many="false"
+	 *        extendedMetaData="kind='group'"
 	 * @generated
 	 */
 	public FeatureMap getBooks()
@@ -169,26 +204,6 @@ public class MappedLibraryImpl extends EObjectImpl implements MappedLibrary
 			books = new BasicFeatureMap(this, ModelPackage.MAPPED_LIBRARY__BOOKS);
 		}
 		return books;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<Book> getRareBooks()
-	{
-		return getBooks().list(ModelPackage.Literals.MAPPED_LIBRARY__RARE_BOOKS);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<Book> getRegularBooks()
-	{
-		return getBooks().list(ModelPackage.Literals.MAPPED_LIBRARY__REGULAR_BOOKS);
 	}
 
 	/**
@@ -224,8 +239,7 @@ public class MappedLibraryImpl extends EObjectImpl implements MappedLibrary
 		switch (featureID)
 		{
 			case ModelPackage.MAPPED_LIBRARY__LOCATION:
-				if (resolve) return getLocation();
-				return basicGetLocation();
+				return getLocation();
 			case ModelPackage.MAPPED_LIBRARY__RARE_BOOKS:
 				return getRareBooks();
 			case ModelPackage.MAPPED_LIBRARY__REGULAR_BOOKS:
@@ -331,4 +345,4 @@ public class MappedLibraryImpl extends EObjectImpl implements MappedLibrary
 		return result.toString();
 	}
 
-} //MappedLibraryImpl
+} // MappedLibrary
