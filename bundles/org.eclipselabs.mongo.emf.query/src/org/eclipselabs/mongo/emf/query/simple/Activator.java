@@ -1,5 +1,5 @@
 
-package org.eclipselabs.mongo.emf.query;
+package org.eclipselabs.mongo.emf.query.simple;
 
 import org.eclipselabs.mongo.emf.IQueryEngine;
 import org.osgi.framework.BundleActivator;

@@ -10,7 +10,7 @@
 	</parent>
 
   <groupId>mongo-emf</groupId>
-  <artifactId>org.eclipselabs.mongo.emf.query</artifactId>
-  <version>0.5.1.qualifier</version>
+  <artifactId>org.eclipselabs.mongo.emf.query.simple</artifactId>
+  <version>0.6.0.qualifier</version>
   <packaging>eclipse-plugin</packaging>
 </project>

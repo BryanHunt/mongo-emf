@@ -9,7 +9,7 @@
  *    Bryan Hunt and Ed Merks - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf.query;
+package org.eclipselabs.mongo.emf.query.simple;
 
 import java.util.ArrayList;
 import java.util.List;
