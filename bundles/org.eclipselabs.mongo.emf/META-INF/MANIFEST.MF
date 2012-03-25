@@ -1,17 +1,22 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %Bundle-Name
+Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipselabs.mongo.emf;singleton:=true
-Bundle-Version: 0.6.0.qualifier
-Bundle-Vendor: %Bundle-Vendor
+Bundle-Version: 1.0.0.qualifier
+Bundle-ClassPath: .
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: com.mongodb,
  org.bson,
  org.bson.types,
+ org.eclipse.emf.common,
  org.eclipse.emf.common.notify,
  org.eclipse.emf.common.notify.impl,
  org.eclipse.emf.common.util,
  org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.impl,
+ org.eclipse.emf.ecore.plugin,
  org.eclipse.emf.ecore.resource,
  org.eclipse.emf.ecore.resource.impl,
  org.eclipse.emf.ecore.util,
@@ -23,6 +28,9 @@ Import-Package: com.mongodb,
  org.osgi.framework;version="1.6.0",
  org.osgi.util.tracker;version="1.5.0"
 Export-Package: org.eclipselabs.mongo.emf,
- org.eclipselabs.mongo.emf.bundle;x-friends:="org.eclipselabs.mongo.emf.junit"
-Bundle-Activator: org.eclipselabs.mongo.emf.bundle.Activator
+ org.eclipselabs.mongo.emf.bundle;x-friends:="org.eclipselabs.mongo.emf.junit",
+ org.eclipselabs.mongo.emf.model,
+ org.eclipselabs.mongo.emf.model.impl,
+ org.eclipselabs.mongo.emf.model.util
 Bundle-ActivationPolicy: lazy
+Bundle-Activator: org.eclipselabs.mongo.emf.bundle.Activator

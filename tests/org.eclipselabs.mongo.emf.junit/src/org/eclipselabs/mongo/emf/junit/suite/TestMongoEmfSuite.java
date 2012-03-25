@@ -11,6 +11,7 @@
 
 package org.eclipselabs.mongo.emf.junit.suite;
 
+import org.eclipselabs.mongo.emf.junit.tests.TestMongoCursor;
 import org.eclipselabs.mongo.emf.junit.tests.TestMongoEmfAttributes;
 import org.eclipselabs.mongo.emf.junit.tests.TestMongoEmfBasics;
 import org.eclipselabs.mongo.emf.junit.tests.TestMongoEmfReferences;
@@ -19,6 +20,6 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ TestMongoEmfBasics.class, TestMongoEmfAttributes.class, TestMongoEmfReferences.class })
+@SuiteClasses({ TestMongoEmfBasics.class, TestMongoEmfAttributes.class, TestMongoEmfReferences.class, TestMongoCursor.class })
 public class TestMongoEmfSuite
 {}

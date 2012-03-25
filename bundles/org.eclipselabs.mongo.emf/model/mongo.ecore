@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model" nsURI="http://www.eclipselabs.org/mongo/emf/model" nsPrefix="org.eclipselabs.mongo.emf.model">
+  <eClassifiers xsi:type="ecore:EClass" name="MongoCursor" eSuperTypes="#//Iterable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dbCursor" eType="#//DBCursor"
+        transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="objectBuilder" eType="#//EObjectBuilder"
+        transient="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dbCollection" eType="#//DBCollection"
+        transient="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="DBCursor" instanceClassName="com.mongodb.DBCursor"
+      serializable="false"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Iterable" instanceTypeName="java.lang.Iterable&lt;EObject>"
+      abstract="true" interface="true"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="EObjectBuilder" instanceClassName="org.eclipselabs.mongo.emf.EObjectBuilder"
+      serializable="false"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="DBCollection" instanceClassName="com.mongodb.DBCollection"
+      serializable="false"/>
+</ecore:EPackage>

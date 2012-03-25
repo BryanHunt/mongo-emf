@@ -126,6 +126,12 @@ public class EObjectBuilder
 		return eObject;
 	}
 
+	public URI buildURI(DBCollection collection, DBObject object)
+	{
+		URI uri = URI.createURI("../" + collection.getName() + "/" + object.get(MongoURIHandlerImpl.ID_KEY));
+		return uriHandler.resolve(uri);
+	}
+
 	/**
 	 * Builds an attribute value from the DBObject, converting the value if necessary.
 	 * Feature maps are delegated to buildFeatureMap() and non-native arrays to

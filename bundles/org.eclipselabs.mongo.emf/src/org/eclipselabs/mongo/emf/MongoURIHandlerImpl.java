@@ -351,6 +351,13 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 	 */
 	public static final String OPTION_WRITE_CONCERN = "WRITE_CONCERN";
 
+	/**
+	 * If set to Boolean.TRUE, a query will return a MongoCursor instead of a Result
+	 * 
+	 * Value type: Boolean
+	 */
+	public static final String OPTION_QUERY_CURSOR = "QUERY_CURSOR";
+
 	private IMongoDB mongoDB;
 	private IQueryEngine queryEngine;
 	private IConverterService converterService;
