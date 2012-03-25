@@ -2,7 +2,7 @@
 <feature
       id="org.eclipselabs.mongo.junit.feature"
       label="MongoEMF JUnit Support"
-      version="0.5.1.qualifier"
+      version="0.6.0.qualifier"
       provider-name="EclipseLabs"
       license-feature="org.eclipselabs.mongo.emf.feature">
 
@@ -21,19 +21,19 @@ make it easier to write JUnit tests involving EMF and MongoDB.
    </license>
 
    <requires>
-      <import plugin="org.hamcrest.core" version="1.1.0" match="greaterOrEqual"/>
       <import plugin="com.mongodb"/>
       <import plugin="org.eclipse.emf.common"/>
       <import plugin="org.eclipse.emf.ecore"/>
-      <import plugin="org.junit"/>
-      <import plugin="org.eclipse.osgi"/>
-      <import plugin="org.eclipselabs.emf.query"/>
       <import plugin="org.eclipselabs.mongo"/>
       <import plugin="org.eclipselabs.mongo.emf"/>
+      <import plugin="org.hamcrest.core" version="1.1.0" match="greaterOrEqual"/>
+      <import plugin="org.junit"/>
+      <import plugin="org.eclipse.osgi"/>
+      <import plugin="org.eclipselabs.emf.query.simple"/>
    </requires>
 
    <plugin
-         id="org.eclipselabs.mongo.junit"
+         id="org.eclipselabs.mongo.emf.developer.junit"
          download-size="0"
          install-size="0"
          version="0.0.0"

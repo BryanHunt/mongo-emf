@@ -2,7 +2,7 @@
 <feature
       id="org.eclipselabs.mongo.emf.query.feature"
       label="MongoEMF Query Engine"
-      version="0.5.1.qualifier"
+      version="0.6.0.qualifier"
       provider-name="EclipseLabs"
       license-feature="org.eclipselabs.mongo.emf.feature">
 
@@ -19,23 +19,22 @@
    </license>
 
    <requires>
-      <import plugin="com.mongodb"/>
       <import plugin="org.eclipse.emf.common"/>
       <import plugin="org.eclipse.emf.ecore"/>
-      <import plugin="org.eclipselabs.emf.query"/>
+      <import plugin="com.mongodb"/>
       <import plugin="org.eclipselabs.mongo.emf"/>
       <import plugin="org.eclipse.osgi"/>
    </requires>
 
    <plugin
-         id="org.eclipselabs.mongo.emf.query"
+         id="org.eclipselabs.emf.query.simple"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.eclipselabs.emf.query"
+         id="org.eclipselabs.mongo.emf.query.simple"
          download-size="0"
          install-size="0"
          version="0.0.0"

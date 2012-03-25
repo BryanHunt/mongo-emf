@@ -2,7 +2,7 @@
 <feature
       id="org.eclipselabs.mongo.emf.log.feature"
       label="MongoEMF OSGi Logging Support"
-      version="0.5.1.qualifier"
+      version="0.6.0.qualifier"
       provider-name="EclipseLabs"
       license-feature="org.eclipselabs.mongo.emf.feature">
 
@@ -17,6 +17,16 @@
    <license url="http://www.example.com/license">
       [Enter License Description here.]
    </license>
+
+   <requires>
+      <import plugin="org.eclipselabs.emf.query.simple"/>
+      <import plugin="org.eclipselabs.mongo.emf"/>
+      <import plugin="org.eclipse.osgi.services"/>
+      <import plugin="org.eclipse.emf.ecore"/>
+      <import plugin="org.eclipse.emf.common"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.osgi"/>
+   </requires>
 
    <plugin
          id="org.eclipselabs.mongo.emf.log"

@@ -2,7 +2,7 @@
 <feature
       id="org.eclipselabs.mongo.emf.feature"
       label="MongoEMF Core Runtime"
-      version="0.5.1.qualifier"
+      version="0.6.0.qualifier"
       provider-name="EclipseLabs">
 
    <description url="https://github.com/BryanHunt/mongo-emf/wiki">
@@ -19,11 +19,12 @@ to persist EMF objects to MongoDB.
    </license>
 
    <requires>
+      <import plugin="com.mongodb" version="2.5.2" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.osgi"/>
       <import plugin="org.eclipse.emf.common"/>
       <import plugin="org.eclipse.emf.ecore"/>
-      <import plugin="com.mongodb" version="2.5.2" match="greaterOrEqual"/>
       <import plugin="org.eclipse.emf.ecore.xmi"/>
-      <import plugin="org.eclipse.osgi"/>
+      <import plugin="org.eclipselabs.emf.query.simple"/>
    </requires>
 
    <plugin

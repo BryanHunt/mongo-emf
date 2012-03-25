@@ -2,7 +2,7 @@
 <feature
       id="org.eclipselabs.mongo.emf.freemarker.feature"
       label="Mongo EMF FreeMarker Support"
-      version="0.5.1.qualifier"
+      version="0.6.0.qualifier"
       provider-name="EclipseLabs"
       license-feature="org.eclipselabs.mongo.emf.feature">
 
@@ -22,8 +22,8 @@
       <import plugin="org.freemarker"/>
       <import plugin="org.eclipse.emf.common"/>
       <import plugin="org.eclipse.emf.ecore"/>
-      <import plugin="org.eclipselabs.emf.query"/>
       <import plugin="org.eclipselabs.mongo.emf"/>
+      <import plugin="org.eclipselabs.emf.query.simple"/>
    </requires>
 
    <plugin
