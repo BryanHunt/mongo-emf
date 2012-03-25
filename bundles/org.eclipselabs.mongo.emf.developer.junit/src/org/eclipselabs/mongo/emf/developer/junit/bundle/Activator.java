@@ -9,7 +9,7 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.junit.bundle;
+package org.eclipselabs.mongo.emf.developer.junit.bundle;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;

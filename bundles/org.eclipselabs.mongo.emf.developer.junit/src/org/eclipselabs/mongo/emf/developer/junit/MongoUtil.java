@@ -9,7 +9,7 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.junit;
+package org.eclipselabs.mongo.emf.developer.junit;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -35,8 +35,8 @@ import org.eclipselabs.emf.query.Result;
 import org.eclipselabs.mongo.IMongoDB;
 import org.eclipselabs.mongo.emf.MongoResourceSetImpl;
 import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
+import org.eclipselabs.mongo.emf.developer.junit.bundle.Activator;
 import org.eclipselabs.mongo.internal.MongoDB;
-import org.eclipselabs.mongo.junit.bundle.Activator;
 
 /**
  * This class provides a set of utility functions that may be useful when unit testing.

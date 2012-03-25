@@ -20,11 +20,11 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipselabs.mongo.emf.developer.junit.MongoDatabase;
+import org.eclipselabs.mongo.emf.developer.junit.MongoUtil;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.TargetObject;
 import org.eclipselabs.mongo.emf.junit.support.BaseTestHarness;
-import org.eclipselabs.mongo.junit.MongoDatabase;
-import org.eclipselabs.mongo.junit.MongoUtil;
 import org.junit.Rule;
 import org.junit.Test;
 

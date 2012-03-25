@@ -11,7 +11,7 @@
 
 package org.eclipselabs.mongo.emf.junit.support;
 
-import org.eclipselabs.mongo.junit.MongoDatabase;
+import org.eclipselabs.mongo.emf.developer.junit.MongoDatabase;
 import org.junit.Rule;
 
 import com.mongodb.DB;

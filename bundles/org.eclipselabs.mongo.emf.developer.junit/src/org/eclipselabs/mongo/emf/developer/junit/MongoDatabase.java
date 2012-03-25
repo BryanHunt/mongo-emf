@@ -9,7 +9,7 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.junit;
+package org.eclipselabs.mongo.emf.developer.junit;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -19,7 +19,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipselabs.mongo.IMongoDB;
-import org.eclipselabs.mongo.junit.bundle.Activator;
+import org.eclipselabs.mongo.emf.developer.junit.bundle.Activator;
 import org.junit.rules.ExternalResource;
 import org.osgi.util.tracker.ServiceTracker;
 

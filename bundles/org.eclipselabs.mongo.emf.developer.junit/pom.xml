@@ -11,6 +11,6 @@
 
   <groupId>mongo-emf</groupId>
   <artifactId>org.eclipselabs.mongo.junit</artifactId>
-  <version>0.5.1-SNAPSHOT</version>
+  <version>0.6.0-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 </project>

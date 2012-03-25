@@ -32,12 +32,12 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
+import org.eclipselabs.mongo.emf.developer.junit.MongoUtil;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.PrimaryObject;
 import org.eclipselabs.mongo.emf.junit.model.TargetObject;
 import org.eclipselabs.mongo.emf.junit.support.TestHarness;
-import org.eclipselabs.mongo.junit.MongoUtil;
 import org.junit.Test;
 
 /**

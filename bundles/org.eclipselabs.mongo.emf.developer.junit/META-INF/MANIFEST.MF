@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Junit
-Bundle-SymbolicName: org.eclipselabs.mongo.junit
-Bundle-Version: 0.5.1.qualifier
+Bundle-SymbolicName: org.eclipselabs.mongo.emf.developer.junit
+Bundle-Version: 0.6.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: com.mongodb,
  org.eclipse.emf.common.util,
@@ -18,6 +18,6 @@ Import-Package: com.mongodb,
  org.junit.rules,
  org.osgi.framework,
  org.osgi.util.tracker
-Export-Package: org.eclipselabs.mongo.junit
+Export-Package: org.eclipselabs.mongo.emf.developer.junit
 Bundle-ActivationPolicy: lazy
-Bundle-Activator: org.eclipselabs.mongo.junit.bundle.Activator
+Bundle-Activator: org.eclipselabs.mongo.emf.developer.junit.bundle.Activator

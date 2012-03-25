@@ -23,12 +23,12 @@ import java.util.HashSet;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipselabs.mongo.emf.developer.junit.MongoUtil;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.PrimaryObject;
 import org.eclipselabs.mongo.emf.junit.model.TargetObject;
 import org.eclipselabs.mongo.emf.junit.support.TestHarness;
-import org.eclipselabs.mongo.junit.MongoUtil;
 import org.junit.Test;
 
 /**
