@@ -5,13 +5,13 @@
 	<parent>
 		<artifactId>build</artifactId>
 		<groupId>mongo-emf</groupId>
-		<version>0.5.1-SNAPSHOT</version>
+		<version>0.6.0-SNAPSHOT</version>
 		<relativePath>../../dev/org.eclipselabs.mongo.emf.developer/Build/pom.xml</relativePath>
 	</parent>
 
   <groupId>mongo-emf</groupId>
   <artifactId>org.eclipselabs.mongo.emf.query.simple.junit</artifactId>
-  <version>0.6.0-SNAPSHOT</version>
+  <version>0.6.0.qualifier</version>
   <packaging>eclipse-test-plugin</packaging>
 
   <build>
