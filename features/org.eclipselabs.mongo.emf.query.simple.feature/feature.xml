@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipselabs.mongo.emf.query.feature"
+      id="org.eclipselabs.mongo.emf.query.simple.feature"
       label="MongoEMF Query Engine"
       version="0.6.0.qualifier"
       provider-name="EclipseLabs"

@@ -36,7 +36,7 @@
             </dependency>
             <dependency>
               <type>eclipse-plugin</type>
-              <artifactId>org.eclipselabs.mongo.emf.query</artifactId>
+              <artifactId>org.eclipselabs.mongo.emf.query.simple</artifactId>
               <version>0.0.0</version>
             </dependency>
            </dependencies>
@@ -52,8 +52,23 @@
 							<autoStart>true</autoStart>
 						</bundle>
 						<bundle>
-							<id>org.eclipselabs.mongo.emf.query</id>
-							<level>3</level>
+							<id>org.eclipselabs.mongo</id>
+							<level>4</level>
+							<autoStart>true</autoStart>
+						</bundle>
+						<bundle>
+							<id>org.eclipselabs.mongo.emf</id>
+							<level>4</level>
+							<autoStart>true</autoStart>
+						</bundle>
+						<bundle>
+							<id>org.eclipselabs.mongo.emf.log</id>
+							<level>4</level>
+							<autoStart>true</autoStart>
+						</bundle>
+						<bundle>
+							<id>org.eclipselabs.mongo.emf.query.simple</id>
+							<level>4</level>
 							<autoStart>true</autoStart>
 						</bundle>
 					</bundleStartLevel>

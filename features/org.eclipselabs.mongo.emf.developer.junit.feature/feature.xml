@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipselabs.mongo.junit.feature"
+      id="org.eclipselabs.mongo.emf.developer.junit.feature"
       label="MongoEMF JUnit Support"
       version="0.6.0.qualifier"
       provider-name="EclipseLabs"
