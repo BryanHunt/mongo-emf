@@ -36,33 +36,62 @@ import com.mongodb.ServerAddress;
  * Example usage:
  * 
  * @Rule
- *       public MongoDatabase database = new MongoDatabase("junit");
+ *       public MongoDatabase database = new MongoDatabase();
  * 
  * @author bhunt
  * 
  */
 public class MongoDatabase extends ExternalResource
 {
+	/**
+	 * Connects to the "junit" database on localhost:27017
+	 */
 	public MongoDatabase()
 	{
 		this("junit");
 	}
 
+	/**
+	 * Connects to the specified database on localhost:27017
+	 * 
+	 * @param database the name of the database to use for unit testing
+	 */
 	public MongoDatabase(String database)
 	{
 		this("localhost", database);
 	}
 
+	/**
+	 * Connects to the specified database on the specified host using the default port 27017
+	 * 
+	 * @param hostname the host running MongoDB
+	 * @param database the name of the database to use for unit testing
+	 */
 	public MongoDatabase(String hostname, String database)
 	{
 		this(hostname, 27017, database);
 	}
 
+	/**
+	 * Connects to the specified database on the specified host and port
+	 * 
+	 * @param hostname the host running MongoDB
+	 * @param port the port MongoDB is listening on
+	 * @param database the name of the database to use for unit testing
+	 */
 	public MongoDatabase(String hostname, int port, String database)
 	{
 		this(hostname, port, database, null);
 	}
 
+	/**
+	 * Connects to the specified replica set on the given host and port
+	 * 
+	 * @param hostname the host running MongoDB
+	 * @param port the port MongoDB is listening on
+	 * @param database the name of the database to use for unit testing
+	 * @param replicaSet the list of servers in the replica set
+	 */
 	public MongoDatabase(String hostname, int port, String database, List<ServerAddress> replicaSet)
 	{
 		this.hostname = hostname;
@@ -75,21 +104,46 @@ public class MongoDatabase extends ExternalResource
 		mongoServiceTracker.open();
 	}
 
+	/**
+	 * Creates a URI for accessing a collection using the database connection as a base URI
+	 * and appending the collection as the next segment.
+	 * 
+	 * @param collection the collection name
+	 * @return a URI referencing a MongoDB collection
+	 */
 	public URI createCollectionURI(String collection)
 	{
 		return baseURI.appendSegments(new String[] { collection, "" });
 	}
 
+	/**
+	 * Creates a URI for accessing an object using the database connection as a base URI
+	 * and appending the collection and object id as the next segments.
+	 * 
+	 * @param collection
+	 * @param id
+	 * @return
+	 */
 	public URI createObjectURI(String collection, String id)
 	{
 		return baseURI.appendSegments(new String[] { collection, id });
 	}
 
+	/**
+	 * Provides access to the MongoDB driver for the database this instance is connected to.
+	 * 
+	 * @return the low-level MongoDB driver interface
+	 */
 	public DB getMongoDB()
 	{
 		return db;
 	}
 
+	/**
+	 * Provides access to the MongoDB OSGi service
+	 * 
+	 * @return the MongoDB OSGi service
+	 */
 	public IMongoDB getMongoDBService()
 	{
 		return mongoService;
