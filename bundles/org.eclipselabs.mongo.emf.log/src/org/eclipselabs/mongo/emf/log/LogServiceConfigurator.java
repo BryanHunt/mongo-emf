@@ -16,7 +16,7 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipselabs.mongo.emf.log.internal.bundle.Activator;
+import org.eclipselabs.mongo.emf.log.bundle.Activator;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;

@@ -49,12 +49,11 @@ import org.osgi.util.tracker.ServiceTracker;
 public class TestLogService
 {
 	@Rule
-	public static final MongoDatabase DB = new MongoDatabase("junit");
+	public static final MongoDatabase DB = new MongoDatabase();
 
 	@BeforeClass
 	public static void globalSetUp()
 	{
-		MongoUtil.registerMongoDBService();
 		LogReaderService logReaderService = Activator.getInstance().getLogReaderService();
 		assertThat(logReaderService, is(notNullValue()));
 		mongoLogService = new MongoEmfLogService(URI.createURI("mongo://localhost/junit/logs/"));

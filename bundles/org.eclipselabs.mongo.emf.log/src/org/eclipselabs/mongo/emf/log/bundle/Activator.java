@@ -1,20 +1,27 @@
 
-package org.eclipselabs.mongo.internal;
+package org.eclipselabs.mongo.emf.log.bundle;
 
-import org.eclipselabs.mongo.IMongoDB;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
 public class Activator implements BundleActivator
 {
+	public static BundleContext getBundleContext()
+	{
+		return bundleContext;
+	}
 
 	@Override
 	public void start(BundleContext context) throws Exception
 	{
-		context.registerService(IMongoDB.class, new MongoDB(), null);
+		bundleContext = context;
 	}
 
 	@Override
 	public void stop(BundleContext context) throws Exception
-	{}
+	{
+		bundleContext = null;
+	}
+
+	private static BundleContext bundleContext;
 }

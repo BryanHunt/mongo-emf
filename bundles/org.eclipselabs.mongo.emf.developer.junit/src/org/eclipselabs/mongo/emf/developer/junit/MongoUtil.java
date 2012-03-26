@@ -32,11 +32,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipselabs.emf.query.Result;
-import org.eclipselabs.mongo.IMongoDB;
 import org.eclipselabs.mongo.emf.MongoResourceSetImpl;
 import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
-import org.eclipselabs.mongo.emf.developer.junit.bundle.Activator;
-import org.eclipselabs.mongo.internal.MongoDB;
 
 /**
  * This class provides a set of utility functions that may be useful when unit testing.
@@ -235,14 +232,6 @@ public class MongoUtil
 			return null;
 
 		return uri.segment(2);
-	}
-
-	/**
-	 * This function registers the IMongoDB service with OSGi
-	 */
-	public static void registerMongoDBService()
-	{
-		Activator.getBundleContext().registerService(IMongoDB.class.getName(), new MongoDB(), null);
 	}
 
 	private static void checkObject(EObject expected, EObject actual, Set<EStructuralFeature> excludeFeatures, Set<EObject> visited)

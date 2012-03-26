@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: MongoEMF Simple Query Engine
 Bundle-SymbolicName: org.eclipselabs.mongo.emf.query.simple
 Bundle-Version: 0.6.0.qualifier
-Bundle-Activator: org.eclipselabs.mongo.emf.query.simple.Activator
 Bundle-Vendor: EclipseLabs
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: com.mongodb,
@@ -15,4 +14,4 @@ Import-Package: com.mongodb,
  org.eclipselabs.emf.query.util,
  org.eclipselabs.mongo.emf,
  org.osgi.framework;version="1.3.0"
-Bundle-ActivationPolicy: lazy
+Service-Component: OSGI-INF/query.xml

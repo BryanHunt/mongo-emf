@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %pluginName
+Bundle-Name: Mongo EMF Runtime
 Bundle-SymbolicName: org.eclipselabs.mongo.emf;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
-Bundle-Vendor: %providerName
+Bundle-Vendor: EclipseLabs
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: com.mongodb,
@@ -32,5 +32,4 @@ Export-Package: org.eclipselabs.mongo.emf,
  org.eclipselabs.mongo.emf.model,
  org.eclipselabs.mongo.emf.model.impl,
  org.eclipselabs.mongo.emf.model.util
-Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipselabs.mongo.emf.bundle.Activator

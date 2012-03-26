@@ -1,12 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: %Bundle-Name.0
+Bundle-Name: MongoDB Service
 Bundle-SymbolicName: org.eclipselabs.mongo
 Bundle-Version: 0.6.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipselabs.mongo,
- org.eclipselabs.mongo.internal;x-friends:="org.eclipselabs.mongo.emf.developer.junit"
+Export-Package: org.eclipselabs.mongo
 Import-Package: com.mongodb,
  org.osgi.framework;version="1.6.0"
-Bundle-Activator: org.eclipselabs.mongo.internal.Activator
+Bundle-Vendor: EclipseLabs
+Service-Component: OSGI-INF/mongo.xml

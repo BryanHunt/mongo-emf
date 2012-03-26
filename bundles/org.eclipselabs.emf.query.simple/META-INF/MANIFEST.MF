@@ -10,7 +10,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipselabs.emf.query,
  org.eclipselabs.emf.query.impl,
  org.eclipselabs.emf.query.util
-Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.emf.ecore,
  org.eclipse.emf.ecore.impl,
  org.eclipse.emf.ecore.plugin,
