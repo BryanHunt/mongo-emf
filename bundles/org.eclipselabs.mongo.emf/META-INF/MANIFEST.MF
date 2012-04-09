@@ -33,3 +33,4 @@ Export-Package: org.eclipselabs.mongo.emf,
  org.eclipselabs.mongo.emf.model.impl,
  org.eclipselabs.mongo.emf.model.util
 Bundle-Activator: org.eclipselabs.mongo.emf.bundle.Activator
+Bundle-ActivationPolicy: lazy

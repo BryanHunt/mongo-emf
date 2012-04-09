@@ -9,3 +9,4 @@ Import-Package: com.mongodb,
  org.osgi.framework;version="1.6.0"
 Bundle-Vendor: EclipseLabs
 Service-Component: OSGI-INF/mongo.xml
+Bundle-ActivationPolicy: lazy

@@ -41,26 +41,6 @@
 							<level>1</level>
 							<autoStart>true</autoStart>
 						</bundle>
-						<bundle>
-							<id>org.eclipselabs.mongo</id>
-							<level>4</level>
-							<autoStart>true</autoStart>
-						</bundle>
-						<bundle>
-							<id>org.eclipselabs.mongo.emf</id>
-							<level>4</level>
-							<autoStart>true</autoStart>
-						</bundle>
-						<bundle>
-							<id>org.eclipselabs.mongo.emf.developer.junit</id>
-							<level>4</level>
-							<autoStart>true</autoStart>
-						</bundle>
-						<bundle>
-							<id>org.eclipselabs.mongo.emf.query.simple</id>
-							<level>4</level>
-							<autoStart>true</autoStart>
-						</bundle>
 					</bundleStartLevel>
 				</configuration>
       </plugin>
