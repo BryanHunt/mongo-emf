@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: MongoEMF Log JUnit Tests
 Bundle-SymbolicName: org.eclipselabs.mongo.emf.log.junit
-Bundle-Version: 0.6.1.qualifier
+Bundle-Version: 0.6.3.qualifier
 Bundle-Activator: org.eclipselabs.mongo.emf.log.junit.bundle.Activator
 Bundle-Vendor: EclipseLabs
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

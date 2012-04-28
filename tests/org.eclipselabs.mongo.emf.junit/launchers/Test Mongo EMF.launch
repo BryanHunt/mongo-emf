@@ -10,6 +10,11 @@
 <booleanAttribute key="clearConfig" value="true"/>
 <booleanAttribute key="clearws" value="true"/>
 <booleanAttribute key="clearwslog" value="false"/>
+<listAttribute key="com.chronon.sb.browser.launcher.launchattrs.excludePatterns"/>
+<listAttribute key="com.chronon.sb.browser.launcher.launchattrs.includePatterns">
+<listEntry value="org.eclipselabs.**"/>
+<listEntry value="org.eclipse.emf.**"/>
+</listAttribute>
 <booleanAttribute key="com.mountainminds.eclemma.core.INPLACE_INSTRUMENTATION" value="true"/>
 <listAttribute key="com.mountainminds.eclemma.core.INSTRUMENTATION_PATHS">
 <listEntry value="/org.eclipselabs.emf.query/bin"/>

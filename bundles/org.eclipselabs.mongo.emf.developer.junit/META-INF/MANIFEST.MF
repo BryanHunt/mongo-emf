@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Junit
+Bundle-Name: MongoEMF Developer JUnit Support
 Bundle-SymbolicName: org.eclipselabs.mongo.emf.developer.junit
-Bundle-Version: 0.6.1.qualifier
+Bundle-Version: 0.6.3.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: com.mongodb,
  org.eclipse.emf.common.util,
@@ -20,3 +20,4 @@ Import-Package: com.mongodb,
 Export-Package: org.eclipselabs.mongo.emf.developer.junit
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipselabs.mongo.emf.developer.junit.bundle.Activator
+Bundle-Vendor: EclipseLabs

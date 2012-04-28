@@ -2,7 +2,7 @@
 <feature
       id="org.eclipselabs.mongo.emf.query.simple.feature"
       label="MongoEMF Query Engine"
-      version="0.6.1.qualifier"
+      version="0.6.3.qualifier"
       provider-name="EclipseLabs"
       license-feature="org.eclipselabs.mongo.emf.feature">
 
