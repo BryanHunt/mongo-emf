@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: MongoEMF Simple Query Engine
 Bundle-SymbolicName: org.eclipselabs.mongo.emf.query.simple
-Bundle-Version: 0.6.3.qualifier
+Bundle-Version: 0.7.0.qualifier
 Bundle-Vendor: EclipseLabs
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: com.mongodb,

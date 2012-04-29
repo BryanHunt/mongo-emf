@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipselabs.mongo.emf.examples;singleton:=true
-Bundle-Version: 0.6.3.qualifier
+Bundle-Version: 0.7.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -10,7 +10,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipselabs.emf.mongo.examples.model,
  org.eclipselabs.emf.mongo.examples.model.util
 Bundle-ActivationPolicy: lazy
-Bundle-Activator: org.eclipselabs.emf.mongo.examples.Activator
 Import-Package: org.eclipse.emf.common.notify,
  org.eclipse.emf.common.notify.impl,
  org.eclipse.emf.common.util,
@@ -22,3 +21,4 @@ Import-Package: org.eclipse.emf.common.notify,
  org.eclipse.emf.ecore.util,
  org.eclipselabs.mongo.emf,
  org.osgi.framework;version="1.6.0"
+Service-Component: OSGI-INF/example.xml

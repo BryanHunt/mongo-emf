@@ -17,16 +17,12 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.URIHandler;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipselabs.emf.query.Result;
-import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
 
 import freemarker.cache.TemplateLoader;
 
@@ -49,24 +45,6 @@ import freemarker.cache.TemplateLoader;
 public class MongoTemplateLoader implements TemplateLoader
 {
 	/**
-	 * Constructs the template loader using an internally created resource set.
-	 * 
-	 * @param baseURI The base MongoDB URI up to and including the collection. For example:
-	 *          mongo://localhost/db/collection. The URI must contain exactly two segments.
-	 */
-	public MongoTemplateLoader(URI baseURI)
-	{
-		if (baseURI.segmentCount() != 2)
-			throw new IllegalArgumentException("The base URI: '" + baseURI + "' must contain exactly two segments");
-
-		this.baseURI = baseURI;
-		resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoURIHandlerImpl());
-		loadTemplates();
-	}
-
-	/**
 	 * Constructs the template loader using the user supplied resource set.
 	 * 
 	 * @param baseURI The base MongoDB URI up to and including the collection. For example:
@@ -83,8 +61,6 @@ public class MongoTemplateLoader implements TemplateLoader
 
 		this.baseURI = baseURI;
 		this.resourceSet = resourceSet;
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoURIHandlerImpl());
 		loadTemplates();
 	}
 

@@ -15,6 +15,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.mongodb.Mongo;
@@ -28,13 +29,19 @@ import com.mongodb.ServerAddress;
  */
 public class MongoProvider implements IMongoProvider
 {
+	public MongoProvider(String uri)
+	{
+		HashMap<String, Object> properties = new HashMap<String, Object>();
+		properties.put(IMongoProvider.PROP_URI, uri);
+	}
+
 	@Override
 	public Mongo getMongo()
 	{
 		return mongo;
 	}
 
-	public void activate(Map<String, Object> properties) throws MongoException, UnknownHostException, URISyntaxException
+	public void configure(Map<String, Object> properties) throws MongoException, UnknownHostException, URISyntaxException
 	{
 		MongoOptions options = new MongoOptions();
 

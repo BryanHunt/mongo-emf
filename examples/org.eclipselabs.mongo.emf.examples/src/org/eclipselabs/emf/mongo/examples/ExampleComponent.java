@@ -11,32 +11,21 @@
 
 package org.eclipselabs.emf.mongo.examples;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.URIHandler;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipselabs.emf.mongo.examples.model.Child;
 import org.eclipselabs.emf.mongo.examples.model.ModelFactory;
 import org.eclipselabs.emf.mongo.examples.model.Parent;
-import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
+import org.eclipselabs.mongo.emf.IResourceSetFactory;
 
 /**
  * @author bhunt
  * 
  */
-public class Activator implements BundleActivator
+public class ExampleComponent
 {
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
-	 */
-	@Override
-	public void start(BundleContext context) throws Exception
+	public void activate() throws Exception
 	{
 		System.out.println("Starting Mongo EMF example");
 		System.out.print("Writing data to MongoDB");
@@ -50,9 +39,7 @@ public class Activator implements BundleActivator
 				System.out.println();
 
 			System.out.print(".");
-			ResourceSet resourceSet = new ResourceSetImpl();
-			EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-			uriHandlers.add(0, new MongoURIHandlerImpl());
+			ResourceSet resourceSet = resourceSetFactory.createResourceSet();
 
 			Parent parent = ModelFactory.eINSTANCE.createParent();
 			parent.setName("Parent " + i);
@@ -80,9 +67,7 @@ public class Activator implements BundleActivator
 		long endTime = System.currentTimeMillis();
 		System.out.println("Time to create " + (PARENT_COUNT * CHILD_COUNT) + " objects: " + ((endTime - startTime) / 1000.0) + " sec");
 
-		ResourceSet resourceSet = new ResourceSetImpl();
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoURIHandlerImpl());
+		ResourceSet resourceSet = resourceSetFactory.createResourceSet();
 
 		startTime = System.currentTimeMillis();
 		Resource resource = resourceSet.getResource(firstParent, true);
@@ -100,15 +85,12 @@ public class Activator implements BundleActivator
 		System.out.println("Time to walk " + CHILD_COUNT + " children of first parent: " + (endTime - startTime) + " ms");
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
-	 */
-	@Override
-	public void stop(BundleContext context) throws Exception
-	{}
+	void bindResourceSetFactory(IResourceSetFactory resourceSetFactory)
+	{
+		this.resourceSetFactory = resourceSetFactory;
+	}
 
+	private IResourceSetFactory resourceSetFactory;
 	private static final int CHILD_COUNT = 1000;
 	private static final int PARENT_COUNT = 1000;
 

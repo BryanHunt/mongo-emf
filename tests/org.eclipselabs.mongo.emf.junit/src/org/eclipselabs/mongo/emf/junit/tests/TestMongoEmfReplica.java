@@ -43,7 +43,7 @@ import com.mongodb.ServerAddress;
 public class TestMongoEmfReplica extends BaseTestHarness
 {
 	@Rule
-	public MongoDatabase database = new MongoDatabase("localhost", 27021, "junit", replicaSet);
+	public MongoDatabase database = new MongoDatabase();
 
 	public TestMongoEmfReplica()
 	{
@@ -82,6 +82,7 @@ public class TestMongoEmfReplica extends BaseTestHarness
 		return database.getMongoDB();
 	}
 
+	// FIXME move the replica set to a configuration service
 	private static List<ServerAddress> replicaSet = new ArrayList<ServerAddress>();
 
 	static

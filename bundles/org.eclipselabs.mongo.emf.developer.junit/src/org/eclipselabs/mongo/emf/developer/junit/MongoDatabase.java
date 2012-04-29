@@ -15,18 +15,14 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
-import java.util.List;
-
 import org.eclipse.emf.common.util.URI;
-import org.eclipselabs.mongo.IMongoDB;
+import org.eclipselabs.mongo.IMongoLocator;
 import org.eclipselabs.mongo.emf.developer.junit.bundle.Activator;
 import org.junit.rules.ExternalResource;
 import org.osgi.util.tracker.ServiceTracker;
 
 import com.mongodb.DB;
 import com.mongodb.Mongo;
-import com.mongodb.MongoURI;
-import com.mongodb.ServerAddress;
 
 /**
  * This class is intended to be used as a JUnit @Rule. It will verify that
@@ -81,26 +77,12 @@ public class MongoDatabase extends ExternalResource
 	 */
 	public MongoDatabase(String hostname, int port, String database)
 	{
-		this(hostname, port, database, null);
-	}
-
-	/**
-	 * Connects to the specified replica set on the given host and port
-	 * 
-	 * @param hostname the host running MongoDB
-	 * @param port the port MongoDB is listening on
-	 * @param database the name of the database to use for unit testing
-	 * @param replicaSet the list of servers in the replica set
-	 */
-	public MongoDatabase(String hostname, int port, String database, List<ServerAddress> replicaSet)
-	{
 		this.hostname = hostname;
 		this.port = port;
 		this.database = database;
-		this.replicaSet = replicaSet;
 
 		baseURI = URI.createURI("mongo://" + hostname + (port == 27017 ? "" : ":" + port) + "/" + database);
-		mongoServiceTracker = new ServiceTracker<IMongoDB, IMongoDB>(Activator.getBundleContext(), IMongoDB.class, null);
+		mongoServiceTracker = new ServiceTracker<IMongoLocator, IMongoLocator>(Activator.getBundleContext(), IMongoLocator.class, null);
 		mongoServiceTracker.open();
 	}
 
@@ -140,34 +122,31 @@ public class MongoDatabase extends ExternalResource
 	}
 
 	/**
-	 * Provides access to the MongoDB OSGi service
+	 * Provides access to the MongoLocatorService OSGi service
 	 * 
 	 * @return the MongoDB OSGi service
 	 */
-	public IMongoDB getMongoDBService()
+	public IMongoLocator getMongoDBService()
 	{
-		return mongoService;
+		return mongoLocatorService;
 	}
 
 	@Override
 	protected void before() throws Throwable
 	{
 		super.before();
-		mongoService = mongoServiceTracker.waitForService(1000);
-		assertThat(mongoService, is(notNullValue()));
-		MongoURI uri = new MongoURI("mongodb://" + hostname + ":" + port);
+		mongoLocatorService = mongoServiceTracker.waitForService(1000);
+		assertThat(mongoLocatorService, is(notNullValue()));
+		String uri = "mongodb://" + hostname + ":" + port;
 
-		if (replicaSet != null)
-			mongoService.configureMongo(uri, replicaSet);
-
-		Mongo mongo = mongoService.getMongo(uri);
+		Mongo mongo = mongoLocatorService.getMongo(uri);
 		db = mongo.getDB(database);
 	}
 
 	@Override
 	protected void after()
 	{
-		if (mongoService != null)
+		if (mongoLocatorService != null)
 		{
 			try
 			{
@@ -189,10 +168,9 @@ public class MongoDatabase extends ExternalResource
 
 	private String hostname;
 	private int port;
-	private List<ServerAddress> replicaSet;
 	private String database;
-	private ServiceTracker<IMongoDB, IMongoDB> mongoServiceTracker;
-	private IMongoDB mongoService;
+	private ServiceTracker<IMongoLocator, IMongoLocator> mongoServiceTracker;
+	private IMongoLocator mongoLocatorService;
 	private DB db;
 	private URI baseURI;
 }

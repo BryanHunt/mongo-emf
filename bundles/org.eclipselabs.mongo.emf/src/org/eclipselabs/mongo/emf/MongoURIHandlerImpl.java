@@ -21,15 +21,13 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.resource.impl.BinaryResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
-import org.eclipselabs.mongo.IMongoDB;
-import org.eclipselabs.mongo.emf.bundle.Activator;
+import org.eclipselabs.mongo.IMongoLocator;
 import org.eclipselabs.mongo.emf.bundle.DefaultBuilderFactory;
 import org.eclipselabs.mongo.emf.bundle.DefaultConverterServiceFactory;
 import org.eclipselabs.mongo.emf.bundle.DefaultStreamFactory;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
-import com.mongodb.MongoURI;
 
 /**
  * This EMF URI handler interfaces to MongoDB. This URI handler can handle URIs with the "mongo"
@@ -56,26 +54,14 @@ import com.mongodb.MongoURI;
 public class MongoURIHandlerImpl extends URIHandlerImpl
 {
 	/**
-	 * This constructor can be used in an OSGi environment and will get the IMongoDB service from the
-	 * bundle activator.
-	 */
-	public MongoURIHandlerImpl()
-	{
-		this(Activator.getInstance().getMongoDB(), Activator.getInstance().getQueryEngine());
-	}
-
-	/**
-	 * This constructor can be used in a standalone EMF environment. The user must supply an instance
-	 * of IMongoDB.
 	 * 
-	 * @param mongoDB the MongoDB service
+	 * @param mongoLocator an instance of the mongo locator service
+	 * @param queryEngine an instance of the query engine
 	 */
-	public MongoURIHandlerImpl(IMongoDB mongoDB, IQueryEngine queryEngine)
+	public MongoURIHandlerImpl(IMongoLocator mongoLocator, IQueryEngine queryEngine)
 	{
-		if (mongoDB == null)
-			throw new NullPointerException("MongoDB service is unavailable");
 
-		this.mongoDB = mongoDB;
+		this.mongoLocator = mongoLocator;
 		this.queryEngine = queryEngine;
 
 		converterServiceFactory = new DefaultConverterServiceFactory();
@@ -160,8 +146,8 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 			throw new IOException("The URI is not of the form 'mongo:/database/collection/{id}");
 
 		String port = uri.port();
-		MongoURI mongoURI = new MongoURI("mongodb://" + uri.host() + (port != null ? ":" + port : ""));
-		DBCollection dbCollection = mongoDB.getMongo(mongoURI).getDB(uri.segment(0)).getCollection(uri.segment(1));
+		String mongoURI = "mongodb://" + uri.host() + (port != null ? ":" + port : "");
+		DBCollection dbCollection = mongoLocator.getMongo(mongoURI).getDB(uri.segment(0)).getCollection(uri.segment(1));
 
 // FIXME uncomment the 4 lines below when MongoDB properly supports tagged reads
 //		@SuppressWarnings("unchecked")
@@ -358,7 +344,7 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 	 */
 	public static final String OPTION_QUERY_CURSOR = "QUERY_CURSOR";
 
-	private IMongoDB mongoDB;
+	private IMongoLocator mongoLocator;
 	private IQueryEngine queryEngine;
 	private IConverterService converterService;
 	private IConverterServiceFactory converterServiceFactory;

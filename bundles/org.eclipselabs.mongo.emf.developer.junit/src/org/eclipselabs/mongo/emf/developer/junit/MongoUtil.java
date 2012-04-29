@@ -29,11 +29,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.URIHandler;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipselabs.emf.query.Result;
-import org.eclipselabs.mongo.emf.MongoResourceSetImpl;
-import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
+import org.eclipselabs.mongo.emf.developer.junit.bundle.Activator;
 
 /**
  * This class provides a set of utility functions that may be useful when unit testing.
@@ -67,7 +64,7 @@ public class MongoUtil
 	@SuppressWarnings("unchecked")
 	public static <T> T checkObject(EObject expected, Set<EStructuralFeature> excludedFeatures)
 	{
-		ResourceSet actualResourceSet = MongoUtil.createResourceSet();
+		ResourceSet actualResourceSet = Activator.getResourceSetFactory().createResourceSet();
 		Resource actualResource = actualResourceSet.getResource(expected.eResource().getURI(), true);
 		EObject actual = actualResource.getContents().get(0);
 		MongoUtil.checkObject(expected, actual, excludedFeatures);
@@ -100,41 +97,6 @@ public class MongoUtil
 	public static void checkObject(EObject expected, EObject actual, Set<EStructuralFeature> excludedFeatures)
 	{
 		checkObject(expected, actual, excludedFeatures, new HashSet<EObject>());
-	}
-
-	/**
-	 * This function will configure a resource set to use with MongoDB.
-	 * 
-	 * @param resourceSet The resource set to configure.
-	 */
-	public static void configureResourceSet(ResourceSet resourceSet)
-	{
-		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoURIHandlerImpl());
-	}
-
-	/**
-	 * This function will create a resource set and configure it with the MongoDB URI handler.
-	 * 
-	 * @return A resource set that can be used with mongo:// URIs.
-	 */
-	public static ResourceSet createResourceSet()
-	{
-		ResourceSet resourceSet = new ResourceSetImpl();
-		configureResourceSet(resourceSet);
-		return resourceSet;
-	}
-
-	/**
-	 * This function will create a mongo resource set and configure it with the MongoDB URI handler.
-	 * 
-	 * @return A resource set that can be used with mongo:// URIs.
-	 */
-	public static ResourceSet createMongoResourceSet()
-	{
-		ResourceSet resourceSet = new MongoResourceSetImpl();
-		configureResourceSet(resourceSet);
-		return resourceSet;
 	}
 
 	/**
