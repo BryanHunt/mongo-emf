@@ -26,10 +26,10 @@ import com.mongodb.ServerAddress;
  * @author bhunt
  * 
  */
-public class MongoFactory implements IMongoFactory
+public class MongoProvider implements IMongoProvider
 {
 	@Override
-	public Mongo createMongo()
+	public Mongo getMongo()
 	{
 		return mongo;
 	}
@@ -113,6 +113,9 @@ public class MongoFactory implements IMongoFactory
 		// replica set.
 
 		Object uriProperty = properties.get(PROP_URI);
+
+		if (uriProperty == null)
+			throw new UnknownHostException("The MongoDB URI was not found in the configuration properties");
 
 		if (uriProperty instanceof String)
 		{

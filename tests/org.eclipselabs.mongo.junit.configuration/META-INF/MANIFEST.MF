@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: MongoEMF JUnit Provider Configuration
+Bundle-SymbolicName: org.eclipselabs.mongo.junit.configuration
+Bundle-Version: 0.7.0.qualifier
+Bundle-Vendor: EclipseLabs
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.eclipselabs.mongo,
+ org.osgi.service.cm;version="1.3.0"
+Service-Component: OSGI-INF/config.xml
+Bundle-ActivationPolicy: lazy

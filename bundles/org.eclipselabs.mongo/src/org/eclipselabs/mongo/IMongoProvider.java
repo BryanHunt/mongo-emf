@@ -17,7 +17,7 @@ import com.mongodb.Mongo;
  * @author bhunt
  * 
  */
-public interface IMongoFactory
+public interface IMongoProvider
 {
 	public String PROP_DESCRIPTION = "description";
 	public String PROP_CONNECTIONS_PER_HOST = "connectionsPerHost";
@@ -35,5 +35,5 @@ public interface IMongoFactory
 	public String PROP_J = "j";
 	public String PROP_URI = "uri";
 
-	Mongo createMongo();
+	Mongo getMongo();
 }

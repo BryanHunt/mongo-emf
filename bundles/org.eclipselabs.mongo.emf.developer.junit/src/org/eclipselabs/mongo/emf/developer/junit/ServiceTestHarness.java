@@ -24,9 +24,20 @@ import org.junit.BeforeClass;
  * 
  * The JUnit framework will automatically call waitForServices() on this class. This function
  * will wait until the OSGi declarative services manager calls activate() before allowing the
- * unit test to continue. The waitForServices() call has a built-in timout of 60 seconds.
+ * unit test to continue. The waitForServices() call has a built-in timeout of 60 seconds.
  * This timeout will keep your automated builds from hanging in the case that a service is not
  * bound.
+ * 
+ * If you need to change the timeout, add the following to your extension:
+ * 
+ * <pre>
+ * &#064;BeforeClass
+ * public static void waitForServices() throws InterruptedException
+ * {
+ * 	initializationTimeout = 10000;
+ * 	ServiceTestHarness.waitForServices();
+ * }
+ * </pre>
  * 
  * This pattern was taken from the book OSGi and Equinox: Creating Highly Modular Java Systems,
  * Jeff McAffer, Paul VanderLei, and Simon Archer, Pearson Education, Inc, page 135.
@@ -48,7 +59,7 @@ public class ServiceTestHarness
 		synchronized (lock)
 		{
 			if (!initialized)
-				lock.wait(60000);
+				lock.wait(initializationTimeout);
 
 			assertTrue("Timed out waiting for services to be bound", initialized);
 		}
@@ -67,6 +78,7 @@ public class ServiceTestHarness
 		}
 	}
 
+	protected static long initializationTimeout = 60000;
 	private static boolean initialized = false;
 	private static Object lock = new Object();
 }
