@@ -27,7 +27,7 @@ public class MongoResourceSetFactory implements IResourceSetFactory
 	{
 		MongoResourceSetImpl resourceSet = new MongoResourceSetImpl();
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoURIHandlerImpl(mongoLocator, queryEngine));
+		uriHandlers.add(0, new MongoURIHandlerImpl(mongoLocator, inputStreamFactory, outputStreamFactory));
 		return resourceSet;
 	}
 
@@ -36,11 +36,17 @@ public class MongoResourceSetFactory implements IResourceSetFactory
 		this.mongoLocator = mongoLocator;
 	}
 
-	public void bindQueryEngine(IQueryEngine queryEngine)
+	public void bindInputStreamFactory(IInputStreamFactory inputStreamFactory)
 	{
-		this.queryEngine = queryEngine;
+		this.inputStreamFactory = inputStreamFactory;
+	}
+
+	public void bindOutputStreamFactory(IOutputStreamFactory outputStreamFactory)
+	{
+		this.outputStreamFactory = outputStreamFactory;
 	}
 
 	private IMongoLocator mongoLocator;
-	private IQueryEngine queryEngine;
+	private IInputStreamFactory inputStreamFactory;
+	private IOutputStreamFactory outputStreamFactory;
 }

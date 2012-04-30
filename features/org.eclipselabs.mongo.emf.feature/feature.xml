@@ -2,7 +2,7 @@
 <feature
       id="org.eclipselabs.mongo.emf.feature"
       label="MongoEMF Core Runtime"
-      version="0.6.3.qualifier"
+      version="0.7.0.qualifier"
       provider-name="EclipseLabs">
 
    <description url="https://github.com/BryanHunt/mongo-emf/wiki">
@@ -40,5 +40,23 @@ to persist EMF objects to MongoDB.
          install-size="0"
          version="0.0.0"
          unpack="false"/>
+
+   <plugin
+         id="org.eclipselabs.mongo.emf.builders"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipselabs.mongo.emf.converter"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipselabs.mongo.emf.streams"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
 
 </feature>

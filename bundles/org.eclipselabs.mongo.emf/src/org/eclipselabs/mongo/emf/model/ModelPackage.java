@@ -135,7 +135,7 @@ public interface ModelPackage extends EPackage
 	 * The meta object id for the '<em>EObject Builder</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipselabs.mongo.emf.EObjectBuilder
+	 * @see org.eclipselabs.mongo.emf.builders.EObjectBuilder
 	 * @see org.eclipselabs.mongo.emf.model.impl.ModelPackageImpl#getEObjectBuilder()
 	 * @generated
 	 */
@@ -218,11 +218,11 @@ public interface ModelPackage extends EPackage
 	EDataType getDBCursor();
 
 	/**
-	 * Returns the meta object for data type '{@link org.eclipselabs.mongo.emf.EObjectBuilder <em>EObject Builder</em>}'.
+	 * Returns the meta object for data type '{@link org.eclipselabs.mongo.emf.builders.EObjectBuilder <em>EObject Builder</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>EObject Builder</em>'.
-	 * @see org.eclipselabs.mongo.emf.EObjectBuilder
+	 * @see org.eclipselabs.mongo.emf.builders.EObjectBuilder
 	 * @model instanceClass="org.eclipselabs.mongo.emf.EObjectBuilder" serializeable="false"
 	 * @generated
 	 */
@@ -320,7 +320,7 @@ public interface ModelPackage extends EPackage
 		 * The meta object literal for the '<em>EObject Builder</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipselabs.mongo.emf.EObjectBuilder
+		 * @see org.eclipselabs.mongo.emf.builders.EObjectBuilder
 		 * @see org.eclipselabs.mongo.emf.model.impl.ModelPackageImpl#getEObjectBuilder()
 		 * @generated
 		 */

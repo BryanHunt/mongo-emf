@@ -9,7 +9,7 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf.bundle;
+package org.eclipselabs.mongo.emf.builders;
 
 import java.util.Map;
 

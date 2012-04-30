@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Mongo EMF Default Converter Service
+Bundle-SymbolicName: org.eclipselabs.mongo.emf.converter
+Bundle-Version: 0.7.0.qualifier
+Bundle-Vendor: EclipseLabs
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.util,
+ org.eclipselabs.mongo.emf
+Service-Component: OSGI-INF/converter.xml
+Bundle-ActivationPolicy: lazy

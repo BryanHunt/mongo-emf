@@ -2,23 +2,18 @@
  */
 package org.eclipselabs.mongo.emf.model.impl;
 
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-
-import java.lang.Iterable;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipselabs.mongo.emf.EObjectBuilder;
-
 import org.eclipselabs.mongo.emf.model.ModelFactory;
 import org.eclipselabs.mongo.emf.model.ModelPackage;
 import org.eclipselabs.mongo.emf.model.MongoCursor;
+
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 
 /**
  * <!-- begin-user-doc -->

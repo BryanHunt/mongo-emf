@@ -9,7 +9,7 @@
  *    Bryan Hunt & Ed Merks - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf.bundle;
+package org.eclipselabs.mongo.emf.streams;
 
 import java.io.IOException;
 import java.io.InputStream;

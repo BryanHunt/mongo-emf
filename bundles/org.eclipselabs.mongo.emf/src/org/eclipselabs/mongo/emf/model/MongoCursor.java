@@ -2,13 +2,11 @@
  */
 package org.eclipselabs.mongo.emf.model;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipselabs.mongo.emf.EObjectBuilder;
+
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
-
-import java.lang.Iterable;
-import org.eclipse.emf.ecore.EObject;
-
-import org.eclipselabs.mongo.emf.EObjectBuilder;
 
 /**
  * <!-- begin-user-doc -->

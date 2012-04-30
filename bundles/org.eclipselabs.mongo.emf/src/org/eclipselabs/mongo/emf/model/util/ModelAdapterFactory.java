@@ -2,16 +2,12 @@
  */
 package org.eclipselabs.mongo.emf.model.util;
 
-import java.lang.Iterable;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
-
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
-
 import org.eclipse.emf.ecore.EObject;
-
-import org.eclipselabs.mongo.emf.model.*;
+import org.eclipselabs.mongo.emf.model.ModelPackage;
+import org.eclipselabs.mongo.emf.model.MongoCursor;
 
 /**
  * <!-- begin-user-doc -->

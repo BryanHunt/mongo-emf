@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" activate="configure" configuration-policy="require" immediate="true" name="org.eclipselabs.mongo.provider">
-   <implementation class="org.eclipselabs.mongo.MongoProvider"/>
+   <implementation class="org.eclipselabs.mongo.impl.MongoProvider"/>
    <service>
       <provide interface="org.eclipselabs.mongo.IMongoProvider"/>
    </service>

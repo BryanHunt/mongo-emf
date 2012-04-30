@@ -9,11 +9,14 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo;
+package org.eclipselabs.mongo.impl;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.eclipselabs.mongo.IMongoLocator;
+import org.eclipselabs.mongo.IMongoProvider;
 
 import com.mongodb.Mongo;
 

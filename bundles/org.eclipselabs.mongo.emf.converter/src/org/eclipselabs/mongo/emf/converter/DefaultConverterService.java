@@ -9,12 +9,13 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf;
+package org.eclipselabs.mongo.emf.converter;
 
 import java.util.LinkedList;
 
 import org.eclipse.emf.ecore.EDataType;
-import org.eclipselabs.mongo.emf.bundle.DefaultMongoEmfConverter;
+import org.eclipselabs.mongo.emf.IConverterService;
+import org.eclipselabs.mongo.emf.IValueConverter;
 
 /**
  * This class is thread safe
@@ -22,12 +23,12 @@ import org.eclipselabs.mongo.emf.bundle.DefaultMongoEmfConverter;
  * @author bhunt
  * 
  */
-public class ConverterService implements IConverterService
+public class DefaultConverterService implements IConverterService
 {
-	public ConverterService()
+	public DefaultConverterService()
 	{
 		this.converters = new LinkedList<IValueConverter>();
-		converters.add(new DefaultMongoEmfConverter());
+		converters.add(new DefaultConverter());
 	}
 
 	@Override

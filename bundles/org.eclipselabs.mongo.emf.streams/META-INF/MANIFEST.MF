@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Mongo EMF Default Stream Support
+Bundle-SymbolicName: org.eclipselabs.mongo.emf.streams
+Bundle-Version: 0.7.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: com.mongodb,
+ org.bson,
+ org.eclipse.emf.common.notify,
+ org.eclipse.emf.common.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.resource,
+ org.eclipse.emf.ecore.util,
+ org.eclipse.emf.ecore.xmi,
+ org.eclipse.emf.ecore.xmi.impl,
+ org.eclipselabs.emf.query,
+ org.eclipselabs.mongo.emf,
+ org.eclipselabs.mongo.emf.model
+Service-Component: OSGI-INF/stream_factory.xml
+Bundle-ActivationPolicy: lazy
+Bundle-Vendor: EclipseLabs

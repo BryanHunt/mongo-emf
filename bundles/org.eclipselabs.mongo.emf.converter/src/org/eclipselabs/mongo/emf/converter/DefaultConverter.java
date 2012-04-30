@@ -9,7 +9,7 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf.bundle;
+package org.eclipselabs.mongo.emf.converter;
 
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -19,7 +19,7 @@ import org.eclipselabs.mongo.emf.IValueConverter;
  * @author bhunt
  * 
  */
-public class DefaultMongoEmfConverter implements IValueConverter
+public class DefaultConverter implements IValueConverter
 {
 	@Override
 	public Object convertMongoDBValueToEMFValue(EDataType eDataType, Object databaseValue)

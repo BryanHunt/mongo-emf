@@ -2,14 +2,11 @@
  */
 package org.eclipselabs.mongo.emf.model.util;
 
-import java.lang.Iterable;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
-
-import org.eclipselabs.mongo.emf.model.*;
+import org.eclipselabs.mongo.emf.model.ModelPackage;
+import org.eclipselabs.mongo.emf.model.MongoCursor;
 
 /**
  * <!-- begin-user-doc -->

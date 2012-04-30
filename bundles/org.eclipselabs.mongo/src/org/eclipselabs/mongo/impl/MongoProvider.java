@@ -9,7 +9,7 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo;
+package org.eclipselabs.mongo.impl;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -17,6 +17,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.eclipselabs.mongo.IMongoProvider;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;

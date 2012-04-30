@@ -9,7 +9,7 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf.bundle;
+package org.eclipselabs.mongo.emf.streams;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,8 +21,8 @@ import org.eclipselabs.mongo.emf.IConverterService;
 import org.eclipselabs.mongo.emf.IDBObjectBuilderFactory;
 import org.eclipselabs.mongo.emf.IEObjectBuilderFactory;
 import org.eclipselabs.mongo.emf.IInputStreamFactory;
-import org.eclipselabs.mongo.emf.IQueryEngine;
 import org.eclipselabs.mongo.emf.IOutputStreamFactory;
+import org.eclipselabs.mongo.emf.IQueryEngine;
 
 import com.mongodb.DBCollection;
 
@@ -33,14 +33,39 @@ import com.mongodb.DBCollection;
 public class DefaultStreamFactory implements IInputStreamFactory, IOutputStreamFactory
 {
 	@Override
-	public OutputStream createOutputStream(IConverterService converterService, IDBObjectBuilderFactory dbObjectBuilderFactory, URI uri, Map<?, ?> options, DBCollection collection, Map<Object, Object> response)
+	public OutputStream createOutputStream(URI uri, Map<?, ?> options, DBCollection collection, Map<Object, Object> response)
 	{
 		return new MongoOutputStream(converterService, dbObjectBuilderFactory, collection, uri, options, response);
 	}
 
 	@Override
-	public InputStream createInputStream(IConverterService converterService, IEObjectBuilderFactory eObjectBuilderFactory, IQueryEngine queryEngine, URI uri, Map<?, ?> options, DBCollection collection, Map<Object, Object> response) throws IOException
+	public InputStream createInputStream(URI uri, Map<?, ?> options, DBCollection collection, Map<Object, Object> response) throws IOException
 	{
 		return new MongoInputStream(converterService, eObjectBuilderFactory, queryEngine, collection, uri, options, response);
 	}
+
+	public void bindConverterService(IConverterService converterService)
+	{
+		this.converterService = converterService;
+	}
+
+	public void bindDBObjectBuilderFactory(IDBObjectBuilderFactory dbObjectBuilderFactory)
+	{
+		this.dbObjectBuilderFactory = dbObjectBuilderFactory;
+	}
+
+	public void bindEObjectBuilderFactory(IEObjectBuilderFactory eObjectBuilderFactory)
+	{
+		this.eObjectBuilderFactory = eObjectBuilderFactory;
+	}
+
+	public void bindQueryEngine(IQueryEngine queryEngine)
+	{
+		this.queryEngine = queryEngine;
+	}
+
+	private IDBObjectBuilderFactory dbObjectBuilderFactory;
+	private IEObjectBuilderFactory eObjectBuilderFactory;
+	private IQueryEngine queryEngine;
+	private IConverterService converterService;
 }
