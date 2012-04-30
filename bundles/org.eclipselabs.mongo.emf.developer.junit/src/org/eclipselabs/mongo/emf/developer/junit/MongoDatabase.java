@@ -77,8 +77,6 @@ public class MongoDatabase extends ExternalResource
 	 */
 	public MongoDatabase(String hostname, int port, String database)
 	{
-		this.hostname = hostname;
-		this.port = port;
 		this.database = database;
 
 		baseURI = URI.createURI("mongodb://" + hostname + (port == 27017 ? "" : ":" + port) + "/" + database);
@@ -165,8 +163,6 @@ public class MongoDatabase extends ExternalResource
 		super.after();
 	}
 
-	private String hostname;
-	private int port;
 	private String database;
 	private ServiceTracker<IMongoLocator, IMongoLocator> mongoServiceTracker;
 	private IMongoLocator mongoLocatorService;
