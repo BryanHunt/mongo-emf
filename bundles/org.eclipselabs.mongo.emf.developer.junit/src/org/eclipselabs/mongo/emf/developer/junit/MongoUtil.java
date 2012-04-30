@@ -113,7 +113,7 @@ public class MongoUtil
 	@SuppressWarnings("unchecked")
 	public static <T extends EObject> T getObject(ResourceSet resourceSet, String db, String collection, String id)
 	{
-		Resource resource = resourceSet.getResource(URI.createURI("mongo://localhost/" + db + "/" + collection + "/" + id), true);
+		Resource resource = resourceSet.getResource(URI.createURI("mongodb://localhost/" + db + "/" + collection + "/" + id), true);
 
 		if (resource == null || resource.getContents().isEmpty())
 			return null;
@@ -137,7 +137,7 @@ public class MongoUtil
 	@SuppressWarnings("unchecked")
 	public static <T extends EObject> T getObject(ResourceSet resourceSet, String db, String collection)
 	{
-		Resource resource = resourceSet.getResource(URI.createURI("mongo://localhost/" + db + "/" + collection + "/?"), true);
+		Resource resource = resourceSet.getResource(URI.createURI("mongodb://localhost/" + db + "/" + collection + "/?"), true);
 		assertThat(resource, is(notNullValue()));
 
 		Result result = (Result) resource.getContents().get(0);
@@ -162,7 +162,7 @@ public class MongoUtil
 	@SuppressWarnings("unchecked")
 	public static <T extends EObject> Collection<T> getObjects(ResourceSet resourceSet, String db, String collection)
 	{
-		Resource resource = resourceSet.getResource(URI.createURI("mongo://localhost/" + db + "/" + collection + "/?"), true);
+		Resource resource = resourceSet.getResource(URI.createURI("mongodb://localhost/" + db + "/" + collection + "/?"), true);
 		assertThat(resource, is(notNullValue()));
 
 		Result result = (Result) resource.getContents().get(0);

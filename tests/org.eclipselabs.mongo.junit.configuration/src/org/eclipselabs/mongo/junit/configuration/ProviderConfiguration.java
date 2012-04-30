@@ -45,7 +45,7 @@ public class ProviderConfiguration
 		if (properties == null)
 			properties = new Hashtable<String, Object>();
 
-		properties.put(IMongoProvider.PROP_URI, "mongo://localhost");
+		properties.put(IMongoProvider.PROP_URI, "mongodb://localhost");
 		config.update(properties);
 	}
 

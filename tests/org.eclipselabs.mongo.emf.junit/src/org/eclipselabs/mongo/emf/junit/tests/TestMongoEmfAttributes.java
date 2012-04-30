@@ -29,6 +29,7 @@ import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.PrimaryObject;
 import org.eclipselabs.mongo.emf.junit.model.TargetObject;
 import org.eclipselabs.mongo.emf.junit.support.TestHarness;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -37,6 +38,18 @@ import org.junit.Test;
  */
 public class TestMongoEmfAttributes extends TestHarness
 {
+	@BeforeClass
+	public static void waitForServices() throws InterruptedException
+	{
+		synchronized (lock)
+		{
+			if (!initialized)
+				lock.wait(60000);
+
+			assertTrue("Timed out waiting for services to be bound", initialized);
+		}
+	}
+
 	@Test
 	public void testTargetObjectWithSingleAttribute() throws IOException
 	{
@@ -121,7 +134,7 @@ public class TestMongoEmfAttributes extends TestHarness
 		primaryObject.setUnsettableAttribute(null);
 		saveObject(primaryObject);
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 		Resource resource = resourceSet.getResource(primaryObject.eResource().getURI(), true);
 		PrimaryObject object = (PrimaryObject) resource.getContents().get(0);
 		assertTrue(object.isSetUnsettableAttribute());
@@ -134,7 +147,7 @@ public class TestMongoEmfAttributes extends TestHarness
 		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
 		saveObject(primaryObject);
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 		Resource resource = resourceSet.getResource(primaryObject.eResource().getURI(), true);
 		PrimaryObject object = (PrimaryObject) resource.getContents().get(0);
 		assertFalse(object.isSetUnsettableAttribute());
@@ -147,7 +160,7 @@ public class TestMongoEmfAttributes extends TestHarness
 		primaryObject.setUnsettableAttributeWithNonNullDefault(null);
 		saveObject(primaryObject);
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 		Resource resource = resourceSet.getResource(primaryObject.eResource().getURI(), true);
 		PrimaryObject object = (PrimaryObject) resource.getContents().get(0);
 		assertFalse(object.isSetUnsettableAttribute());
@@ -160,7 +173,7 @@ public class TestMongoEmfAttributes extends TestHarness
 		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
 		saveObject(primaryObject);
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 		Resource resource = resourceSet.getResource(primaryObject.eResource().getURI(), true);
 		PrimaryObject object = (PrimaryObject) resource.getContents().get(0);
 		assertFalse(object.isSetUnsettableAttribute());
@@ -192,4 +205,16 @@ public class TestMongoEmfAttributes extends TestHarness
 		PrimaryObject actual = MongoUtil.checkObject(primaryObject, excludeFeatures);
 		assertThat(actual.getFeatureMapAttributeCollection().size(), is(2));
 	}
+
+	protected void activate()
+	{
+		synchronized (lock)
+		{
+			initialized = true;
+			lock.notifyAll();
+		}
+	}
+
+	private static boolean initialized = false;
+	private static Object lock = new Object();
 }

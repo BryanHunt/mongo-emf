@@ -38,6 +38,7 @@ import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.PrimaryObject;
 import org.eclipselabs.mongo.emf.junit.model.TargetObject;
 import org.eclipselabs.mongo.emf.junit.support.TestHarness;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -46,6 +47,18 @@ import org.junit.Test;
  */
 public class TestMongoEmfReferences extends TestHarness
 {
+	@BeforeClass
+	public static void waitForServices() throws InterruptedException
+	{
+		synchronized (lock)
+		{
+			if (!initialized)
+				lock.wait(60000);
+
+			assertTrue("Timed out waiting for services to be bound", initialized);
+		}
+	}
+
 	@Test
 	public void testPrimaryObject() throws IOException
 	{
@@ -70,7 +83,7 @@ public class TestMongoEmfReferences extends TestHarness
 		primaryObject.setUnsettableReference(null);
 		saveObject(primaryObject);
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 		Resource resource = resourceSet.getResource(primaryObject.eResource().getURI(), true);
 		PrimaryObject object = (PrimaryObject) resource.getContents().get(0);
 		assertTrue(object.isSetUnsettableReference());
@@ -83,7 +96,7 @@ public class TestMongoEmfReferences extends TestHarness
 		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
 		saveObject(primaryObject);
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 		Resource resource = resourceSet.getResource(primaryObject.eResource().getURI(), true);
 		PrimaryObject object = (PrimaryObject) resource.getContents().get(0);
 		assertFalse(object.isSetUnsettableReference());
@@ -212,7 +225,7 @@ public class TestMongoEmfReferences extends TestHarness
 		// Setup : Create a primary object with a cross-document containment reference to a target
 		// object.
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 
 		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
 		targetObject.setSingleAttribute("junit");
@@ -237,7 +250,7 @@ public class TestMongoEmfReferences extends TestHarness
 		// Setup : Create a primary object with multiple cross-document containment references to target
 		// objects.
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 
 		TargetObject targetObject1 = ModelFactory.eINSTANCE.createTargetObject();
 		targetObject1.setSingleAttribute("one");
@@ -266,7 +279,7 @@ public class TestMongoEmfReferences extends TestHarness
 	{
 		// Setup : Create a primary object with a containment reference to a target object.
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 
 		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
 		targetObject.setSingleAttribute("junit");
@@ -290,7 +303,7 @@ public class TestMongoEmfReferences extends TestHarness
 		// Setup : Create a primary object with a cross-document containment reference to a target
 		// object.
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 
 		TargetObject targetObject = ModelFactory.eINSTANCE.createTargetObject();
 		targetObject.setSingleAttribute("junit");
@@ -304,7 +317,7 @@ public class TestMongoEmfReferences extends TestHarness
 		// Test : Delete the target object and reload the primary object
 
 		targetObject.eResource().delete(null);
-		ResourceSet testResourceSet = MongoUtil.createResourceSet();
+		ResourceSet testResourceSet = createResourceSet();
 		Resource resource = testResourceSet.getResource(primaryObject.eResource().getURI(), true);
 
 		// Verify : Check that the object was stored correctly.
@@ -352,7 +365,7 @@ public class TestMongoEmfReferences extends TestHarness
 	@Test
 	public void testPrimaryObjectWithProxiesDoesNotResolveThemOnSave() throws IOException
 	{
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 
 		PrimaryObject primaryObject = ModelFactory.eINSTANCE.createPrimaryObject();
 		primaryObject.setName("junit");
@@ -403,7 +416,7 @@ public class TestMongoEmfReferences extends TestHarness
 		assertTrue(((EObject) ((InternalEList<?>) primaryObject.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_CONTAINMENT_REFERENCE_PROXIES)).basicGet(0)).eIsProxy());
 		assertTrue(((EObject) ((InternalEList<?>) primaryObject.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE)).basicGet(0)).eIsProxy());
 
-		ResourceSet resourceSet2 = MongoUtil.createResourceSet();
+		ResourceSet resourceSet2 = createResourceSet();
 		resourceSet2.getLoadOptions().put(MongoURIHandlerImpl.OPTION_PROXY_ATTRIBUTES, Boolean.TRUE);
 		Resource primaryResource2 = resourceSet2.getResource(primaryObject.eResource().getURI(), true);
 		PrimaryObject primaryObject2 = (PrimaryObject) primaryResource2.getContents().get(0);
@@ -431,7 +444,7 @@ public class TestMongoEmfReferences extends TestHarness
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		primaryResource2.save(out, options);
 
-		ResourceSet resourceSet3 = MongoUtil.createResourceSet();
+		ResourceSet resourceSet3 = createResourceSet();
 		Resource primaryResource3 = resourceSet3.createResource(primaryObject.eResource().getURI());
 		primaryResource3.load(new ByteArrayInputStream(out.toByteArray()), null);
 
@@ -452,4 +465,16 @@ public class TestMongoEmfReferences extends TestHarness
 		assertThat(((TargetObject) ((EObject) ((InternalEList<?>) primaryObject3.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE)).basicGet(0))).getSingleAttribute(),
 				is("one"));
 	}
+
+	protected void activate()
+	{
+		synchronized (lock)
+		{
+			initialized = true;
+			lock.notifyAll();
+		}
+	}
+
+	private static boolean initialized = false;
+	private static Object lock = new Object();
 }

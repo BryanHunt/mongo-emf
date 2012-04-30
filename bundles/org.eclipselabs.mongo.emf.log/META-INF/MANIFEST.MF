@@ -16,5 +16,4 @@ Import-Package: org.eclipselabs.emf.query, org.eclipselabs.mongo.emf, org.eclips
  org.eclipse.emf.ecore.resource, org.eclipse.emf.ecore.resource.impl, org.eclipse.core.runtime,
  org.osgi.service.log, org.osgi.framework, org.eclipse.emf.common, org.osgi.util.tracker, org.osgi.service.cm
 Service-Component: OSGI-INF/log.xml
-Bundle-Activator: org.eclipselabs.mongo.emf.log.bundle.Activator
 Bundle-ActivationPolicy: lazy

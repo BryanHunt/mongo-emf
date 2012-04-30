@@ -23,7 +23,9 @@ Import-Package: com.yourkit.api,
  org.eclipselabs.emf.query,
  org.eclipselabs.mongo.emf,
  org.eclipselabs.mongo.emf.developer.junit,
+ org.eclipselabs.mongo.emf.junit.support,
  org.junit,
  org.junit.runner,
  org.junit.runners,
  org.osgi.framework
+Service-Component: OSGI-INF/base_performance.xml

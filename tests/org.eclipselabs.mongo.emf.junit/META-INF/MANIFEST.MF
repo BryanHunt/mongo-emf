@@ -36,4 +36,7 @@ Import-Package: com.mongodb,
  org.junit.runner,
  org.junit.runners,
  org.osgi.framework,
+ org.osgi.service.cm;version="1.3.0",
  org.osgi.util.tracker
+Service-Component: OSGI-INF/cursor.xml,OSGI-INF/attributes.xml,OSGI-INF/basics.xml,OSGI-INF/references.xml,OSGI-INF/replica.xml,OSGI-INF/mongo_config.xml,
+ OSGI-INF/replica_config.xml

@@ -48,7 +48,7 @@ public class MongoTemplateLoader implements TemplateLoader
 	 * Constructs the template loader using the user supplied resource set.
 	 * 
 	 * @param baseURI The base MongoDB URI up to and including the collection. For example:
-	 *          mongo://localhost/db/collection. The URI must contain exactly two segments.
+	 *          mongodb://localhost/db/collection. The URI must contain exactly two segments.
 	 * @param resourceSet The resource set to use for loading and storing the templates.
 	 */
 	public MongoTemplateLoader(URI baseURI, ResourceSet resourceSet)

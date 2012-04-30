@@ -17,49 +17,35 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
-import java.io.IOException;
 import java.util.Collection;
 
-import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipselabs.emf.query.BinaryOperation;
 import org.eclipselabs.emf.query.FeatureAccessor;
 import org.eclipselabs.emf.query.Literal;
 import org.eclipselabs.emf.query.QueryFactory;
+import org.eclipselabs.mongo.emf.IResourceSetFactory;
 import org.eclipselabs.mongo.emf.developer.junit.MongoDatabase;
 import org.eclipselabs.mongo.emf.developer.junit.MongoUtil;
+import org.eclipselabs.mongo.emf.developer.junit.ServiceTestHarness;
 import org.eclipselabs.mongo.emf.log.IMongoLogService;
 import org.eclipselabs.mongo.emf.log.LogEntry;
 import org.eclipselabs.mongo.emf.log.LogLevel;
 import org.eclipselabs.mongo.emf.log.LogPackage;
-import org.eclipselabs.mongo.emf.log.LogServiceConfigurator;
-import org.eclipselabs.mongo.emf.log.impl.MongoEmfLogService;
-import org.eclipselabs.mongo.emf.log.junit.bundle.Activator;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.osgi.service.log.LogListener;
 import org.osgi.service.log.LogReaderService;
 import org.osgi.service.log.LogService;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author bhunt
  * 
  */
-public class TestLogService
+public class TestLogService extends ServiceTestHarness
 {
 	@Rule
 	public static final MongoDatabase DB = new MongoDatabase();
-
-	@BeforeClass
-	public static void globalSetUp()
-	{
-		LogReaderService logReaderService = Activator.getInstance().getLogReaderService();
-		assertThat(logReaderService, is(notNullValue()));
-		mongoLogService = new MongoEmfLogService(URI.createURI("mongo://localhost/junit/logs/"));
-		osgiLogService = Activator.getInstance().getLogService();
-		logReaderService.addLogListener((LogListener) mongoLogService);
-	}
 
 	@Test
 	public void testLogDebug() throws InterruptedException
@@ -67,7 +53,7 @@ public class TestLogService
 		mongoLogService.setLogLevel(LogLevel.LOG_DEBUG);
 		osgiLogService.log(LogService.LOG_DEBUG, "debug");
 		Thread.sleep(1000);
-		Collection<LogEntry> logEntries = MongoUtil.getObjects(MongoUtil.createResourceSet(), "junit", DB_LOGS);
+		Collection<LogEntry> logEntries = MongoUtil.getObjects(createResourceSet(), "junit", DB_LOGS);
 
 		for (LogEntry entry : logEntries)
 		{
@@ -84,7 +70,7 @@ public class TestLogService
 		mongoLogService.setLogLevel(LogLevel.LOG_ERROR);
 		osgiLogService.log(LogService.LOG_ERROR, "error");
 		Thread.sleep(1000);
-		LogEntry logEntry = MongoUtil.getObject(MongoUtil.createResourceSet(), "junit", DB_LOGS);
+		LogEntry logEntry = MongoUtil.getObject(createResourceSet(), "junit", DB_LOGS);
 		assertThat(logEntry, is(notNullValue()));
 		assertThat(logEntry.getMessage(), is("error"));
 	}
@@ -95,7 +81,7 @@ public class TestLogService
 		mongoLogService.setLogLevel(LogLevel.LOG_INFO);
 		osgiLogService.log(LogService.LOG_INFO, "info");
 		Thread.sleep(100);
-		LogEntry logEntry = MongoUtil.getObject(MongoUtil.createResourceSet(), "junit", DB_LOGS);
+		LogEntry logEntry = MongoUtil.getObject(createResourceSet(), "junit", DB_LOGS);
 		assertThat(logEntry, is(notNullValue()));
 		assertThat(logEntry.getMessage(), is("info"));
 	}
@@ -106,7 +92,7 @@ public class TestLogService
 		mongoLogService.setLogLevel(LogLevel.LOG_WARNING);
 		osgiLogService.log(LogService.LOG_ERROR, "warning");
 		Thread.sleep(100);
-		LogEntry logEntry = MongoUtil.getObject(MongoUtil.createResourceSet(), "junit", DB_LOGS);
+		LogEntry logEntry = MongoUtil.getObject(createResourceSet(), "junit", DB_LOGS);
 		assertThat(logEntry, is(notNullValue()));
 		assertThat(logEntry.getMessage(), is("warning"));
 	}
@@ -117,7 +103,7 @@ public class TestLogService
 		mongoLogService.setLogLevel(LogLevel.LOG_ERROR);
 		osgiLogService.log(LogService.LOG_WARNING, "error");
 		Thread.sleep(100);
-		LogEntry logEntry = MongoUtil.getObject(MongoUtil.createResourceSet(), "junit", DB_LOGS);
+		LogEntry logEntry = MongoUtil.getObject(createResourceSet(), "junit", DB_LOGS);
 		assertThat(logEntry, is(nullValue()));
 	}
 
@@ -154,24 +140,41 @@ public class TestLogService
 		assertThat(entries.iterator().next().getLevel(), is(LogLevel.LOG_ERROR));
 	}
 
-	@Test
-	public void testConfigureLogService() throws InterruptedException, IOException
+	void bindLogService(LogService logService)
 	{
-		try
-		{
-			LogServiceConfigurator.configureLogService(URI.createURI("mongo://localhost/junit/logs/"), LogLevel.LOG_ERROR_VALUE);
-			ServiceTracker<IMongoLogService, IMongoLogService> logServiceTracker = new ServiceTracker<IMongoLogService, IMongoLogService>(Activator.getInstance().getContext(), IMongoLogService.class, null);
-			logServiceTracker.open();
-			IMongoLogService logService = logServiceTracker.waitForService(2000);
-			assertThat(logService, is(notNullValue()));
-		}
-		finally
-		{
-			LogServiceConfigurator.unconfigureLogService();
-		}
+		osgiLogService = logService;
+	}
+
+	void bindLogReaderService(LogReaderService readerService)
+	{
+		logReaderService = readerService;
+	}
+
+	void bindMongoLogService(IMongoLogService logService)
+	{
+		mongoLogService = logService;
+	}
+
+	void bindResourceSetFactory(IResourceSetFactory factory)
+	{
+		resourceSetFactory = factory;
+	}
+
+	@Override
+	protected void activate()
+	{
+		logReaderService.addLogListener((LogListener) mongoLogService);
+		super.activate();
+	}
+
+	private ResourceSet createResourceSet()
+	{
+		return resourceSetFactory.createResourceSet();
 	}
 
 	private static final String DB_LOGS = "logs";
 	private static LogService osgiLogService;
+	private static LogReaderService logReaderService;
 	private static IMongoLogService mongoLogService;
+	private static IResourceSetFactory resourceSetFactory;
 }

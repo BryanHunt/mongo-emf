@@ -28,13 +28,15 @@ import org.junit.BeforeClass;
  * This timeout will keep your automated builds from hanging in the case that a service is not
  * bound.
  * 
+ * <b>This class may not be used when running more than one test class at a time (ie, a suite).</b>
+ * 
  * If you need to change the timeout, add the following to your extension:
  * 
  * <pre>
  * &#064;BeforeClass
  * public static void waitForServices() throws InterruptedException
  * {
- * 	initializationTimeout = 10000;
+ * 	setInitializationTimeout(10000);
  * 	ServiceTestHarness.waitForServices();
  * }
  * </pre>
@@ -63,6 +65,11 @@ public class ServiceTestHarness
 
 			assertTrue("Timed out waiting for services to be bound", initialized);
 		}
+	}
+
+	protected static void setInitializationTimeout(long timeout)
+	{
+		initializationTimeout = timeout;
 	}
 
 	/**

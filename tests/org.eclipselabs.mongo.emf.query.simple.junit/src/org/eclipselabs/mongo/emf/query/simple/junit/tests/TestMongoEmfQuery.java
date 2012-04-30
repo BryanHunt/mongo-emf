@@ -34,7 +34,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipselabs.emf.query.Result;
 import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
-import org.eclipselabs.mongo.emf.developer.junit.MongoUtil;
 import org.eclipselabs.mongo.emf.junit.model.ETypes;
 import org.eclipselabs.mongo.emf.junit.model.PrimaryObject;
 import org.eclipselabs.mongo.emf.junit.model.TargetObject;
@@ -72,7 +71,7 @@ public class TestMongoEmfQuery extends TestHarness
 	{
 		DBObject libraryObject = createLibrary("Wastelands");
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.LIBRARY, "_id=='" + libraryObject.get(ID_KEY) + "'"), true);
 		assertThat(resource, is(notNullValue()));
@@ -104,7 +103,7 @@ public class TestMongoEmfQuery extends TestHarness
 
 		// Verify : Check that the object was stored correctly
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 		Resource resource = resourceSet.getResource(createQueryURI(org.eclipselabs.mongo.emf.junit.model.ModelPackage.Literals.PRIMARY_OBJECT, "idAttribute=='" + id + "'"), true);
 		assertThat(resource, is(notNullValue()));
 		assertThat(resource.getContents().size(), is(1));
@@ -119,7 +118,7 @@ public class TestMongoEmfQuery extends TestHarness
 		createLibrary("Wastelands");
 		createLibrary("Badlands");
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.LIBRARY, ""), true);
 		assertThat(resource, is(notNullValue()));
@@ -146,7 +145,7 @@ public class TestMongoEmfQuery extends TestHarness
 		createBook(badlands, "Gunslinger", Collections.<DBObject> emptyList());
 		createLibrary("Wetlands");
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.LIBRARY, "books.title == 'Gunslinger'"), true);
 		assertThat(resource, is(notNullValue()));
@@ -174,7 +173,7 @@ public class TestMongoEmfQuery extends TestHarness
 		BasicDBObject wetlands = createLibrary("Wetlands");
 		createBook(wetlands, "Thinner", Collections.<DBObject> emptyList());
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.LIBRARY, "(books.title == 'Gunslinger') || (books.title == 'The Shining') || (books.title == 'Thinner')"), true);
 		assertThat(resource, is(notNullValue()));
@@ -209,7 +208,7 @@ public class TestMongoEmfQuery extends TestHarness
 		createBook(wetlands, "Gunslinger", Collections.<DBObject> emptyList());
 		createBook(wetlands, "The Shining", Collections.<DBObject> emptyList());
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.LIBRARY, "(books.title == 'Gunslinger') && (books.title == 'The Shining') && (books.title == 'Thinner')"), true);
 		assertThat(resource, is(notNullValue()));
@@ -229,7 +228,7 @@ public class TestMongoEmfQuery extends TestHarness
 		createAuthor(null);
 		createAuthor("Stephen King");
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.PERSON, "name == null"), true);
 		assertThat(resource, is(notNullValue()));
@@ -247,7 +246,7 @@ public class TestMongoEmfQuery extends TestHarness
 		createAuthor(null);
 		createAuthor("Stephen King");
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.PERSON, "name != null"), true);
 		assertThat(resource, is(notNullValue()));
@@ -267,7 +266,7 @@ public class TestMongoEmfQuery extends TestHarness
 		createAuthor("Ed Merks");
 		createAuthor("Stephen King");
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.PERSON, "(name != 'Dean Kontz') && (name != 'Stephen King') && (name != 'Bryan Hunt')"), true);
 		assertThat(resource, is(notNullValue()));
@@ -284,7 +283,7 @@ public class TestMongoEmfQuery extends TestHarness
 	{
 		createAuthor("Stephen King");
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 
 		Resource resource = resourceSet.getResource(createQueryURI(ModelPackage.Literals.PERSON, "name=='Stephen King'"), true);
 		assertThat(resource, is(notNullValue()));
@@ -303,7 +302,7 @@ public class TestMongoEmfQuery extends TestHarness
 		ETypes eTypes = org.eclipselabs.mongo.emf.junit.model.ModelFactory.eINSTANCE.createETypes();
 		eTypes.setELong(1);
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 		Resource resource = resourceSet.createResource(createCollectionURI(org.eclipselabs.mongo.emf.junit.model.ModelPackage.Literals.ETYPES));
 		resource.getContents().add(eTypes);
 		HashMap<String, Object> options = new HashMap<String, Object>(1);
@@ -317,7 +316,7 @@ public class TestMongoEmfQuery extends TestHarness
 		resource.getContents().add(eTypes);
 		resource.save(null);
 
-		resourceSet = MongoUtil.createResourceSet();
+		resourceSet = createResourceSet();
 		resource = resourceSet.getResource(createQueryURI(org.eclipselabs.mongo.emf.junit.model.ModelPackage.Literals.ETYPES, "eInt == 0"), true);
 		Result result = (Result) resource.getContents().get(0);
 		assertThat(result.getValues().size(), is(1));
@@ -335,12 +334,12 @@ public class TestMongoEmfQuery extends TestHarness
 		ETypes eTypes = org.eclipselabs.mongo.emf.junit.model.ModelFactory.eINSTANCE.createETypes();
 		eTypes.setEDate(calendar.getTime());
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 		Resource resource = resourceSet.createResource(createCollectionURI(org.eclipselabs.mongo.emf.junit.model.ModelPackage.Literals.ETYPES));
 		resource.getContents().add(eTypes);
 		resource.save(null);
 
-		resourceSet = MongoUtil.createResourceSet();
+		resourceSet = createResourceSet();
 		resource = resourceSet.getResource(
 				createQueryURI(org.eclipselabs.mongo.emf.junit.model.ModelPackage.Literals.ETYPES, "eDate >= " + EcoreFactory.eINSTANCE.convertToString(EcorePackage.Literals.EDATE, new Date())), true);
 		Result result = (Result) resource.getContents().get(0);
@@ -360,7 +359,7 @@ public class TestMongoEmfQuery extends TestHarness
 		// Test : Query for the object using an invalid operator - this can happen if you forget to
 		// enclose the value in ''
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 		Resource resource = resourceSet.getResource(createCollectionURI(targetObject.eClass()).appendQuery(URI.encodeQuery("singleAttribute==4d", false)), true);
 
 		// Verify : The query should not return any results;

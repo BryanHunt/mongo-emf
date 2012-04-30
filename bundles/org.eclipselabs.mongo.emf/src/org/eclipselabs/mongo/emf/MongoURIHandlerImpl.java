@@ -40,8 +40,8 @@ import com.mongodb.DBCollection;
  * and the URI of the EMF Resource will be modified to include the id in the URI. Examples of valid
  * URIs:
  * 
- * mongo://localhost/data/people/
- * mongo://localhost/data/people/4d0a3e259095b5b334a59df0
+ * mongodb://localhost/data/people/
+ * mongodb://localhost/data/people/4d0a3e259095b5b334a59df0
  * 
  * This class has the ability to use a custom converter service, builders, and streams. Each component
  * has a set function for the appropriate factory. Unless you are customizing how EMF objects are
@@ -80,7 +80,7 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 	{
 		// This handler should only accept URIs with the scheme "mongo"
 
-		return "mongo".equalsIgnoreCase(uri.scheme());
+		return "mongodb".equalsIgnoreCase(uri.scheme());
 	}
 
 	@Override
@@ -128,7 +128,7 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 
 	/**
 	 * This function locates the MongoDB collection instance corresponding to the collection identifier extracted from the URI. The URI path must have exactly 3 segments and be of the form
-	 * mongo://host:[port]/database/collection/{id} where id is optional.
+	 * mongodb://host:[port]/database/collection/{id} where id is optional.
 	 * 
 	 * @param mongoDB the MongoDB service
 	 * @param uri the MongoDB collection identifier
@@ -143,7 +143,7 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 		// collection segment # 1.
 
 		if (uri.segmentCount() != 3)
-			throw new IOException("The URI is not of the form 'mongo:/database/collection/{id}");
+			throw new IOException("The URI is not of the form 'mongodb:/database/collection/{id}");
 
 		String port = uri.port();
 		String mongoURI = "mongodb://" + uri.host() + (port != null ? ":" + port : "");
@@ -209,7 +209,7 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 
 	/**
 	 * This function extracts the object ID from the given URI. The URI path must have exactly 3 segments and be of the form
-	 * mongo://host:[port]/database/collection/{id} where id is optional.
+	 * mongodb://host:[port]/database/collection/{id} where id is optional.
 	 * 
 	 * @param uri
 	 * @return the object ID from the given URI or null if the id was not specified

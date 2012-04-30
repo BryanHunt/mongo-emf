@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipselabs.emf.query.Result;
 import org.eclipselabs.mongo.emf.developer.junit.MongoDatabase;
-import org.eclipselabs.mongo.emf.developer.junit.MongoUtil;
+import org.eclipselabs.mongo.emf.junit.support.TestHarness;
 import org.eclipselabs.mongo.emf.perf.model.ModelFactory;
 import org.eclipselabs.mongo.emf.perf.model.TestObject1;
 import org.junit.BeforeClass;
@@ -33,7 +33,7 @@ import com.yourkit.api.ProfilingModes;
  * @author bhunt
  * 
  */
-public class TestBasePerformance
+public class TestBasePerformance extends TestHarness
 {
 	@Rule
 	public static MongoDatabase db = new MongoDatabase("junit");
@@ -56,8 +56,8 @@ public class TestBasePerformance
 	@Test
 	public void testCollectionOfObjects() throws Exception
 	{
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
-		URI uri = URI.createURI("mongo://localhost/junit/objects/");
+		ResourceSet resourceSet = createResourceSet();
+		URI uri = URI.createURI("mongodb://localhost/junit/objects/");
 		Resource resource = resourceSet.createResource(uri);
 
 		System.out.println("Initializing");
@@ -74,7 +74,7 @@ public class TestBasePerformance
 		System.out.println("Capturing snapshot");
 		System.out.println("Collection store snapshot: " + controller.captureSnapshot(ProfilingModes.SNAPSHOT_WITHOUT_HEAP));
 
-		resourceSet = MongoUtil.createResourceSet();
+		resourceSet = createResourceSet();
 
 		System.out.println("Loading data");
 

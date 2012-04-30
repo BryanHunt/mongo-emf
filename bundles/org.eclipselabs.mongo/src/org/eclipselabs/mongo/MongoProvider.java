@@ -29,6 +29,9 @@ import com.mongodb.ServerAddress;
  */
 public class MongoProvider implements IMongoProvider
 {
+	public MongoProvider()
+	{}
+
 	public MongoProvider(String uri)
 	{
 		HashMap<String, Object> properties = new HashMap<String, Object>();

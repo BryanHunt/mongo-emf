@@ -40,6 +40,9 @@ import org.osgi.service.log.LogReaderService;
  */
 public class MongoEmfLogService implements IMongoLogService, LogListener
 {
+	public MongoEmfLogService()
+	{}
+
 	public MongoEmfLogService(URI baseURI, LogLevel logLevel)
 	{
 		this.baseURI = baseURI;

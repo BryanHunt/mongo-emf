@@ -11,6 +11,8 @@
 
 package org.eclipselabs.emf.mongo.examples;
 
+import java.io.IOException;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -50,14 +52,30 @@ public class ExampleComponent
 				child.setName("Child " + i + " " + j);
 				parent.getChildren().add(child);
 
-				Resource resource = resourceSet.createResource(URI.createURI("mongo://localhost/test/Child/"));
+				Resource resource = resourceSet.createResource(URI.createURI("mongodb://localhost/test/Child/"));
 				resource.getContents().add(child);
-				resource.save(null);
+
+				try
+				{
+					resource.save(null);
+				}
+				catch (IOException e)
+				{
+					e.printStackTrace();
+				}
 			}
 
-			Resource resource = resourceSet.createResource(URI.createURI("mongo://localhost/test/Parent/"));
+			Resource resource = resourceSet.createResource(URI.createURI("mongodb://localhost/test/Parent/"));
 			resource.getContents().add(parent);
-			resource.save(null);
+
+			try
+			{
+				resource.save(null);
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
 
 			if (firstParent == null)
 				firstParent = resource.getURI();
@@ -91,7 +109,7 @@ public class ExampleComponent
 	}
 
 	private IResourceSetFactory resourceSetFactory;
-	private static final int CHILD_COUNT = 1000;
-	private static final int PARENT_COUNT = 1000;
+	private static final int CHILD_COUNT = 10;
+	private static final int PARENT_COUNT = 10;
 
 }

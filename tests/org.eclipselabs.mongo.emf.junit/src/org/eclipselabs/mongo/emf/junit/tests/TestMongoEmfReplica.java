@@ -11,25 +11,20 @@
 
 package org.eclipselabs.mongo.emf.junit.tests;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipselabs.mongo.emf.developer.junit.MongoDatabase;
 import org.eclipselabs.mongo.emf.developer.junit.MongoUtil;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.TargetObject;
-import org.eclipselabs.mongo.emf.junit.support.BaseTestHarness;
-import org.junit.Rule;
+import org.eclipselabs.mongo.emf.junit.support.TestHarness;
+import org.junit.BeforeClass;
 import org.junit.Test;
-
-import com.mongodb.DB;
-import com.mongodb.ServerAddress;
 
 /**
  * This test assumes you have a MongoDB replica set running on localhost.
@@ -40,14 +35,23 @@ import com.mongodb.ServerAddress;
  * @author bhunt
  * 
  */
-public class TestMongoEmfReplica extends BaseTestHarness
+public class TestMongoEmfReplica extends TestHarness
 {
-	@Rule
-	public MongoDatabase database = new MongoDatabase();
-
 	public TestMongoEmfReplica()
 	{
 		super(27021);
+	}
+
+	@BeforeClass
+	public static void waitForServices() throws InterruptedException
+	{
+		synchronized (lock)
+		{
+			if (!initialized)
+				lock.wait(60000);
+
+			assertTrue("Timed out waiting for services to be bound", initialized);
+		}
 	}
 
 	@Test
@@ -64,7 +68,7 @@ public class TestMongoEmfReplica extends BaseTestHarness
 
 		// Verify : Check that the object was stored correctly
 
-		ResourceSet actualResourceSet = MongoUtil.createResourceSet();
+		ResourceSet actualResourceSet = createResourceSet();
 
 		HashMap<String, String> tags = new HashMap<String, String>(1);
 		tags.put("locale", "in");
@@ -76,28 +80,15 @@ public class TestMongoEmfReplica extends BaseTestHarness
 		MongoUtil.checkObject(targetObject, actual);
 	}
 
-	@Override
-	protected DB createDatabase()
+	protected void activate()
 	{
-		return database.getMongoDB();
-	}
-
-	// FIXME move the replica set to a configuration service
-	private static List<ServerAddress> replicaSet = new ArrayList<ServerAddress>();
-
-	static
-	{
-		try
+		synchronized (lock)
 		{
-			replicaSet.add(new ServerAddress("localhost", 27020));
-			replicaSet.add(new ServerAddress("localhost", 27021));
-			replicaSet.add(new ServerAddress("localhost", 27022));
-		}
-		catch (UnknownHostException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			initialized = true;
+			lock.notifyAll();
 		}
 	}
 
+	private static boolean initialized = false;
+	private static Object lock = new Object();
 }

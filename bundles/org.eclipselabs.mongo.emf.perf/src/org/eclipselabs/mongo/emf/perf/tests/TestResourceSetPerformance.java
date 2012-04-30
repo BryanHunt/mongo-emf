@@ -19,11 +19,12 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipselabs.mongo.emf.developer.junit.MongoDatabase;
-import org.eclipselabs.mongo.emf.developer.junit.MongoUtil;
+import org.eclipselabs.mongo.emf.junit.support.TestHarness;
 import org.eclipselabs.mongo.emf.perf.model.ModelFactory;
 import org.eclipselabs.mongo.emf.perf.model.ObjectGroup;
 import org.eclipselabs.mongo.emf.perf.model.TestObject1;
 import org.eclipselabs.mongo.emf.perf.support.TreeVisitor;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +36,7 @@ import org.junit.runners.Parameterized.Parameters;
  * 
  */
 @RunWith(value = Parameterized.class)
-public class TestResourceSetPerformance
+public class TestResourceSetPerformance extends TestHarness
 {
 	@Rule
 	public static MongoDatabase db = new MongoDatabase("junit");
@@ -57,10 +58,11 @@ public class TestResourceSetPerformance
 	}
 
 	@Test
+	@Ignore
 	public void testObjectTree() throws Exception
 	{
 		ResourceSet resourceSet = createResourceSet();
-		resourceSet.getURIConverter().getURIMap().put(URI.createURI("http://localhost/junit/"), URI.createURI("mongo://localhost/junit/"));
+		resourceSet.getURIConverter().getURIMap().put(URI.createURI("http://localhost/junit/"), URI.createURI("mongodb://localhost/junit/"));
 		URI uri = URI.createURI("http://localhost/junit/objects/");
 
 		System.out.println("Initializing");
@@ -82,7 +84,7 @@ public class TestResourceSetPerformance
 		rootResource.save(null);
 
 		resourceSet = createResourceSet();
-		resourceSet.getURIConverter().getURIMap().put(URI.createURI("http://localhost/junit/"), URI.createURI("mongo://localhost/junit/"));
+		resourceSet.getURIConverter().getURIMap().put(URI.createURI("http://localhost/junit/"), URI.createURI("mongodb://localhost/junit/"));
 
 		System.out.println("Loading data");
 
@@ -136,17 +138,17 @@ public class TestResourceSetPerformance
 		return group;
 	}
 
-	private ResourceSet createResourceSet()
-	{
-		ResourceSet resourceSet;
-
-		if (useMongoResourceSet)
-			resourceSet = MongoUtil.createMongoResourceSet();
-		else
-			resourceSet = MongoUtil.createResourceSet();
-
-		return resourceSet;
-	}
+//	private ResourceSet createResourceSet()
+//	{
+//		ResourceSet resourceSet;
+//
+//		if (useMongoResourceSet)
+//			resourceSet = MongoUtil.createMongoResourceSet();
+//		else
+//			resourceSet = MongoUtil.createResourceSet();
+//
+//		return resourceSet;
+//	}
 
 	private boolean useMongoResourceSet;
 	private int numberObjects;

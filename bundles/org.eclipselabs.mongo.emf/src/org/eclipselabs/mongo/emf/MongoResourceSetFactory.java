@@ -28,7 +28,7 @@ public class MongoResourceSetFactory implements IResourceSetFactory
 		MongoResourceSetImpl resourceSet = new MongoResourceSetImpl();
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
 		uriHandlers.add(0, new MongoURIHandlerImpl(mongoLocator, queryEngine));
-		return null;
+		return resourceSet;
 	}
 
 	public void bindMongoLocator(IMongoLocator mongoLocator)

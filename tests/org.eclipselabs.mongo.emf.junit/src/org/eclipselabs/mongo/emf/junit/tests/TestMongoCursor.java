@@ -28,13 +28,13 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
-import org.eclipselabs.mongo.emf.developer.junit.MongoUtil;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.TargetObject;
 import org.eclipselabs.mongo.emf.junit.support.TestHarness;
 import org.eclipselabs.mongo.emf.model.MongoCursor;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -43,6 +43,18 @@ import org.junit.Test;
  */
 public class TestMongoCursor extends TestHarness
 {
+	@BeforeClass
+	public static void waitForServices() throws InterruptedException
+	{
+		synchronized (lock)
+		{
+			if (!initialized)
+				lock.wait(60000);
+
+			assertTrue("Timed out waiting for services to be bound", initialized);
+		}
+	}
+
 	@Before
 	public void setUp() throws UnknownHostException
 	{
@@ -55,7 +67,7 @@ public class TestMongoCursor extends TestHarness
 	{
 		// Test: Query the database to return a cursor
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 		resourceSet.getLoadOptions().put(MongoURIHandlerImpl.OPTION_QUERY_CURSOR, Boolean.TRUE);
 		Resource resource = resourceSet.getResource(queryURI, true);
 
@@ -82,7 +94,7 @@ public class TestMongoCursor extends TestHarness
 
 		// Test: Query the database to return a cursor
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 		resourceSet.getLoadOptions().put(MongoURIHandlerImpl.OPTION_QUERY_CURSOR, Boolean.TRUE);
 		Resource resource = resourceSet.getResource(queryURI, true);
 
@@ -123,7 +135,7 @@ public class TestMongoCursor extends TestHarness
 
 		// Test: Query the database to return a cursor
 
-		ResourceSet resourceSet = MongoUtil.createResourceSet();
+		ResourceSet resourceSet = createResourceSet();
 		resourceSet.getLoadOptions().put(MongoURIHandlerImpl.OPTION_QUERY_CURSOR, Boolean.TRUE);
 		Resource resource = resourceSet.getResource(queryURI, true);
 
@@ -158,5 +170,16 @@ public class TestMongoCursor extends TestHarness
 		assertTrue(pendingTargets.isEmpty());
 	}
 
+	protected void activate()
+	{
+		synchronized (lock)
+		{
+			initialized = true;
+			lock.notifyAll();
+		}
+	}
+
+	private static boolean initialized = false;
+	private static Object lock = new Object();
 	private static URI queryURI;
 }

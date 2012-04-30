@@ -81,7 +81,7 @@ public class MongoDatabase extends ExternalResource
 		this.port = port;
 		this.database = database;
 
-		baseURI = URI.createURI("mongo://" + hostname + (port == 27017 ? "" : ":" + port) + "/" + database);
+		baseURI = URI.createURI("mongodb://" + hostname + (port == 27017 ? "" : ":" + port) + "/" + database);
 		mongoServiceTracker = new ServiceTracker<IMongoLocator, IMongoLocator>(Activator.getBundleContext(), IMongoLocator.class, null);
 		mongoServiceTracker.open();
 	}
@@ -137,9 +137,8 @@ public class MongoDatabase extends ExternalResource
 		super.before();
 		mongoLocatorService = mongoServiceTracker.waitForService(1000);
 		assertThat(mongoLocatorService, is(notNullValue()));
-		String uri = "mongodb://" + hostname + ":" + port;
 
-		Mongo mongo = mongoLocatorService.getMongo(uri);
+		Mongo mongo = mongoLocatorService.getMongo(baseURI.toString());
 		db = mongo.getDB(database);
 	}
 
