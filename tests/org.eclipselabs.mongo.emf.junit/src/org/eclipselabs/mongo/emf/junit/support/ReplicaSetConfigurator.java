@@ -28,7 +28,6 @@ public class ReplicaSetConfigurator extends BaseConfigurator
 	@Override
 	protected void configureMongoProvider(ConfigurationAdmin configurationAdmin) throws IOException
 	{
-		// FIXME add replica sets
 		Configuration config = configurationAdmin.createFactoryConfiguration("org.eclipselabs.mongo.provider", null);
 
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
