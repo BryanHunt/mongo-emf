@@ -9,7 +9,7 @@
  *    Bryan Hunt and Ed Merks - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf;
+package org.eclipselabs.mongo.emf.ext;
 
 import java.util.HashMap;
 

@@ -9,12 +9,13 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf;
+package org.eclipselabs.mongo.emf.ext;
+
+import java.util.HashSet;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
-import org.eclipselabs.mongo.IMongoLocator;
 
 /**
  * @author bhunt
@@ -27,26 +28,22 @@ public class MongoResourceSetFactory implements IResourceSetFactory
 	{
 		MongoResourceSetImpl resourceSet = new MongoResourceSetImpl();
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
-		uriHandlers.add(0, new MongoURIHandlerImpl(mongoLocator, inputStreamFactory, outputStreamFactory));
+
+		for (IUriHandlerProvider provider : providers)
+			uriHandlers.add(0, provider.getURIHandler());
+
 		return resourceSet;
 	}
 
-	public void bindMongoLocator(IMongoLocator mongoLocator)
+	public void bindUriHandlerProvider(IUriHandlerProvider handlerProvider)
 	{
-		this.mongoLocator = mongoLocator;
+		providers.add(handlerProvider);
 	}
 
-	public void bindInputStreamFactory(IInputStreamFactory inputStreamFactory)
+	public void unbindUriHandlerProvider(IUriHandlerProvider handlerProvider)
 	{
-		this.inputStreamFactory = inputStreamFactory;
+		providers.remove(handlerProvider);
 	}
 
-	public void bindOutputStreamFactory(IOutputStreamFactory outputStreamFactory)
-	{
-		this.outputStreamFactory = outputStreamFactory;
-	}
-
-	private IMongoLocator mongoLocator;
-	private IInputStreamFactory inputStreamFactory;
-	private IOutputStreamFactory outputStreamFactory;
+	private HashSet<IUriHandlerProvider> providers = new HashSet<IUriHandlerProvider>();
 }

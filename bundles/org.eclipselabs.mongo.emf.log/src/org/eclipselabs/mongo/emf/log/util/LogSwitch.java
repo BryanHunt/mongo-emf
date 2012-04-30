@@ -8,10 +8,9 @@ package org.eclipselabs.mongo.emf.log.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-
 import org.eclipse.emf.ecore.util.Switch;
-
-import org.eclipselabs.mongo.emf.log.*;
+import org.eclipselabs.mongo.emf.log.LogEntry;
+import org.eclipselabs.mongo.emf.log.LogPackage;
 
 /**
  * <!-- begin-user-doc -->

@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Mongo EMF Extensions
+Bundle-SymbolicName: org.eclipselabs.mongo.emf.ext
+Bundle-Version: 0.7.0.qualifier
+Bundle-Vendor: EclipseLabs
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.eclipse.emf.common.notify,
+ org.eclipse.emf.common.notify.impl,
+ org.eclipse.emf.common.util,
+ org.eclipse.emf.ecore.resource,
+ org.eclipse.emf.ecore.resource.impl,
+ org.eclipse.emf.ecore.util,
+ org.eclipselabs.mongo
+Export-Package: org.eclipselabs.mongo.emf.ext
+Service-Component: OSGI-INF/factory.xml
+Bundle-ActivationPolicy: lazy

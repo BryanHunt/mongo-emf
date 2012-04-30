@@ -11,7 +11,7 @@
 
 package org.eclipselabs.mongo.emf.developer.junit.bundle;
 
-import org.eclipselabs.mongo.emf.IResourceSetFactory;
+import org.eclipselabs.mongo.emf.ext.IResourceSetFactory;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;

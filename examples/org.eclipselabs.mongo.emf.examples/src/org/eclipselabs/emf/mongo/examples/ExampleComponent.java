@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipselabs.emf.mongo.examples.model.Child;
 import org.eclipselabs.emf.mongo.examples.model.ModelFactory;
 import org.eclipselabs.emf.mongo.examples.model.Parent;
-import org.eclipselabs.mongo.emf.IResourceSetFactory;
+import org.eclipselabs.mongo.emf.ext.IResourceSetFactory;
 
 /**
  * @author bhunt

@@ -9,15 +9,15 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf;
+package org.eclipselabs.mongo.emf.ext;
 
-import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIHandler;
 
 /**
  * @author bhunt
  * 
  */
-public interface IResourceSetFactory
+public interface IUriHandlerProvider
 {
-	ResourceSet createResourceSet();
+	URIHandler getURIHandler();
 }

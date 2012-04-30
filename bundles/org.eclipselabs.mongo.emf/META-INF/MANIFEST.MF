@@ -25,6 +25,7 @@ Import-Package: com.mongodb,
  org.eclipselabs.emf.query,
  org.eclipselabs.emf.query.util,
  org.eclipselabs.mongo,
+ org.eclipselabs.mongo.emf.ext,
  org.osgi.framework;version="1.6.0",
  org.osgi.util.tracker;version="1.5.0"
 Export-Package: org.eclipselabs.mongo.emf,
@@ -32,4 +33,4 @@ Export-Package: org.eclipselabs.mongo.emf,
  org.eclipselabs.mongo.emf.model.impl,
  org.eclipselabs.mongo.emf.model.util
 Bundle-ActivationPolicy: lazy
-Service-Component: OSGI-INF/resource_set_factory.xml
+Service-Component: OSGI-INF/handler.xml

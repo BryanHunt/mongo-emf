@@ -25,5 +25,5 @@
 <booleanAttribute key="tracing" value="false"/>
 <booleanAttribute key="useCustomFeatures" value="false"/>
 <booleanAttribute key="useDefaultConfigArea" value="true"/>
-<stringAttribute key="workspace_bundles" value="org.eclipselabs.emf.query.simple@default:default,org.eclipselabs.mongo.emf.builders@default:default,org.eclipselabs.mongo.emf.converter@default:default,org.eclipselabs.mongo.emf.examples@5:default,org.eclipselabs.mongo.emf.query.simple@default:default,org.eclipselabs.mongo.emf.streams@default:default,org.eclipselabs.mongo.emf@default:default,org.eclipselabs.mongo.junit.configuration@default:default,org.eclipselabs.mongo@default:default"/>
+<stringAttribute key="workspace_bundles" value="org.eclipselabs.emf.query.simple@default:default,org.eclipselabs.mongo.emf.builders@default:default,org.eclipselabs.mongo.emf.converter@default:default,org.eclipselabs.mongo.emf.examples@5:default,org.eclipselabs.mongo.emf.ext@default:default,org.eclipselabs.mongo.emf.query.simple@default:default,org.eclipselabs.mongo.emf.streams@default:default,org.eclipselabs.mongo.emf@default:default,org.eclipselabs.mongo.junit.configuration@default:default,org.eclipselabs.mongo@default:default"/>
 </launchConfiguration>
