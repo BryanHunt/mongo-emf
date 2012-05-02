@@ -7,6 +7,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipselabs.mongo
 Import-Package: com.mongodb
 Bundle-Vendor: EclipseLabs
-Service-Component: OSGI-INF/provider.xml,
- OSGI-INF/locator.xml
+Service-Component: OSGI-INF/services/provider.xml,
+ OSGI-INF/services/locator.xml
 Bundle-ActivationPolicy: lazy

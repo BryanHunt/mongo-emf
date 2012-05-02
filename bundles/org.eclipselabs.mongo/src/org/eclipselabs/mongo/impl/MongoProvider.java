@@ -120,27 +120,28 @@ public class MongoProvider implements IMongoProvider
 		if (j != null)
 			options.j = j;
 
-		// The uriProperty can be a single string or an array of strings.  A single
-		// string denotes a single MongoDB instance.  An array of strings denotes a
-		// replica set.
+		// The uriProperty is a single string containing one or more server URIs.
+		// When more than one URI is specified, it denotes a replica set and the
+		// URIs must be separated by a comma (CSV).
 
 		Object uriProperty = properties.get(PROP_URI);
 
 		if (uriProperty == null)
 			throw new UnknownHostException("The MongoDB URI was not found in the configuration properties");
 
-		if (uriProperty instanceof String)
+		String[] uris = ((String) uriProperty).split(",");
+
+		if (uris.length == 1)
 		{
-			ServerAddress serverAddress = createServerAddress((String) uriProperty);
+			ServerAddress serverAddress = createServerAddress(uris[0].trim());
 			mongo = new Mongo(serverAddress, options);
 		}
 		else
 		{
-			String[] uriProperties = (String[]) uriProperty;
-			ArrayList<ServerAddress> serverAddresses = new ArrayList<ServerAddress>();
+			ArrayList<ServerAddress> serverAddresses = new ArrayList<ServerAddress>(uris.length);
 
-			for (String uri : uriProperties)
-				serverAddresses.add(createServerAddress(uri));
+			for (String uri : uris)
+				serverAddresses.add(createServerAddress(uri.trim()));
 
 			mongo = new Mongo(serverAddresses, options);
 		}

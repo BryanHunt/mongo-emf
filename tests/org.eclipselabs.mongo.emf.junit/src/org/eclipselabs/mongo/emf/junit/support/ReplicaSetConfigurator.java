@@ -31,14 +31,9 @@ public class ReplicaSetConfigurator extends BaseConfigurator
 		Configuration config = configurationAdmin.createFactoryConfiguration("org.eclipselabs.mongo.provider", null);
 
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
-
-		String[] replicaSet = new String[3];
-		replicaSet[0] = "mongodb://localhost:27022";
-		replicaSet[1] = "mongodb://localhost:27023";
-		replicaSet[2] = "mongodb://localhost:27024";
-
-		properties.put(IMongoProvider.PROP_URI, replicaSet);
+		properties.put(IMongoProvider.PROP_URI, "mongodb://localhost:27022, mongodb://localhost:27023, mongodb://localhost:27024");
 		properties.put("type", "replicaSet");
+
 		config.update(properties);
 	}
 }
