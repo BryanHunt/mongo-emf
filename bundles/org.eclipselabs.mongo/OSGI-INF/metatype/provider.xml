@@ -17,7 +17,7 @@
 		<AD label="Write Concern - fsync"       name="fsync"                                        id = "9.1.2.3.14" type="Boolean"         default="false"  description="The 'fsync' value of the global WriteConcern. Default is false."/>
 		<AD label="Write Concern - j"           name="j"                                            id = "9.1.2.3.15" type="Boolean"         default="false"  description="The 'j' value of the global WriteConcern. Default is false."/>
 	</OCD>
-	<Designate pid="">
+	<Designate factoryPid="org.eclipselabs.mongo.provider">
 		<Object ocdref="9.1.2.3"/>
 	</Designate>
 </MetaData>
