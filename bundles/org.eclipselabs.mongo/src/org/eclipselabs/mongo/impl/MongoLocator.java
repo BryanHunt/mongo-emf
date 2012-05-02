@@ -27,7 +27,7 @@ import com.mongodb.Mongo;
 public class MongoLocator implements IMongoLocator
 {
 	@Override
-	public Mongo getMongo(String uri)
+	public synchronized Mongo getMongo(String uri)
 	{
 		IMongoProvider provider = mongoProviders.get(uri);
 
@@ -46,7 +46,7 @@ public class MongoLocator implements IMongoLocator
 		return provider != null ? provider.getMongo() : null;
 	}
 
-	public void bindMongoProvider(IMongoProvider mongoProvider, Map<String, Object> properties)
+	public synchronized void bindMongoProvider(IMongoProvider mongoProvider, Map<String, Object> properties)
 	{
 		Object uriProperty = properties.get(IMongoProvider.PROP_URI);
 
@@ -61,7 +61,7 @@ public class MongoLocator implements IMongoLocator
 		}
 	}
 
-	public void unbindMongoProvider(IMongoProvider mongoProvider, Map<String, Object> properties)
+	public synchronized void unbindMongoProvider(IMongoProvider mongoProvider, Map<String, Object> properties)
 	{
 		Object uriProperty = properties.get(IMongoProvider.PROP_URI);
 

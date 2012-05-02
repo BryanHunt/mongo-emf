@@ -10,7 +10,7 @@
 	</parent>
 
   <groupId>mongo-emf</groupId>
-  <artifactId>org.eclipselabs.mongo.emf.log.junit</artifactId>
+  <artifactId>org.eclipselabs.mongo.junit.integration</artifactId>
   <version>0.7.0.qualifier</version>
   <packaging>eclipse-test-plugin</packaging>
 
@@ -21,8 +21,8 @@
         <artifactId>tycho-surefire-plugin</artifactId>
         <version>${tycho-version}</version>
         <configuration>
-          <testSuite>org.eclipselabs.mongo.emf.log.junit</testSuite>
-          <testClass>org.eclipselabs.mongo.emf.log.junit.suite.TestMongoEmfLogSuite</testClass>
+          <testSuite>org.eclipselabs.mongo.junit.integration</testSuite>
+          <testClass>org.eclipselabs.mongo.integration.tests.TestMongoFactory</testClass>
            <dependencies>
             <dependency>
               <type>eclipse-plugin</type>
@@ -41,20 +41,10 @@
             </dependency>
             <dependency>
               <type>eclipse-plugin</type>
-              <artifactId>org.eclipselabs.mongo.emf.builders</artifactId>
+              <artifactId>org.eclipselabs.mongo.junit.configuration</artifactId>
               <version>0.0.0</version>
             </dependency>
-            <dependency>
-              <type>eclipse-plugin</type>
-              <artifactId>org.eclipselabs.mongo.emf.converter</artifactId>
-              <version>0.0.0</version>
-            </dependency>
-            <dependency>
-              <type>eclipse-plugin</type>
-              <artifactId>org.eclipselabs.mongo.emf.streams</artifactId>
-              <version>0.0.0</version>
-            </dependency>
-            </dependencies>
+           </dependencies>
           <bundleStartLevel>
 						<bundle>
 							<id>org.eclipse.equinox.ds</id>
@@ -63,7 +53,7 @@
 						</bundle>
 						<bundle>
 							<id>org.eclipse.equinox.cm</id>
-							<level>1</level>
+							<level>4</level>
 							<autoStart>true</autoStart>
 						</bundle>
 					</bundleStartLevel>

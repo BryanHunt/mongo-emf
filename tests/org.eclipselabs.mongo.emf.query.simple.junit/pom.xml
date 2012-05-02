@@ -34,7 +34,22 @@
               <artifactId>org.eclipselabs.mongo.emf.query.simple</artifactId>
               <version>0.0.0</version>
             </dependency>
-           </dependencies>
+            <dependency>
+              <type>eclipse-plugin</type>
+              <artifactId>org.eclipselabs.mongo.emf.builders</artifactId>
+              <version>0.0.0</version>
+            </dependency>
+            <dependency>
+              <type>eclipse-plugin</type>
+              <artifactId>org.eclipselabs.mongo.emf.converter</artifactId>
+              <version>0.0.0</version>
+            </dependency>
+            <dependency>
+              <type>eclipse-plugin</type>
+              <artifactId>org.eclipselabs.mongo.emf.streams</artifactId>
+              <version>0.0.0</version>
+            </dependency>
+            </dependencies>
           <bundleStartLevel>
 						<bundle>
 							<id>org.eclipse.equinox.ds</id>

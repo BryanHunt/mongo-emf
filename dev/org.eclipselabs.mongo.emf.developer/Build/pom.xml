@@ -12,14 +12,19 @@
     <module>../../../bundles/org.eclipselabs.emf.query.simple</module>
     <module>../../../bundles/org.eclipselabs.mongo</module>
     <module>../../../bundles/org.eclipselabs.mongo.emf</module>
+    <module>../../../bundles/org.eclipselabs.mongo.emf.builders</module>
+    <module>../../../bundles/org.eclipselabs.mongo.emf.converter</module>
+    <module>../../../bundles/org.eclipselabs.mongo.emf.developer.junit</module>
+    <module>../../../bundles/org.eclipselabs.mongo.emf.ext</module>
     <module>../../../bundles/org.eclipselabs.mongo.emf.freemarker</module>
     <module>../../../bundles/org.eclipselabs.mongo.emf.log</module>
     <module>../../../bundles/org.eclipselabs.mongo.emf.query.simple</module>
-    <module>../../../bundles/org.eclipselabs.mongo.emf.developer.junit</module>
+    <module>../../../bundles/org.eclipselabs.mongo.emf.streams</module>
     
     <module>../../../tests/org.eclipselabs.mongo.emf.junit</module>
-    <module>../../../tests/org.eclipselabs.mongo.emf.query.simple.junit</module>
     <module>../../../tests/org.eclipselabs.mongo.emf.log.junit</module>
+    <module>../../../tests/org.eclipselabs.mongo.emf.query.simple.junit</module>
+    <module>../../../tests/org.eclipselabs.mongo.junit.integration</module>
     
     <module>../../../features/org.eclipselabs.mongo.emf.feature</module>
     <module>../../../features/org.eclipselabs.mongo.emf.freemarker.feature</module>

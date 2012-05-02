@@ -5,8 +5,7 @@ Bundle-SymbolicName: org.eclipselabs.mongo
 Bundle-Version: 0.7.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.eclipselabs.mongo
-Import-Package: com.mongodb,
- org.osgi.framework;version="1.6.0"
+Import-Package: com.mongodb
 Bundle-Vendor: EclipseLabs
 Service-Component: OSGI-INF/provider.xml,
  OSGI-INF/locator.xml
