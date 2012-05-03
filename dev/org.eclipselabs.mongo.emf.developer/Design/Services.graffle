@@ -183,6 +183,11 @@
 						<string>1</string>
 					</dict>
 				</dict>
+				<key>stroke</key>
+				<dict>
+					<key>Pattern</key>
+					<integer>1</integer>
+				</dict>
 			</dict>
 			<key>Text</key>
 			<dict>
@@ -3067,7 +3072,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2012-05-03 05:41:02 +0000</string>
+	<string>2012-05-03 05:46:46 +0000</string>
 	<key>Modifier</key>
 	<string>Bryan Hunt</string>
 	<key>NotesVisible</key>
@@ -3172,7 +3177,7 @@
 		<key>SidebarWidth</key>
 		<integer>120</integer>
 		<key>VisibleRegion</key>
-		<string>{{0, 0}, {1502, 949}}</string>
+		<string>{{580, 1}, {1502, 949}}</string>
 		<key>Zoom</key>
 		<real>1</real>
 		<key>ZoomValues</key>
