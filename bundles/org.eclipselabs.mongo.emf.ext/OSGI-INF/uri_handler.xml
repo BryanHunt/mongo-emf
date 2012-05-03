@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="org.eclipselabs.mongo.emf.ext.uriHandlerConfigurator">
+   <implementation class="org.eclipselabs.mongo.emf.ext.impl.ResourceSetUriHandlerConfigurator"/>
+   <service>
+      <provide interface="org.eclipselabs.mongo.emf.ext.IResourceSetConfigurator"/>
+   </service>
+   <reference bind="bindUriHandlerProvider" cardinality="0..n" interface="org.eclipselabs.mongo.emf.ext.IUriHandlerProvider" name="IUriHandlerProvider" policy="dynamic" unbind="unbindUriHandlerProvider"/>
+</scr:component>

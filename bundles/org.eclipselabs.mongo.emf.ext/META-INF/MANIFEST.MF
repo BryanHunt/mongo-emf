@@ -13,5 +13,6 @@ Import-Package: org.eclipse.emf.common.notify,
  org.eclipse.emf.ecore.util,
  org.eclipselabs.mongo
 Export-Package: org.eclipselabs.mongo.emf.ext
-Service-Component: OSGI-INF/factory.xml
+Service-Component: OSGI-INF/factory.xml,
+ OSGI-INF/uri_handler.xml
 Bundle-ActivationPolicy: lazy

@@ -9,41 +9,68 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf.ext;
+package org.eclipselabs.mongo.emf.ext.impl;
 
 import java.util.HashSet;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
+import org.eclipselabs.mongo.emf.ext.IResourceSetConfigurator;
+import org.eclipselabs.mongo.emf.ext.IUriHandlerProvider;
 
 /**
  * @author bhunt
  * 
  */
-public class MongoResourceSetFactory implements IResourceSetFactory
+public class ResourceSetUriHandlerConfigurator implements IResourceSetConfigurator
 {
 	@Override
-	public ResourceSet createResourceSet()
+	public void configureResourceSet(ResourceSet resourceSet)
 	{
-		MongoResourceSetImpl resourceSet = new MongoResourceSetImpl();
 		EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
+		lock.readLock().lock();
 
-		for (IUriHandlerProvider provider : providers)
-			uriHandlers.add(0, provider.getURIHandler());
-
-		return resourceSet;
+		try
+		{
+			for (IUriHandlerProvider provider : providers)
+				uriHandlers.add(0, provider.getURIHandler());
+		}
+		finally
+		{
+			lock.readLock().unlock();
+		}
 	}
 
 	public void bindUriHandlerProvider(IUriHandlerProvider handlerProvider)
 	{
-		providers.add(handlerProvider);
+		lock.writeLock().lock();
+
+		try
+		{
+			providers.add(handlerProvider);
+		}
+		finally
+		{
+			lock.writeLock().unlock();
+		}
 	}
 
 	public void unbindUriHandlerProvider(IUriHandlerProvider handlerProvider)
 	{
-		providers.remove(handlerProvider);
+		lock.writeLock().lock();
+
+		try
+		{
+			providers.remove(handlerProvider);
+		}
+		finally
+		{
+			lock.writeLock().unlock();
+		}
 	}
 
 	private HashSet<IUriHandlerProvider> providers = new HashSet<IUriHandlerProvider>();
+	private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 }
