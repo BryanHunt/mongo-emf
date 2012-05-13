@@ -131,9 +131,7 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 		if (uri.segmentCount() != 3)
 			throw new IOException("The URI is not of the form 'mongodb:/database/collection/{id}");
 
-		String port = uri.port();
-		String mongoURI = "mongodb://" + uri.host() + (port != null ? ":" + port : "");
-		DBCollection dbCollection = mongoLocator.getMongo(mongoURI).getDB(uri.segment(0)).getCollection(uri.segment(1));
+		DBCollection dbCollection = mongoLocator.getDatabase(uri.toString()).getCollection(uri.segment(1));
 
 // FIXME uncomment the 4 lines below when MongoDB properly supports tagged reads
 //		@SuppressWarnings("unchecked")

@@ -18,6 +18,7 @@ import java.util.Map.Entry;
 import org.eclipselabs.mongo.IMongoLocator;
 import org.eclipselabs.mongo.IMongoProvider;
 
+import com.mongodb.DB;
 import com.mongodb.Mongo;
 
 /**
@@ -27,22 +28,31 @@ import com.mongodb.Mongo;
 public class MongoLocator implements IMongoLocator
 {
 	@Override
+	public DB getDatabase(String uri)
+	{
+		IMongoProvider mongoProvider = getMongoProvider(uri);
+
+		if (mongoProvider == null)
+			return null;
+
+		String[] segments = uri.split("/");
+
+		if (segments.length < 4)
+			return null;
+
+		DB db = mongoProvider.getMongo().getDB(segments[3]);
+		String user = mongoProvider.getUser();
+
+		if (user != null)
+			db.authenticate(user, mongoProvider.getPassword().toCharArray());
+
+		return db;
+	}
+
+	@Override
 	public synchronized Mongo getMongo(String uri)
 	{
-		IMongoProvider provider = mongoProviders.get(uri);
-
-		if (provider == null)
-		{
-			for (Entry<String, IMongoProvider> entry : mongoProviders.entrySet())
-			{
-				if (uri.startsWith(entry.getKey()))
-				{
-					provider = entry.getValue();
-					break;
-				}
-			}
-		}
-
+		IMongoProvider provider = getMongoProvider(uri);
 		return provider != null ? provider.getMongo() : null;
 	}
 
@@ -74,6 +84,24 @@ public class MongoLocator implements IMongoLocator
 			for (String uri : (String[]) uriProperty)
 				mongoProviders.remove(uri);
 		}
+	}
+
+	private IMongoProvider getMongoProvider(String uri)
+	{
+		IMongoProvider provider = mongoProviders.get(uri);
+
+		if (provider == null)
+		{
+			for (Entry<String, IMongoProvider> entry : mongoProviders.entrySet())
+			{
+				if (uri.startsWith(entry.getKey()))
+				{
+					provider = entry.getValue();
+					break;
+				}
+			}
+		}
+		return provider;
 	}
 
 	private HashMap<String, IMongoProvider> mongoProviders = new HashMap<String, IMongoProvider>();

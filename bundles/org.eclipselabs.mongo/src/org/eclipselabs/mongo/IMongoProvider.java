@@ -14,11 +14,14 @@ package org.eclipselabs.mongo;
 import com.mongodb.Mongo;
 
 /**
+ * 
  * @author bhunt
  * 
  */
 public interface IMongoProvider
 {
+	public String PROP_USER = "user";
+	public String PROP_PASSWORD = "password";
 	public String PROP_DESCRIPTION = "description";
 	public String PROP_CONNECTIONS_PER_HOST = "connectionsPerHost";
 	public String PROP_THREADS_ALLOWED_TO_BLOCK_FOR_CONNECTION_MULTIPLIER = "threadsAllowedToBlockForConnectionMultiplier";
@@ -36,4 +39,8 @@ public interface IMongoProvider
 	public String PROP_URI = "uri";
 
 	Mongo getMongo();
+
+	String getUser();
+
+	String getPassword();
 }

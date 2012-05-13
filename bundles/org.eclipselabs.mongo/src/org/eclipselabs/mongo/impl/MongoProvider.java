@@ -46,6 +46,18 @@ public class MongoProvider implements IMongoProvider
 		return mongo;
 	}
 
+	@Override
+	public String getUser()
+	{
+		return user;
+	}
+
+	@Override
+	public String getPassword()
+	{
+		return password;
+	}
+
 	public void configure(Map<String, Object> properties) throws MongoException, UnknownHostException, URISyntaxException
 	{
 		MongoOptions options = new MongoOptions();
@@ -145,6 +157,9 @@ public class MongoProvider implements IMongoProvider
 
 			mongo = new Mongo(serverAddresses, options);
 		}
+
+		user = (String) properties.get(PROP_USER);
+		password = (String) properties.get(PROP_PASSWORD);
 	}
 
 	private ServerAddress createServerAddress(String uriProperty) throws URISyntaxException, UnknownHostException
@@ -156,4 +171,6 @@ public class MongoProvider implements IMongoProvider
 	}
 
 	private volatile Mongo mongo;
+	private String user;
+	private String password;
 }

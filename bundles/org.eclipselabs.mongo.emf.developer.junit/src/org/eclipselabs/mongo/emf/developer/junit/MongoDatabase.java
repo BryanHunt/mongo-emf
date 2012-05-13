@@ -22,12 +22,11 @@ import org.junit.rules.ExternalResource;
 import org.osgi.util.tracker.ServiceTracker;
 
 import com.mongodb.DB;
-import com.mongodb.Mongo;
 
 /**
  * This class is intended to be used as a JUnit @Rule. It will verify that
  * the IMongoDB service exists, and it will delete all collections in the specified
- * MongoDB after each test runs.
+ * database after each test runs.
  * 
  * Example usage:
  * 
@@ -77,8 +76,6 @@ public class MongoDatabase extends ExternalResource
 	 */
 	public MongoDatabase(String hostname, int port, String database)
 	{
-		this.database = database;
-
 		baseURI = URI.createURI("mongodb://" + hostname + (port == 27017 ? "" : ":" + port) + "/" + database);
 		mongoServiceTracker = new ServiceTracker<IMongoLocator, IMongoLocator>(Activator.getBundleContext(), IMongoLocator.class, null);
 		mongoServiceTracker.open();
@@ -136,8 +133,7 @@ public class MongoDatabase extends ExternalResource
 		mongoLocatorService = mongoServiceTracker.waitForService(1000);
 		assertThat(mongoLocatorService, is(notNullValue()));
 
-		Mongo mongo = mongoLocatorService.getMongo(baseURI.toString());
-		db = mongo.getDB(database);
+		db = mongoLocatorService.getDatabase(baseURI.toString());
 	}
 
 	@Override
@@ -163,7 +159,6 @@ public class MongoDatabase extends ExternalResource
 		super.after();
 	}
 
-	private String database;
 	private ServiceTracker<IMongoLocator, IMongoLocator> mongoServiceTracker;
 	private IMongoLocator mongoLocatorService;
 	private DB db;
