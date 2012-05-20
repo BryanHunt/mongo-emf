@@ -20,16 +20,29 @@ import org.junit.rules.ExternalResource;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
- * @author bhunt
+ * This class is intended to be used as a JUnit @Rule. It will create a
+ * service tracker for the specified service and wait for the service
+ * up to the specified timeout.
  * 
+ * @author bhunt
  */
 public class ServiceLocator<T> extends ExternalResource
 {
+	/**
+	 * Defaults the timeout to 1000 ms.
+	 * 
+	 * @param type the service class
+	 */
 	public ServiceLocator(Class<T> type)
 	{
 		this(type, 1000);
 	}
 
+	/**
+	 * 
+	 * @param type the service class
+	 * @param timeout the timeout to wait for the service in ms.
+	 */
 	public ServiceLocator(Class<T> type, long timeout)
 	{
 		this.timeout = timeout;
@@ -37,6 +50,10 @@ public class ServiceLocator<T> extends ExternalResource
 		serviceTracker.open();
 	}
 
+	/**
+	 * 
+	 * @return the service instance
+	 */
 	public T getService()
 	{
 		return service;

@@ -12,6 +12,7 @@
 package org.eclipselabs.mongo.emf.ext.impl;
 
 import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -19,6 +20,10 @@ import org.eclipselabs.mongo.emf.ext.IResourceSetConfigurator;
 import org.eclipselabs.mongo.emf.ext.IResourceSetFactory;
 
 /**
+ * This implementation of the IResourceSetFactory applies all currently
+ * bound IResourceSetConfigurator services to the resource set after
+ * construction.
+ * 
  * @author bhunt
  * 
  */
@@ -71,6 +76,6 @@ public class MongoResourceSetFactory implements IResourceSetFactory
 		}
 	}
 
-	private HashSet<IResourceSetConfigurator> configurators = new HashSet<IResourceSetConfigurator>();
+	private Set<IResourceSetConfigurator> configurators = new HashSet<IResourceSetConfigurator>();
 	private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 }

@@ -67,6 +67,10 @@ public class ServiceTestHarness
 		}
 	}
 
+	/**
+	 * 
+	 * @param timeout the time in ms to wait for the services to be bound by DS.
+	 */
 	protected static void setInitializationTimeout(long timeout)
 	{
 		initializationTimeout = timeout;

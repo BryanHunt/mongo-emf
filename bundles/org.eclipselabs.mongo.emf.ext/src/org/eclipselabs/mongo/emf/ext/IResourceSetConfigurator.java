@@ -14,10 +14,19 @@ package org.eclipselabs.mongo.emf.ext;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
+ * This OSGi service configures a resource set during construction. It is
+ * expected that a system may define more than one configurator and that the
+ * ResourceSet factory will apply all configurators.
+ * 
  * @author bhunt
  * 
  */
 public interface IResourceSetConfigurator
 {
+	/**
+	 * Configure a newly constructed ResourceSet
+	 * 
+	 * @param resourceSet the ResourceSet to configure
+	 */
 	void configureResourceSet(ResourceSet resourceSet);
 }

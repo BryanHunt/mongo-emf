@@ -21,6 +21,10 @@ import org.eclipselabs.mongo.emf.ext.IResourceSetConfigurator;
 import org.eclipselabs.mongo.emf.ext.IUriHandlerProvider;
 
 /**
+ * This implementation of the IResourceSetConfigurator service will attach
+ * all currently bound URI handlers to the ResourceSet. This service is
+ * intended to be used with the IResourceSetFactory service.
+ * 
  * @author bhunt
  * 
  */

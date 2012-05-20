@@ -27,6 +27,9 @@ import org.eclipse.emf.ecore.util.EContentAdapter;
  * with O(n) complexity whereas the default ResourceSetImpl will load resources
  * with O(n^2) complexity.
  * 
+ * This class may be deprecated with EMF 2.8 as there was work done to improve the
+ * base EMF ResourceSetImpl.
+ * 
  * @author bhunt
  * 
  */

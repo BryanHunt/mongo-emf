@@ -14,10 +14,17 @@ package org.eclipselabs.mongo.emf.ext;
 import org.eclipse.emf.ecore.resource.URIHandler;
 
 /**
+ * This OSGi service provides a URI handler. It is intended to be used with the
+ * IResourceSetConfigurator for configuring a ResourceSet.
+ * 
  * @author bhunt
  * 
  */
 public interface IUriHandlerProvider
 {
+	/**
+	 * 
+	 * @return the URI handler instance
+	 */
 	URIHandler getURIHandler();
 }

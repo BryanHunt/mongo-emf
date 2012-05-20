@@ -34,10 +34,13 @@ public class MongoProvider implements IMongoProvider
 	public MongoProvider()
 	{}
 
-	public MongoProvider(String uri)
+	public MongoProvider(String uri, String user, String password) throws MongoException, UnknownHostException, URISyntaxException
 	{
 		HashMap<String, Object> properties = new HashMap<String, Object>();
 		properties.put(IMongoProvider.PROP_URI, uri);
+		properties.put(IMongoProvider.PROP_USER, user);
+		properties.put(IMongoProvider.PROP_PASSWORD, password);
+		configure(properties);
 	}
 
 	@Override

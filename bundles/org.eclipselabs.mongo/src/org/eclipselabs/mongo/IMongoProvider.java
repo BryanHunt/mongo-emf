@@ -14,14 +14,16 @@ package org.eclipselabs.mongo;
 import com.mongodb.Mongo;
 
 /**
+ * This OSGi service provides access to a configured MongoDB driver. The MongoDB driver
+ * is initialized using the configured service properties.
  * 
  * @author bhunt
  * 
  */
 public interface IMongoProvider
 {
-	public String PROP_USER = "user";
-	public String PROP_PASSWORD = "password";
+	//--- MongoOptions properties ---------------------------------------------------------
+
 	public String PROP_DESCRIPTION = "description";
 	public String PROP_CONNECTIONS_PER_HOST = "connectionsPerHost";
 	public String PROP_THREADS_ALLOWED_TO_BLOCK_FOR_CONNECTION_MULTIPLIER = "threadsAllowedToBlockForConnectionMultiplier";
@@ -36,11 +38,34 @@ public interface IMongoProvider
 	public String PROP_WTIMEOUT = "wtimeout";
 	public String PROP_FSYNC = "fsync";
 	public String PROP_J = "j";
+
+	//--- Provider service specific properties ---------------------------------------------
+
+	public String PROP_USER = "user";
+	public String PROP_PASSWORD = "password";
 	public String PROP_URI = "uri";
 
+	//--------------------------------------------------------------------------------------
+
+	/**
+	 * 
+	 * @return the MongoDB driver configured by the service properties
+	 */
 	Mongo getMongo();
 
+	/**
+	 * The user will be configured on the provider service only when the
+	 * MongoDB server requires authentication.
+	 * 
+	 * @return the configured user id or null
+	 */
 	String getUser();
 
+	/**
+	 * The password will be configured on the provider service only when the
+	 * MongoDB server requires authentication.
+	 * 
+	 * @return the configured password or null
+	 */
 	String getPassword();
 }

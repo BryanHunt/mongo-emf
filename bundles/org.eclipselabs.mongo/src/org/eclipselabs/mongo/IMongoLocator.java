@@ -15,16 +15,27 @@ import com.mongodb.DB;
 import com.mongodb.Mongo;
 
 /**
- * This interface gives clients access to a configured Mongo instance. Users
- * should obtain an instance of this interface as an OSGi service.
+ * This OSGi service gives clients access to a configured Mongo instance lookup by URI.
+ * The URI may be any extension of the MongoDB server URI. If your MongoDB server requires
+ * authentication, you should use getDatabase() instead of getMongo().
  * 
  * @author bhunt
  */
 public interface IMongoLocator
 {
 	/**
+	 * Locate a DB instance using the provided URI. If the MongoDB server requires
+	 * authentication, the instance of DB returned will have the user id and password
+	 * set that was specified in the IMongoProvider configuration.
+	 * 
+	 * @param uri the full or base URI of the Mongo database instance
+	 * @return the DB instance with authentication if necessary
+	 */
+	DB getDatabase(String uri);
+
+	/**
 	 * Locate a Mongo instance using the provided URI. The URI may be a full URI
-	 * or a base URI. If the MongoDB server requires autheitication, and you
+	 * or a base URI. If the MongoDB server requires authentication, and you
 	 * call mongo.getDB(), the DB instance returned will not be authenticated.
 	 * In this case, you should call getDatabase(String uri) instead to get an
 	 * authenticated instance of DB.
@@ -33,14 +44,4 @@ public interface IMongoLocator
 	 * @return the Mongo instance if found; null otherwise
 	 */
 	Mongo getMongo(String uri);
-
-	/**
-	 * Locate a DB instance using the provided URI. If the MongoDB server requires
-	 * authentication, the instance of DB returned will have the user id and password
-	 * set.
-	 * 
-	 * @param uri the full or base URI of the Mongo database instance
-	 * @return the DB instance with authentication if necessary
-	 */
-	DB getDatabase(String uri);
 }

@@ -14,10 +14,16 @@ package org.eclipselabs.mongo.emf.ext;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
+ * This OSGi service builds an EMF ResourceSet.
+ * 
  * @author bhunt
  * 
  */
 public interface IResourceSetFactory
 {
+	/**
+	 * 
+	 * @return the newly created ResourceSet
+	 */
 	ResourceSet createResourceSet();
 }

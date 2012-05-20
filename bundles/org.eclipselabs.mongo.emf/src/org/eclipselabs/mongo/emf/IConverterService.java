@@ -43,5 +43,4 @@ public interface IConverterService
 	 * @param converter the converter to remove
 	 */
 	void removeConverter(IValueConverter converter);
-
 }

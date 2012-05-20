@@ -35,12 +35,15 @@ public class MongoLocator implements IMongoLocator
 		if (mongoProvider == null)
 			return null;
 
-		String[] segments = uri.split("/");
+		// The URI will be of the form: mongodb://host[:port]/db/collection/[id]
+		// When the string is split on / the db will be the part at index 3
 
-		if (segments.length < 4)
+		String[] parts = uri.split("/");
+
+		if (parts.length < 4)
 			return null;
 
-		DB db = mongoProvider.getMongo().getDB(segments[3]);
+		DB db = mongoProvider.getMongo().getDB(parts[3]);
 		String user = mongoProvider.getUser();
 
 		if (user != null)
@@ -50,7 +53,7 @@ public class MongoLocator implements IMongoLocator
 	}
 
 	@Override
-	public synchronized Mongo getMongo(String uri)
+	public Mongo getMongo(String uri)
 	{
 		IMongoProvider provider = getMongoProvider(uri);
 		return provider != null ? provider.getMongo() : null;
@@ -58,51 +61,50 @@ public class MongoLocator implements IMongoLocator
 
 	public synchronized void bindMongoProvider(IMongoProvider mongoProvider, Map<String, Object> properties)
 	{
-		Object uriProperty = properties.get(IMongoProvider.PROP_URI);
+		String uri = (String) properties.get(IMongoProvider.PROP_URI);
 
-		if (uriProperty instanceof String)
-		{
-			mongoProviders.put((String) uriProperty, mongoProvider);
-		}
-		else
-		{
-			for (String uri : (String[]) uriProperty)
-				mongoProviders.put(uri, mongoProvider);
-		}
+		// The URI can be a CSV when connecting to a replica set.  In that case, we
+		// register the provider using the first URI in the list
+
+		String[] uris = uri.split(",");
+		uri = uris[0].trim();
+
+		mongoProvidersByURI.put(uri, mongoProvider);
 	}
 
 	public synchronized void unbindMongoProvider(IMongoProvider mongoProvider, Map<String, Object> properties)
 	{
-		Object uriProperty = properties.get(IMongoProvider.PROP_URI);
+		String uri = (String) properties.get(IMongoProvider.PROP_URI);
 
-		if (uriProperty instanceof String)
-		{
-			mongoProviders.remove((String) uriProperty);
-		}
-		else
-		{
-			for (String uri : (String[]) uriProperty)
-				mongoProviders.remove(uri);
-		}
+		// The URI can be a CSV when connecting to a replica set.  In that case, the
+		// provider was registered using the first URI in the list, so we must use
+		// that first URI to unregister the provider.
+
+		String[] uris = uri.split(",");
+		uri = uris[0].trim();
+
+		mongoProvidersByURI.remove(uri);
 	}
 
-	private IMongoProvider getMongoProvider(String uri)
+	private synchronized IMongoProvider getMongoProvider(String uri)
 	{
-		IMongoProvider provider = mongoProviders.get(uri);
+		IMongoProvider provider = mongoProvidersByURI.get(uri);
 
-		if (provider == null)
+		if (provider != null)
+			return provider;
+
+		// Since the provider was not found, the client probably passed in a URI
+		// that contains segments in the path.  In this case, we have to compare
+		// each registered URI for a substring match.
+
+		for (Entry<String, IMongoProvider> entry : mongoProvidersByURI.entrySet())
 		{
-			for (Entry<String, IMongoProvider> entry : mongoProviders.entrySet())
-			{
-				if (uri.startsWith(entry.getKey()))
-				{
-					provider = entry.getValue();
-					break;
-				}
-			}
+			if (uri.startsWith(entry.getKey()))
+				return entry.getValue();
 		}
-		return provider;
+
+		return null;
 	}
 
-	private HashMap<String, IMongoProvider> mongoProviders = new HashMap<String, IMongoProvider>();
+	private HashMap<String, IMongoProvider> mongoProvidersByURI = new HashMap<String, IMongoProvider>();
 }

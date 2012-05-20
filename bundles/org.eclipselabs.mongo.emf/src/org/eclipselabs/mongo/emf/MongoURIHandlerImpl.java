@@ -28,10 +28,9 @@ import com.mongodb.DBCollection;
 
 /**
  * This EMF URI handler interfaces to MongoDB. This URI handler can handle URIs with the "mongodb"
- * scheme. The URI path must have exactly 3 segments. The URI path must be of the form
- * /database/collection/{id} where id is optional the first time the EMF object is saved. When
- * building queries, do not specify an id, but make sure path has 3 segments by placing a "/" after
- * the collection.
+ * scheme. The URI path must have exactly 3 segments and be of the form /database/collection/{id}
+ * where id is optional the first time the EMF object is saved. When building queries, do not
+ * specify an id, but make sure path has 3 segments by placing a "/" after the collection.
  * 
  * Note that if the id is not specified when the object is first saved, MongoDB will assign the id
  * and the URI of the EMF Resource will be modified to include the id in the URI. Examples of valid
@@ -40,10 +39,9 @@ import com.mongodb.DBCollection;
  * mongodb://localhost/data/people/
  * mongodb://localhost/data/people/4d0a3e259095b5b334a59df0
  * 
- * This class has the ability to use a custom converter service, builders, and streams. Each component
- * has a set function for the appropriate factory. Unless you are customizing how EMF objects are
- * serialized and de-serialized in MongoDB, you should not call these functions as default factories
- * are provided.
+ * This class is intended to be used with the IResourceSetFactory service. If you are not using the
+ * factory service, you will have to supply instances of IMongoLocator, IIntputStreamFActory, and
+ * IOutputStreamFactory.
  * 
  * @author bhunt
  * 
@@ -53,7 +51,8 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 	/**
 	 * 
 	 * @param mongoLocator an instance of the mongo locator service
-	 * @param queryEngine an instance of the query engine
+	 * @param inputStreamFactory an instance of the input stream factory service
+	 * @param outputStreamFactory an instance of the output stream factory service
 	 */
 	public MongoURIHandlerImpl(IMongoLocator mongoLocator, IInputStreamFactory inputStreamFactory, IOutputStreamFactory outputStreamFactory)
 	{
@@ -116,11 +115,9 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 	 * This function locates the MongoDB collection instance corresponding to the collection identifier extracted from the URI. The URI path must have exactly 3 segments and be of the form
 	 * mongodb://host:[port]/database/collection/{id} where id is optional.
 	 * 
-	 * @param mongoDB the MongoDB service
 	 * @param uri the MongoDB collection identifier
 	 * @param options the load or save options as appropriate
 	 * @return the MongoDB collection corresponding to the URI
-	 * @throws UnknownHostException if the host specified in the URI can't be found
 	 * @throws IOException if the URI is malformed or the collection could not otherwise be resolved
 	 */
 	public DBCollection getCollection(URI uri, Map<?, ?> options) throws IOException
