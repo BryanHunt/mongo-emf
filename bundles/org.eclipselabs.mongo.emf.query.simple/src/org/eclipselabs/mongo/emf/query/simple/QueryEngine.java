@@ -22,6 +22,7 @@ import org.eclipselabs.emf.query.Literal;
 import org.eclipselabs.emf.query.util.ExpressionBuilder;
 import org.eclipselabs.emf.query.util.QuerySwitch;
 import org.eclipselabs.mongo.emf.IQueryEngine;
+import org.eclipselabs.mongo.emf.MongoQuery;
 import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
 
 import com.mongodb.BasicDBObject;
@@ -36,9 +37,9 @@ public class QueryEngine implements IQueryEngine
 {
 
 	@Override
-	public DBObject buildDBObjectQuery(URI uri)
+	public MongoQuery buildDBObjectQuery(URI uri)
 	{
-		return buildDBObjectQuery(new ExpressionBuilder(URI.decode(uri.query())).parseExpression());
+		return new MongoQuery(buildDBObjectQuery(new ExpressionBuilder(URI.decode(uri.query())).parseExpression()), null);
 	}
 
 	private DBObject buildDBObjectQuery(Expression expression)

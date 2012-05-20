@@ -13,8 +13,6 @@ package org.eclipselabs.mongo.emf;
 
 import org.eclipse.emf.common.util.URI;
 
-import com.mongodb.DBObject;
-
 /**
  * @author bhunt
  * 
@@ -25,7 +23,7 @@ public interface IQueryEngine
 	 * This function builds a DBObject to be used as a query to MongoDB from the EMF query
 	 * 
 	 * @param uri the incoming URI containing the query
-	 * @return the DBObject representation of the query
+	 * @return the MongoQuery representation of the query
 	 */
-	DBObject buildDBObjectQuery(URI uri);
+	MongoQuery buildDBObjectQuery(URI uri);
 }

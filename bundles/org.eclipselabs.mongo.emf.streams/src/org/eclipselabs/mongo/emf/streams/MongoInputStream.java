@@ -30,12 +30,14 @@ import org.eclipselabs.mongo.emf.EObjectBuilder;
 import org.eclipselabs.mongo.emf.IConverterService;
 import org.eclipselabs.mongo.emf.IEObjectBuilderFactory;
 import org.eclipselabs.mongo.emf.IQueryEngine;
+import org.eclipselabs.mongo.emf.MongoQuery;
 import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
 import org.eclipselabs.mongo.emf.model.ModelFactory;
 import org.eclipselabs.mongo.emf.model.MongoCursor;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 
 /**
@@ -89,13 +91,21 @@ public class MongoInputStream extends InputStream implements URIConverter.Loadab
 			if (queryEngine == null)
 				throw new IOException("The query engine was not found");
 
+			MongoQuery mongoQuery = queryEngine.buildDBObjectQuery(uri);
+			DBCursor resultCursor = null;
+
+			if (mongoQuery.getFieldFilter() == null)
+				resultCursor = collection.find(mongoQuery.getObjectFilter());
+			else
+				resultCursor = collection.find(mongoQuery.getObjectFilter(), mongoQuery.getFieldFilter());
+
 			boolean createCursor = Boolean.TRUE.equals(options.get(MongoURIHandlerImpl.OPTION_QUERY_CURSOR));
 
 			if (createCursor)
 			{
 				MongoCursor cursor = ModelFactory.eINSTANCE.createMongoCursor();
 				cursor.setDbCollection(collection);
-				cursor.setDbCursor(collection.find(queryEngine.buildDBObjectQuery(uri)));
+				cursor.setDbCursor(resultCursor);
 				cursor.setObjectBuilder(builder);
 				contents.add(cursor);
 			}
@@ -104,7 +114,7 @@ public class MongoInputStream extends InputStream implements URIConverter.Loadab
 				Result result = QueryFactory.eINSTANCE.createResult();
 				InternalEList<EObject> values = (InternalEList<EObject>) result.getValues();
 
-				for (DBObject dbObject : collection.find(queryEngine.buildDBObjectQuery(uri)))
+				for (DBObject dbObject : resultCursor)
 					values.addUnique(builder.buildEObject(collection, dbObject, resource, true));
 
 				contents.add(result);
