@@ -21,7 +21,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.resource.impl.BinaryResourceImpl;
 import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
-import org.eclipselabs.mongo.IMongoLocator;
+import org.eclipselabs.mongo.IDatabaseLocator;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -54,7 +54,7 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 	 * @param inputStreamFactory an instance of the input stream factory service
 	 * @param outputStreamFactory an instance of the output stream factory service
 	 */
-	public MongoURIHandlerImpl(IMongoLocator mongoLocator, IInputStreamFactory inputStreamFactory, IOutputStreamFactory outputStreamFactory)
+	public MongoURIHandlerImpl(IDatabaseLocator mongoLocator, IInputStreamFactory inputStreamFactory, IOutputStreamFactory outputStreamFactory)
 	{
 
 		this.mongoLocator = mongoLocator;
@@ -277,7 +277,7 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 	 */
 	public static final String OPTION_QUERY_CURSOR = "QUERY_CURSOR";
 
-	private IMongoLocator mongoLocator;
+	private IDatabaseLocator mongoLocator;
 	private IInputStreamFactory inputStreamFactory;
 	private IOutputStreamFactory outputStreamFactory;
 }

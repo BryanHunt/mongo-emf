@@ -12,7 +12,7 @@
 package org.eclipselabs.mongo.emf.impl;
 
 import org.eclipse.emf.ecore.resource.URIHandler;
-import org.eclipselabs.mongo.IMongoLocator;
+import org.eclipselabs.mongo.IDatabaseLocator;
 import org.eclipselabs.mongo.emf.IInputStreamFactory;
 import org.eclipselabs.mongo.emf.IOutputStreamFactory;
 import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
@@ -33,7 +33,7 @@ public class MongoURIHandlerProvider implements IUriHandlerProvider
 		return uriHandler;
 	}
 
-	public void bindMongoLocator(IMongoLocator mongoLocator)
+	public void bindMongoLocator(IDatabaseLocator mongoLocator)
 	{
 		this.mongoLocator = mongoLocator;
 	}
@@ -49,7 +49,7 @@ public class MongoURIHandlerProvider implements IUriHandlerProvider
 	}
 
 	private MongoURIHandlerImpl uriHandler;
-	private IMongoLocator mongoLocator;
+	private IDatabaseLocator mongoLocator;
 	private IInputStreamFactory inputStreamFactory;
 	private IOutputStreamFactory outputStreamFactory;
 }

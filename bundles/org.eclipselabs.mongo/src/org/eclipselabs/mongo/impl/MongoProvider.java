@@ -34,12 +34,10 @@ public class MongoProvider implements IMongoProvider
 	public MongoProvider()
 	{}
 
-	public MongoProvider(String uri, String user, String password) throws MongoException, UnknownHostException, URISyntaxException
+	public MongoProvider(String uri) throws MongoException, UnknownHostException, URISyntaxException
 	{
 		HashMap<String, Object> properties = new HashMap<String, Object>();
 		properties.put(IMongoProvider.PROP_URI, uri);
-		properties.put(IMongoProvider.PROP_USER, user);
-		properties.put(IMongoProvider.PROP_PASSWORD, password);
 		configure(properties);
 	}
 
@@ -50,15 +48,9 @@ public class MongoProvider implements IMongoProvider
 	}
 
 	@Override
-	public String getUser()
+	public String getURI()
 	{
-		return user;
-	}
-
-	@Override
-	public String getPassword()
-	{
-		return password;
+		return uri;
 	}
 
 	public void configure(Map<String, Object> properties) throws MongoException, UnknownHostException, URISyntaxException
@@ -139,12 +131,13 @@ public class MongoProvider implements IMongoProvider
 		// When more than one URI is specified, it denotes a replica set and the
 		// URIs must be separated by a comma (CSV).
 
-		Object uriProperty = properties.get(PROP_URI);
+		String uriProperty = (String) properties.get(PROP_URI);
 
-		if (uriProperty == null)
+		if (uriProperty == null || uriProperty.isEmpty())
 			throw new UnknownHostException("The MongoDB URI was not found in the configuration properties");
 
-		String[] uris = ((String) uriProperty).split(",");
+		String[] uris = uriProperty.split(",");
+		uri = uris[0];
 
 		if (uris.length == 1)
 		{
@@ -160,9 +153,6 @@ public class MongoProvider implements IMongoProvider
 
 			mongo = new Mongo(serverAddresses, options);
 		}
-
-		user = (String) properties.get(PROP_USER);
-		password = (String) properties.get(PROP_PASSWORD);
 	}
 
 	private ServerAddress createServerAddress(String uriProperty) throws URISyntaxException, UnknownHostException
@@ -173,7 +163,6 @@ public class MongoProvider implements IMongoProvider
 		return serverAddress;
 	}
 
+	private volatile String uri;
 	private volatile Mongo mongo;
-	private String user;
-	private String password;
 }

@@ -41,8 +41,6 @@ public interface IMongoProvider
 
 	//--- Provider service specific properties ---------------------------------------------
 
-	public String PROP_USER = "user";
-	public String PROP_PASSWORD = "password";
 	public String PROP_URI = "uri";
 
 	//--------------------------------------------------------------------------------------
@@ -53,19 +51,5 @@ public interface IMongoProvider
 	 */
 	Mongo getMongo();
 
-	/**
-	 * The user will be configured on the provider service only when the
-	 * MongoDB server requires authentication.
-	 * 
-	 * @return the configured user id or null
-	 */
-	String getUser();
-
-	/**
-	 * The password will be configured on the provider service only when the
-	 * MongoDB server requires authentication.
-	 * 
-	 * @return the configured password or null
-	 */
-	String getPassword();
+	String getURI();
 }

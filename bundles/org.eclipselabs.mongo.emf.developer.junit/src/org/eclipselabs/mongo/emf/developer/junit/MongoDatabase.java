@@ -16,7 +16,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipselabs.mongo.IMongoLocator;
+import org.eclipselabs.mongo.IDatabaseLocator;
 import org.eclipselabs.mongo.emf.developer.junit.bundle.Activator;
 import org.junit.rules.ExternalResource;
 import org.osgi.util.tracker.ServiceTracker;
@@ -77,7 +77,7 @@ public class MongoDatabase extends ExternalResource
 	public MongoDatabase(String hostname, int port, String database)
 	{
 		baseURI = URI.createURI("mongodb://" + hostname + (port == 27017 ? "" : ":" + port) + "/" + database);
-		mongoServiceTracker = new ServiceTracker<IMongoLocator, IMongoLocator>(Activator.getBundleContext(), IMongoLocator.class, null);
+		mongoServiceTracker = new ServiceTracker<IDatabaseLocator, IDatabaseLocator>(Activator.getBundleContext(), IDatabaseLocator.class, null);
 		mongoServiceTracker.open();
 	}
 
@@ -121,7 +121,7 @@ public class MongoDatabase extends ExternalResource
 	 * 
 	 * @return the MongoDB OSGi service
 	 */
-	public IMongoLocator getMongoDBService()
+	public IDatabaseLocator getMongoDBService()
 	{
 		return mongoLocatorService;
 	}
@@ -159,8 +159,8 @@ public class MongoDatabase extends ExternalResource
 		super.after();
 	}
 
-	private ServiceTracker<IMongoLocator, IMongoLocator> mongoServiceTracker;
-	private IMongoLocator mongoLocatorService;
+	private ServiceTracker<IDatabaseLocator, IDatabaseLocator> mongoServiceTracker;
+	private IDatabaseLocator mongoLocatorService;
 	private DB db;
 	private URI baseURI;
 }
