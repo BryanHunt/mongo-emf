@@ -34,7 +34,7 @@ public class MongoConfigurator extends BaseConfigurator
 
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
 
-		properties.put(IMongoProvider.PROP_URI, "mongodb://localhost");
+		properties.put(IMongoProvider.PROP_URI, "mongodb://localhost/");
 		properties.put("type", "mongo");
 		config.update(properties);
 	}

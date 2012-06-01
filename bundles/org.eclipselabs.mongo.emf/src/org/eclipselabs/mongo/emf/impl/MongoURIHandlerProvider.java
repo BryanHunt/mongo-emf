@@ -28,14 +28,14 @@ public class MongoURIHandlerProvider implements IUriHandlerProvider
 	public synchronized URIHandler getURIHandler()
 	{
 		if (uriHandler == null)
-			uriHandler = new MongoURIHandlerImpl(mongoLocator, inputStreamFactory, outputStreamFactory);
+			uriHandler = new MongoURIHandlerImpl(databseLocator, inputStreamFactory, outputStreamFactory);
 
 		return uriHandler;
 	}
 
-	public void bindMongoLocator(IDatabaseLocator mongoLocator)
+	public void bindDatabaseLocator(IDatabaseLocator mongoLocator)
 	{
-		this.mongoLocator = mongoLocator;
+		this.databseLocator = mongoLocator;
 	}
 
 	public void bindInputStreamFactory(IInputStreamFactory inputStreamFactory)
@@ -49,7 +49,7 @@ public class MongoURIHandlerProvider implements IUriHandlerProvider
 	}
 
 	private MongoURIHandlerImpl uriHandler;
-	private IDatabaseLocator mongoLocator;
+	private IDatabaseLocator databseLocator;
 	private IInputStreamFactory inputStreamFactory;
 	private IOutputStreamFactory outputStreamFactory;
 }

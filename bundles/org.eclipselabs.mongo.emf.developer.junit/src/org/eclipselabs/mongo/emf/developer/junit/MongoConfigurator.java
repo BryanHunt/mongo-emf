@@ -32,7 +32,7 @@ public class MongoConfigurator
 	{
 		Configuration config = configurationAdmin.createFactoryConfiguration("org.eclipselabs.mongo.provider", null);
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
-		properties.put(IMongoProvider.PROP_URI, "mongodb://localhost");
+		properties.put(IMongoProvider.PROP_URI, "mongodb://localhost/");
 		config.update(properties);
 	}
 

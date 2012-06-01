@@ -52,7 +52,7 @@ public class ExampleComponent
 				child.setName("Child " + i + " " + j);
 				parent.getChildren().add(child);
 
-				Resource resource = resourceSet.createResource(URI.createURI("mongodb://localhost:27018/test/Child/"));
+				Resource resource = resourceSet.createResource(URI.createURI("mongodb://localhost/test/Child/"));
 				resource.getContents().add(child);
 
 				try
@@ -65,7 +65,7 @@ public class ExampleComponent
 				}
 			}
 
-			Resource resource = resourceSet.createResource(URI.createURI("mongodb://localhost:27018/test/Parent/"));
+			Resource resource = resourceSet.createResource(URI.createURI("mongodb://localhost/test/Parent/"));
 			resource.getContents().add(parent);
 
 			try

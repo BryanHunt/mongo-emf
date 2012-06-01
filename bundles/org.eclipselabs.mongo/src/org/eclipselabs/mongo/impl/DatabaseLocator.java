@@ -30,8 +30,11 @@ public class DatabaseLocator implements IDatabaseLocator
 	@Override
 	public DB getDatabase(String uri)
 	{
-		URI fullURI = URI.createURI(uri);
-		URI dbURI = fullURI.trimSegments(fullURI.segmentCount() - 1);
+		URI fullURI = URI.createURI(uri).trimFragment().trimQuery();
+		URI dbURI = fullURI;
+
+		if (fullURI.segmentCount() > 2)
+			dbURI = fullURI.trimSegments(fullURI.segmentCount() - 1);
 
 		synchronized (databasesByURI)
 		{
@@ -44,7 +47,7 @@ public class DatabaseLocator implements IDatabaseLocator
 
 			synchronized (mongoProvidersByURI)
 			{
-				mongoProvider = mongoProvidersByURI.get(dbURI.trimSegments(1).toString());
+				mongoProvider = mongoProvidersByURI.get(dbURI.trimSegments(2).toString());
 			}
 
 			if (mongoProvider == null)

@@ -134,6 +134,7 @@ public class MongoDatabase extends ExternalResource
 		assertThat(mongoLocatorService, is(notNullValue()));
 
 		db = mongoLocatorService.getDatabase(baseURI.toString());
+		assertThat(db, is(notNullValue()));
 	}
 
 	@Override
