@@ -11,6 +11,7 @@
 
 package org.eclipselabs.mongo.impl;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipselabs.mongo.IDatabaseAuthenticationProvider;
@@ -21,6 +22,18 @@ import org.eclipselabs.mongo.IDatabaseAuthenticationProvider;
  */
 public class DatabaseAuthenticationProvider implements IDatabaseAuthenticationProvider
 {
+	public DatabaseAuthenticationProvider()
+	{}
+
+	public DatabaseAuthenticationProvider(String uri, String user, String password)
+	{
+		Map<String, Object> properties = new HashMap<String, Object>();
+		properties.put(IDatabaseAuthenticationProvider.PROP_URI, uri);
+		properties.put(IDatabaseAuthenticationProvider.PROP_USER, user);
+		properties.put(IDatabaseAuthenticationProvider.PROP_PASSWORD, password);
+		configure(properties);
+	}
+
 	@Override
 	public String getURI()
 	{
@@ -57,9 +70,7 @@ public class DatabaseAuthenticationProvider implements IDatabaseAuthenticationPr
 		// The URI will be of the form: mongodb://host[:port]/db/collection/[id]
 		// When the string is split on / the db will be the part at index 3
 
-		String[] parts = uri.split("/");
-
-		if (parts.length < 4)
+		if (uri.split("/").length < 4)
 			throw new IllegalStateException("Could not determine database name from uri: '" + uri + "'");
 	}
 

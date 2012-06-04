@@ -142,7 +142,7 @@ public class MongoProvider implements IMongoProvider
 		if (uris.length == 1)
 		{
 			ServerAddress serverAddress = createServerAddress(uris[0].trim());
-			mongo = new Mongo(serverAddress, options);
+			mongo = createMongo(options, serverAddress);
 		}
 		else
 		{
@@ -151,8 +151,18 @@ public class MongoProvider implements IMongoProvider
 			for (String uri : uris)
 				serverAddresses.add(createServerAddress(uri.trim()));
 
-			mongo = new Mongo(serverAddresses, options);
+			mongo = createMongo(options, serverAddresses);
 		}
+	}
+
+	protected Mongo createMongo(MongoOptions options, ArrayList<ServerAddress> serverAddresses)
+	{
+		return new Mongo(serverAddresses, options);
+	}
+
+	protected Mongo createMongo(MongoOptions options, ServerAddress serverAddress)
+	{
+		return new Mongo(serverAddress, options);
 	}
 
 	private ServerAddress createServerAddress(String uriProperty) throws URISyntaxException, UnknownHostException
