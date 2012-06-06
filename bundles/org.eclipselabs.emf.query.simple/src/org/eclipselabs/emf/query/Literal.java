@@ -27,55 +27,55 @@ package org.eclipselabs.emf.query;
 public interface Literal extends Expression
 {
   /**
-   * Returns the value of the '<em><b>Literal Value</b></em>' attribute.
-   * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Literal Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Literal Value</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Literal Value</em>' attribute.
-   * @see #setLiteralValue(String)
-   * @see org.eclipselabs.emf.query.QueryPackage#getLiteral_LiteralValue()
-   * @model required="true"
-   * @generated
-   */
+	 * @return the value of the '<em>Literal Value</em>' attribute.
+	 * @see #setLiteralValue(String)
+	 * @see org.eclipselabs.emf.query.QueryPackage#getLiteral_LiteralValue()
+	 * @model required="true"
+	 * @generated
+	 */
   String getLiteralValue();
 
   /**
-   * Sets the value of the '{@link org.eclipselabs.emf.query.Literal#getLiteralValue <em>Literal Value</em>}' attribute.
-   * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipselabs.emf.query.Literal#getLiteralValue <em>Literal Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Literal Value</em>' attribute.
-   * @see #getLiteralValue()
-   * @generated
-   */
+	 * @param value the new value of the '<em>Literal Value</em>' attribute.
+	 * @see #getLiteralValue()
+	 * @generated
+	 */
   void setLiteralValue(String value);
 
   /**
-   * Returns the value of the '<em><b>Value</b></em>' attribute.
-   * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Value</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Value</em>' attribute.
-   * @see #setValue(Object)
-   * @see org.eclipselabs.emf.query.QueryPackage#getLiteral_Value()
-   * @model required="true" transient="true" derived="true"
-   * @generated
-   */
+	 * @return the value of the '<em>Value</em>' attribute.
+	 * @see #setValue(Object)
+	 * @see org.eclipselabs.emf.query.QueryPackage#getLiteral_Value()
+	 * @model required="true" transient="true" derived="true"
+	 * @generated
+	 */
   Object getValue();
 
   /**
-   * Sets the value of the '{@link org.eclipselabs.emf.query.Literal#getValue <em>Value</em>}' attribute.
-   * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link org.eclipselabs.emf.query.Literal#getValue <em>Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Value</em>' attribute.
-   * @see #getValue()
-   * @generated
-   */
+	 * @param value the new value of the '<em>Value</em>' attribute.
+	 * @see #getValue()
+	 * @generated
+	 */
   void setValue(Object value);
 
 } // Literal

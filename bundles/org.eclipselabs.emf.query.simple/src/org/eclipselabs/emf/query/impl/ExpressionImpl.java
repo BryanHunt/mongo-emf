@@ -8,7 +8,6 @@ package org.eclipselabs.emf.query.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
 import org.eclipselabs.emf.query.Expression;
 import org.eclipselabs.emf.query.QueryPackage;
 
@@ -24,23 +23,23 @@ import org.eclipselabs.emf.query.QueryPackage;
 public abstract class ExpressionImpl extends EObjectImpl implements Expression
 {
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   protected ExpressionImpl()
   {
-    super();
-  }
+		super();
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   protected EClass eStaticClass()
   {
-    return QueryPackage.Literals.EXPRESSION;
-  }
+		return QueryPackage.Literals.EXPRESSION;
+	}
 } //ExpressionImpl

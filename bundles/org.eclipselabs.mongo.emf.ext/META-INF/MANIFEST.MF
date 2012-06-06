@@ -1,13 +1,17 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Mongo EMF Extensions
-Bundle-SymbolicName: org.eclipselabs.mongo.emf.ext
+Bundle-SymbolicName: org.eclipselabs.mongo.emf.ext;singleton:=true
 Bundle-Version: 0.7.0.qualifier
 Bundle-Vendor: EclipseLabs
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Import-Package: org.eclipse.emf.common.notify,
+Import-Package: org.eclipse.emf.common,
+ org.eclipse.emf.common.notify,
  org.eclipse.emf.common.notify.impl,
  org.eclipse.emf.common.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.impl,
+ org.eclipse.emf.ecore.plugin,
  org.eclipse.emf.ecore.resource,
  org.eclipse.emf.ecore.resource.impl,
  org.eclipse.emf.ecore.util,

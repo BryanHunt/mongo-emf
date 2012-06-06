@@ -39,13 +39,12 @@ public class ProviderConfiguration
 	{
 		Configuration config = configurationAdmin.getConfiguration("org.eclipselabs.mongo.provider", null);
 
-		@SuppressWarnings("unchecked")
 		Dictionary<String, Object> properties = config.getProperties();
 
 		if (properties == null)
 			properties = new Hashtable<String, Object>();
 
-		properties.put(IMongoProvider.PROP_URI, "mongodb://localhost");
+		properties.put(IMongoProvider.PROP_URI, "mongodb://localhost/");
 		config.update(properties);
 	}
 

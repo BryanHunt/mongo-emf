@@ -1,23 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
    <feature url="features/org.eclipselabs.mongo.emf.feature_0.7.0.qualifier.jar" id="org.eclipselabs.mongo.emf.feature" version="0.7.0.qualifier">
-      <category name="mongo-emf"/>
+      <category name="runtime"/>
    </feature>
    <feature url="features/org.eclipselabs.mongo.emf.freemarker.feature_0.7.0.qualifier.jar" id="org.eclipselabs.mongo.emf.freemarker.feature" version="0.7.0.qualifier">
-      <category name="mongo-emf"/>
+      <category name="extensions"/>
    </feature>
    <feature url="features/org.eclipselabs.mongo.emf.log.feature_0.7.0.qualifier.jar" id="org.eclipselabs.mongo.emf.log.feature" version="0.7.0.qualifier">
-      <category name="mongo-emf"/>
+      <category name="extensions"/>
    </feature>
    <feature url="features/org.eclipselabs.mongo.emf.developer.junit.feature_0.7.0.qualifier.jar" id="org.eclipselabs.mongo.emf.developer.junit.feature" version="0.7.0.qualifier">
-      <category name="mongo-emf"/>
+      <category name="extensions"/>
    </feature>
    <feature url="features/org.eclipselabs.mongo.emf.query.simple.feature_0.7.0.qualifier.jar" id="org.eclipselabs.mongo.emf.query.simple.feature" version="0.7.0.qualifier">
-      <category name="mongo-emf"/>
+      <category name="runtime"/>
    </feature>
-   <category-def name="mongo-emf" label="Mongo EMF Runtime">
+   <feature url="features/org.eclipselabs.mongo.emf.builders.feature_0.7.0.qualifier.jar" id="org.eclipselabs.mongo.emf.builders.feature" version="0.7.0.qualifier">
+      <category name="runtime"/>
+   </feature>
+   <feature url="features/org.eclipselabs.mongo.emf.core.feature_0.7.0.qualifier.jar" id="org.eclipselabs.mongo.emf.core.feature" version="0.7.0.qualifier">
+      <category name="runtime"/>
+   </feature>
+   <feature url="features/org.eclipselabs.mongo.emf.streams.feature_0.7.0.qualifier.jar" id="org.eclipselabs.mongo.emf.streams.feature" version="0.7.0.qualifier">
+      <category name="runtime"/>
+   </feature>
+   <category-def name="runtime" label="MongoEMF Runtime">
       <description>
-         EMF binding for MongoDB persistence.
+         EMF binding for MongoDB persistence.  The MongoEMF All-In-One Runtime feature is the only feature you need unless you are extending / specializing the services.
+      </description>
+   </category-def>
+   <category-def name="extensions" label="MongoEMF Extensions">
+      <description>
+         Extensions to the MongoEMF Runtime.
       </description>
    </category-def>
 </site>

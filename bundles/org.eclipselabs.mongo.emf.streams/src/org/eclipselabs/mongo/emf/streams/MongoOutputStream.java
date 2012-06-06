@@ -25,12 +25,12 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipselabs.emf.query.QueryFactory;
-import org.eclipselabs.emf.query.Result;
 import org.eclipselabs.mongo.emf.DBObjectBuilder;
 import org.eclipselabs.mongo.emf.IConverterService;
 import org.eclipselabs.mongo.emf.IDBObjectBuilderFactory;
 import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
+import org.eclipselabs.mongo.emf.ext.ExtFactory;
+import org.eclipselabs.mongo.emf.ext.Result;
 
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
@@ -134,7 +134,7 @@ public class MongoOutputStream extends ByteArrayOutputStream implements URIConve
 
 		URI baseURI = resource.getURI().trimSegments(1);
 		InternalEObject[] eObjects = contents.toArray(new InternalEObject[contents.size()]);
-		Result result = QueryFactory.eINSTANCE.createResult();
+		Result result = ExtFactory.eINSTANCE.createResult();
 		InternalEList<EObject> values = (InternalEList<EObject>) result.getValues();
 
 		for (int i = 0; i < dbObjects.size(); i++)

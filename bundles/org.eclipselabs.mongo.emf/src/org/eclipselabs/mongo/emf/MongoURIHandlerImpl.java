@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
 import org.eclipselabs.mongo.IDatabaseLocator;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
 import com.mongodb.DBCollection;
 
 /**
@@ -128,7 +129,12 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 		if (uri.segmentCount() != 3)
 			throw new IOException("The URI is not of the form 'mongodb:/database/collection/{id}");
 
-		DBCollection dbCollection = databaseLocator.getDatabase(uri.toString()).getCollection(uri.segment(1));
+		DB database = databaseLocator.getDatabase(uri.toString());
+
+		if (database == null)
+			throw new IOException("Database is not available");
+
+		DBCollection dbCollection = database.getCollection(uri.segment(1));
 
 // FIXME uncomment the 4 lines below when MongoDB properly supports tagged reads
 //		@SuppressWarnings("unchecked")

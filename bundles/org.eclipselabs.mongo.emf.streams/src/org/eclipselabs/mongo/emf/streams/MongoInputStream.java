@@ -24,14 +24,14 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipselabs.emf.query.QueryFactory;
-import org.eclipselabs.emf.query.Result;
 import org.eclipselabs.mongo.emf.EObjectBuilder;
 import org.eclipselabs.mongo.emf.IConverterService;
 import org.eclipselabs.mongo.emf.IEObjectBuilderFactory;
 import org.eclipselabs.mongo.emf.IQueryEngine;
 import org.eclipselabs.mongo.emf.MongoQuery;
 import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
+import org.eclipselabs.mongo.emf.ext.ExtFactory;
+import org.eclipselabs.mongo.emf.ext.Result;
 import org.eclipselabs.mongo.emf.model.ModelFactory;
 import org.eclipselabs.mongo.emf.model.MongoCursor;
 
@@ -111,7 +111,7 @@ public class MongoInputStream extends InputStream implements URIConverter.Loadab
 			}
 			else
 			{
-				Result result = QueryFactory.eINSTANCE.createResult();
+				Result result = ExtFactory.eINSTANCE.createResult();
 				InternalEList<EObject> values = (InternalEList<EObject>) result.getValues();
 
 				for (DBObject dbObject : resultCursor)

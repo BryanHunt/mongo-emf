@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipselabs.emf.query.Result;
+import org.eclipselabs.mongo.emf.ext.Result;
 
 import freemarker.cache.TemplateLoader;
 

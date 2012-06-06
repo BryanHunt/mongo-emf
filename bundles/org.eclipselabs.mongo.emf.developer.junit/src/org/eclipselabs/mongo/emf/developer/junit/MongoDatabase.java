@@ -131,10 +131,10 @@ public class MongoDatabase extends ExternalResource
 	{
 		super.before();
 		mongoLocatorService = mongoServiceTracker.waitForService(1000);
-		assertThat(mongoLocatorService, is(notNullValue()));
+		assertThat("Failed to get the IDatabaseLocator service", mongoLocatorService, is(notNullValue()));
 
 		db = mongoLocatorService.getDatabase(baseURI.toString());
-		assertThat(db, is(notNullValue()));
+		assertThat("No database configured for: " + baseURI.toString(), db, is(notNullValue()));
 	}
 
 	@Override
