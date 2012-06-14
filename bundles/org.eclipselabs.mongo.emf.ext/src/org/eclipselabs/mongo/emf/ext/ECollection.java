@@ -21,15 +21,15 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipselabs.mongo.emf.ext.Result#getValues <em>Values</em>}</li>
+ *   <li>{@link org.eclipselabs.mongo.emf.ext.ECollection#getValues <em>Values</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.eclipselabs.mongo.emf.ext.ExtPackage#getResult()
+ * @see org.eclipselabs.mongo.emf.ext.ExtPackage#getECollection()
  * @model kind="class"
  * @generated
  */
-public class Result extends EObjectImpl implements EObject
+public class ECollection extends EObjectImpl implements EObject
 {
 	/**
 	 * The cached value of the '{@link #getValues() <em>Values</em>}' reference list.
@@ -46,7 +46,7 @@ public class Result extends EObjectImpl implements EObject
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected Result()
+	protected ECollection()
 	{
 		super();
 	}
@@ -59,7 +59,7 @@ public class Result extends EObjectImpl implements EObject
 	@Override
 	protected EClass eStaticClass()
 	{
-		return ExtPackage.Literals.RESULT;
+		return ExtPackage.Literals.ECOLLECTION;
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class Result extends EObjectImpl implements EObject
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Values</em>' reference list.
-	 * @see org.eclipselabs.mongo.emf.ext.ExtPackage#getResult_Values()
+	 * @see org.eclipselabs.mongo.emf.ext.ExtPackage#getECollection_Values()
 	 * @model
 	 * @generated
 	 */
@@ -80,7 +80,7 @@ public class Result extends EObjectImpl implements EObject
 	{
 		if (values == null)
 		{
-			values = new EObjectResolvingEList<EObject>(EObject.class, this, ExtPackage.RESULT__VALUES);
+			values = new EObjectResolvingEList<EObject>(EObject.class, this, ExtPackage.ECOLLECTION__VALUES);
 		}
 		return values;
 	}
@@ -95,7 +95,7 @@ public class Result extends EObjectImpl implements EObject
 	{
 		switch (featureID)
 		{
-			case ExtPackage.RESULT__VALUES:
+			case ExtPackage.ECOLLECTION__VALUES:
 				return getValues();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -112,7 +112,7 @@ public class Result extends EObjectImpl implements EObject
 	{
 		switch (featureID)
 		{
-			case ExtPackage.RESULT__VALUES:
+			case ExtPackage.ECOLLECTION__VALUES:
 				getValues().clear();
 				getValues().addAll((Collection<? extends EObject>)newValue);
 				return;
@@ -130,7 +130,7 @@ public class Result extends EObjectImpl implements EObject
 	{
 		switch (featureID)
 		{
-			case ExtPackage.RESULT__VALUES:
+			case ExtPackage.ECOLLECTION__VALUES:
 				getValues().clear();
 				return;
 		}
@@ -147,7 +147,7 @@ public class Result extends EObjectImpl implements EObject
 	{
 		switch (featureID)
 		{
-			case ExtPackage.RESULT__VALUES:
+			case ExtPackage.ECOLLECTION__VALUES:
 				return values != null && !values.isEmpty();
 		}
 		return super.eIsSet(featureID);

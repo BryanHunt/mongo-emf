@@ -29,8 +29,8 @@ import org.eclipselabs.mongo.emf.DBObjectBuilder;
 import org.eclipselabs.mongo.emf.IConverterService;
 import org.eclipselabs.mongo.emf.IDBObjectBuilderFactory;
 import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
+import org.eclipselabs.mongo.emf.ext.ECollection;
 import org.eclipselabs.mongo.emf.ext.ExtFactory;
-import org.eclipselabs.mongo.emf.ext.Result;
 
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
@@ -134,8 +134,8 @@ public class MongoOutputStream extends ByteArrayOutputStream implements URIConve
 
 		URI baseURI = resource.getURI().trimSegments(1);
 		InternalEObject[] eObjects = contents.toArray(new InternalEObject[contents.size()]);
-		Result result = ExtFactory.eINSTANCE.createResult();
-		InternalEList<EObject> values = (InternalEList<EObject>) result.getValues();
+		ECollection eCollection = ExtFactory.eINSTANCE.createECollection();
+		InternalEList<EObject> values = (InternalEList<EObject>) eCollection.getValues();
 
 		for (int i = 0; i < dbObjects.size(); i++)
 		{
@@ -146,7 +146,7 @@ public class MongoOutputStream extends ByteArrayOutputStream implements URIConve
 		}
 
 		contents.clear();
-		contents.add(result);
+		contents.add(eCollection);
 	}
 
 	private void saveSingleObject(Object id) throws IOException

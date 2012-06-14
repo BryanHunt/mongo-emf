@@ -75,9 +75,9 @@ public class ExtAdapterFactory extends AdapterFactoryImpl
 		new ExtSwitch<Adapter>()
 		{
 			@Override
-			public Adapter caseResult(Result object)
+			public Adapter caseECollection(ECollection object)
 			{
-				return createResultAdapter();
+				return createECollectionAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object)
@@ -102,16 +102,16 @@ public class ExtAdapterFactory extends AdapterFactoryImpl
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipselabs.mongo.emf.ext.Result <em>Result</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipselabs.mongo.emf.ext.ECollection <em>ECollection</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipselabs.mongo.emf.ext.Result
+	 * @see org.eclipselabs.mongo.emf.ext.ECollection
 	 * @generated
 	 */
-	public Adapter createResultAdapter()
+	public Adapter createECollectionAdapter()
 	{
 		return null;
 	}

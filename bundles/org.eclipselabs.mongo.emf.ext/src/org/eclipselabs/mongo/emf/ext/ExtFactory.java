@@ -72,7 +72,7 @@ public class ExtFactory extends EFactoryImpl
 	{
 		switch (eClass.getClassifierID())
 		{
-			case ExtPackage.RESULT: return createResult();
+			case ExtPackage.ECOLLECTION: return createECollection();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -83,10 +83,10 @@ public class ExtFactory extends EFactoryImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Result createResult()
+	public ECollection createECollection()
 	{
-		Result result = new Result();
-		return result;
+		ECollection eCollection = new ECollection();
+		return eCollection;
 	}
 
 	/**

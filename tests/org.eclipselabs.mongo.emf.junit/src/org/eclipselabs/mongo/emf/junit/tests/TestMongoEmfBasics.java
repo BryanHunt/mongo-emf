@@ -44,7 +44,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
 import org.eclipselabs.mongo.emf.developer.junit.MongoUtil;
-import org.eclipselabs.mongo.emf.ext.Result;
+import org.eclipselabs.mongo.emf.ext.ECollection;
 import org.eclipselabs.mongo.emf.junit.model.ETypes;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
@@ -350,12 +350,12 @@ public class TestMongoEmfBasics extends TestHarness
 		// Verify : Check that the objects were stored correctly
 
 		assertThat(resource.getContents().size(), is(1));
-		assertThat(resource.getContents().get(0), is(instanceOf(Result.class)));
+		assertThat(resource.getContents().get(0), is(instanceOf(ECollection.class)));
 
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(2));
-		assertThat(MongoUtil.getID(result.getValues().get(0)), is(id1));
-		assertThat(MongoUtil.getID(result.getValues().get(1)), is(id2));
+		ECollection eCollection = (ECollection) resource.getContents().get(0);
+		assertThat(eCollection.getValues().size(), is(2));
+		assertThat(MongoUtil.getID(eCollection.getValues().get(0)), is(id1));
+		assertThat(MongoUtil.getID(eCollection.getValues().get(1)), is(id2));
 	}
 
 	@Test
@@ -399,15 +399,15 @@ public class TestMongoEmfBasics extends TestHarness
 		// Verify : The resouce should contain a Result with proxies to all of the stored objects
 
 		assertThat(resource.getContents().size(), is(1));
-		assertThat(resource.getContents().get(0), is(instanceOf(Result.class)));
+		assertThat(resource.getContents().get(0), is(instanceOf(ECollection.class)));
 
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(numberTargets));
+		ECollection eCollection = (ECollection) resource.getContents().get(0);
+		assertThat(eCollection.getValues().size(), is(numberTargets));
 
 		for (int i = 0; i < numberTargets; i++)
 		{
-			assertThat(result.getValues().get(i), is(instanceOf(TargetObject.class)));
-			TargetObject targetObject = (TargetObject) result.getValues().get(i);
+			assertThat(eCollection.getValues().get(i), is(instanceOf(TargetObject.class)));
+			TargetObject targetObject = (TargetObject) eCollection.getValues().get(i);
 			assertThat(targetObject.getSingleAttribute(), is("junit " + i));
 		}
 	}

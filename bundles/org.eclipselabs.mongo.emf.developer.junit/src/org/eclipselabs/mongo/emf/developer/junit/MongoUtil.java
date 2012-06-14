@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipselabs.mongo.emf.developer.junit.bundle.Activator;
-import org.eclipselabs.mongo.emf.ext.Result;
+import org.eclipselabs.mongo.emf.ext.ECollection;
 
 /**
  * This class provides a set of utility functions that may be useful when unit testing.
@@ -140,13 +140,13 @@ public class MongoUtil
 		Resource resource = resourceSet.getResource(URI.createURI("mongodb://localhost/" + db + "/" + collection + "/?"), true);
 		assertThat(resource, is(notNullValue()));
 
-		Result result = (Result) resource.getContents().get(0);
+		ECollection eCollection = (ECollection) resource.getContents().get(0);
 
-		if (result.getValues().isEmpty())
+		if (eCollection.getValues().isEmpty())
 			return null;
 
-		assertThat(result.getValues().size(), is(1));
-		return (T) result.getValues().get(0);
+		assertThat(eCollection.getValues().size(), is(1));
+		return (T) eCollection.getValues().get(0);
 	}
 
 	/**
@@ -165,10 +165,10 @@ public class MongoUtil
 		Resource resource = resourceSet.getResource(URI.createURI("mongodb://localhost/" + db + "/" + collection + "/?"), true);
 		assertThat(resource, is(notNullValue()));
 
-		Result result = (Result) resource.getContents().get(0);
+		ECollection eCollection = (ECollection) resource.getContents().get(0);
 		ArrayList<T> objects = new ArrayList<T>();
 
-		for (EObject object : result.getValues())
+		for (EObject object : eCollection.getValues())
 			objects.add((T) object);
 
 		return objects;

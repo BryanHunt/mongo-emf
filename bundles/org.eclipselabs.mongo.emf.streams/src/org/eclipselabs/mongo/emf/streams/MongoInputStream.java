@@ -30,8 +30,8 @@ import org.eclipselabs.mongo.emf.IEObjectBuilderFactory;
 import org.eclipselabs.mongo.emf.IQueryEngine;
 import org.eclipselabs.mongo.emf.MongoQuery;
 import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
+import org.eclipselabs.mongo.emf.ext.ECollection;
 import org.eclipselabs.mongo.emf.ext.ExtFactory;
-import org.eclipselabs.mongo.emf.ext.Result;
 import org.eclipselabs.mongo.emf.model.ModelFactory;
 import org.eclipselabs.mongo.emf.model.MongoCursor;
 
@@ -111,13 +111,13 @@ public class MongoInputStream extends InputStream implements URIConverter.Loadab
 			}
 			else
 			{
-				Result result = ExtFactory.eINSTANCE.createResult();
-				InternalEList<EObject> values = (InternalEList<EObject>) result.getValues();
+				ECollection eCollection = ExtFactory.eINSTANCE.createECollection();
+				InternalEList<EObject> values = (InternalEList<EObject>) eCollection.getValues();
 
 				for (DBObject dbObject : resultCursor)
 					values.addUnique(builder.buildEObject(collection, dbObject, resource, true));
 
-				contents.add(result);
+				contents.add(eCollection);
 			}
 		}
 		else

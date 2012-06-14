@@ -59,14 +59,14 @@ public class ExtPackage extends EPackageImpl
 	public static final ExtPackage eINSTANCE = org.eclipselabs.mongo.emf.ext.ExtPackage.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.ext.Result <em>Result</em>}' class.
+	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.ext.ECollection <em>ECollection</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipselabs.mongo.emf.ext.Result
-	 * @see org.eclipselabs.mongo.emf.ext.ExtPackage#getResult()
+	 * @see org.eclipselabs.mongo.emf.ext.ECollection
+	 * @see org.eclipselabs.mongo.emf.ext.ExtPackage#getECollection()
 	 * @generated
 	 */
-	public static final int RESULT = 0;
+	public static final int ECOLLECTION = 0;
 
 	/**
 	 * The feature id for the '<em><b>Values</b></em>' reference list.
@@ -75,23 +75,23 @@ public class ExtPackage extends EPackageImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int RESULT__VALUES = 0;
+	public static final int ECOLLECTION__VALUES = 0;
 
 	/**
-	 * The number of structural features of the '<em>Result</em>' class.
+	 * The number of structural features of the '<em>ECollection</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	public static final int RESULT_FEATURE_COUNT = 1;
+	public static final int ECOLLECTION_FEATURE_COUNT = 1;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass resultEClass = null;
+	private EClass eCollectionEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -161,31 +161,33 @@ public class ExtPackage extends EPackageImpl
 
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.ext.Result <em>Result</em>}'.
+	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.ext.ECollection <em>ECollection</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Result</em>'.
-	 * @see org.eclipselabs.mongo.emf.ext.Result
+	 * @return the meta object for class '<em>ECollection</em>'.
+	 * @see org.eclipselabs.mongo.emf.ext.ECollection
 	 * @generated
 	 */
-	public EClass getResult()
+	public EClass getECollection()
 	{
-		return resultEClass;
+		return eCollectionEClass;
 	}
 
+
 	/**
-	 * Returns the meta object for the reference list '{@link org.eclipselabs.mongo.emf.ext.Result#getValues <em>Values</em>}'.
+	 * Returns the meta object for the reference list '{@link org.eclipselabs.mongo.emf.ext.ECollection#getValues <em>Values</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the reference list '<em>Values</em>'.
-	 * @see org.eclipselabs.mongo.emf.ext.Result#getValues()
-	 * @see #getResult()
+	 * @see org.eclipselabs.mongo.emf.ext.ECollection#getValues()
+	 * @see #getECollection()
 	 * @generated
 	 */
-	public EReference getResult_Values()
+	public EReference getECollection_Values()
 	{
-		return (EReference)resultEClass.getEStructuralFeatures().get(0);
+		return (EReference)eCollectionEClass.getEStructuralFeatures().get(0);
 	}
+
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -219,8 +221,8 @@ public class ExtPackage extends EPackageImpl
 		isCreated = true;
 
 		// Create classes and their features
-		resultEClass = createEClass(RESULT);
-		createEReference(resultEClass, RESULT__VALUES);
+		eCollectionEClass = createEClass(ECOLLECTION);
+		createEReference(eCollectionEClass, ECOLLECTION__VALUES);
 	}
 
 	/**
@@ -257,8 +259,8 @@ public class ExtPackage extends EPackageImpl
 		// Add supertypes to classes
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(resultEClass, Result.class, "Result", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getResult_Values(), theEcorePackage.getEObject(), null, "values", null, 0, -1, Result.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(eCollectionEClass, ECollection.class, "ECollection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getECollection_Values(), theEcorePackage.getEObject(), null, "values", null, 0, -1, ECollection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
@@ -279,14 +281,14 @@ public class ExtPackage extends EPackageImpl
 	public interface Literals
 	{
 		/**
-		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.ext.Result <em>Result</em>}' class.
+		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.ext.ECollection <em>ECollection</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipselabs.mongo.emf.ext.Result
-		 * @see org.eclipselabs.mongo.emf.ext.ExtPackage#getResult()
+		 * @see org.eclipselabs.mongo.emf.ext.ECollection
+		 * @see org.eclipselabs.mongo.emf.ext.ExtPackage#getECollection()
 		 * @generated
 		 */
-		public static final EClass RESULT = eINSTANCE.getResult();
+		public static final EClass ECOLLECTION = eINSTANCE.getECollection();
 
 		/**
 		 * The meta object literal for the '<em><b>Values</b></em>' reference list feature.
@@ -294,7 +296,7 @@ public class ExtPackage extends EPackageImpl
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EReference RESULT__VALUES = eINSTANCE.getResult_Values();
+		public static final EReference ECOLLECTION__VALUES = eINSTANCE.getECollection_Values();
 
 	}
 

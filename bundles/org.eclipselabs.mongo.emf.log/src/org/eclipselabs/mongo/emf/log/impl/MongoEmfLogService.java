@@ -26,7 +26,7 @@ import org.eclipselabs.emf.query.Expression;
 import org.eclipselabs.emf.query.util.ExpressionBuilder;
 import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
 import org.eclipselabs.mongo.emf.ext.IResourceSetFactory;
-import org.eclipselabs.mongo.emf.ext.Result;
+import org.eclipselabs.mongo.emf.ext.ECollection;
 import org.eclipselabs.mongo.emf.log.IMongoLogService;
 import org.eclipselabs.mongo.emf.log.LogEntry;
 import org.eclipselabs.mongo.emf.log.LogFactory;
@@ -144,8 +144,8 @@ public class MongoEmfLogService implements IMongoLogService, LogListener
 	{
 		ResourceSet resourceSet = resourceSetFactory.createResourceSet();
 		Resource resource = resourceSet.getResource(baseURI.appendQuery(URI.encodeQuery(query, false)), true);
-		Result result = (Result) resource.getContents().get(0);
-		return (Collection<LogEntry>) (Collection<?>) result.getValues();
+		ECollection eCollection = (ECollection) resource.getContents().get(0);
+		return (Collection<LogEntry>) (Collection<?>) eCollection.getValues();
 	}
 
 	private URI baseURI;

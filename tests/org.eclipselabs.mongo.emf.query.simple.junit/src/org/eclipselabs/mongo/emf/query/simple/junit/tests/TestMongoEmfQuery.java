@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
-import org.eclipselabs.mongo.emf.ext.Result;
+import org.eclipselabs.mongo.emf.ext.ECollection;
 import org.eclipselabs.mongo.emf.junit.model.ETypes;
 import org.eclipselabs.mongo.emf.junit.model.PrimaryObject;
 import org.eclipselabs.mongo.emf.junit.model.TargetObject;
@@ -77,9 +77,9 @@ public class TestMongoEmfQuery extends TestHarness
 		assertThat(resource, is(notNullValue()));
 		assertThat(resource.getContents().size(), is(1));
 
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(1));
-		Library library = (Library) result.getValues().get(0);
+		ECollection eCollection = (ECollection) resource.getContents().get(0);
+		assertThat(eCollection.getValues().size(), is(1));
+		Library library = (Library) eCollection.getValues().get(0);
 
 		assertThat(library.getLocation(), is(notNullValue()));
 		assertThat(library.getLocation().getAddress(), is("Wastelands"));
@@ -108,8 +108,8 @@ public class TestMongoEmfQuery extends TestHarness
 		assertThat(resource, is(notNullValue()));
 		assertThat(resource.getContents().size(), is(1));
 
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(1));
+		ECollection eCollection = (ECollection) resource.getContents().get(0);
+		assertThat(eCollection.getValues().size(), is(1));
 	}
 
 	@Test
@@ -124,10 +124,10 @@ public class TestMongoEmfQuery extends TestHarness
 		assertThat(resource, is(notNullValue()));
 		assertThat(resource.getContents().size(), is(1));
 
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(2));
-		Library library1 = (Library) result.getValues().get(0);
-		Library library2 = (Library) result.getValues().get(1);
+		ECollection eCollection = (ECollection) resource.getContents().get(0);
+		assertThat(eCollection.getValues().size(), is(2));
+		Library library1 = (Library) eCollection.getValues().get(0);
+		Library library2 = (Library) eCollection.getValues().get(1);
 
 		assertThat(library1.getLocation(), is(notNullValue()));
 		assertThat(library1.getLocation().getAddress(), is("Wastelands"));
@@ -151,10 +151,10 @@ public class TestMongoEmfQuery extends TestHarness
 		assertThat(resource, is(notNullValue()));
 		assertThat(resource.getContents().size(), is(1));
 
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(2));
-		Library library1 = (Library) result.getValues().get(0);
-		Library library2 = (Library) result.getValues().get(1);
+		ECollection eCollection = (ECollection) resource.getContents().get(0);
+		assertThat(eCollection.getValues().size(), is(2));
+		Library library1 = (Library) eCollection.getValues().get(0);
+		Library library2 = (Library) eCollection.getValues().get(1);
 
 		assertThat(library1.getLocation(), is(notNullValue()));
 		assertThat(library1.getLocation().getAddress(), is("Wastelands"));
@@ -179,11 +179,11 @@ public class TestMongoEmfQuery extends TestHarness
 		assertThat(resource, is(notNullValue()));
 		assertThat(resource.getContents().size(), is(1));
 
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(3));
-		Library library1 = (Library) result.getValues().get(0);
-		Library library2 = (Library) result.getValues().get(1);
-		Library library3 = (Library) result.getValues().get(2);
+		ECollection eCollection = (ECollection) resource.getContents().get(0);
+		assertThat(eCollection.getValues().size(), is(3));
+		Library library1 = (Library) eCollection.getValues().get(0);
+		Library library2 = (Library) eCollection.getValues().get(1);
+		Library library3 = (Library) eCollection.getValues().get(2);
 
 		assertThat(library1.getLocation(), is(notNullValue()));
 		assertThat(library1.getLocation().getAddress(), is("Wastelands"));
@@ -214,9 +214,9 @@ public class TestMongoEmfQuery extends TestHarness
 		assertThat(resource, is(notNullValue()));
 		assertThat(resource.getContents().size(), is(1));
 
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(1));
-		Library library1 = (Library) result.getValues().get(0);
+		ECollection eCollection = (ECollection) resource.getContents().get(0);
+		assertThat(eCollection.getValues().size(), is(1));
+		Library library1 = (Library) eCollection.getValues().get(0);
 
 		assertThat(library1.getLocation(), is(notNullValue()));
 		assertThat(library1.getLocation().getAddress(), is("Wetlands"));
@@ -234,9 +234,9 @@ public class TestMongoEmfQuery extends TestHarness
 		assertThat(resource, is(notNullValue()));
 		assertThat(resource.getContents().size(), is(1));
 
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(1));
-		Person person = (Person) result.getValues().get(0);
+		ECollection eCollection = (ECollection) resource.getContents().get(0);
+		assertThat(eCollection.getValues().size(), is(1));
+		Person person = (Person) eCollection.getValues().get(0);
 		assertThat(person.getName(), is((String) null));
 	}
 
@@ -252,9 +252,9 @@ public class TestMongoEmfQuery extends TestHarness
 		assertThat(resource, is(notNullValue()));
 		assertThat(resource.getContents().size(), is(1));
 
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(1));
-		Person person = (Person) result.getValues().get(0);
+		ECollection eCollection = (ECollection) resource.getContents().get(0);
+		assertThat(eCollection.getValues().size(), is(1));
+		Person person = (Person) eCollection.getValues().get(0);
 		assertThat(person.getName(), is("Stephen King"));
 	}
 
@@ -272,9 +272,9 @@ public class TestMongoEmfQuery extends TestHarness
 		assertThat(resource, is(notNullValue()));
 		assertThat(resource.getContents().size(), is(1));
 
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(1));
-		Person person = (Person) result.getValues().get(0);
+		ECollection eCollection = (ECollection) resource.getContents().get(0);
+		assertThat(eCollection.getValues().size(), is(1));
+		Person person = (Person) eCollection.getValues().get(0);
 		assertThat(person.getName(), is("Ed Merks"));
 	}
 
@@ -289,9 +289,9 @@ public class TestMongoEmfQuery extends TestHarness
 		assertThat(resource, is(notNullValue()));
 		assertThat(resource.getContents().size(), is(1));
 
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(1));
-		Person author = (Person) result.getValues().get(0);
+		ECollection eCollection = (ECollection) resource.getContents().get(0);
+		assertThat(eCollection.getValues().size(), is(1));
+		Person author = (Person) eCollection.getValues().get(0);
 
 		assertThat(author.getName(), is("Stephen King"));
 	}
@@ -318,9 +318,9 @@ public class TestMongoEmfQuery extends TestHarness
 
 		resourceSet = createResourceSet();
 		resource = resourceSet.getResource(createQueryURI(org.eclipselabs.mongo.emf.junit.model.ModelPackage.Literals.ETYPES, "eInt == 0"), true);
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(1));
-		ETypes target = (ETypes) result.getValues().get(0);
+		ECollection eCollection = (ECollection) resource.getContents().get(0);
+		assertThat(eCollection.getValues().size(), is(1));
+		ETypes target = (ETypes) eCollection.getValues().get(0);
 		assertThat(target.getEInt(), is(0));
 		assertThat(target.getELong(), is(1L));
 	}
@@ -342,8 +342,8 @@ public class TestMongoEmfQuery extends TestHarness
 		resourceSet = createResourceSet();
 		resource = resourceSet.getResource(
 				createQueryURI(org.eclipselabs.mongo.emf.junit.model.ModelPackage.Literals.ETYPES, "eDate >= " + EcoreFactory.eINSTANCE.convertToString(EcorePackage.Literals.EDATE, new Date())), true);
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(1));
+		ECollection eCollection = (ECollection) resource.getContents().get(0);
+		assertThat(eCollection.getValues().size(), is(1));
 	}
 
 	@Ignore
@@ -364,8 +364,8 @@ public class TestMongoEmfQuery extends TestHarness
 
 		// Verify : The query should not return any results;
 
-		Result result = (Result) resource.getContents().get(0);
-		assertThat(result.getValues().size(), is(0));
+		ECollection eCollection = (ECollection) resource.getContents().get(0);
+		assertThat(eCollection.getValues().size(), is(0));
 	}
 
 	private BasicDBObject createAuthor(String name)

@@ -72,29 +72,29 @@ public class ExtSwitch<T> extends Switch<T>
 	{
 		switch (classifierID)
 		{
-			case ExtPackage.RESULT:
+			case ExtPackage.ECOLLECTION:
 			{
-				Result result = (Result)theEObject;
-				T theResult = caseResult(result);
-				if (theResult == null) theResult = defaultCase(theEObject);
-				return theResult;
+				ECollection eCollection = (ECollection)theEObject;
+				T result = caseECollection(eCollection);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
 			}
 			default: return defaultCase(theEObject);
 		}
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Result</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>ECollection</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Result</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>ECollection</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseResult(Result object)
+	public T caseECollection(ECollection object)
 	{
 		return null;
 	}

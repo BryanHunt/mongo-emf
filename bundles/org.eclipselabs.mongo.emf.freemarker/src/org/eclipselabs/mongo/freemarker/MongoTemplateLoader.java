@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipselabs.mongo.emf.ext.Result;
+import org.eclipselabs.mongo.emf.ext.ECollection;
 
 import freemarker.cache.TemplateLoader;
 
@@ -164,8 +164,8 @@ public class MongoTemplateLoader implements TemplateLoader
 	public void loadTemplates()
 	{
 		Resource resource = resourceSet.getResource(baseURI.appendSegment("").appendQuery(""), true);
-		Result result = (Result) resource.getContents().get(0);
-		EcoreUtil.resolveAll(result);
+		ECollection eCollection = (ECollection) resource.getContents().get(0);
+		EcoreUtil.resolveAll(eCollection);
 		resourceSet.getResources().remove(0);
 	}
 

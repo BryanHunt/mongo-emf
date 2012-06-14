@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipselabs.mongo.emf.developer.junit.MongoDatabase;
-import org.eclipselabs.mongo.emf.ext.Result;
+import org.eclipselabs.mongo.emf.ext.ECollection;
 import org.eclipselabs.mongo.emf.junit.support.TestHarness;
 import org.eclipselabs.mongo.emf.perf.model.ModelFactory;
 import org.eclipselabs.mongo.emf.perf.model.TestObject1;
@@ -80,11 +80,11 @@ public class TestBasePerformance extends TestHarness
 
 		controller.startCPUProfiling(ProfilingModes.CPU_TRACING, filters.toString(), Controller.DEFAULT_WALLTIME_SPEC);
 		resource = resourceSet.getResource(uri.appendQuery(""), true);
-		Result result = (Result) resource.getContents().get(0);
+		ECollection eCollection = (ECollection) resource.getContents().get(0);
 
 		System.out.println("Loading from a Result");
 
-		for (EObject object : result.getValues());
+		for (EObject object : eCollection.getValues());
 
 		System.out.println("Stopping profile");
 		controller.stopCPUProfiling();
