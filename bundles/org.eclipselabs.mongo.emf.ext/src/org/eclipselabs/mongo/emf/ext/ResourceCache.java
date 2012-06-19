@@ -17,9 +17,10 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  * @author bhunt
  * 
  */
-public abstract class ResourceCache
+public class ResourceCache implements IResourceCache
 {
-	protected ResourceSet getResourceSet()
+	@Override
+	public ResourceSet getResourceSet()
 	{
 		if (resourceSet == null)
 		{
