@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="org.eclipselabs.mongo.emf.resourceSetFactory">
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="org.eclipselabs.mongo.emf.mongoURIHandlerProvider">
    <implementation class="org.eclipselabs.mongo.emf.impl.MongoURIHandlerProvider"/>
    <reference bind="bindInputStreamFactory" cardinality="1..1" interface="org.eclipselabs.mongo.emf.IInputStreamFactory" name="IInputStreamFactory" policy="static"/>
    <reference bind="bindOutputStreamFactory" cardinality="1..1" interface="org.eclipselabs.mongo.emf.IOutputStreamFactory" name="IOutputStreamFactory" policy="static"/>
