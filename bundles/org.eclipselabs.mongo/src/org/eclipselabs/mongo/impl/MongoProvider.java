@@ -48,9 +48,9 @@ public class MongoProvider implements IMongoProvider
 	}
 
 	@Override
-	public String getURI()
+	public String[] getURIs()
 	{
-		return uri;
+		return uris;
 	}
 
 	public void configure(Map<String, Object> properties) throws MongoException, UnknownHostException, URISyntaxException
@@ -136,8 +136,7 @@ public class MongoProvider implements IMongoProvider
 		if (uriProperty == null || uriProperty.isEmpty())
 			throw new UnknownHostException("The MongoDB URI was not found in the configuration properties");
 
-		String[] uris = uriProperty.split(",");
-		uri = uris[0];
+		uris = uriProperty.split("\\s*,\\s*");
 
 		if (uris.length == 1)
 		{
@@ -173,6 +172,6 @@ public class MongoProvider implements IMongoProvider
 		return serverAddress;
 	}
 
-	private volatile String uri;
+	private volatile String[] uris;
 	private volatile Mongo mongo;
 }

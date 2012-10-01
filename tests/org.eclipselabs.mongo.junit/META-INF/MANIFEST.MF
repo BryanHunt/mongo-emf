@@ -7,4 +7,5 @@ Fragment-Host: org.eclipselabs.mongo;bundle-version="0.7.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.junit,
  org.eclipse.xtext.xbase.lib;bundle-version="2.3.0",
- org.jnario.lib;bundle-version="0.1.0"
+ org.jnario.lib;bundle-version="0.1.0",
+ org.mockito.mockito-all;bundle-version="1.9.0"

@@ -51,5 +51,5 @@ public interface IMongoProvider
 	 */
 	Mongo getMongo();
 
-	String getURI();
+	String[] getURIs();
 }

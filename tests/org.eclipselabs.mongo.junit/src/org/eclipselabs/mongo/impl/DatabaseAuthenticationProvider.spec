@@ -25,9 +25,9 @@ describe DatabaseAuthenticationProvider
 	 * The provider can be configured outside of an OSGi container
 	 * using the constructor.
 	 */
-	context "using constructor"
+	context "configuration using the constructor"
 	{
-		fact "configuration parameters are available through the API"
+		fact "configuration parameters passed to the constructor are available through the API"
 		{
 			val provider = new DatabaseAuthenticationProvider("mongodb://localhost/db", "user", "password")
 			provider.URI should be "mongodb://localhost/db"
@@ -37,10 +37,9 @@ describe DatabaseAuthenticationProvider
 	}
 
 	/*
-	 * The provider can be configured after construction using
-	 * configure().
+	 * The configuration parameters are validated with configure().
 	 */
-	context "using configure with valid properties"
+	context "configuration"
 	{
 		fact "configuration parameters are available through the API"
 		{
@@ -49,26 +48,20 @@ describe DatabaseAuthenticationProvider
 			subject.user should be "user"
 			subject.password should be "password"
 		}
-	}
-	
-	/*
-	 * The configuration parameters are validated with configure().
-	 */
-	context "using configure with invalid parameters"
-	{
-		fact "configure throws execption when URI is missing the database name"
+		
+		fact "configure throws exception when URI is missing the database name"
 		{
 			properties.put(IDatabaseAuthenticationProvider::PROP_URI, "mongodb://localhost/")
 			subject.configure(properties) throws IllegalStateException
 		}
 
-		fact "configure throws execption when URI is missing the database segment"
+		fact "configure throws exception when URI is missing the database segment"
 		{
 			properties.put(IDatabaseAuthenticationProvider::PROP_URI, "mongodb://localhost")
 			subject.configure(properties) throws IllegalStateException
 		}
 
-		fact "configure throws execption when URI is missing"
+		fact "configure throws exception when URI is missing"
 		{
 			properties.put(IDatabaseAuthenticationProvider::PROP_URI, null)
 			subject.configure(properties) throws IllegalStateException

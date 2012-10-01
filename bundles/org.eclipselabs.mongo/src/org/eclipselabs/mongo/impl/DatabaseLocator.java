@@ -83,36 +83,21 @@ public class DatabaseLocator implements IDatabaseLocator
 		}
 	}
 
-	public void bindMongoProvider(IMongoProvider mongoProvider, Map<String, Object> properties)
+	public void bindMongoProvider(IMongoProvider mongoProvider)
 	{
-		String uri = (String) properties.get(IMongoProvider.PROP_URI);
-
-		// The URI can be a CSV when connecting to a replica set.  In that case, we
-		// register the provider using the first URI in the list
-
-		String[] uris = uri.split(",");
-		uri = uris[0].trim();
-
 		synchronized (mongoProvidersByURI)
 		{
-			mongoProvidersByURI.put(uri, mongoProvider);
+			for (String uri : mongoProvider.getURIs())
+				mongoProvidersByURI.put(uri, mongoProvider);
 		}
 	}
 
-	public void unbindMongoProvider(IMongoProvider mongoProvider, Map<String, Object> properties)
+	public void unbindMongoProvider(IMongoProvider mongoProvider)
 	{
-		String uri = (String) properties.get(IMongoProvider.PROP_URI);
-
-		// The URI can be a CSV when connecting to a replica set.  In that case, the
-		// provider was registered using the first URI in the list, so we must use
-		// that first URI to unregister the provider.
-
-		String[] uris = uri.split(",");
-		uri = uris[0].trim();
-
 		synchronized (mongoProvidersByURI)
 		{
-			mongoProvidersByURI.remove(uri);
+			for (String uri : mongoProvider.getURIs())
+				mongoProvidersByURI.remove(uri);
 		}
 	}
 
