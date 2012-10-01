@@ -14,32 +14,58 @@ package org.eclipselabs.mongo.impl;
 import java.util.Map;
 
 import org.eclipselabs.mongo.IDatabaseLocator;
+import org.eclipselabs.mongo.IMongoId;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 
 /**
  * @author bhunt
  * 
  */
-public class MongoId
+public class MongoId implements IMongoId
 {
-	private long nextId = 1;
 	private IDatabaseLocator databaseLocator;
+	private DBCollection collection;
+	private DBObject query;
+	private DBObject update;
+	private DB db;
 
-	public void activate(Map<String, Object> parameters)
+	private static final String ID = "_id";
+	private static final String LAST_ID = "lastId";
+
+	public void configure(Map<String, Object> parameters)
 	{
-		String uri = (String) parameters.get("uri"); // TODO make constant
-		String collectionName = (String) parameters.get("collection");
+		String uri = (String) parameters.get(PROP_URI);
+		String collectionName = uri.split("/")[4];
 
-		DB db = databaseLocator.getDatabase(uri);
-		DBCollection collection = db.getCollection(collectionName);
-		DBCursor cursor = collection.find().sort(new BasicDBObject("_id", -1)).limit(1);
+		db = databaseLocator.getDatabase(uri);
 
-		if (cursor.hasNext())
-			nextId = ((Long) cursor.next().get("_id")) + 1;
+		if (db == null)
+			throw new RuntimeException("Could not find database for URI: '" + uri + "'");
+
+		collection = db.getCollection(collectionName);
+
+		query = new BasicDBObject();
+		query.put(ID, Long.valueOf(0));
+
+		update = new BasicDBObject();
+		update.put("$inc", new BasicDBObject(LAST_ID, Long.valueOf(1)));
+
+		DBObject object = collection.findOne(query);
+
+		if (object == null)
+		{
+			DBObject initialId = new BasicDBObject();
+			initialId.put(ID, Long.valueOf(0));
+			initialId.put(LAST_ID, Long.valueOf(0));
+			collection.insert(initialId);
+
+			if (!db.getLastError().ok())
+				throw new RuntimeException("Could not initialize the id counter for collection: '" + collection.getName() + "'");
+		}
 	}
 
 	public void bindDatabaseLocator(IDatabaseLocator databaseLocator)
@@ -47,8 +73,14 @@ public class MongoId
 		this.databaseLocator = databaseLocator;
 	}
 
-	public synchronized long getNextId()
+	@Override
+	public long getNextId()
 	{
-		return nextId++;
+		DBObject result = collection.findAndModify(query, null, null, false, update, true, false);
+
+		if (!db.getLastError().ok())
+			throw new RuntimeException("Failed to update the id counter for collection: '" + collection.getName() + "'");
+
+		return (Long) result.get(LAST_ID);
 	}
 }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" activate="configure" configuration-policy="require" immediate="true" name="org.eclipselabs.mongo.id">
+   <implementation class="org.eclipselabs.mongo.impl.MongoId"/>
+   <service>
+      <provide interface="org.eclipselabs.mongo.IMongoId"/>
+   </service>
+   <reference bind="bindDatabaseLocator" cardinality="1..1" interface="org.eclipselabs.mongo.IDatabaseLocator" name="IDatabaseLocator" policy="static"/>
+</scr:component>

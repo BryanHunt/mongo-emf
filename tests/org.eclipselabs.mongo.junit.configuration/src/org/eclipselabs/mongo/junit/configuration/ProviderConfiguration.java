@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
+import org.eclipselabs.mongo.IMongoId;
 import org.eclipselabs.mongo.IMongoProvider;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -28,6 +29,7 @@ public class ProviderConfiguration
 	void activate() throws IOException
 	{
 		configureMongoProvider();
+		configureMongoId();
 	}
 
 	void bindConfigurationAdmin(ConfigurationAdmin configurationAdmin)
@@ -39,6 +41,7 @@ public class ProviderConfiguration
 	{
 		Configuration config = configurationAdmin.getConfiguration("org.eclipselabs.mongo.provider", null);
 
+		@SuppressWarnings("unchecked")
 		Dictionary<String, Object> properties = config.getProperties();
 
 		if (properties == null)
@@ -46,6 +49,21 @@ public class ProviderConfiguration
 
 		properties.put(IMongoProvider.PROP_URI, "mongodb://localhost/");
 		config.update(properties);
+	}
+
+	private void configureMongoId() throws IOException
+	{
+		Configuration config = configurationAdmin.getConfiguration("org.eclipselabs.mongo.id", null);
+
+		@SuppressWarnings("unchecked")
+		Dictionary<String, Object> properties = config.getProperties();
+
+		if (properties == null)
+			properties = new Hashtable<String, Object>();
+
+		properties.put(IMongoId.PROP_URI, "mongodb://localhost/junit/junit_id");
+		config.update(properties);
+
 	}
 
 	private ConfigurationAdmin configurationAdmin;

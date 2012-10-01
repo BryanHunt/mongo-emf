@@ -14,9 +14,11 @@ package org.eclipselabs.mongo.emf.streams;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipselabs.mongo.IMongoId;
 import org.eclipselabs.mongo.emf.IConverterService;
 import org.eclipselabs.mongo.emf.IDBObjectBuilderFactory;
 import org.eclipselabs.mongo.emf.IEObjectBuilderFactory;
@@ -35,7 +37,7 @@ public class DefaultStreamFactory implements IInputStreamFactory, IOutputStreamF
 	@Override
 	public OutputStream createOutputStream(URI uri, Map<?, ?> options, DBCollection collection, Map<Object, Object> response)
 	{
-		return new MongoOutputStream(converterService, dbObjectBuilderFactory, collection, uri, options, response);
+		return new MongoOutputStream(converterService, dbObjectBuilderFactory, collection, uri, idProviders, options, response);
 	}
 
 	@Override
@@ -64,8 +66,25 @@ public class DefaultStreamFactory implements IInputStreamFactory, IOutputStreamF
 		this.queryEngine = queryEngine;
 	}
 
+	public synchronized void bindMongoId(IMongoId mongoId, @SuppressWarnings("rawtypes") Map properties)
+	{
+		String uri = (String) properties.get(IMongoId.PROP_URI);
+
+		if (idProviders == null)
+			idProviders = new HashMap<String, IMongoId>();
+
+		idProviders.put(uri, mongoId);
+	}
+
+	public void unbindMongoId(IMongoId mongoId, @SuppressWarnings("rawtypes") Map properties)
+	{
+		String uri = (String) properties.get(IMongoId.PROP_URI);
+		idProviders.remove(uri);
+	}
+
 	private IDBObjectBuilderFactory dbObjectBuilderFactory;
 	private IEObjectBuilderFactory eObjectBuilderFactory;
 	private IQueryEngine queryEngine;
 	private IConverterService converterService;
+	private volatile Map<String, IMongoId> idProviders;
 }

@@ -44,7 +44,7 @@
 	<key>Creator</key>
 	<string>Bryan Hunt</string>
 	<key>DisplayScale</key>
-	<string>1 0/72 in = 1 0/72 in</string>
+	<string>1 0/72 in = 1.0000 in</string>
 	<key>GraphDocumentVersion</key>
 	<integer>8</integer>
 	<key>GraphicsList</key>
@@ -207,8 +207,8 @@
 			<integer>7</integer>
 			<key>Points</key>
 			<array>
-				<string>{956.99623431002749, 105.8352474447009}</string>
-				<string>{1053.5036990776039, 117.74701804885474}</string>
+				<string>{956.99626020566086, 105.82450945693954}</string>
+				<string>{1053.5037331194405, 117.69481068190258}</string>
 			</array>
 			<key>Style</key>
 			<dict>
@@ -2006,7 +2006,7 @@
 			<key>OrthogonalBarPoint</key>
 			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
-			<real>77.099990844726562</real>
+			<real>78.599990844726562</real>
 			<key>Points</key>
 			<array>
 				<string>{1001.4999865000001, 304.5}</string>
@@ -2047,11 +2047,11 @@
 			<key>ID</key>
 			<integer>47</integer>
 			<key>OrthogonalBarAutomatic</key>
-			<true/>
+			<false/>
 			<key>OrthogonalBarPoint</key>
 			<string>{0, 0}</string>
 			<key>OrthogonalBarPosition</key>
-			<real>77.099990844726562</real>
+			<real>80</real>
 			<key>Points</key>
 			<array>
 				<string>{1001.4999865000001, 304.5}</string>
@@ -3072,7 +3072,7 @@
 	<key>MasterSheets</key>
 	<array/>
 	<key>ModificationDate</key>
-	<string>2012-05-03 05:46:46 +0000</string>
+	<string>2012-05-03 15:53:52 +0000</string>
 	<key>Modifier</key>
 	<string>Bryan Hunt</string>
 	<key>NotesVisible</key>
@@ -3108,7 +3108,7 @@
 		<key>NSPaperName</key>
 		<array>
 			<string>string</string>
-			<string>ANSI D</string>
+			<string>D</string>
 		</array>
 		<key>NSPaperSize</key>
 		<array>
@@ -3163,7 +3163,7 @@
 			</dict>
 		</array>
 		<key>Frame</key>
-		<string>{{1935, 70}, {1651, 1103}}</string>
+		<string>{{627, 461}, {1651, 1103}}</string>
 		<key>ListView</key>
 		<true/>
 		<key>OutlineWidth</key>
@@ -3177,7 +3177,7 @@
 		<key>SidebarWidth</key>
 		<integer>120</integer>
 		<key>VisibleRegion</key>
-		<string>{{580, 1}, {1502, 949}}</string>
+		<string>{{0, 0}, {1502, 949}}</string>
 		<key>Zoom</key>
 		<real>1</real>
 		<key>ZoomValues</key>

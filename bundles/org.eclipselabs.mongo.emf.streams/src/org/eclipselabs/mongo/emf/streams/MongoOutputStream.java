@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipselabs.mongo.IMongoId;
 import org.eclipselabs.mongo.emf.DBObjectBuilder;
 import org.eclipselabs.mongo.emf.IConverterService;
 import org.eclipselabs.mongo.emf.IDBObjectBuilderFactory;
@@ -42,7 +43,7 @@ import com.mongodb.WriteConcern;
  */
 public class MongoOutputStream extends ByteArrayOutputStream implements URIConverter.Saveable
 {
-	public MongoOutputStream(IConverterService converterService, IDBObjectBuilderFactory builderFactory, DBCollection collection, URI uri, Map<?, ?> options, Map<Object, Object> response)
+	public MongoOutputStream(IConverterService converterService, IDBObjectBuilderFactory builderFactory, DBCollection collection, URI uri, Map<String, IMongoId> idProviders, Map<?, ?> options, Map<Object, Object> response)
 	{
 		if (converterService == null)
 			throw new NullPointerException("The converter service must not be null");
@@ -53,6 +54,7 @@ public class MongoOutputStream extends ByteArrayOutputStream implements URIConve
 		this.converterService = converterService;
 		this.collection = collection;
 		this.uri = uri;
+		this.idProviders = idProviders;
 		this.options = options;
 		this.response = response;
 		this.builderFactory = builderFactory;
@@ -71,6 +73,16 @@ public class MongoOutputStream extends ByteArrayOutputStream implements URIConve
 			uriHandler = new org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl();
 
 		Object id = MongoURIHandlerImpl.getID(uri);
+
+		// If the id was not specified, look for an id generator
+
+		if (id == null && idProviders != null)
+		{
+			IMongoId mongoId = idProviders.get(uri.trimSegments(uri.segmentCount() - 2));
+
+			if (mongoId != null)
+				id = mongoId.getNextId();
+		}
 
 		// If the id was not specified, we append a dummy id to the resource URI so that all of the
 		// relative proxies will be generated correctly.
@@ -224,4 +236,5 @@ public class MongoOutputStream extends ByteArrayOutputStream implements URIConve
 	private Map<Object, Object> response;
 	private URI uri;
 	private DBObjectBuilder builder;
+	private Map<String, IMongoId> idProviders;
 }

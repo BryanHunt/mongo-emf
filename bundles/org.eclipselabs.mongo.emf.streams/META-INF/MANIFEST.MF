@@ -13,6 +13,7 @@ Import-Package: com.mongodb,
  org.eclipse.emf.ecore.util,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.emf.ecore.xmi.impl,
+ org.eclipselabs.mongo,
  org.eclipselabs.mongo.emf,
  org.eclipselabs.mongo.emf.ext,
  org.eclipselabs.mongo.emf.model

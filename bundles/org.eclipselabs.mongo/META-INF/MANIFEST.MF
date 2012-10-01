@@ -10,5 +10,5 @@ Import-Package: com.mongodb,
  org.eclipse.emf.common.util
 Bundle-Vendor: EclipseLabs
 Service-Component: OSGI-INF/services/provider.xml,OSGI-INF/services/locator.xml,
- OSGI-INF/services/auth.xml
+ OSGI-INF/services/auth.xml, OSGI-INF/services/id.xml
 Bundle-ActivationPolicy: lazy
