@@ -5,12 +5,12 @@
 	<parent>
 		<artifactId>build</artifactId>
 		<groupId>mongo-emf</groupId>
-		<version>0.7.0-SNAPSHOT</version>
+		<version>0.7.1-SNAPSHOT</version>
 		<relativePath>../../dev/org.eclipselabs.mongo.emf.developer/Build/pom.xml</relativePath>
 	</parent>
 
   <groupId>mongo-emf</groupId>
   <artifactId>org.eclipselabs.mongo.emf.query.simple.feature</artifactId>
-  <version>0.7.0.qualifier</version>
+  <version>0.7.1.qualifier</version>
   <packaging>eclipse-feature</packaging>
 </project>

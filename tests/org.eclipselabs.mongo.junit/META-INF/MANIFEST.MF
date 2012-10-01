@@ -2,8 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Mongo JUnit Tests
 Bundle-SymbolicName: org.eclipselabs.mongo.junit
-Bundle-Version: 0.7.0.qualifier
-Fragment-Host: org.eclipselabs.mongo;bundle-version="0.7.0"
+Bundle-Version: 0.7.1.qualifier
+Fragment-Host: org.eclipselabs.mongo;bundle-version="0.7.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.junit,
  org.eclipse.xtext.xbase.lib;bundle-version="2.3.0",

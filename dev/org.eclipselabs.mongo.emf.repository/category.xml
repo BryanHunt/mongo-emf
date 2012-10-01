@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipselabs.mongo.emf.feature_0.7.0.qualifier.jar" id="org.eclipselabs.mongo.emf.feature" version="0.7.0.qualifier">
+   <feature url="features/org.eclipselabs.mongo.emf.feature_0.7.1.qualifier.jar" id="org.eclipselabs.mongo.emf.feature" version="0.7.1.qualifier">
       <category name="runtime"/>
    </feature>
-   <feature url="features/org.eclipselabs.mongo.emf.freemarker.feature_0.7.0.qualifier.jar" id="org.eclipselabs.mongo.emf.freemarker.feature" version="0.7.0.qualifier">
+   <feature url="features/org.eclipselabs.mongo.emf.freemarker.feature_0.7.1.qualifier.jar" id="org.eclipselabs.mongo.emf.freemarker.feature" version="0.7.1.qualifier">
       <category name="extensions"/>
    </feature>
-   <feature url="features/org.eclipselabs.mongo.emf.log.feature_0.7.0.qualifier.jar" id="org.eclipselabs.mongo.emf.log.feature" version="0.7.0.qualifier">
+   <feature url="features/org.eclipselabs.mongo.emf.log.feature_0.7.1.qualifier.jar" id="org.eclipselabs.mongo.emf.log.feature" version="0.7.1.qualifier">
       <category name="extensions"/>
    </feature>
-   <feature url="features/org.eclipselabs.mongo.emf.developer.junit.feature_0.7.0.qualifier.jar" id="org.eclipselabs.mongo.emf.developer.junit.feature" version="0.7.0.qualifier">
+   <feature url="features/org.eclipselabs.mongo.emf.developer.junit.feature_0.7.1.qualifier.jar" id="org.eclipselabs.mongo.emf.developer.junit.feature" version="0.7.1.qualifier">
       <category name="extensions"/>
    </feature>
-   <feature url="features/org.eclipselabs.mongo.emf.query.simple.feature_0.7.0.qualifier.jar" id="org.eclipselabs.mongo.emf.query.simple.feature" version="0.7.0.qualifier">
+   <feature url="features/org.eclipselabs.mongo.emf.query.simple.feature_0.7.1.qualifier.jar" id="org.eclipselabs.mongo.emf.query.simple.feature" version="0.7.1.qualifier">
       <category name="runtime"/>
    </feature>
-   <feature url="features/org.eclipselabs.mongo.emf.builders.feature_0.7.0.qualifier.jar" id="org.eclipselabs.mongo.emf.builders.feature" version="0.7.0.qualifier">
+   <feature url="features/org.eclipselabs.mongo.emf.builders.feature_0.7.1.qualifier.jar" id="org.eclipselabs.mongo.emf.builders.feature" version="0.7.1.qualifier">
       <category name="runtime"/>
    </feature>
-   <feature url="features/org.eclipselabs.mongo.emf.core.feature_0.7.0.qualifier.jar" id="org.eclipselabs.mongo.emf.core.feature" version="0.7.0.qualifier">
+   <feature url="features/org.eclipselabs.mongo.emf.core.feature_0.7.1.qualifier.jar" id="org.eclipselabs.mongo.emf.core.feature" version="0.7.1.qualifier">
       <category name="runtime"/>
    </feature>
-   <feature url="features/org.eclipselabs.mongo.emf.streams.feature_0.7.0.qualifier.jar" id="org.eclipselabs.mongo.emf.streams.feature" version="0.7.0.qualifier">
+   <feature url="features/org.eclipselabs.mongo.emf.streams.feature_0.7.1.qualifier.jar" id="org.eclipselabs.mongo.emf.streams.feature" version="0.7.1.qualifier">
       <category name="runtime"/>
    </feature>
    <category-def name="runtime" label="MongoEMF Runtime">

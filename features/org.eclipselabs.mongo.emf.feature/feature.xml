@@ -2,7 +2,7 @@
 <feature
       id="org.eclipselabs.mongo.emf.feature"
       label="MongoEMF All-In-One Runtime"
-      version="0.7.0.qualifier"
+      version="0.7.1.qualifier"
       provider-name="EclipseLabs">
 
    <description url="https://github.com/BryanHunt/mongo-emf/wiki">

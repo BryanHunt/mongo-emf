@@ -2,7 +2,7 @@
 <feature
       id="org.eclipselabs.mongo.emf.streams.feature"
       label="MongoEMF DefaultStreams"
-      version="0.7.0.qualifier"
+      version="0.7.1.qualifier"
       provider-name="EclipseLabs">
 
    <description url="http://www.example.com/description">
