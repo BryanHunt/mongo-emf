@@ -74,13 +74,13 @@ public class MongoId implements IMongoId
 	}
 
 	@Override
-	public long getNextId()
+	public String getNextId()
 	{
 		DBObject result = collection.findAndModify(query, null, null, false, update, true, false);
 
 		if (!db.getLastError().ok())
 			throw new RuntimeException("Failed to update the id counter for collection: '" + collection.getName() + "'");
 
-		return (Long) result.get(LAST_ID);
+		return result.get(LAST_ID).toString();
 	}
 }

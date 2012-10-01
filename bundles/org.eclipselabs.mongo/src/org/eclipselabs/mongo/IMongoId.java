@@ -19,5 +19,5 @@ public interface IMongoId
 {
 	String PROP_URI = "uri";
 
-	long getNextId();
+	String getNextId();
 }

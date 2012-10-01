@@ -38,7 +38,7 @@ public class TestMongoId extends ServiceTestHarness
 	@Test
 	public void testGetNextId()
 	{
-		assertThat(mongoId.getNextId(), is(1L));
+		assertThat(mongoId.getNextId(), is("1"));
 		DBCollection collection = database.getMongoDB().getCollection("junit_id");
 		DBObject result = collection.findOne(new BasicDBObject("_id", Long.valueOf(0)));
 		assertThat((Long) result.get("lastId"), is(1L));
