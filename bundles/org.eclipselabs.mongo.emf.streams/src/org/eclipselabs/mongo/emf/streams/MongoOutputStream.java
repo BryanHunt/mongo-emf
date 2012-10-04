@@ -81,10 +81,11 @@ public class MongoOutputStream extends ByteArrayOutputStream implements URIConve
 			IMongoId mongoId = idProviders.get(uri.trimSegments(uri.segmentCount() - 2).toString());
 
 			if (mongoId != null)
+			{
 				id = mongoId.getNextId();
-
-			uri = uri.appendSegment(id.toString());
-			resource.setURI(resource.getURI().trimSegments(1).appendSegment(id.toString()));
+				uri = uri.appendSegment(id.toString());
+				resource.setURI(resource.getURI().trimSegments(1).appendSegment(id.toString()));
+			}
 		}
 
 		// If the id was not specified, we append a dummy id to the resource URI so that all of the
