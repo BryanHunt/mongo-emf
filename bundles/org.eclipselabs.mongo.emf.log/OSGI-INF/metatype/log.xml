@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MetaData xmlns="http://www.osgi.org/xmlns/metatype/v1.1.0">
+	<OCD name="MongoDB Log" id="org.eclipselabs.mongo.emf.log" description="MongoDB Logger Configuration">
+		<AD name="URI"       id="uri"      type="String" description="The URI of the MongoDB log collection of the form 'mongodb://host:[port]/db/logCollection/'."/>
+		<AD name="Log Level" id="logLevel" type="String" description="The OSGi log level to store in the database."/>
+	</OCD>
+	<Designate factoryPid="org.eclipselabs.mongo.emf.log">
+		<Object ocdref="org.eclipselabs.mongo.emf.log"/>
+	</Designate>
+</MetaData>

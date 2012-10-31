@@ -30,5 +30,5 @@ Import-Package: org.eclipse.core.runtime,
  org.osgi.service.component,
  org.osgi.service.log,
  org.osgi.util.tracker
-Service-Component: OSGI-INF/log.xml
+Service-Component: OSGI-INF/services/log.xml
 Bundle-ActivationPolicy: lazy

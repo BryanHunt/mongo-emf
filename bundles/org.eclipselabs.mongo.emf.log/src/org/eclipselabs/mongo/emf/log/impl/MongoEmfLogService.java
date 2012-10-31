@@ -25,8 +25,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipselabs.emf.query.Expression;
 import org.eclipselabs.emf.query.util.ExpressionBuilder;
 import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
-import org.eclipselabs.mongo.emf.ext.IResourceSetFactory;
 import org.eclipselabs.mongo.emf.ext.ECollection;
+import org.eclipselabs.mongo.emf.ext.IResourceSetFactory;
 import org.eclipselabs.mongo.emf.log.IMongoLogService;
 import org.eclipselabs.mongo.emf.log.LogEntry;
 import org.eclipselabs.mongo.emf.log.LogFactory;
@@ -45,7 +45,7 @@ public class MongoEmfLogService implements IMongoLogService, LogListener
 
 	public MongoEmfLogService(URI baseURI, LogLevel logLevel)
 	{
-		this.baseURI = baseURI;
+		this.uri = baseURI;
 		this.logLevel = logLevel;
 	}
 
@@ -74,7 +74,7 @@ public class MongoEmfLogService implements IMongoLogService, LogListener
 
 		ResourceSet resourceSet = resourceSetFactory.createResourceSet();
 
-		Resource resource = resourceSet.createResource(baseURI);
+		Resource resource = resourceSet.createResource(uri);
 		resource.getContents().add(logEntry);
 
 		HashMap<String, Object> options = new HashMap<String, Object>(1);
@@ -126,10 +126,10 @@ public class MongoEmfLogService implements IMongoLogService, LogListener
 
 	void activate(Map<String, Object> properties)
 	{
-		baseURI = URI.createURI((String) properties.get("baseURI"));
+		uri = URI.createURI((String) properties.get("uri"));
 
-		if (baseURI == null)
-			throw new IllegalStateException("baseURI property was not found");
+		if (uri == null)
+			throw new IllegalStateException("uri property was not found");
 
 		Integer logLevelValue = (Integer) properties.get("logLevel");
 
@@ -143,12 +143,12 @@ public class MongoEmfLogService implements IMongoLogService, LogListener
 	private Collection<LogEntry> getLogEntries(String query)
 	{
 		ResourceSet resourceSet = resourceSetFactory.createResourceSet();
-		Resource resource = resourceSet.getResource(baseURI.appendQuery(URI.encodeQuery(query, false)), true);
+		Resource resource = resourceSet.getResource(uri.appendQuery(URI.encodeQuery(query, false)), true);
 		ECollection eCollection = (ECollection) resource.getContents().get(0);
 		return (Collection<LogEntry>) (Collection<?>) eCollection.getValues();
 	}
 
-	private URI baseURI;
+	private URI uri;
 	private LogLevel logLevel = LogLevel.LOG_ERROR;
 	private LogReaderService logReaderService;
 	private IResourceSetFactory resourceSetFactory;

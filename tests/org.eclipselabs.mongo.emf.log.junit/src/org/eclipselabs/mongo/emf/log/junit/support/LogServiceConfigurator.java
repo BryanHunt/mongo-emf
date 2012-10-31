@@ -28,7 +28,7 @@ public class LogServiceConfigurator
 	{
 		Configuration configuration = configurationAdmin.getConfiguration("org.eclipselabs.mongo.emf.log", null);
 		Hashtable<String, Object> properties = new Hashtable<String, Object>();
-		properties.put("baseURI", "mongodb://localhost/junit/logs/");
+		properties.put("uri", "mongodb://localhost/junit/logs/");
 		properties.put("logLevel", LogLevel.LOG_INFO.getValue());
 		configuration.update(properties);
 	}
