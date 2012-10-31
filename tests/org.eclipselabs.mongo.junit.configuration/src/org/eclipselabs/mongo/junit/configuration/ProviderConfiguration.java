@@ -41,7 +41,6 @@ public class ProviderConfiguration
 	{
 		Configuration config = configurationAdmin.getConfiguration("org.eclipselabs.mongo.provider", null);
 
-		@SuppressWarnings("unchecked")
 		Dictionary<String, Object> properties = config.getProperties();
 
 		if (properties == null)
@@ -55,7 +54,6 @@ public class ProviderConfiguration
 	{
 		Configuration config = configurationAdmin.getConfiguration("org.eclipselabs.mongo.id", null);
 
-		@SuppressWarnings("unchecked")
 		Dictionary<String, Object> properties = config.getProperties();
 
 		if (properties == null)
