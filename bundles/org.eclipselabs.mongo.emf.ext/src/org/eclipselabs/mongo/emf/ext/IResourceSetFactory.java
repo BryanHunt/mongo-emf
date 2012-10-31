@@ -11,6 +11,8 @@
 
 package org.eclipselabs.mongo.emf.ext;
 
+import java.util.Collection;
+
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
@@ -26,4 +28,9 @@ public interface IResourceSetFactory
 	 * @return the newly created ResourceSet
 	 */
 	ResourceSet createResourceSet();
+
+	/**
+	 * @return the collection of resource set configurators currently bound to the factory
+	 */
+	Collection<IResourceSetConfigurator> getResourceSetConfigurators();
 }

@@ -11,6 +11,8 @@
 
 package org.eclipselabs.mongo.emf.ext.impl;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -46,6 +48,21 @@ public class MongoResourceSetFactory implements IResourceSetFactory
 		}
 
 		return resourceSet;
+	}
+
+	@Override
+	public Collection<IResourceSetConfigurator> getResourceSetConfigurators()
+	{
+		lock.readLock().lock();
+
+		try
+		{
+			return Collections.unmodifiableCollection(configurators);
+		}
+		finally
+		{
+			lock.readLock().unlock();
+		}
 	}
 
 	public void bindResourceSetConfigurator(IResourceSetConfigurator resourceSetConfigurator)
