@@ -22,15 +22,17 @@ public class MongoQuery
 	/**
 	 * @param objectFilter the object filter
 	 * @param fieldFilter the field filter
+	 * @param sortFilter the sort filter
 	 */
-	public MongoQuery(DBObject objectFilter, DBObject fieldFilter)
+	public MongoQuery(DBObject objectFilter, DBObject fieldFilter, DBObject sortFilter)
 	{
 		this.objectFilter = objectFilter;
 		this.fieldFilter = fieldFilter;
+		this.sortFilter = sortFilter;
 	}
 
 	/**
-	 * @return the objectFilter
+	 * @return the object filter
 	 */
 	public DBObject getObjectFilter()
 	{
@@ -38,13 +40,22 @@ public class MongoQuery
 	}
 
 	/**
-	 * @return the fieldFilter
+	 * @return the field filter
 	 */
 	public DBObject getFieldFilter()
 	{
 		return fieldFilter;
 	}
 
+	/**
+	 * @return the sort filter
+	 */
+	public DBObject getSortFilter()
+	{
+		return sortFilter;
+	}
+
 	private DBObject objectFilter;
 	private DBObject fieldFilter;
+	private DBObject sortFilter;
 }

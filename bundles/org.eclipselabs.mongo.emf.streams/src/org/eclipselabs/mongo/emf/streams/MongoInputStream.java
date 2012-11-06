@@ -93,8 +93,16 @@ public class MongoInputStream extends InputStream implements URIConverter.Loadab
 
 			if (uri.query().startsWith("mongo:"))
 			{
-				DBObject objectFilter = (DBObject) JSON.parse(URI.decode(uri.query().substring(6)));
-				mongoQuery = new MongoQuery(objectFilter, null);
+				String decodedQuery = URI.decode(uri.query());
+				int sortIndex = decodedQuery.indexOf("sort:");
+
+				DBObject objectFilter = (DBObject) JSON.parse(decodedQuery.substring(6, sortIndex));
+				DBObject sortFilter = null;
+
+				if (sortIndex > 0)
+					sortFilter = (DBObject) JSON.parse(decodedQuery.substring(sortIndex + 5));
+
+				mongoQuery = new MongoQuery(objectFilter, null, sortFilter);
 			}
 			else
 			{
@@ -110,6 +118,9 @@ public class MongoInputStream extends InputStream implements URIConverter.Loadab
 				resultCursor = collection.find(mongoQuery.getObjectFilter());
 			else
 				resultCursor = collection.find(mongoQuery.getObjectFilter(), mongoQuery.getFieldFilter());
+
+			if (mongoQuery.getSortFilter() != null)
+				resultCursor = resultCursor.sort(mongoQuery.getSortFilter());
 
 			boolean createCursor = Boolean.TRUE.equals(options.get(MongoURIHandlerImpl.OPTION_QUERY_CURSOR));
 

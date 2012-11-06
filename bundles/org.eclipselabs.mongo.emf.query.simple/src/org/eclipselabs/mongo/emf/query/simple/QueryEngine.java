@@ -39,7 +39,7 @@ public class QueryEngine implements IQueryEngine
 	@Override
 	public MongoQuery buildDBObjectQuery(URI uri)
 	{
-		return new MongoQuery(buildDBObjectQuery(new ExpressionBuilder(URI.decode(uri.query())).parseExpression()), null);
+		return new MongoQuery(buildDBObjectQuery(new ExpressionBuilder(URI.decode(uri.query())).parseExpression()), null, null);
 	}
 
 	private DBObject buildDBObjectQuery(Expression expression)
