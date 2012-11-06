@@ -39,6 +39,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.util.JSON;
 
 /**
  * @author bhunt
@@ -88,10 +89,21 @@ public class MongoInputStream extends InputStream implements URIConverter.Loadab
 
 		if (uri.query() != null)
 		{
-			if (queryEngine == null)
-				throw new IOException("The query engine was not found");
+			MongoQuery mongoQuery = null;
 
-			MongoQuery mongoQuery = queryEngine.buildDBObjectQuery(uri);
+			if (uri.query().startsWith("mongo:"))
+			{
+				DBObject objectFilter = (DBObject) JSON.parse(URI.decode(uri.query().substring(6)));
+				mongoQuery = new MongoQuery(objectFilter, null);
+			}
+			else
+			{
+				if (queryEngine == null)
+					throw new IOException("The query engine was not found");
+
+				mongoQuery = queryEngine.buildDBObjectQuery(uri);
+			}
+
 			DBCursor resultCursor = null;
 
 			if (mongoQuery.getFieldFilter() == null)
@@ -139,8 +151,9 @@ public class MongoInputStream extends InputStream implements URIConverter.Loadab
 	@Override
 	public int read() throws IOException
 	{
-		// InputStream requires that we implement this function.  It will never be called since this implementation
-		// implements URIConverter.Loadable. The loadResource() function will be called instead.
+		// InputStream requires that we implement this function. It will never be called
+		// since this implementation implements URIConverter.Loadable. The loadResource()
+		// function will be called instead.
 
 		return 0;
 	}

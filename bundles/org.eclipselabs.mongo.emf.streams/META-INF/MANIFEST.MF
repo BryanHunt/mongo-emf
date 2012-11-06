@@ -5,6 +5,7 @@ Bundle-SymbolicName: org.eclipselabs.mongo.emf.streams
 Bundle-Version: 0.7.1.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: com.mongodb,
+ com.mongodb.util,
  org.bson,
  org.eclipse.emf.common.notify,
  org.eclipse.emf.common.util,
