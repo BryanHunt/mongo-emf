@@ -21,7 +21,6 @@ make it easier to write JUnit tests involving EMF and MongoDB.
    </license>
 
    <requires>
-      <import plugin="com.mongodb"/>
       <import plugin="org.eclipse.emf.common"/>
       <import plugin="org.eclipse.emf.ecore"/>
       <import plugin="org.eclipselabs.mongo"/>
@@ -29,7 +28,9 @@ make it easier to write JUnit tests involving EMF and MongoDB.
       <import plugin="org.hamcrest.core" version="1.1.0" match="greaterOrEqual"/>
       <import plugin="org.junit"/>
       <import plugin="org.eclipse.osgi"/>
-      <import plugin="org.eclipselabs.emf.query.simple"/>
+      <import plugin="org.mongodb.mongo-java-driver"/>
+      <import plugin="org.eclipselabs.mongo.emf.ext"/>
+      <import plugin="org.eclipse.osgi.services"/>
    </requires>
 
    <plugin

@@ -21,9 +21,9 @@
    <requires>
       <import plugin="org.eclipse.emf.common"/>
       <import plugin="org.eclipse.emf.ecore"/>
-      <import plugin="com.mongodb"/>
       <import plugin="org.eclipselabs.mongo.emf"/>
       <import plugin="org.eclipse.osgi"/>
+      <import plugin="org.mongodb.mongo-java-driver"/>
    </requires>
 
    <plugin

@@ -18,12 +18,11 @@
    </license>
 
    <requires>
-      <import plugin="com.mongodb"/>
       <import plugin="org.eclipse.emf.common"/>
       <import plugin="org.eclipse.emf.ecore"/>
       <import plugin="org.eclipse.emf.ecore.xmi"/>
-      <import plugin="org.eclipselabs.emf.query.simple"/>
       <import plugin="org.eclipse.osgi"/>
+      <import plugin="org.mongodb.mongo-java-driver"/>
    </requires>
 
    <plugin

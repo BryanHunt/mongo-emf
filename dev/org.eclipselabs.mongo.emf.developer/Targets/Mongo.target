@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="Mongo" sequenceNumber="116">
+<?pde version="3.8"?>
+
+<target name="Mongo" sequenceNumber="117">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.freemarker.feature.feature.group" version="2.3.0.201104101347"/>
 <unit id="org.freemarker.source.feature.feature.group" version="2.3.0.201104101347"/>
 <repository location="http://quickiemart.springfieldusa.net/Targets/FreeMarker"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="com.mongodb.feature.feature.group" version="2.7.2.201111251414"/>
-<repository location="http://bryanhunt.github.com/mongo-emf/mongodb/2.7.2"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.hamcrest.feature.feature.group" version="1.3.0.201107152246"/>
@@ -22,12 +20,16 @@
 <repository location="http://download.eclipse.org/releases/juno"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.jnario.feature.group" version="0.3.0.201210260619"/>
+<unit id="org.jnario.feature.group" version="0.3.0.201211022102"/>
 <repository location="http://www.jnario.org/updates/snapshot/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.mockito.feature.feature.group" version="1.9.0.201204041315"/>
 <repository location="http://quickiemart.springfieldusa.net/Targets/Mockito"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.mongodb.feature.feature.group" version="2.9.3.201211071007"/>
+<repository location="http://bryanhunt.github.com/mongo-emf/mongodb/2.9.3"/>
 </location>
 </locations>
 </target>
