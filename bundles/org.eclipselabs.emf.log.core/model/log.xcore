@@ -1,0 +1,22 @@
+@GenModel(suppressInterfaces="true")
+package org.eclipselabs.emf.log
+
+import java.util.Date
+type Date wraps Date
+
+enum LogLevel
+{
+	Error
+	Warning
+	Info
+	Debug
+}
+
+class LogEntry
+{
+	LogLevel level
+	Date createdOn
+	String message
+	String exceptionMessage
+	String exceptionStack	
+}
