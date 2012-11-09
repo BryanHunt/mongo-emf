@@ -11,6 +11,10 @@
 
 package org.eclipselabs.mongo.emf.log.ui;
 
+import org.eclipse.emf.databinding.EMFProperties;
+import org.eclipse.emf.databinding.IEMFListProperty;
+import org.eclipse.emf.databinding.IEMFValueProperty;
+import org.eclipse.jface.databinding.viewers.ViewerSupport;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -18,6 +22,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipselabs.emf.log.LogPackage;
+import org.eclipselabs.mongo.emf.ext.ECollection;
+import org.eclipselabs.mongo.emf.ext.ExtPackage;
 
 /**
  * @author bhunt
@@ -26,6 +33,9 @@ import org.eclipse.ui.part.ViewPart;
 public class LogView extends ViewPart
 {
 	private TableViewer viewer;
+	private static IEMFListProperty collectionListProperty = EMFProperties.list(ExtPackage.Literals.ECOLLECTION__VALUES);
+	private static IEMFValueProperty[] logLabelProperties = EMFProperties.values(LogPackage.Literals.LOG_ENTRY__CREATED_ON, LogPackage.Literals.LOG_ENTRY__LEVEL, LogPackage.Literals.LOG_ENTRY__MESSAGE,
+			LogPackage.Literals.LOG_ENTRY__EXCEPTION_MESSAGE);
 
 	@Override
 	public void createPartControl(Composite parent)
@@ -48,6 +58,10 @@ public class LogView extends ViewPart
 		TableColumn messageColumn = new TableColumn(table, SWT.LEFT);
 		messageColumn.setText("Message");
 		messageColumn.setWidth(500);
+
+		TableColumn exceptionMessageColumn = new TableColumn(table, SWT.LEFT);
+		exceptionMessageColumn.setText("Exception Message");
+		exceptionMessageColumn.setWidth(500);
 	}
 
 	@Override
@@ -56,8 +70,8 @@ public class LogView extends ViewPart
 		viewer.getTable().setFocus();
 	}
 
-	public void refresh()
+	public void refresh(ECollection entries)
 	{
-
+		ViewerSupport.bind(viewer, collectionListProperty.observe(entries), logLabelProperties);
 	}
 }

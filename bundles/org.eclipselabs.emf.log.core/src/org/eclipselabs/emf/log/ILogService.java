@@ -11,8 +11,9 @@
 
 package org.eclipselabs.emf.log;
 
-import java.util.Collection;
 import java.util.Date;
+
+import org.eclipselabs.mongo.emf.ext.ECollection;
 
 /**
  * @author bhunt
@@ -25,19 +26,19 @@ public interface ILogService
 	 * @param count the number of log entries to return
 	 * @return the most recent N log entries
 	 */
-	Collection<LogEntry> getLogEntries(int count);
+	ECollection getLogEntries(int count);
 
 	/**
 	 * 
 	 * @param cutoff the date of the oldest log entry to return
 	 * @return the most recent log entries up to the cutoff date
 	 */
-	Collection<LogEntry> getLogEntries(Date cutoff);
+	ECollection getLogEntries(Date cutoff);
 
 	/**
 	 * 
 	 * @param query the search query
 	 * @return the log entries matching the search query
 	 */
-	Collection<LogEntry> getLogEntries(String query);
+	ECollection getLogEntries(String query);
 }
