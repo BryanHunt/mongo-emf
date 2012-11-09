@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: EMF Logging With MongoDB
+Bundle-SymbolicName: org.eclipselabs.emf.mongodb.log
+Bundle-Version: 0.8.0.qualifier
+Bundle-Vendor: EclipseLabs
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.eclipse.emf.common.util,
+ org.eclipse.emf.ecore.resource,
+ org.eclipselabs.emf.log,
+ org.eclipselabs.mongo.emf,
+ org.eclipselabs.mongo.emf.ext,
+ org.osgi.service.log;version="1.3.0"
