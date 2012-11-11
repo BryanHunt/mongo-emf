@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" activate="activate" configuration-policy="require" immediate="true" name="org.eclipselabs.mongo.emf.log">
-   <implementation class="org.eclipselabs.mongo.emf.log.impl.MongoEmfLogService"/>
-   <reference bind="bindLogReaderService" cardinality="1..1" interface="org.osgi.service.log.LogReaderService" name="LogReaderService" policy="static"/>
-   <service>
-      <provide interface="org.eclipselabs.mongo.emf.log.IMongoLogService"/>
-   </service>
-   <reference bind="bindResourceSetFactory" cardinality="1..1" interface="org.eclipselabs.mongo.emf.ext.IResourceSetFactory" name="IResourceSetFactory" policy="static"/>
-</scr:component>
