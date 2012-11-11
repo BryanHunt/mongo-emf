@@ -14,7 +14,7 @@ package org.eclipselabs.mongo.emf.log.junit.support;
 import java.io.IOException;
 import java.util.Hashtable;
 
-import org.eclipselabs.mongo.emf.log.LogLevel;
+import org.eclipselabs.emf.log.LogLevel;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -22,14 +22,22 @@ import org.osgi.service.cm.ConfigurationAdmin;
  * @author bhunt
  * 
  */
-public class LogServiceConfigurator
+public class LogServiceConfigurator implements ILogServiceConfigurator
 {
-	void bindConfigurationAdmin(ConfigurationAdmin configurationAdmin) throws IOException
+	private ConfigurationAdmin configurationAdmin;
+
+	@Override
+	public void setLogLevel(LogLevel logLevel) throws IOException
 	{
 		Configuration configuration = configurationAdmin.getConfiguration("org.eclipselabs.mongo.emf.log", null);
 		Hashtable<String, Object> properties = new Hashtable<String, Object>();
 		properties.put("uri", "mongodb://localhost/junit/logs/");
-		properties.put("logLevel", LogLevel.LOG_INFO.getValue());
+		properties.put("logLevel", logLevel.getValue());
 		configuration.update(properties);
+	}
+
+	void bindConfigurationAdmin(ConfigurationAdmin configurationAdmin)
+	{
+		this.configurationAdmin = configurationAdmin;
 	}
 }
