@@ -110,6 +110,11 @@ public class MongoDbLogListener implements LogListener
 		logReaderService.addLogListener(this);
 	}
 
+	void deactivate()
+	{
+		logReaderService.removeLogListener(this);
+	}
+
 	private URI uri;
 	private LogLevel logLevel = LogLevel.ERROR;
 	private LogReaderService logReaderService;
