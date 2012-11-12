@@ -9,7 +9,7 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf.log.junit.tests;
+package org.eclipselabs.emf.mongodb.log.junit.tests;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -23,11 +23,11 @@ import java.util.Collection;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipselabs.emf.log.LogEntry;
 import org.eclipselabs.emf.log.LogLevel;
+import org.eclipselabs.emf.mongodb.log.junit.support.ILogServiceConfigurator;
 import org.eclipselabs.mongo.emf.developer.junit.MongoDatabase;
 import org.eclipselabs.mongo.emf.developer.junit.MongoUtil;
 import org.eclipselabs.mongo.emf.developer.junit.ServiceTestHarness;
 import org.eclipselabs.mongo.emf.ext.IResourceSetFactory;
-import org.eclipselabs.mongo.emf.log.junit.support.ILogServiceConfigurator;
 import org.junit.Rule;
 import org.junit.Test;
 import org.osgi.service.log.LogService;
@@ -45,8 +45,9 @@ public class TestMongoDbLogListener extends ServiceTestHarness
 	public void testLogDebug() throws InterruptedException, IOException
 	{
 		logServiceConfigurator.setLogLevel(LogLevel.DEBUG);
+		Thread.sleep(100);
 		osgiLogService.log(LogService.LOG_DEBUG, "debug");
-		Thread.sleep(1000);
+		Thread.sleep(200);
 		Collection<LogEntry> logEntries = MongoUtil.getObjects(createResourceSet(), "junit", DB_LOGS);
 
 		for (LogEntry entry : logEntries)
@@ -62,8 +63,9 @@ public class TestMongoDbLogListener extends ServiceTestHarness
 	public void testLogError() throws InterruptedException, IOException
 	{
 		logServiceConfigurator.setLogLevel(LogLevel.ERROR);
+		Thread.sleep(100);
 		osgiLogService.log(LogService.LOG_ERROR, "error");
-		Thread.sleep(1000);
+		Thread.sleep(100);
 		LogEntry logEntry = MongoUtil.getObject(createResourceSet(), "junit", DB_LOGS);
 		assertThat(logEntry, is(notNullValue()));
 		assertThat(logEntry.getMessage(), is("error"));
@@ -73,6 +75,7 @@ public class TestMongoDbLogListener extends ServiceTestHarness
 	public void testLogInfo() throws InterruptedException, IOException
 	{
 		logServiceConfigurator.setLogLevel(LogLevel.INFO);
+		Thread.sleep(100);
 		osgiLogService.log(LogService.LOG_INFO, "info");
 		Thread.sleep(100);
 		LogEntry logEntry = MongoUtil.getObject(createResourceSet(), "junit", DB_LOGS);
@@ -84,6 +87,7 @@ public class TestMongoDbLogListener extends ServiceTestHarness
 	public void testLogWarning() throws InterruptedException, IOException
 	{
 		logServiceConfigurator.setLogLevel(LogLevel.WARNING);
+		Thread.sleep(100);
 		osgiLogService.log(LogService.LOG_ERROR, "warning");
 		Thread.sleep(100);
 		LogEntry logEntry = MongoUtil.getObject(createResourceSet(), "junit", DB_LOGS);
@@ -95,6 +99,7 @@ public class TestMongoDbLogListener extends ServiceTestHarness
 	public void testLogFilteredEntry() throws InterruptedException, IOException
 	{
 		logServiceConfigurator.setLogLevel(LogLevel.ERROR);
+		Thread.sleep(100);
 		osgiLogService.log(LogService.LOG_WARNING, "error");
 		Thread.sleep(100);
 		LogEntry logEntry = MongoUtil.getObject(createResourceSet(), "junit", DB_LOGS);

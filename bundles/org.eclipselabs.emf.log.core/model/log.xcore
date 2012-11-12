@@ -6,10 +6,10 @@ type Date wraps Date
 
 enum LogLevel
 {
-	Error
-	Warning
-	Info
-	Debug
+	Error = 1
+	Warning = 2
+	Info = 3
+	Debug = 4
 }
 
 class LogEntry

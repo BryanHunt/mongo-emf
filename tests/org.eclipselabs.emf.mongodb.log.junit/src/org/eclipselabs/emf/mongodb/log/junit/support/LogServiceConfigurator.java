@@ -9,7 +9,7 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf.log.junit.support;
+package org.eclipselabs.emf.mongodb.log.junit.support;
 
 import java.io.IOException;
 import java.util.Hashtable;
@@ -29,7 +29,7 @@ public class LogServiceConfigurator implements ILogServiceConfigurator
 	@Override
 	public void setLogLevel(LogLevel logLevel) throws IOException
 	{
-		Configuration configuration = configurationAdmin.getConfiguration("org.eclipselabs.mongo.emf.log", null);
+		Configuration configuration = configurationAdmin.getConfiguration("org.eclipselabs.emf.mongodb.log", null);
 		Hashtable<String, Object> properties = new Hashtable<String, Object>();
 		properties.put("uri", "mongodb://localhost/junit/logs/");
 		properties.put("logLevel", logLevel.getValue());

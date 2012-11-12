@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>org.eclipselabs.mongo.emf.log.junit</name>
+	<name>org.eclipselabs.emf.mongodb.log.junit</name>
 	<comment></comment>
 	<projects>
 	</projects>

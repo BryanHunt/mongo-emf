@@ -9,13 +9,13 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.junit.configuration;
+package org.eclipselabs.mongo.junit.integration.support;
 
 import java.io.IOException;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-import org.eclipselabs.mongo.IMongoProvider;
+import org.eclipselabs.mongo.IMongoId;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -23,20 +23,20 @@ import org.osgi.service.cm.ConfigurationAdmin;
  * @author bhunt
  * 
  */
-public class ProviderConfiguration
+public class MongoIdConfiguration
 {
 	private ConfigurationAdmin configurationAdmin;
 
 	void activate() throws IOException
 	{
-		Configuration config = configurationAdmin.getConfiguration("org.eclipselabs.mongo.provider", null);
+		Configuration config = configurationAdmin.getConfiguration("org.eclipselabs.mongo.id", null);
 
 		Dictionary<String, Object> properties = config.getProperties();
 
 		if (properties == null)
 			properties = new Hashtable<String, Object>();
 
-		properties.put(IMongoProvider.PROP_URI, "mongodb://localhost/");
+		properties.put(IMongoId.PROP_URI, "mongodb://localhost/junit/junit_id");
 		config.update(properties);
 	}
 

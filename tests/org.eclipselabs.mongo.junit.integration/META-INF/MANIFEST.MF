@@ -10,6 +10,7 @@ Import-Package: com.mongodb,
  org.bson,
  org.eclipselabs.mongo,
  org.eclipselabs.mongo.emf.developer.junit,
- org.hamcrest;version="1.3.0"
-Service-Component: OSGI-INF/provider.xml, OSGI-INF/id.xml
+ org.hamcrest;version="1.3.0",
+ org.osgi.service.cm;version="1.4.0"
+Service-Component: OSGI-INF/provider.xml, OSGI-INF/id.xml, OSGI-INF/config.xml
 Bundle-ActivationPolicy: lazy

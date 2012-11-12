@@ -27,7 +27,7 @@ public enum LogLevel implements Enumerator
    * @generated
    * @ordered
    */
-  ERROR(0, "Error", "Error"),
+  ERROR(1, "Error", "Error"),
 
   /**
    * The '<em><b>Warning</b></em>' literal object.
@@ -37,7 +37,7 @@ public enum LogLevel implements Enumerator
    * @generated
    * @ordered
    */
-  WARNING(0, "Warning", "Warning"),
+  WARNING(2, "Warning", "Warning"),
 
   /**
    * The '<em><b>Info</b></em>' literal object.
@@ -47,7 +47,7 @@ public enum LogLevel implements Enumerator
    * @generated
    * @ordered
    */
-  INFO(0, "Info", "Info"),
+  INFO(3, "Info", "Info"),
 
   /**
    * The '<em><b>Debug</b></em>' literal object.
@@ -57,7 +57,7 @@ public enum LogLevel implements Enumerator
    * @generated
    * @ordered
    */
-  DEBUG(0, "Debug", "Debug");
+  DEBUG(4, "Debug", "Debug");
 
   /**
    * The '<em><b>Error</b></em>' literal value.
@@ -72,7 +72,7 @@ public enum LogLevel implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int ERROR_VALUE = 0;
+  public static final int ERROR_VALUE = 1;
 
   /**
    * The '<em><b>Warning</b></em>' literal value.
@@ -87,7 +87,7 @@ public enum LogLevel implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int WARNING_VALUE = 0;
+  public static final int WARNING_VALUE = 2;
 
   /**
    * The '<em><b>Info</b></em>' literal value.
@@ -102,7 +102,7 @@ public enum LogLevel implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int INFO_VALUE = 0;
+  public static final int INFO_VALUE = 3;
 
   /**
    * The '<em><b>Debug</b></em>' literal value.
@@ -117,7 +117,7 @@ public enum LogLevel implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int DEBUG_VALUE = 0;
+  public static final int DEBUG_VALUE = 4;
 
   /**
    * An array of all the '<em><b>Level</b></em>' enumerators.
@@ -191,6 +191,9 @@ public enum LogLevel implements Enumerator
     switch (value)
     {
       case ERROR_VALUE: return ERROR;
+      case WARNING_VALUE: return WARNING;
+      case INFO_VALUE: return INFO;
+      case DEBUG_VALUE: return DEBUG;
     }
     return null;
   }

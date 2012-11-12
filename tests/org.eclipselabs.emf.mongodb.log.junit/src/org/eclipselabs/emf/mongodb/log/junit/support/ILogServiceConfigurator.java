@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 Bryan Hunt.
+ * Copyright (c) 2012 Bryan Hunt.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,14 +9,19 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf.log.junit.suite;
+package org.eclipselabs.emf.mongodb.log.junit.support;
 
-import org.eclipselabs.mongo.emf.log.junit.tests.TestMongoDbLogListener;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-import org.junit.runners.Suite.SuiteClasses;
+import java.io.IOException;
 
-@RunWith(Suite.class)
-@SuiteClasses({ TestMongoDbLogListener.class })
-public class TestMongoEmfLogSuite
-{}
+import org.eclipselabs.emf.log.LogLevel;
+
+/**
+ * @author bhunt
+ *
+ */
+public interface ILogServiceConfigurator
+{
+
+	public void setLogLevel(LogLevel logLevel) throws IOException;
+
+}
