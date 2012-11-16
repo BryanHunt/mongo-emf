@@ -9,5 +9,5 @@
    <reference bind="bindDBObjectBuilderFactory" cardinality="1..1" interface="org.eclipselabs.mongo.emf.IDBObjectBuilderFactory" name="IDBObjectBuilderFactory" policy="static"/>
    <reference bind="bindEObjectBuilderFactory" cardinality="1..1" interface="org.eclipselabs.mongo.emf.IEObjectBuilderFactory" name="IEObjectBuilderFactory" policy="static"/>
    <reference bind="bindConverterService" cardinality="1..1" interface="org.eclipselabs.mongo.emf.IConverterService" name="IConverterService" policy="static"/>
-   <reference bind="bindMongoId" cardinality="0..n" interface="org.eclipselabs.mongo.IMongoId" name="IMongoId" policy="dynamic" unbind="unbindMongoId"/>
+   <reference bind="bindMongoIdFactory" cardinality="0..n" interface="org.eclipselabs.emongo.MongoIdFactory" name="MongoIdFactory" policy="dynamic" unbind="unbindMongoIdFactory"/>
 </scr:component>

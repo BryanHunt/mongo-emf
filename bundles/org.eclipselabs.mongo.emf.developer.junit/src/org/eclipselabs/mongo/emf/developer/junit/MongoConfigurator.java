@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-import org.eclipselabs.mongo.IMongoProvider;
+import org.eclipselabs.emongo.MongoProvider;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -32,7 +32,7 @@ public class MongoConfigurator
 	{
 		Configuration config = configurationAdmin.createFactoryConfiguration("org.eclipselabs.mongo.provider", null);
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
-		properties.put(IMongoProvider.PROP_URI, "mongodb://localhost/");
+		properties.put(MongoProvider.PROP_URI, "mongodb://localhost/");
 		config.update(properties);
 	}
 

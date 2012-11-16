@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="org.eclipselabs.mongo.locator">
-   <implementation class="org.eclipselabs.mongo.impl.DatabaseLocator"/>
-   <reference bind="bindMongoProvider" cardinality="0..n" interface="org.eclipselabs.mongo.IMongoProvider" name="IMongoProvider" policy="dynamic" unbind="unbindMongoProvider"/>
-   <reference bind="bindDatabaseAuthenticationProvider" cardinality="0..n" interface="org.eclipselabs.mongo.IDatabaseAuthenticationProvider" name="IDatabaseAuthenticationProvider" policy="dynamic" unbind="unbindDatabaseAuthenticationProvider"/>
-   <service>
-      <provide interface="org.eclipselabs.mongo.IDatabaseLocator"/>
-   </service>
-</scr:component>

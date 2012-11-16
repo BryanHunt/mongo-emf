@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipselabs.mongo.IMongoId;
+import org.eclipselabs.emongo.MongoIdFactory;
 import org.eclipselabs.mongo.emf.DBObjectBuilder;
 import org.eclipselabs.mongo.emf.IConverterService;
 import org.eclipselabs.mongo.emf.IDBObjectBuilderFactory;
@@ -43,7 +43,7 @@ import com.mongodb.WriteConcern;
  */
 public class MongoOutputStream extends ByteArrayOutputStream implements URIConverter.Saveable
 {
-	public MongoOutputStream(IConverterService converterService, IDBObjectBuilderFactory builderFactory, DBCollection collection, URI uri, Map<String, IMongoId> idProviders, Map<?, ?> options, Map<Object, Object> response)
+	public MongoOutputStream(IConverterService converterService, IDBObjectBuilderFactory builderFactory, DBCollection collection, URI uri, Map<String, MongoIdFactory> idProviders, Map<?, ?> options, Map<Object, Object> response)
 	{
 		if (converterService == null)
 			throw new NullPointerException("The converter service must not be null");
@@ -54,7 +54,7 @@ public class MongoOutputStream extends ByteArrayOutputStream implements URIConve
 		this.converterService = converterService;
 		this.collection = collection;
 		this.uri = uri;
-		this.idProviders = idProviders;
+		this.idFactories = idProviders;
 		this.options = options;
 		this.response = response;
 		this.builderFactory = builderFactory;
@@ -76,13 +76,13 @@ public class MongoOutputStream extends ByteArrayOutputStream implements URIConve
 
 		// If the id was not specified, look for an id generator
 
-		if (id == null && idProviders != null)
+		if (id == null && idFactories != null)
 		{
-			IMongoId mongoId = idProviders.get(uri.trimSegments(uri.segmentCount() - 2).toString());
+			MongoIdFactory mongoIdFactory = idFactories.get(uri.trimSegments(uri.segmentCount() - 2).toString());
 
-			if (mongoId != null)
+			if (mongoIdFactory != null)
 			{
-				id = mongoId.getNextId();
+				id = mongoIdFactory.getNextId();
 				uri = uri.appendSegment(id.toString());
 				resource.setURI(resource.getURI().trimSegments(1).appendSegment(id.toString()));
 			}
@@ -242,5 +242,5 @@ public class MongoOutputStream extends ByteArrayOutputStream implements URIConve
 	private Map<Object, Object> response;
 	private URI uri;
 	private DBObjectBuilder builder;
-	private Map<String, IMongoId> idProviders;
+	private Map<String, MongoIdFactory> idFactories;
 }

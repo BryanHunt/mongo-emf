@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-import org.eclipselabs.mongo.IMongoId;
+import org.eclipselabs.emongo.MongoIdFactory;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -36,7 +36,7 @@ public class MongoIdConfiguration
 		if (properties == null)
 			properties = new Hashtable<String, Object>();
 
-		properties.put(IMongoId.PROP_URI, "mongodb://localhost/junit/junit_id");
+		properties.put(MongoIdFactory.PROP_URI, "mongodb://localhost/junit/junit_id");
 		config.update(properties);
 	}
 

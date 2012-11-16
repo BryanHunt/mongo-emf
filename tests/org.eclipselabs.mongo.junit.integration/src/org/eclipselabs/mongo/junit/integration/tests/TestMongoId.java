@@ -14,7 +14,9 @@ package org.eclipselabs.mongo.junit.integration.tests;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import org.eclipselabs.mongo.IMongoId;
+import java.io.IOException;
+
+import org.eclipselabs.emongo.MongoIdFactory;
 import org.eclipselabs.mongo.emf.developer.junit.MongoDatabase;
 import org.eclipselabs.mongo.emf.developer.junit.ServiceTestHarness;
 import org.junit.Rule;
@@ -33,10 +35,10 @@ public class TestMongoId extends ServiceTestHarness
 	@Rule
 	public MongoDatabase database = new MongoDatabase();
 
-	private static IMongoId mongoId;
+	private static MongoIdFactory mongoId;
 
 	@Test
-	public void testGetNextId()
+	public void testGetNextId() throws IOException
 	{
 		assertThat(mongoId.getNextId(), is("1"));
 		DBCollection collection = database.getMongoDB().getCollection("junit_id");
@@ -44,7 +46,7 @@ public class TestMongoId extends ServiceTestHarness
 		assertThat((Long) result.get("lastId"), is(1L));
 	}
 
-	void bindMongoId(IMongoId service)
+	void bindMongoId(MongoIdFactory service)
 	{
 		mongoId = service;
 	}

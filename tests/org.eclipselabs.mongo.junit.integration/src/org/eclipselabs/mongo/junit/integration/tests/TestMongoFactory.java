@@ -14,7 +14,7 @@ package org.eclipselabs.mongo.junit.integration.tests;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-import org.eclipselabs.mongo.IMongoProvider;
+import org.eclipselabs.emongo.MongoProvider;
 import org.eclipselabs.mongo.emf.developer.junit.ServiceTestHarness;
 import org.junit.Test;
 
@@ -34,10 +34,10 @@ public class TestMongoFactory extends ServiceTestHarness
 		assertThat(mongo.getAddress().getPort(), is(27017));
 	}
 
-	void bindMongoProvider(IMongoProvider service)
+	void bindMongoProvider(MongoProvider service)
 	{
 		mongoProvider = service;
 	}
 
-	private static IMongoProvider mongoProvider;
+	private static MongoProvider mongoProvider;
 }

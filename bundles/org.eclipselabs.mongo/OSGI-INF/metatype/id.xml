@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<MetaData xmlns="http://www.osgi.org/xmlns/metatype/v1.1.0">
-	<OCD name="MongoDB ID" id="org.eclipselabs.mongo.id" description="MongoDB ID Provider Configuration">
-		<AD name="URI"        id="uri"        type="String" description="The URI of the MongoDB collection of the form 'mongodb://host:[port]/db/collection'."/>
-	</OCD>
-	<Designate factoryPid="org.eclipselabs.mongo.id">
-		<Object ocdref="org.eclipselabs.mongo.id"/>
-	</Designate>
-</MetaData>

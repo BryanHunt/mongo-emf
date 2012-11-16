@@ -14,8 +14,7 @@ Import-Package: org.eclipse.emf.common,
  org.eclipse.emf.ecore.plugin,
  org.eclipse.emf.ecore.resource,
  org.eclipse.emf.ecore.resource.impl,
- org.eclipse.emf.ecore.util,
- org.eclipselabs.mongo
+ org.eclipse.emf.ecore.util
 Export-Package: org.eclipselabs.mongo.emf.ext
 Service-Component: OSGI-INF/factory.xml,
  OSGI-INF/uri_handler.xml

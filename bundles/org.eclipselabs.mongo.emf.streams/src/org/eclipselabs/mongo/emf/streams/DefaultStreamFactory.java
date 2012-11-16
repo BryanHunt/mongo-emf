@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipselabs.mongo.IMongoId;
+import org.eclipselabs.emongo.MongoIdFactory;
 import org.eclipselabs.mongo.emf.IConverterService;
 import org.eclipselabs.mongo.emf.IDBObjectBuilderFactory;
 import org.eclipselabs.mongo.emf.IEObjectBuilderFactory;
@@ -37,7 +37,7 @@ public class DefaultStreamFactory implements IInputStreamFactory, IOutputStreamF
 	@Override
 	public OutputStream createOutputStream(URI uri, Map<?, ?> options, DBCollection collection, Map<Object, Object> response)
 	{
-		return new MongoOutputStream(converterService, dbObjectBuilderFactory, collection, uri, idProviders, options, response);
+		return new MongoOutputStream(converterService, dbObjectBuilderFactory, collection, uri, idFactories, options, response);
 	}
 
 	@Override
@@ -66,25 +66,25 @@ public class DefaultStreamFactory implements IInputStreamFactory, IOutputStreamF
 		this.queryEngine = queryEngine;
 	}
 
-	public synchronized void bindMongoId(IMongoId mongoId, @SuppressWarnings("rawtypes") Map properties)
+	public synchronized void bindMongoIdFactory(MongoIdFactory mongoIdFactory, @SuppressWarnings("rawtypes") Map properties)
 	{
-		String uri = (String) properties.get(IMongoId.PROP_URI);
+		String uri = (String) properties.get(MongoIdFactory.PROP_URI);
 
-		if (idProviders == null)
-			idProviders = new HashMap<String, IMongoId>();
+		if (idFactories == null)
+			idFactories = new HashMap<String, MongoIdFactory>();
 
-		idProviders.put(uri, mongoId);
+		idFactories.put(uri, mongoIdFactory);
 	}
 
-	public void unbindMongoId(IMongoId mongoId, @SuppressWarnings("rawtypes") Map properties)
+	public void unbindMongoIdFactory(MongoIdFactory mongoIdFactory, @SuppressWarnings("rawtypes") Map properties)
 	{
-		String uri = (String) properties.get(IMongoId.PROP_URI);
-		idProviders.remove(uri);
+		String uri = (String) properties.get(MongoIdFactory.PROP_URI);
+		idFactories.remove(uri);
 	}
 
 	private IDBObjectBuilderFactory dbObjectBuilderFactory;
 	private IEObjectBuilderFactory eObjectBuilderFactory;
 	private IQueryEngine queryEngine;
 	private IConverterService converterService;
-	private volatile Map<String, IMongoId> idProviders;
+	private volatile Map<String, MongoIdFactory> idFactories;
 }
