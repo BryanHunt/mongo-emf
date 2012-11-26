@@ -22,9 +22,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipselabs.emf.ext.ECollection;
+import org.eclipselabs.emf.ext.ExtPackage;
 import org.eclipselabs.emf.log.LogPackage;
-import org.eclipselabs.mongo.emf.ext.ECollection;
-import org.eclipselabs.mongo.emf.ext.ExtPackage;
 
 /**
  * @author bhunt

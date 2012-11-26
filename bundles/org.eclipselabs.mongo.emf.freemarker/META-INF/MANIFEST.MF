@@ -21,4 +21,4 @@ Import-Package: freemarker.cache,
  org.eclipse.emf.ecore.resource.impl,
  org.eclipse.emf.ecore.util,
  org.eclipselabs.mongo.emf,
- org.eclipselabs.mongo.emf.ext
+ org.eclipselabs.emf.ext

@@ -16,10 +16,10 @@ import java.io.IOException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipselabs.emf.ext.ResourceSetFactory;
 import org.eclipselabs.emf.mongo.examples.model.Child;
 import org.eclipselabs.emf.mongo.examples.model.ModelFactory;
 import org.eclipselabs.emf.mongo.examples.model.Parent;
-import org.eclipselabs.mongo.emf.ext.IResourceSetFactory;
 
 /**
  * @author bhunt
@@ -103,12 +103,12 @@ public class ExampleComponent
 		System.out.println("Time to walk " + CHILD_COUNT + " children of first parent: " + (endTime - startTime) + " ms");
 	}
 
-	void bindResourceSetFactory(IResourceSetFactory resourceSetFactory)
+	void bindResourceSetFactory(ResourceSetFactory resourceSetFactory)
 	{
 		this.resourceSetFactory = resourceSetFactory;
 	}
 
-	private IResourceSetFactory resourceSetFactory;
+	private ResourceSetFactory resourceSetFactory;
 	private static final int CHILD_COUNT = 10;
 	private static final int PARENT_COUNT = 10;
 

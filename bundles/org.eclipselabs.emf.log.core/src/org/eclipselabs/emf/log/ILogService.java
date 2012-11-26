@@ -13,7 +13,7 @@ package org.eclipselabs.emf.log;
 
 import java.util.Date;
 
-import org.eclipselabs.mongo.emf.ext.ECollection;
+import org.eclipselabs.emf.ext.ECollection;
 
 /**
  * @author bhunt

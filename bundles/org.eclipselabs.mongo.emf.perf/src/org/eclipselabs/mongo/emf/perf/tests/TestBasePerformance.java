@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipselabs.mongo.emf.developer.junit.MongoDatabase;
-import org.eclipselabs.mongo.emf.ext.ECollection;
+import org.eclipselabs.emf.ext.ECollection;
 import org.eclipselabs.mongo.emf.junit.support.TestHarness;
 import org.eclipselabs.mongo.emf.perf.model.ModelFactory;
 import org.eclipselabs.mongo.emf.perf.model.TestObject1;

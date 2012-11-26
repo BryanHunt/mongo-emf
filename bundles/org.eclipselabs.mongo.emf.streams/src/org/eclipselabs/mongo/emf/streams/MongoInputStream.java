@@ -30,8 +30,8 @@ import org.eclipselabs.mongo.emf.IEObjectBuilderFactory;
 import org.eclipselabs.mongo.emf.IQueryEngine;
 import org.eclipselabs.mongo.emf.MongoQuery;
 import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
-import org.eclipselabs.mongo.emf.ext.ECollection;
-import org.eclipselabs.mongo.emf.ext.ExtFactory;
+import org.eclipselabs.emf.ext.ECollection;
+import org.eclipselabs.emf.ext.ExtFactory;
 import org.eclipselabs.mongo.emf.model.ModelFactory;
 import org.eclipselabs.mongo.emf.model.MongoCursor;
 

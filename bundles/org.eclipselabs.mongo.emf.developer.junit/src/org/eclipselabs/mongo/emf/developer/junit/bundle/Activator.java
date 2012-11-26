@@ -11,7 +11,7 @@
 
 package org.eclipselabs.mongo.emf.developer.junit.bundle;
 
-import org.eclipselabs.mongo.emf.ext.IResourceSetFactory;
+import org.eclipselabs.emf.ext.ResourceSetFactory;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
@@ -27,7 +27,7 @@ public class Activator implements BundleActivator
 		return bundleContext;
 	}
 
-	public static IResourceSetFactory getResourceSetFactory()
+	public static ResourceSetFactory getResourceSetFactory()
 	{
 		return resourceSetFactoryTracker.getService();
 	}
@@ -36,7 +36,7 @@ public class Activator implements BundleActivator
 	public void start(BundleContext context) throws Exception
 	{
 		bundleContext = context;
-		resourceSetFactoryTracker = new ServiceTracker<IResourceSetFactory, IResourceSetFactory>(context, IResourceSetFactory.class, null);
+		resourceSetFactoryTracker = new ServiceTracker<ResourceSetFactory, ResourceSetFactory>(context, ResourceSetFactory.class, null);
 		resourceSetFactoryTracker.open();
 	}
 
@@ -50,5 +50,5 @@ public class Activator implements BundleActivator
 	}
 
 	private static BundleContext bundleContext;
-	private static ServiceTracker<IResourceSetFactory, IResourceSetFactory> resourceSetFactoryTracker;
+	private static ServiceTracker<ResourceSetFactory, ResourceSetFactory> resourceSetFactoryTracker;
 }

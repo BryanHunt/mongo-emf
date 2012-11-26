@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="org.eclipselabs.mongo.emf.ext.factory">
-   <implementation class="org.eclipselabs.mongo.emf.ext.impl.MongoResourceSetFactory"/>
-   <service>
-      <provide interface="org.eclipselabs.mongo.emf.ext.IResourceSetFactory"/>
-   </service>
-   <reference bind="bindResourceSetConfigurator" cardinality="0..n" interface="org.eclipselabs.mongo.emf.ext.IResourceSetConfigurator" name="IResourceSetConfigurator" policy="dynamic" unbind="unbindResourceSetConfigurator"/>
-</scr:component>

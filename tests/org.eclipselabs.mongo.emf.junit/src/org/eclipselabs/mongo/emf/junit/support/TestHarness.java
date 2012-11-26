@@ -24,8 +24,8 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipselabs.emf.ext.ResourceSetFactory;
 import org.eclipselabs.mongo.emf.developer.junit.MongoDatabase;
-import org.eclipselabs.mongo.emf.ext.IResourceSetFactory;
 import org.junit.Before;
 import org.junit.Rule;
 
@@ -93,7 +93,7 @@ public abstract class TestHarness
 		saveObject(resourceSet, object, uri, options);
 	}
 
-	public void bindResourceSetFactory(IResourceSetFactory factory)
+	public void bindResourceSetFactory(ResourceSetFactory factory)
 	{
 		resourceSetFactory = factory;
 	}
@@ -107,5 +107,5 @@ public abstract class TestHarness
 
 	private DB db;
 	private Integer port;
-	private static IResourceSetFactory resourceSetFactory;
+	private static ResourceSetFactory resourceSetFactory;
 }

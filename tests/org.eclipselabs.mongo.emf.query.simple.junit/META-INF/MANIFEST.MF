@@ -26,7 +26,7 @@ Import-Package: com.mongodb,
  org.eclipselabs.emf.query.impl,
  org.eclipselabs.mongo.emf,
  org.eclipselabs.mongo.emf.developer.junit,
- org.eclipselabs.mongo.emf.ext,
+ org.eclipselabs.emf.ext,
  org.eclipselabs.mongo.emf.junit.model,
  org.eclipselabs.mongo.emf.junit.support,
  org.hamcrest;version="1.3.0"

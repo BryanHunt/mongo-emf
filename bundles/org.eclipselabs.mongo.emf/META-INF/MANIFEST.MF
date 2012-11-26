@@ -23,7 +23,7 @@ Import-Package: com.mongodb,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.emf.ecore.xmi.impl,
  org.eclipselabs.emongo,
- org.eclipselabs.mongo.emf.ext,
+ org.eclipselabs.emf.ext,
  org.osgi.framework;version="1.6.0",
  org.osgi.util.tracker;version="1.5.0"
 Export-Package: org.eclipselabs.mongo.emf,

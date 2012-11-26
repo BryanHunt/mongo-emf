@@ -21,11 +21,11 @@ import java.util.Map;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipselabs.emf.ext.ResourceSetFactory;
 import org.eclipselabs.emf.log.LogEntry;
 import org.eclipselabs.emf.log.LogFactory;
 import org.eclipselabs.emf.log.LogLevel;
 import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
-import org.eclipselabs.mongo.emf.ext.IResourceSetFactory;
 import org.osgi.service.log.LogListener;
 import org.osgi.service.log.LogReaderService;
 
@@ -90,7 +90,7 @@ public class MongoDbLogListener implements LogListener
 		this.logReaderService = logReaderService;
 	}
 
-	public void bindResourceSetFactory(IResourceSetFactory resourceSetFactory)
+	public void bindResourceSetFactory(ResourceSetFactory resourceSetFactory)
 	{
 		this.resourceSetFactory = resourceSetFactory;
 	}
@@ -118,5 +118,5 @@ public class MongoDbLogListener implements LogListener
 	private URI uri;
 	private LogLevel logLevel = LogLevel.ERROR;
 	private LogReaderService logReaderService;
-	private IResourceSetFactory resourceSetFactory;
+	private ResourceSetFactory resourceSetFactory;
 }

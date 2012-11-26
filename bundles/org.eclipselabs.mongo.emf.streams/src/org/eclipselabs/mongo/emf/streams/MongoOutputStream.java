@@ -30,8 +30,8 @@ import org.eclipselabs.mongo.emf.DBObjectBuilder;
 import org.eclipselabs.mongo.emf.IConverterService;
 import org.eclipselabs.mongo.emf.IDBObjectBuilderFactory;
 import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
-import org.eclipselabs.mongo.emf.ext.ECollection;
-import org.eclipselabs.mongo.emf.ext.ExtFactory;
+import org.eclipselabs.emf.ext.ECollection;
+import org.eclipselabs.emf.ext.ExtFactory;
 
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;

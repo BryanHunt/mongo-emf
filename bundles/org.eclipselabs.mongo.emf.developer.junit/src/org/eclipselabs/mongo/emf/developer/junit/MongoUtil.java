@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipselabs.mongo.emf.developer.junit.bundle.Activator;
-import org.eclipselabs.mongo.emf.ext.ECollection;
+import org.eclipselabs.emf.ext.ECollection;
 
 /**
  * This class provides a set of utility functions that may be useful when unit testing.

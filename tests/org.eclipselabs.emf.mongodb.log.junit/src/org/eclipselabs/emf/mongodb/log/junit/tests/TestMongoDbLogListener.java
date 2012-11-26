@@ -21,13 +21,13 @@ import java.io.IOException;
 import java.util.Collection;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipselabs.emf.ext.ResourceSetFactory;
 import org.eclipselabs.emf.log.LogEntry;
 import org.eclipselabs.emf.log.LogLevel;
 import org.eclipselabs.emf.mongodb.log.junit.support.ILogServiceConfigurator;
 import org.eclipselabs.mongo.emf.developer.junit.MongoDatabase;
 import org.eclipselabs.mongo.emf.developer.junit.MongoUtil;
 import org.eclipselabs.mongo.emf.developer.junit.ServiceTestHarness;
-import org.eclipselabs.mongo.emf.ext.IResourceSetFactory;
 import org.junit.Rule;
 import org.junit.Test;
 import org.osgi.service.log.LogService;
@@ -116,7 +116,7 @@ public class TestMongoDbLogListener extends ServiceTestHarness
 		logServiceConfigurator = service;
 	}
 
-	void bindResourceSetFactory(IResourceSetFactory factory)
+	void bindResourceSetFactory(ResourceSetFactory factory)
 	{
 		resourceSetFactory = factory;
 	}
@@ -128,6 +128,6 @@ public class TestMongoDbLogListener extends ServiceTestHarness
 
 	private static final String DB_LOGS = "logs";
 	private static LogService osgiLogService;
-	private static IResourceSetFactory resourceSetFactory;
+	private static ResourceSetFactory resourceSetFactory;
 	private static ILogServiceConfigurator logServiceConfigurator;
 }

@@ -12,17 +12,17 @@
 package org.eclipselabs.mongo.emf.impl;
 
 import org.eclipse.emf.ecore.resource.URIHandler;
+import org.eclipselabs.emf.ext.UriHandlerProvider;
 import org.eclipselabs.emongo.DatabaseLocator;
 import org.eclipselabs.mongo.emf.IInputStreamFactory;
 import org.eclipselabs.mongo.emf.IOutputStreamFactory;
 import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
-import org.eclipselabs.mongo.emf.ext.IUriHandlerProvider;
 
 /**
  * @author bhunt
  * 
  */
-public class MongoURIHandlerProvider implements IUriHandlerProvider
+public class MongoURIHandlerProvider implements UriHandlerProvider
 {
 	@Override
 	public synchronized URIHandler getURIHandler()
