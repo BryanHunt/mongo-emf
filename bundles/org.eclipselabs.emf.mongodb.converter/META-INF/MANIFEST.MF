@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Mongo EMF Default Converter Service
-Bundle-SymbolicName: org.eclipselabs.mongo.emf.converter
+Bundle-SymbolicName: org.eclipselabs.emf.mongodb.converter
 Bundle-Version: 0.7.1.qualifier
 Bundle-Vendor: EclipseLabs
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
