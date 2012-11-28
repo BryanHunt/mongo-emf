@@ -9,7 +9,7 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf.converter;
+package org.eclipselabs.emf.mongodb.converter;
 
 import java.util.LinkedList;
 

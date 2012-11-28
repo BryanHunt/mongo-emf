@@ -4,21 +4,21 @@
  *
  * $Id$
  */
-package org.eclipselabs.mongo.freemarker.util;
+package org.eclipselabs.emf.freemarker.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipselabs.mongo.freemarker.FreeMarkerTemplate;
-import org.eclipselabs.mongo.freemarker.FreemarkerPackage;
+import org.eclipselabs.emf.freemarker.FreeMarkerTemplate;
+import org.eclipselabs.emf.freemarker.FreemarkerPackage;
 
 /**
  * <!-- begin-user-doc -->
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see org.eclipselabs.mongo.freemarker.FreemarkerPackage
+ * @see org.eclipselabs.emf.freemarker.FreemarkerPackage
  * @generated
  */
 public class FreemarkerAdapterFactory extends AdapterFactoryImpl
@@ -104,13 +104,13 @@ public class FreemarkerAdapterFactory extends AdapterFactoryImpl
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipselabs.mongo.freemarker.FreeMarkerTemplate <em>Free Marker Template</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipselabs.emf.freemarker.FreeMarkerTemplate <em>Free Marker Template</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipselabs.mongo.freemarker.FreeMarkerTemplate
+	 * @see org.eclipselabs.emf.freemarker.FreeMarkerTemplate
 	 * @generated
 	 */
 	public Adapter createFreeMarkerTemplateAdapter()

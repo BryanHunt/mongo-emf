@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.eclipselabs.mongo.freemarker;
+package org.eclipselabs.emf.freemarker;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * @see org.eclipselabs.mongo.freemarker.FreemarkerPackage
+ * @see org.eclipselabs.emf.freemarker.FreemarkerPackage
  * @generated
  */
 public class FreemarkerFactory extends EFactoryImpl

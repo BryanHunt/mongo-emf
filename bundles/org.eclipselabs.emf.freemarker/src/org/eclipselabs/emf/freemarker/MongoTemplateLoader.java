@@ -9,7 +9,7 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.freemarker;
+package org.eclipselabs.emf.freemarker;
 
 import java.io.IOException;
 import java.io.Reader;

@@ -1,14 +1,14 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
-Bundle-SymbolicName: org.eclipselabs.emf.mongodb.freemarker;singleton:=true
+Bundle-SymbolicName: org.eclipselabs.emf.freemarker;singleton:=true
 Bundle-Version: 0.7.1.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipselabs.mongo.freemarker,
- org.eclipselabs.mongo.freemarker.util
+Export-Package: org.eclipselabs.emf.freemarker,
+ org.eclipselabs.emf.freemarker.util
 Import-Package: freemarker.cache,
  org.eclipse.emf.common,
  org.eclipse.emf.common.notify,
@@ -20,5 +20,4 @@ Import-Package: freemarker.cache,
  org.eclipse.emf.ecore.resource,
  org.eclipse.emf.ecore.resource.impl,
  org.eclipse.emf.ecore.util,
- org.eclipselabs.emf.ext,
- org.eclipselabs.emf.mongodb
+ org.eclipselabs.emf.ext

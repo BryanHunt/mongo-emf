@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.eclipselabs.mongo.freemarker;
+package org.eclipselabs.emf.freemarker;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * @see org.eclipselabs.mongo.freemarker.FreemarkerFactory
+ * @see org.eclipselabs.emf.freemarker.FreemarkerFactory
  * @model kind="package"
  * @generated
  */
@@ -58,14 +58,14 @@ public class FreemarkerPackage extends EPackageImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static final FreemarkerPackage eINSTANCE = org.eclipselabs.mongo.freemarker.FreemarkerPackage.init();
+	public static final FreemarkerPackage eINSTANCE = org.eclipselabs.emf.freemarker.FreemarkerPackage.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipselabs.mongo.freemarker.FreeMarkerTemplate <em>Free Marker Template</em>}' class.
+	 * The meta object id for the '{@link org.eclipselabs.emf.freemarker.FreeMarkerTemplate <em>Free Marker Template</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipselabs.mongo.freemarker.FreeMarkerTemplate
-	 * @see org.eclipselabs.mongo.freemarker.FreemarkerPackage#getFreeMarkerTemplate()
+	 * @see org.eclipselabs.emf.freemarker.FreeMarkerTemplate
+	 * @see org.eclipselabs.emf.freemarker.FreemarkerPackage#getFreeMarkerTemplate()
 	 * @generated
 	 */
 	public static final int FREE_MARKER_TEMPLATE = 0;
@@ -106,7 +106,7 @@ public class FreemarkerPackage extends EPackageImpl
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.eclipselabs.mongo.freemarker.FreemarkerPackage#eNS_URI
+	 * @see org.eclipselabs.emf.freemarker.FreemarkerPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
@@ -160,11 +160,11 @@ public class FreemarkerPackage extends EPackageImpl
 
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipselabs.mongo.freemarker.FreeMarkerTemplate <em>Free Marker Template</em>}'.
+	 * Returns the meta object for class '{@link org.eclipselabs.emf.freemarker.FreeMarkerTemplate <em>Free Marker Template</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Free Marker Template</em>'.
-	 * @see org.eclipselabs.mongo.freemarker.FreeMarkerTemplate
+	 * @see org.eclipselabs.emf.freemarker.FreeMarkerTemplate
 	 * @generated
 	 */
 	public EClass getFreeMarkerTemplate()
@@ -173,11 +173,11 @@ public class FreemarkerPackage extends EPackageImpl
 	}
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.freemarker.FreeMarkerTemplate#getContents <em>Contents</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.emf.freemarker.FreeMarkerTemplate#getContents <em>Contents</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Contents</em>'.
-	 * @see org.eclipselabs.mongo.freemarker.FreeMarkerTemplate#getContents()
+	 * @see org.eclipselabs.emf.freemarker.FreeMarkerTemplate#getContents()
 	 * @see #getFreeMarkerTemplate()
 	 * @generated
 	 */
@@ -275,11 +275,11 @@ public class FreemarkerPackage extends EPackageImpl
 	public interface Literals
 	{
 		/**
-		 * The meta object literal for the '{@link org.eclipselabs.mongo.freemarker.FreeMarkerTemplate <em>Free Marker Template</em>}' class.
+		 * The meta object literal for the '{@link org.eclipselabs.emf.freemarker.FreeMarkerTemplate <em>Free Marker Template</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipselabs.mongo.freemarker.FreeMarkerTemplate
-		 * @see org.eclipselabs.mongo.freemarker.FreemarkerPackage#getFreeMarkerTemplate()
+		 * @see org.eclipselabs.emf.freemarker.FreeMarkerTemplate
+		 * @see org.eclipselabs.emf.freemarker.FreemarkerPackage#getFreeMarkerTemplate()
 		 * @generated
 		 */
 		public static final EClass FREE_MARKER_TEMPLATE = eINSTANCE.getFreeMarkerTemplate();

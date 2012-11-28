@@ -4,13 +4,13 @@
  *
  * $Id$
  */
-package org.eclipselabs.mongo.freemarker.util;
+package org.eclipselabs.emf.freemarker.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipselabs.mongo.freemarker.FreeMarkerTemplate;
-import org.eclipselabs.mongo.freemarker.FreemarkerPackage;
+import org.eclipselabs.emf.freemarker.FreeMarkerTemplate;
+import org.eclipselabs.emf.freemarker.FreemarkerPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,7 +22,7 @@ import org.eclipselabs.mongo.freemarker.FreemarkerPackage;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see org.eclipselabs.mongo.freemarker.FreemarkerPackage
+ * @see org.eclipselabs.emf.freemarker.FreemarkerPackage
  * @generated
  */
 public class FreemarkerSwitch<T> extends Switch<T>

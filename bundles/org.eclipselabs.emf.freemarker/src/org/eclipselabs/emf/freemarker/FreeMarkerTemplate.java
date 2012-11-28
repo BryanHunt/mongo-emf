@@ -4,7 +4,7 @@
  *
  * $Id$
  */
-package org.eclipselabs.mongo.freemarker;
+package org.eclipselabs.emf.freemarker;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -16,11 +16,11 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.eclipselabs.mongo.freemarker.FreeMarkerTemplate#getContents <em>Contents</em>}</li>
+ *   <li>{@link org.eclipselabs.emf.freemarker.FreeMarkerTemplate#getContents <em>Contents</em>}</li>
  * </ul>
  * </p>
  *
- * @see org.eclipselabs.mongo.freemarker.FreemarkerPackage#getFreeMarkerTemplate()
+ * @see org.eclipselabs.emf.freemarker.FreemarkerPackage#getFreeMarkerTemplate()
  * @model kind="class" interface="true" abstract="true"
  * @generated
  */
@@ -36,14 +36,14 @@ public interface FreeMarkerTemplate extends EObject
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Contents</em>' attribute.
 	 * @see #setContents(String)
-	 * @see org.eclipselabs.mongo.freemarker.FreemarkerPackage#getFreeMarkerTemplate_Contents()
+	 * @see org.eclipselabs.emf.freemarker.FreemarkerPackage#getFreeMarkerTemplate_Contents()
 	 * @model
 	 * @generated
 	 */
 	String getContents();
 
 	/**
-	 * Sets the value of the '{@link org.eclipselabs.mongo.freemarker.FreeMarkerTemplate#getContents <em>Contents</em>}' attribute.
+	 * Sets the value of the '{@link org.eclipselabs.emf.freemarker.FreeMarkerTemplate#getContents <em>Contents</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Contents</em>' attribute.
