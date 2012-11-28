@@ -5,7 +5,7 @@
     suppressInterfaces="true" importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0"
     copyrightFields="false">
   <foreignModel>junit.ecore</foreignModel>
-  <genPackages prefix="Model" basePackage="org.eclipselabs.mongo.emf.query.simple.junit"
+  <genPackages prefix="Model" basePackage="org.eclipselabs.emf.mongodb.query.simple.junit"
       disposableProviderFactory="true" ecorePackage="junit.ecore#/">
     <genClasses ecoreClass="junit.ecore#//Person">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute junit.ecore#//Person/name"/>
@@ -26,6 +26,12 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute junit.ecore#//Location/address"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference junit.ecore#//Location/featuredBook"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute junit.ecore#//Location/id"/>
+    </genClasses>
+    <genClasses ecoreClass="junit.ecore#//MappedLibrary">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference junit.ecore#//MappedLibrary/location"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference junit.ecore#//MappedLibrary/rareBooks"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference junit.ecore#//MappedLibrary/regularBooks"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute junit.ecore#//MappedLibrary/books"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

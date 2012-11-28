@@ -1,18 +1,16 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
-Bundle-SymbolicName: org.eclipselabs.emf.mongodb.query.simple.junit;singleton:=true
+Bundle-SymbolicName: org.eclipselabs.emf.mongodb.perf;singleton:=true
 Bundle-Version: 0.7.1.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipselabs.emf.mongodb.query.simple.junit.model,
- org.eclipselabs.emf.mongodb.query.simple.junit.model.util
+Export-Package: org.eclipselabs.emf.mongodb.perf.model,
+ org.eclipselabs.emf.mongodb.perf.model.util
 Bundle-ActivationPolicy: lazy
-Import-Package: com.mongodb,
- org.bson,
- org.bson.types,
+Import-Package: com.yourkit.api,
  org.eclipse.emf.common,
  org.eclipse.emf.common.notify,
  org.eclipse.emf.common.notify.impl,
@@ -24,12 +22,12 @@ Import-Package: com.mongodb,
  org.eclipse.emf.ecore.util,
  org.eclipselabs.emf.ext,
  org.eclipselabs.emf.mongodb,
- org.eclipselabs.emf.mongodb.junit.model,
  org.eclipselabs.emf.mongodb.junit.support,
- org.eclipselabs.emf.query,
- org.eclipselabs.emf.query.impl,
  org.eclipselabs.emongo,
+ org.eclipselabs.emongo.junit.util,
  org.eclipselabs.eunit.junit.utils,
- org.hamcrest;version="1.3.0"
-Require-Bundle: org.junit;bundle-version="4.9.0"
-Service-Component: OSGI-INF/junit.xml
+ org.junit,
+ org.junit.runner,
+ org.junit.runners,
+ org.osgi.framework
+Service-Component: OSGI-INF/base_performance.xml

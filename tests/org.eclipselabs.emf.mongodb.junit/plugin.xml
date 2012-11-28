@@ -2,14 +2,18 @@
 <?eclipse version="3.0"?>
 
 <!--
+ <copyright>
+ </copyright>
+
+ $Id$
 -->
 
 <plugin>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
-            uri="http://www.eclipselabs.org/mongo/emf/query/simple/junit"
-            class="org.eclipselabs.emf.mongodb.query.simple.junit.model.ModelPackage"
+            uri="http://www.eclipselabs.org/mongo/emf/junit"
+            class="org.eclipselabs.emf.mongodb.junit.model.ModelPackage"
             genModel="model/junit.genmodel"/>
    </extension>
 
