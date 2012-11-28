@@ -15,7 +15,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 import org.eclipselabs.emongo.MongoProvider;
-import org.eclipselabs.mongo.emf.developer.junit.ServiceTestHarness;
+import org.eclipselabs.eunit.junit.utils.ServiceTestHarness;
 import org.junit.Test;
 
 import com.mongodb.Mongo;

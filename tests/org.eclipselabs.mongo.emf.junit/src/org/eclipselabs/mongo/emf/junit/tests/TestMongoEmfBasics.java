@@ -42,8 +42,8 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
-import org.eclipselabs.mongo.emf.developer.junit.MongoUtil;
 import org.eclipselabs.emf.ext.ECollection;
+import org.eclipselabs.emf.ext.junit.util.EChecker;
 import org.eclipselabs.emf.mongodb.MongoUtils;
 import org.eclipselabs.emf.mongodb.Options;
 import org.eclipselabs.mongo.emf.junit.model.ETypes;
@@ -217,7 +217,7 @@ public class TestMongoEmfBasics extends TestHarness
 
 		assertThat(eTypes.eResource().getURI().segmentCount(), is(3));
 		assertThat(eTypes.eResource().getURI().segment(2), is(notNullValue()));
-		MongoUtil.checkObject(eTypes);
+		EChecker.checkObject(eTypes, createResourceSet());
 	}
 
 	@Test
@@ -236,8 +236,8 @@ public class TestMongoEmfBasics extends TestHarness
 
 		// Verify : Check that the object was stored correctly, and that is has the ID we specified.
 
-		TargetObject actual = MongoUtil.checkObject(targetObject);
-		assertThat(MongoUtil.getID(actual), is(id.toString()));
+		TargetObject actual = EChecker.checkObject(targetObject, createResourceSet());
+		assertThat(EChecker.getID(actual), is(id.toString()));
 	}
 
 	@Test
@@ -256,8 +256,8 @@ public class TestMongoEmfBasics extends TestHarness
 
 		// Verify : Check that the object was stored correctly, and that is has the ID we specified.
 
-		TargetObject actual = MongoUtil.checkObject(targetObject);
-		assertThat(MongoUtil.getID(actual), is(id));
+		TargetObject actual = EChecker.checkObject(targetObject, createResourceSet());
+		assertThat(EChecker.getID(actual), is(id));
 	}
 
 	@Test
@@ -277,7 +277,7 @@ public class TestMongoEmfBasics extends TestHarness
 
 		// Verify : Check that the object was stored correctly.
 
-		MongoUtil.checkObject(targetObject);
+		EChecker.checkObject(targetObject, createResourceSet());
 	}
 
 	@Test
@@ -299,8 +299,8 @@ public class TestMongoEmfBasics extends TestHarness
 
 		// Verify : Check that the object was stored correctly, and that is has the ID we specified.
 
-		TargetObject actual = MongoUtil.checkObject(targetObject);
-		assertThat(MongoUtil.getID(actual), is(id));
+		TargetObject actual = EChecker.checkObject(targetObject, createResourceSet());
+		assertThat(EChecker.getID(actual), is(id));
 	}
 
 	@Test
@@ -321,7 +321,7 @@ public class TestMongoEmfBasics extends TestHarness
 
 		// Verify : Check that the object was stored correctly
 
-		assertThat(MongoUtil.getID(primaryObject), is(id));
+		assertThat(EChecker.getID(primaryObject), is(id));
 	}
 
 	@Test
@@ -355,8 +355,8 @@ public class TestMongoEmfBasics extends TestHarness
 
 		ECollection eCollection = (ECollection) resource.getContents().get(0);
 		assertThat(eCollection.getValues().size(), is(2));
-		assertThat(MongoUtil.getID(eCollection.getValues().get(0)), is(id1));
-		assertThat(MongoUtil.getID(eCollection.getValues().get(1)), is(id2));
+		assertThat(EChecker.getID(eCollection.getValues().get(0)), is(id1));
+		assertThat(EChecker.getID(eCollection.getValues().get(1)), is(id2));
 	}
 
 	@Test
@@ -443,7 +443,7 @@ public class TestMongoEmfBasics extends TestHarness
 		testResourceSet.getResources().add(libraryXMI);
 
 		libraryXMI.load(new ByteArrayInputStream(out.toByteArray()), null);
-		MongoUtil.checkObject(primaryObject, libraryXMI.getContents().get(0));
+		EChecker.checkObject(primaryObject, libraryXMI.getContents().get(0));
 	}
 
 	@Test
@@ -480,7 +480,7 @@ public class TestMongoEmfBasics extends TestHarness
 			testResourceSet.getResources().add(libraryBinary);
 
 			libraryBinary.load(new ByteArrayInputStream(out.toByteArray()), null);
-			MongoUtil.checkObject(primaryObject, libraryBinary.getContents().get(0));
+			EChecker.checkObject(primaryObject, libraryBinary.getContents().get(0));
 		}
 		{
 			ResourceSet testResourceSet = createResourceSet();
@@ -491,7 +491,7 @@ public class TestMongoEmfBasics extends TestHarness
 			testResourceSet.getResources().add(libraryXMI);
 
 			libraryXMI.load(new ByteArrayInputStream(out.toByteArray()), options);
-			MongoUtil.checkObject(primaryObject, libraryXMI.getContents().get(0));
+			EChecker.checkObject(primaryObject, libraryXMI.getContents().get(0));
 		}
 	}
 
@@ -529,7 +529,7 @@ public class TestMongoEmfBasics extends TestHarness
 			testResourceSet.getResources().add(libraryXML);
 
 			libraryXML.load(new ByteArrayInputStream(out.toByteArray()), null);
-			MongoUtil.checkObject(primaryObject, libraryXML.getContents().get(0));
+			EChecker.checkObject(primaryObject, libraryXML.getContents().get(0));
 		}
 		{
 			ResourceSet testResourceSet = createResourceSet();
@@ -540,7 +540,7 @@ public class TestMongoEmfBasics extends TestHarness
 			testResourceSet.getResources().add(libraryXMI);
 
 			libraryXMI.load(new ByteArrayInputStream(out.toByteArray()), options);
-			MongoUtil.checkObject(primaryObject, libraryXMI.getContents().get(0));
+			EChecker.checkObject(primaryObject, libraryXMI.getContents().get(0));
 		}
 	}
 

@@ -19,7 +19,7 @@ import java.util.HashMap;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipselabs.mongo.emf.developer.junit.MongoUtil;
+import org.eclipselabs.emf.ext.junit.util.EChecker;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.TargetObject;
 import org.eclipselabs.mongo.emf.junit.support.TestHarness;
@@ -77,7 +77,7 @@ public class TestMongoEmfReplica extends TestHarness
 //		actualResourceSet.getLoadOptions().put(MongoDBURIHandlerImpl.OPTION_TAGGED_READ_PREFERENCE, tags);
 		Resource actualResource = actualResourceSet.getResource(targetObject.eResource().getURI(), true);
 		EObject actual = actualResource.getContents().get(0);
-		MongoUtil.checkObject(targetObject, actual);
+		EChecker.checkObject(targetObject, actual);
 	}
 
 	protected void activate()

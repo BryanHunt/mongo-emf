@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipselabs.emf.ext.ResourceSetFactory;
-import org.eclipselabs.mongo.emf.developer.junit.MongoDatabase;
+import org.eclipselabs.emongo.junit.util.MongoDatabase;
 import org.junit.Before;
 import org.junit.Rule;
 

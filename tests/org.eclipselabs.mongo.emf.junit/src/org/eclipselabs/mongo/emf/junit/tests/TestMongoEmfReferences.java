@@ -31,8 +31,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipselabs.emf.ext.junit.util.EChecker;
 import org.eclipselabs.emf.mongodb.Options;
-import org.eclipselabs.mongo.emf.developer.junit.MongoUtil;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.PrimaryObject;
@@ -73,7 +73,7 @@ public class TestMongoEmfReferences extends TestHarness
 
 		// Verify : Check that the object was stored correctly.
 
-		MongoUtil.checkObject(primaryObject);
+		EChecker.checkObject(primaryObject, createResourceSet());
 	}
 
 	@Test
@@ -120,7 +120,7 @@ public class TestMongoEmfReferences extends TestHarness
 
 		// Verify : Check that the object was stored correctly.
 
-		MongoUtil.checkObject(primaryObject);
+		EChecker.checkObject(primaryObject, createResourceSet());
 	}
 
 	@Test
@@ -145,7 +145,7 @@ public class TestMongoEmfReferences extends TestHarness
 
 		// Verify : Check that the object was stored correctly.
 
-		MongoUtil.checkObject(primaryObject);
+		EChecker.checkObject(primaryObject, createResourceSet());
 	}
 
 	@Test
@@ -167,7 +167,7 @@ public class TestMongoEmfReferences extends TestHarness
 
 		// Verify : Check that the object was stored correctly.
 
-		MongoUtil.checkObject(primaryObject);
+		EChecker.checkObject(primaryObject, createResourceSet());
 	}
 
 	@Test
@@ -189,7 +189,7 @@ public class TestMongoEmfReferences extends TestHarness
 
 		// Verify : Check that the object was stored correctly.
 
-		MongoUtil.checkObject(primaryObject);
+		EChecker.checkObject(primaryObject, createResourceSet());
 	}
 
 	@Test
@@ -216,7 +216,7 @@ public class TestMongoEmfReferences extends TestHarness
 
 		// Verify : Check that the object was stored correctly.
 
-		MongoUtil.checkObject(primaryObject);
+		EChecker.checkObject(primaryObject, createResourceSet());
 	}
 
 	@Test
@@ -241,7 +241,7 @@ public class TestMongoEmfReferences extends TestHarness
 
 		// Verify : Check that the object was stored correctly.
 
-		MongoUtil.checkObject(primaryObject);
+		EChecker.checkObject(primaryObject, createResourceSet());
 	}
 
 	@Test
@@ -271,7 +271,7 @@ public class TestMongoEmfReferences extends TestHarness
 
 		// Verify : Check that the object was stored correctly.
 
-		MongoUtil.checkObject(primaryObject);
+		EChecker.checkObject(primaryObject, createResourceSet());
 	}
 
 	@Test
@@ -294,7 +294,7 @@ public class TestMongoEmfReferences extends TestHarness
 
 		// Verify : Check that the object was stored correctly.
 
-		MongoUtil.checkObject(primaryObject);
+		EChecker.checkObject(primaryObject, createResourceSet());
 	}
 
 	@Test
@@ -358,7 +358,7 @@ public class TestMongoEmfReferences extends TestHarness
 
 		HashSet<EStructuralFeature> excludeFeatures = new HashSet<EStructuralFeature>(1);
 		excludeFeatures.add(ModelPackage.Literals.PRIMARY_OBJECT__FEATURE_MAP_REFERENCE_COLLECTION);
-		PrimaryObject actual = MongoUtil.checkObject(primaryObject, excludeFeatures);
+		PrimaryObject actual = EChecker.checkObject(primaryObject, excludeFeatures, createResourceSet());
 		assertThat(actual.getFeatureMapReferenceCollection().size(), is(2));
 	}
 

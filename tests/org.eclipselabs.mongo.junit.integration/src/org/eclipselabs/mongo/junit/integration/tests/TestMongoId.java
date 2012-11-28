@@ -17,8 +17,8 @@ import static org.junit.Assert.assertThat;
 import java.io.IOException;
 
 import org.eclipselabs.emongo.MongoIdFactory;
-import org.eclipselabs.mongo.emf.developer.junit.MongoDatabase;
-import org.eclipselabs.mongo.emf.developer.junit.ServiceTestHarness;
+import org.eclipselabs.emongo.junit.util.MongoDatabase;
+import org.eclipselabs.eunit.junit.utils.ServiceTestHarness;
 import org.junit.Rule;
 import org.junit.Test;
 

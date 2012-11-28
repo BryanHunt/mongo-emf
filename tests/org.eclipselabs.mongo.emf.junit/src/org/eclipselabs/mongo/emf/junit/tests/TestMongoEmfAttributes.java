@@ -23,7 +23,7 @@ import java.util.HashSet;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipselabs.mongo.emf.developer.junit.MongoUtil;
+import org.eclipselabs.emf.ext.junit.util.EChecker;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.PrimaryObject;
@@ -64,7 +64,7 @@ public class TestMongoEmfAttributes extends TestHarness
 
 		// Verify : Check that the object was stored correctly.
 
-		MongoUtil.checkObject(targetObject);
+		EChecker.checkObject(targetObject, createResourceSet());
 	}
 
 	@Test
@@ -82,7 +82,7 @@ public class TestMongoEmfAttributes extends TestHarness
 
 		// Verify : Check that the object was stored correctly.
 
-		MongoUtil.checkObject(targetObject);
+		EChecker.checkObject(targetObject, createResourceSet());
 	}
 
 	@Test
@@ -102,7 +102,7 @@ public class TestMongoEmfAttributes extends TestHarness
 		// Verify : Check that the object was stored correctly and there is only one object in the
 		// collection.
 
-		MongoUtil.checkObject(targetObject);
+		EChecker.checkObject(targetObject, createResourceSet());
 		assertThat(getCollection(targetObject.eClass()).getCount(), is(1L));
 	}
 
@@ -123,7 +123,7 @@ public class TestMongoEmfAttributes extends TestHarness
 		// Verify : Check that the object was stored correctly and there is only one object in the
 		// collection.
 
-		MongoUtil.checkObject(targetObject);
+		EChecker.checkObject(targetObject, createResourceSet());
 		assertThat(getCollection(targetObject.eClass()).getCount(), is(1L));
 	}
 
@@ -202,7 +202,7 @@ public class TestMongoEmfAttributes extends TestHarness
 
 		HashSet<EStructuralFeature> excludeFeatures = new HashSet<EStructuralFeature>(1);
 		excludeFeatures.add(ModelPackage.Literals.PRIMARY_OBJECT__FEATURE_MAP_ATTRIBUTE_COLLECTION);
-		PrimaryObject actual = MongoUtil.checkObject(primaryObject, excludeFeatures);
+		PrimaryObject actual = EChecker.checkObject(primaryObject, excludeFeatures, createResourceSet());
 		assertThat(actual.getFeatureMapAttributeCollection().size(), is(2));
 	}
 

@@ -22,12 +22,12 @@ import java.util.Collection;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipselabs.emf.ext.ResourceSetFactory;
+import org.eclipselabs.emf.ext.junit.util.EChecker;
 import org.eclipselabs.emf.log.LogEntry;
 import org.eclipselabs.emf.log.LogLevel;
 import org.eclipselabs.emf.mongodb.log.junit.support.ILogServiceConfigurator;
-import org.eclipselabs.mongo.emf.developer.junit.MongoDatabase;
-import org.eclipselabs.mongo.emf.developer.junit.MongoUtil;
-import org.eclipselabs.mongo.emf.developer.junit.ServiceTestHarness;
+import org.eclipselabs.emongo.junit.util.MongoDatabase;
+import org.eclipselabs.eunit.junit.utils.ServiceTestHarness;
 import org.junit.Rule;
 import org.junit.Test;
 import org.osgi.service.log.LogService;
@@ -48,7 +48,7 @@ public class TestMongoDbLogListener extends ServiceTestHarness
 		Thread.sleep(100);
 		osgiLogService.log(LogService.LOG_DEBUG, "debug");
 		Thread.sleep(200);
-		Collection<LogEntry> logEntries = MongoUtil.getObjects(createResourceSet(), "junit", DB_LOGS);
+		Collection<LogEntry> logEntries = EChecker.getObjects(createResourceSet(), "junit", DB_LOGS);
 
 		for (LogEntry entry : logEntries)
 		{
@@ -66,7 +66,7 @@ public class TestMongoDbLogListener extends ServiceTestHarness
 		Thread.sleep(100);
 		osgiLogService.log(LogService.LOG_ERROR, "error");
 		Thread.sleep(100);
-		LogEntry logEntry = MongoUtil.getObject(createResourceSet(), "junit", DB_LOGS);
+		LogEntry logEntry = EChecker.getObject(createResourceSet(), "junit", DB_LOGS);
 		assertThat(logEntry, is(notNullValue()));
 		assertThat(logEntry.getMessage(), is("error"));
 	}
@@ -78,7 +78,7 @@ public class TestMongoDbLogListener extends ServiceTestHarness
 		Thread.sleep(100);
 		osgiLogService.log(LogService.LOG_INFO, "info");
 		Thread.sleep(100);
-		LogEntry logEntry = MongoUtil.getObject(createResourceSet(), "junit", DB_LOGS);
+		LogEntry logEntry = EChecker.getObject(createResourceSet(), "junit", DB_LOGS);
 		assertThat(logEntry, is(notNullValue()));
 		assertThat(logEntry.getMessage(), is("info"));
 	}
@@ -90,7 +90,7 @@ public class TestMongoDbLogListener extends ServiceTestHarness
 		Thread.sleep(100);
 		osgiLogService.log(LogService.LOG_ERROR, "warning");
 		Thread.sleep(100);
-		LogEntry logEntry = MongoUtil.getObject(createResourceSet(), "junit", DB_LOGS);
+		LogEntry logEntry = EChecker.getObject(createResourceSet(), "junit", DB_LOGS);
 		assertThat(logEntry, is(notNullValue()));
 		assertThat(logEntry.getMessage(), is("warning"));
 	}
@@ -102,7 +102,7 @@ public class TestMongoDbLogListener extends ServiceTestHarness
 		Thread.sleep(100);
 		osgiLogService.log(LogService.LOG_WARNING, "error");
 		Thread.sleep(100);
-		LogEntry logEntry = MongoUtil.getObject(createResourceSet(), "junit", DB_LOGS);
+		LogEntry logEntry = EChecker.getObject(createResourceSet(), "junit", DB_LOGS);
 		assertThat(logEntry, is(nullValue()));
 	}
 

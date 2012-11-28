@@ -18,7 +18,7 @@ import java.util.Date;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipselabs.mongo.emf.developer.junit.MongoDatabase;
+import org.eclipselabs.emongo.junit.util.MongoDatabase;
 import org.eclipselabs.mongo.emf.junit.support.TestHarness;
 import org.eclipselabs.mongo.emf.perf.model.ModelFactory;
 import org.eclipselabs.mongo.emf.perf.model.ObjectGroup;

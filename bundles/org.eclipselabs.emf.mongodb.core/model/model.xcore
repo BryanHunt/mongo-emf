@@ -1,0 +1,39 @@
+@GenModel(suppressInterfaces="true", containmentProxies="true")
+package org.eclipselabs.emf.mongodb.model
+
+import com.mongodb.DBCursor
+import com.mongodb.DBCollection
+import org.eclipselabs.emf.mongodb.EObjectBuilder
+import com.mongodb.DBObject
+import org.eclipse.emf.ecore.EObject
+import java.util.Iterator
+import org.eclipselabs.emf.mongodb.util.MongoIterator
+
+type DBObject wraps DBObject
+type DBCursor wraps DBCursor
+type DBCollection wraps DBCollection
+type EObjectBuilder wraps EObjectBuilder
+type Iterator wraps Iterator<EObject>
+
+interface Iterable wraps java.lang.Iterable<EObject>
+{}
+
+class MongoCursor extends Iterable
+{
+	DBCursor dbCursor
+	DBCollection dbCollection
+	EObjectBuilder objectBuilder
+	
+	op Iterator iterator()
+	{
+		return new MongoIterator(dbCursor, dbCollection, eResource, objectBuilder)
+	}
+}
+
+class MongoQuery
+{
+	DBObject filter
+	DBObject projection
+	DBObject sort
+	Integer limit
+}
