@@ -17,8 +17,9 @@ import java.util.List;
 import org.bson.types.ObjectId;
 import org.eclipse.emf.common.util.URI;
 import org.eclipselabs.emf.mongodb.Keywords;
-import org.eclipselabs.emf.mongodb.MongoQuery;
 import org.eclipselabs.emf.mongodb.QueryEngine;
+import org.eclipselabs.emf.mongodb.model.ModelFactory;
+import org.eclipselabs.emf.mongodb.model.MongoQuery;
 import org.eclipselabs.emf.query.BinaryOperation;
 import org.eclipselabs.emf.query.Expression;
 import org.eclipselabs.emf.query.Literal;
@@ -39,7 +40,9 @@ public class SimpleQueryEngine implements QueryEngine
 	@Override
 	public MongoQuery buildDBObjectQuery(URI uri)
 	{
-		return new MongoQuery(buildDBObjectQuery(new ExpressionBuilder(URI.decode(uri.query())).parseExpression()), null, null);
+		MongoQuery mongoQuery = ModelFactory.eINSTANCE.createMongoQuery();
+		mongoQuery.setFilter(buildDBObjectQuery(new ExpressionBuilder(URI.decode(uri.query())).parseExpression()));
+		return mongoQuery;
 	}
 
 	private DBObject buildDBObjectQuery(Expression expression)

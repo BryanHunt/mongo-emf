@@ -2,15 +2,13 @@
  */
 package org.eclipselabs.emf.mongodb.model;
 
-import com.mongodb.DBObject;
-
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import com.mongodb.DBObject;
 
 /**
  * <!-- begin-user-doc -->

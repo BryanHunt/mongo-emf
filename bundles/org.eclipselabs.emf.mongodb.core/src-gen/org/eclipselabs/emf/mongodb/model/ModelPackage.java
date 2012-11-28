@@ -2,12 +2,6 @@
  */
 package org.eclipselabs.emf.mongodb.model;
 
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-import com.mongodb.DBObject;
-
-import java.lang.Iterable;
-
 import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -16,10 +10,12 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipselabs.emf.mongodb.EObjectBuilder;
+
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 
 /**
  * <!-- begin-user-doc -->

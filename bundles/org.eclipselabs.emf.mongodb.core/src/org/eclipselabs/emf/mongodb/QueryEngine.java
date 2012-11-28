@@ -12,6 +12,7 @@
 package org.eclipselabs.emf.mongodb;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipselabs.emf.mongodb.model.MongoQuery;
 
 /**
  * @author bhunt

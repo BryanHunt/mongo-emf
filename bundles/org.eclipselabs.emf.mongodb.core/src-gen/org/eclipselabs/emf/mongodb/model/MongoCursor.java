@@ -2,30 +2,21 @@
  */
 package org.eclipselabs.emf.mongodb.model;
 
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
-
-import java.lang.Iterable;
-
 import java.lang.reflect.InvocationTargetException;
-
 import java.util.Iterator;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 import org.eclipse.emf.ecore.resource.Resource;
-
 import org.eclipselabs.emf.mongodb.EObjectBuilder;
-
 import org.eclipselabs.emf.mongodb.util.MongoIterator;
+
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 
 /**
  * <!-- begin-user-doc -->

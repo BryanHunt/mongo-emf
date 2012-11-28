@@ -30,12 +30,12 @@ import org.eclipselabs.emf.mongodb.ConverterService;
 import org.eclipselabs.emf.mongodb.EObjectBuilder;
 import org.eclipselabs.emf.mongodb.EObjectBuilderFactory;
 import org.eclipselabs.emf.mongodb.Keywords;
-import org.eclipselabs.emf.mongodb.MongoQuery;
 import org.eclipselabs.emf.mongodb.MongoUtils;
 import org.eclipselabs.emf.mongodb.Options;
 import org.eclipselabs.emf.mongodb.QueryEngine;
 import org.eclipselabs.emf.mongodb.model.ModelFactory;
 import org.eclipselabs.emf.mongodb.model.MongoCursor;
+import org.eclipselabs.emf.mongodb.model.MongoQuery;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -92,19 +92,17 @@ public class MongoInputStream extends InputStream implements URIConverter.Loadab
 		if (uri.query() != null)
 		{
 			MongoQuery mongoQuery = null;
+			String decodedQuery = URI.decode(uri.query());
 
-			if (uri.query().startsWith("mongo:"))
+			if (decodedQuery.startsWith("{"))
 			{
-				String decodedQuery = URI.decode(uri.query());
-				int sortIndex = decodedQuery.indexOf("sort:");
 
-				DBObject objectFilter = (DBObject) JSON.parse(decodedQuery.substring(6, sortIndex));
-				DBObject sortFilter = null;
-
-				if (sortIndex > 0)
-					sortFilter = (DBObject) JSON.parse(decodedQuery.substring(sortIndex + 5));
-
-				mongoQuery = new MongoQuery(objectFilter, null, sortFilter);
+				DBObject query = (DBObject) JSON.parse(decodedQuery);
+				mongoQuery = ModelFactory.eINSTANCE.createMongoQuery();
+				mongoQuery.setFilter((DBObject) query.get("filter"));
+				mongoQuery.setProjection((DBObject) query.get("projection"));
+				mongoQuery.setSort((DBObject) query.get("sort"));
+				mongoQuery.setLimit((Integer) query.get("limit"));
 			}
 			else
 			{
@@ -116,13 +114,16 @@ public class MongoInputStream extends InputStream implements URIConverter.Loadab
 
 			DBCursor resultCursor = null;
 
-			if (mongoQuery.getFieldFilter() == null)
-				resultCursor = collection.find(mongoQuery.getObjectFilter());
+			if (mongoQuery.getProjection() == null)
+				resultCursor = collection.find(mongoQuery.getFilter());
 			else
-				resultCursor = collection.find(mongoQuery.getObjectFilter(), mongoQuery.getFieldFilter());
+				resultCursor = collection.find(mongoQuery.getFilter(), mongoQuery.getProjection());
 
-			if (mongoQuery.getSortFilter() != null)
-				resultCursor = resultCursor.sort(mongoQuery.getSortFilter());
+			if (mongoQuery.getSort() != null)
+				resultCursor = resultCursor.sort(mongoQuery.getSort());
+
+			if (mongoQuery.getLimit() != null)
+				resultCursor = resultCursor.limit(mongoQuery.getLimit());
 
 			boolean createCursor = Boolean.TRUE.equals(options.get(Options.OPTION_QUERY_CURSOR));
 
