@@ -9,7 +9,7 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf;
+package org.eclipselabs.emf.mongodb;
 
 import org.eclipse.emf.ecore.EDataType;
 
@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EDataType;
  * @author bhunt
  * 
  */
-public interface IConverterService
+public interface ConverterService
 {
 	/**
 	 * Adds the converter and makes it available for consideration when serializing and de-serializing an object.
@@ -27,7 +27,7 @@ public interface IConverterService
 	 * 
 	 * @param converter the converter to add
 	 */
-	void addConverter(IValueConverter converter);
+	void addConverter(ValueConverter converter);
 
 	/**
 	 * Locates an appropriate converter for a given EDataType
@@ -35,12 +35,12 @@ public interface IConverterService
 	 * @param eDataType the data type needing conversion
 	 * @return the converter for the specified data type
 	 */
-	IValueConverter getConverter(EDataType eDataType);
+	ValueConverter getConverter(EDataType eDataType);
 
 	/**
 	 * Removes the converter and the converter will no longer be considered during serialization and de-serialization of an object.
 	 * 
 	 * @param converter the converter to remove
 	 */
-	void removeConverter(IValueConverter converter);
+	void removeConverter(ValueConverter converter);
 }

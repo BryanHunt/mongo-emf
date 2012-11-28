@@ -13,13 +13,13 @@ package org.eclipselabs.mongo.emf.converter;
 
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipselabs.mongo.emf.IValueConverter;
+import org.eclipselabs.emf.mongodb.ValueConverter;
 
 /**
  * @author bhunt
  * 
  */
-public class DefaultConverter implements IValueConverter
+public class DefaultConverter implements ValueConverter
 {
 	@Override
 	public Object convertMongoDBValueToEMFValue(EDataType eDataType, Object databaseValue)

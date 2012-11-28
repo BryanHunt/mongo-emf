@@ -1,12 +1,12 @@
 /**
  */
-package org.eclipselabs.mongo.emf.model.util;
+package org.eclipselabs.emf.mongodb.model.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipselabs.mongo.emf.model.ModelPackage;
-import org.eclipselabs.mongo.emf.model.MongoCursor;
+import org.eclipselabs.emf.mongodb.model.ModelPackage;
+import org.eclipselabs.emf.mongodb.model.MongoCursor;
 
 /**
  * <!-- begin-user-doc -->
@@ -18,7 +18,7 @@ import org.eclipselabs.mongo.emf.model.MongoCursor;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see org.eclipselabs.mongo.emf.model.ModelPackage
+ * @see org.eclipselabs.emf.mongodb.model.ModelPackage
  * @generated
  */
 public class ModelSwitch<T> extends Switch<T>

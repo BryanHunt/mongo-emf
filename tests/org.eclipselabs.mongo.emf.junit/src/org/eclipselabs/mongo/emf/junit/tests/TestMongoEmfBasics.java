@@ -42,9 +42,10 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
-import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
 import org.eclipselabs.mongo.emf.developer.junit.MongoUtil;
 import org.eclipselabs.emf.ext.ECollection;
+import org.eclipselabs.emf.mongodb.MongoUtils;
+import org.eclipselabs.emf.mongodb.Options;
 import org.eclipselabs.mongo.emf.junit.model.ETypes;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
@@ -82,17 +83,17 @@ public class TestMongoEmfBasics extends TestHarness
 	@Test
 	public void testGetID() throws IOException
 	{
-		assertThat(MongoURIHandlerImpl.getID(URI.createURI("mongodb://localhost/db/collection/")), is(nullValue()));
+		assertThat(MongoUtils.getID(URI.createURI("mongodb://localhost/db/collection/")), is(nullValue()));
 
 		{
-			Object id = MongoURIHandlerImpl.getID(URI.createURI("mongodb://localhost/db/collection/id"));
+			Object id = MongoUtils.getID(URI.createURI("mongodb://localhost/db/collection/id"));
 			assertThat(id, is(instanceOf(String.class)));
 			assertThat((String) id, is("id"));
 		}
 
 		{
 			ObjectId objectID = new ObjectId();
-			Object id = MongoURIHandlerImpl.getID(URI.createURI("mongodb://localhost/db/collection/" + objectID));
+			Object id = MongoUtils.getID(URI.createURI("mongodb://localhost/db/collection/" + objectID));
 			assertThat(id, is(instanceOf(ObjectId.class)));
 			assertThat((ObjectId) id, is(objectID));
 		}
@@ -101,29 +102,29 @@ public class TestMongoEmfBasics extends TestHarness
 	@Test(expected = IOException.class)
 	public void testGetBadID() throws IOException
 	{
-		MongoURIHandlerImpl.getID(URI.createURI("mongodb://localhost/db/collection"));
+		MongoUtils.getID(URI.createURI("mongodb://localhost/db/collection"));
 	}
 
 	@Test
 	public void testNativeTypes()
 	{
-		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EBOOLEAN));
-		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EBOOLEAN_OBJECT));
-		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EBYTE));
-		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EBYTE_OBJECT));
-		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EBYTE_ARRAY));
-		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.ESHORT));
-		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.ESHORT_OBJECT));
-		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EINT));
-		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EINTEGER_OBJECT));
-		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.ELONG));
-		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.ELONG_OBJECT));
-		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EDOUBLE));
-		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EDOUBLE_OBJECT));
-		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EFLOAT));
-		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EFLOAT_OBJECT));
-		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.EDATE));
-		assertTrue(MongoURIHandlerImpl.isNativeType(EcorePackage.Literals.ESTRING));
+		assertTrue(MongoUtils.isNativeType(EcorePackage.Literals.EBOOLEAN));
+		assertTrue(MongoUtils.isNativeType(EcorePackage.Literals.EBOOLEAN_OBJECT));
+		assertTrue(MongoUtils.isNativeType(EcorePackage.Literals.EBYTE));
+		assertTrue(MongoUtils.isNativeType(EcorePackage.Literals.EBYTE_OBJECT));
+		assertTrue(MongoUtils.isNativeType(EcorePackage.Literals.EBYTE_ARRAY));
+		assertTrue(MongoUtils.isNativeType(EcorePackage.Literals.ESHORT));
+		assertTrue(MongoUtils.isNativeType(EcorePackage.Literals.ESHORT_OBJECT));
+		assertTrue(MongoUtils.isNativeType(EcorePackage.Literals.EINT));
+		assertTrue(MongoUtils.isNativeType(EcorePackage.Literals.EINTEGER_OBJECT));
+		assertTrue(MongoUtils.isNativeType(EcorePackage.Literals.ELONG));
+		assertTrue(MongoUtils.isNativeType(EcorePackage.Literals.ELONG_OBJECT));
+		assertTrue(MongoUtils.isNativeType(EcorePackage.Literals.EDOUBLE));
+		assertTrue(MongoUtils.isNativeType(EcorePackage.Literals.EDOUBLE_OBJECT));
+		assertTrue(MongoUtils.isNativeType(EcorePackage.Literals.EFLOAT));
+		assertTrue(MongoUtils.isNativeType(EcorePackage.Literals.EFLOAT_OBJECT));
+		assertTrue(MongoUtils.isNativeType(EcorePackage.Literals.EDATE));
+		assertTrue(MongoUtils.isNativeType(EcorePackage.Literals.ESTRING));
 	}
 
 	@Test(expected = IOException.class)
@@ -270,7 +271,7 @@ public class TestMongoEmfBasics extends TestHarness
 		// Test : Store the object to MongoDB
 
 		HashMap<String, Object> options = new HashMap<String, Object>(1);
-		options.put(MongoURIHandlerImpl.OPTION_WRITE_CONCERN, WriteConcern.SAFE);
+		options.put(Options.OPTION_WRITE_CONCERN, WriteConcern.SAFE);
 
 		saveObject(targetObject, createCollectionURI(targetObject.eClass()), options);
 
@@ -314,7 +315,7 @@ public class TestMongoEmfBasics extends TestHarness
 		// Test : Store the object with the option to use the ID attribute as the MongoDB _id
 
 		HashMap<String, Object> options = new HashMap<String, Object>();
-		options.put(MongoURIHandlerImpl.OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY, Boolean.TRUE);
+		options.put(Options.OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY, Boolean.TRUE);
 
 		saveObject(primaryObject, createCollectionURI(primaryObject.eClass()), options);
 
@@ -339,7 +340,7 @@ public class TestMongoEmfBasics extends TestHarness
 		// Test : Store the object with the option to use the ID attribute as the MongoDB _id
 
 		HashMap<String, Object> options = new HashMap<String, Object>();
-		options.put(MongoURIHandlerImpl.OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY, Boolean.TRUE);
+		options.put(Options.OPTION_USE_ID_ATTRIBUTE_AS_PRIMARY_KEY, Boolean.TRUE);
 
 		ResourceSet resourceSet = createResourceSet();
 		Resource resource = resourceSet.createResource(createCollectionURI(primaryObject1.eClass()));

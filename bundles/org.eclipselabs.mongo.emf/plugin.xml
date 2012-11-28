@@ -9,7 +9,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://www.eclipselabs.org/mongo/emf/model"
-            class="org.eclipselabs.mongo.emf.model.ModelPackage"
+            class="org.eclipselabs.emf.mongodb.model.ModelPackage"
             genModel="model/mongo.genmodel"/>
    </extension>
 

@@ -1,20 +1,20 @@
 /**
  */
-package org.eclipselabs.mongo.emf.model.util;
+package org.eclipselabs.emf.mongodb.model.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipselabs.mongo.emf.model.ModelPackage;
-import org.eclipselabs.mongo.emf.model.MongoCursor;
+import org.eclipselabs.emf.mongodb.model.ModelPackage;
+import org.eclipselabs.emf.mongodb.model.MongoCursor;
 
 /**
  * <!-- begin-user-doc -->
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see org.eclipselabs.mongo.emf.model.ModelPackage
+ * @see org.eclipselabs.emf.mongodb.model.ModelPackage
  * @generated
  */
 public class ModelAdapterFactory extends AdapterFactoryImpl
@@ -105,13 +105,13 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipselabs.mongo.emf.model.MongoCursor <em>Mongo Cursor</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.eclipselabs.emf.mongodb.model.MongoCursor <em>Mongo Cursor</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.eclipselabs.mongo.emf.model.MongoCursor
+	 * @see org.eclipselabs.emf.mongodb.model.MongoCursor
 	 * @generated
 	 */
 	public Adapter createMongoCursorAdapter()

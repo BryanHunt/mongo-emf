@@ -25,7 +25,7 @@ import org.eclipselabs.emf.ext.ResourceSetFactory;
 import org.eclipselabs.emf.log.LogEntry;
 import org.eclipselabs.emf.log.LogFactory;
 import org.eclipselabs.emf.log.LogLevel;
-import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
+import org.eclipselabs.emf.mongodb.Options;
 import org.osgi.service.log.LogListener;
 import org.osgi.service.log.LogReaderService;
 
@@ -73,7 +73,7 @@ public class MongoDbLogListener implements LogListener
 		resource.getContents().add(logEntry);
 
 		HashMap<String, Object> options = new HashMap<String, Object>(1);
-		options.put(MongoURIHandlerImpl.OPTION_SERIALIZE_DEFAULT_ATTRIBUTE_VALUES, Boolean.TRUE);
+		options.put(Options.OPTION_SERIALIZE_DEFAULT_ATTRIBUTE_VALUES, Boolean.TRUE);
 
 		try
 		{

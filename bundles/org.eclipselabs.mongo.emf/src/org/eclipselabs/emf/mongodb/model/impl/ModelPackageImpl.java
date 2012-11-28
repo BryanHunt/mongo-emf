@@ -1,16 +1,16 @@
 /**
  */
-package org.eclipselabs.mongo.emf.model.impl;
+package org.eclipselabs.emf.mongodb.model.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-import org.eclipselabs.mongo.emf.EObjectBuilder;
-import org.eclipselabs.mongo.emf.model.ModelFactory;
-import org.eclipselabs.mongo.emf.model.ModelPackage;
-import org.eclipselabs.mongo.emf.model.MongoCursor;
+import org.eclipselabs.emf.mongodb.EObjectBuilder;
+import org.eclipselabs.emf.mongodb.model.ModelFactory;
+import org.eclipselabs.emf.mongodb.model.ModelPackage;
+import org.eclipselabs.emf.mongodb.model.MongoCursor;
 
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -69,7 +69,7 @@ public class ModelPackageImpl extends EPackageImpl implements ModelPackage
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.eclipselabs.mongo.emf.model.ModelPackage#eNS_URI
+	 * @see org.eclipselabs.emf.mongodb.model.ModelPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */

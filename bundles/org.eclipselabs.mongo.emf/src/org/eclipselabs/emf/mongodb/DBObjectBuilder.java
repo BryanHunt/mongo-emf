@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011 Bryan Hunt.
+ * Copyright (c) 2012 Bryan Hunt.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,21 +9,23 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf;
+package org.eclipselabs.emf.mongodb;
 
-import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+
+import com.mongodb.DBObject;
 
 /**
  * @author bhunt
  * 
  */
-public interface IQueryEngine
+public interface DBObjectBuilder
 {
 	/**
-	 * This function builds a DBObject to be used as a query to MongoDB from the EMF query
+	 * Build a DBObject from the supplied EMF object.
 	 * 
-	 * @param uri the incoming URI containing the query
-	 * @return the MongoQuery representation of the query
+	 * @param eObject the EMF object to serialize
+	 * @return the newly created DBObject
 	 */
-	MongoQuery buildDBObjectQuery(URI uri);
+	DBObject buildDBObject(EObject eObject);
 }

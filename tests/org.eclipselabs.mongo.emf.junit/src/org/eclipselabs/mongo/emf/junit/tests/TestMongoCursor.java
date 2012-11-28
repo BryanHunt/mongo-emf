@@ -27,12 +27,12 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
+import org.eclipselabs.emf.mongodb.Options;
+import org.eclipselabs.emf.mongodb.model.MongoCursor;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
 import org.eclipselabs.mongo.emf.junit.model.TargetObject;
 import org.eclipselabs.mongo.emf.junit.support.TestHarness;
-import org.eclipselabs.mongo.emf.model.MongoCursor;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -68,7 +68,7 @@ public class TestMongoCursor extends TestHarness
 		// Test: Query the database to return a cursor
 
 		ResourceSet resourceSet = createResourceSet();
-		resourceSet.getLoadOptions().put(MongoURIHandlerImpl.OPTION_QUERY_CURSOR, Boolean.TRUE);
+		resourceSet.getLoadOptions().put(Options.OPTION_QUERY_CURSOR, Boolean.TRUE);
 		Resource resource = resourceSet.getResource(queryURI, true);
 
 		// Verify: Make sure we got a cursor back with no elements
@@ -95,7 +95,7 @@ public class TestMongoCursor extends TestHarness
 		// Test: Query the database to return a cursor
 
 		ResourceSet resourceSet = createResourceSet();
-		resourceSet.getLoadOptions().put(MongoURIHandlerImpl.OPTION_QUERY_CURSOR, Boolean.TRUE);
+		resourceSet.getLoadOptions().put(Options.OPTION_QUERY_CURSOR, Boolean.TRUE);
 		Resource resource = resourceSet.getResource(queryURI, true);
 
 		// Verify: Make sure we got a cursor back with only one element that matches the target object
@@ -136,7 +136,7 @@ public class TestMongoCursor extends TestHarness
 		// Test: Query the database to return a cursor
 
 		ResourceSet resourceSet = createResourceSet();
-		resourceSet.getLoadOptions().put(MongoURIHandlerImpl.OPTION_QUERY_CURSOR, Boolean.TRUE);
+		resourceSet.getLoadOptions().put(Options.OPTION_QUERY_CURSOR, Boolean.TRUE);
 		Resource resource = resourceSet.getResource(queryURI, true);
 
 		// Verify: Make sure we got a cursor back with three elements that match the target objects

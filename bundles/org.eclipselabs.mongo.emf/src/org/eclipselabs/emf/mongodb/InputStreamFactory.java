@@ -9,9 +9,10 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf;
+package org.eclipselabs.emf.mongodb;
 
-import java.io.OutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
@@ -19,21 +20,22 @@ import org.eclipse.emf.common.util.URI;
 import com.mongodb.DBCollection;
 
 /**
- * This interface provides the API for for the OutputStream factory. If you wish to use a custom OutputStream,
+ * This interface provides the API for for the InputStream factory. If you wish to use a custom InputStream,
  * you must create a factory class for your stream that implements this interface.
  * 
  * @author bhunt
  */
-public interface IOutputStreamFactory
+public interface InputStreamFactory
 {
 	/**
-	 * Constructs the OutputStream
+	 * Constructs the InputStream
 	 * 
 	 * @param uri the URI of the resource
 	 * @param options the EMF load options
 	 * @param collection the MongoDB collection specified in the URI
 	 * @param response the EMF response
-	 * @return the stream for saving the EMF object to MongoDB
+	 * @return the stream for loading an EMF object from MongoDB
+	 * @throws IOException if there is a problem constructing the EMF object
 	 */
-	OutputStream createOutputStream(URI uri, Map<?, ?> options, DBCollection collection, Map<Object, Object> response);
+	InputStream createInputStream(URI uri, Map<?, ?> options, DBCollection collection, Map<Object, Object> response) throws IOException;
 }

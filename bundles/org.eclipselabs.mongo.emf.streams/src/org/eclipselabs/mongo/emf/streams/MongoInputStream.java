@@ -24,16 +24,18 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipselabs.mongo.emf.EObjectBuilder;
-import org.eclipselabs.mongo.emf.IConverterService;
-import org.eclipselabs.mongo.emf.IEObjectBuilderFactory;
-import org.eclipselabs.mongo.emf.IQueryEngine;
-import org.eclipselabs.mongo.emf.MongoQuery;
-import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
 import org.eclipselabs.emf.ext.ECollection;
 import org.eclipselabs.emf.ext.ExtFactory;
-import org.eclipselabs.mongo.emf.model.ModelFactory;
-import org.eclipselabs.mongo.emf.model.MongoCursor;
+import org.eclipselabs.emf.mongodb.ConverterService;
+import org.eclipselabs.emf.mongodb.EObjectBuilder;
+import org.eclipselabs.emf.mongodb.EObjectBuilderFactory;
+import org.eclipselabs.emf.mongodb.Keywords;
+import org.eclipselabs.emf.mongodb.MongoQuery;
+import org.eclipselabs.emf.mongodb.MongoUtils;
+import org.eclipselabs.emf.mongodb.Options;
+import org.eclipselabs.emf.mongodb.QueryEngine;
+import org.eclipselabs.emf.mongodb.model.ModelFactory;
+import org.eclipselabs.emf.mongodb.model.MongoCursor;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -47,7 +49,7 @@ import com.mongodb.util.JSON;
  */
 public class MongoInputStream extends InputStream implements URIConverter.Loadable
 {
-	public MongoInputStream(IConverterService converterService, IEObjectBuilderFactory builderFactory, IQueryEngine queryEngine, DBCollection collection, URI uri, Map<?, ?> options, Map<Object, Object> response) throws IOException
+	public MongoInputStream(ConverterService converterService, EObjectBuilderFactory builderFactory, QueryEngine queryEngine, DBCollection collection, URI uri, Map<?, ?> options, Map<Object, Object> response) throws IOException
 	{
 		if (converterService == null)
 			throw new NullPointerException("The converter service must not be null");
@@ -79,7 +81,7 @@ public class MongoInputStream extends InputStream implements URIConverter.Loadab
 		else
 			uriHandler.setBaseURI(resource.getURI());
 
-		boolean includeAttributesForProxyReferences = Boolean.TRUE.equals(options.get(MongoURIHandlerImpl.OPTION_PROXY_ATTRIBUTES));
+		boolean includeAttributesForProxyReferences = Boolean.TRUE.equals(options.get(Options.OPTION_PROXY_ATTRIBUTES));
 		EObjectBuilder builder = builderFactory.createObjectBuilder(converterService, uriHandler, includeAttributesForProxyReferences, eClassCache);
 
 		// If the URI contains a query string, use it to locate a collection of objects from
@@ -122,7 +124,7 @@ public class MongoInputStream extends InputStream implements URIConverter.Loadab
 			if (mongoQuery.getSortFilter() != null)
 				resultCursor = resultCursor.sort(mongoQuery.getSortFilter());
 
-			boolean createCursor = Boolean.TRUE.equals(options.get(MongoURIHandlerImpl.OPTION_QUERY_CURSOR));
+			boolean createCursor = Boolean.TRUE.equals(options.get(Options.OPTION_QUERY_CURSOR));
 
 			if (createCursor)
 			{
@@ -145,7 +147,7 @@ public class MongoInputStream extends InputStream implements URIConverter.Loadab
 		}
 		else
 		{
-			DBObject dbObject = collection.findOne(new BasicDBObject(MongoURIHandlerImpl.ID_KEY, MongoURIHandlerImpl.getID(uri)));
+			DBObject dbObject = collection.findOne(new BasicDBObject(Keywords.ID_KEY, MongoUtils.getID(uri)));
 
 			if (dbObject != null)
 			{
@@ -154,7 +156,7 @@ public class MongoInputStream extends InputStream implements URIConverter.Loadab
 				if (eObject != null)
 					contents.add(eObject);
 
-				response.put(URIConverter.RESPONSE_TIME_STAMP_PROPERTY, dbObject.get(MongoURIHandlerImpl.TIME_STAMP_KEY));
+				response.put(URIConverter.RESPONSE_TIME_STAMP_PROPERTY, dbObject.get(Keywords.TIME_STAMP_KEY));
 			}
 		}
 	}
@@ -172,9 +174,9 @@ public class MongoInputStream extends InputStream implements URIConverter.Loadab
 	private URI uri;
 	private Map<?, ?> options;
 	private Map<Object, Object> response;
-	private IConverterService converterService;
-	private IQueryEngine queryEngine;
+	private ConverterService converterService;
+	private QueryEngine queryEngine;
 	private DBCollection collection;
 	private Map<String, EClass> eClassCache = new HashMap<String, EClass>();
-	private IEObjectBuilderFactory builderFactory;
+	private EObjectBuilderFactory builderFactory;
 }

@@ -2,7 +2,7 @@
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="org.eclipselabs.mongo.emf.builders.factory">
    <implementation class="org.eclipselabs.mongo.emf.builders.DefaultBuilderFactory"/>
    <service>
-      <provide interface="org.eclipselabs.mongo.emf.IEObjectBuilderFactory"/>
-      <provide interface="org.eclipselabs.mongo.emf.IDBObjectBuilderFactory"/>
+      <provide interface="org.eclipselabs.mongo.emf.EObjectBuilderFactory"/>
+      <provide interface="org.eclipselabs.mongo.emf.DBObjectBuilderFactory"/>
    </service>
 </scr:component>

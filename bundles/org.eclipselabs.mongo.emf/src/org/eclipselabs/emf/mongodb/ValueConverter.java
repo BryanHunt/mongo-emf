@@ -9,7 +9,7 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf;
+package org.eclipselabs.emf.mongodb;
 
 import org.eclipse.emf.ecore.EDataType;
 
@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EDataType;
  * @author bhunt
  * 
  */
-public interface IValueConverter
+public interface ValueConverter
 {
 	/**
 	 * Convert a value from MongoDB to a value used by EMF of the specified type.

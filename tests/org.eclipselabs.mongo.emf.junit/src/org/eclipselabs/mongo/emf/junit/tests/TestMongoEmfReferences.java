@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
+import org.eclipselabs.emf.mongodb.Options;
 import org.eclipselabs.mongo.emf.developer.junit.MongoUtil;
 import org.eclipselabs.mongo.emf.junit.model.ModelFactory;
 import org.eclipselabs.mongo.emf.junit.model.ModelPackage;
@@ -417,7 +417,7 @@ public class TestMongoEmfReferences extends TestHarness
 		assertTrue(((EObject) ((InternalEList<?>) primaryObject.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE)).basicGet(0)).eIsProxy());
 
 		ResourceSet resourceSet2 = createResourceSet();
-		resourceSet2.getLoadOptions().put(MongoURIHandlerImpl.OPTION_PROXY_ATTRIBUTES, Boolean.TRUE);
+		resourceSet2.getLoadOptions().put(Options.OPTION_PROXY_ATTRIBUTES, Boolean.TRUE);
 		Resource primaryResource2 = resourceSet2.getResource(primaryObject.eResource().getURI(), true);
 		PrimaryObject primaryObject2 = (PrimaryObject) primaryResource2.getContents().get(0);
 

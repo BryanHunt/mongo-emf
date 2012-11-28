@@ -4,7 +4,7 @@
     modelName="Mongo" importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0"
     copyrightFields="false">
   <foreignModel>mongo.ecore</foreignModel>
-  <genPackages prefix="Model" basePackage="org.eclipselabs.mongo.emf" disposableProviderFactory="true"
+  <genPackages prefix="Model" basePackage="org.eclipselabs.emf.mongodb" disposableProviderFactory="true"
       ecorePackage="mongo.ecore#/">
     <genDataTypes ecoreDataType="mongo.ecore#//DBCursor"/>
     <genDataTypes ecoreDataType="mongo.ecore#//EObjectBuilder"/>

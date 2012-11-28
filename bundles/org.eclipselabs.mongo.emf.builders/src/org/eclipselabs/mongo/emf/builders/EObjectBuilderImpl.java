@@ -9,7 +9,7 @@
  *    Bryan Hunt & Ed Merks - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongo.emf;
+package org.eclipselabs.mongo.emf.builders;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +31,10 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
+import org.eclipselabs.emf.mongodb.ConverterService;
+import org.eclipselabs.emf.mongodb.EObjectBuilder;
+import org.eclipselabs.emf.mongodb.Keywords;
+import org.eclipselabs.emf.mongodb.MongoUtils;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -44,7 +48,7 @@ import com.mongodb.DBObject;
  * 
  * @author bhunt
  */
-public class EObjectBuilder
+public class EObjectBuilderImpl implements EObjectBuilder
 {
 	/**
 	 * Constructs an object builder without an EClass cache.
@@ -53,7 +57,7 @@ public class EObjectBuilder
 	 * @param uriHandler the handler for creating proxy URIs
 	 * @param includeAttributesForProxyReferences true if you want attribute values to be set on proxy references; false otherwise
 	 */
-	public EObjectBuilder(IConverterService converterService, XMLResource.URIHandler uriHandler, boolean includeAttributesForProxyReferences)
+	public EObjectBuilderImpl(ConverterService converterService, XMLResource.URIHandler uriHandler, boolean includeAttributesForProxyReferences)
 	{
 		this(converterService, uriHandler, includeAttributesForProxyReferences, null);
 	}
@@ -66,7 +70,7 @@ public class EObjectBuilder
 	 * @param includeAttributesForProxyReferences true if you want attribute values to be set on proxy references; false otherwise
 	 * @param eClassCache the cache to use to EClass lookups when building the EObject instance - may be null
 	 */
-	public EObjectBuilder(IConverterService converterService, XMLResource.URIHandler uriHandler, boolean includeAttributesForProxyReferences, Map<String, EClass> eClassCache)
+	public EObjectBuilderImpl(ConverterService converterService, XMLResource.URIHandler uriHandler, boolean includeAttributesForProxyReferences, Map<String, EClass> eClassCache)
 	{
 		this.converterService = converterService;
 		this.uriHandler = uriHandler;
@@ -86,6 +90,7 @@ public class EObjectBuilder
 	 * @param isProxy true if the object is to be built as a proxy; false otherwise
 	 * @return the newly created EMF object instance
 	 */
+	@Override
 	public EObject buildEObject(DBCollection collection, DBObject dbObject, Resource resource, boolean isProxy)
 	{
 		// Build an empty EMF object to hold the data from the MongodDB object
@@ -113,7 +118,7 @@ public class EObjectBuilder
 
 		if (isProxy)
 		{
-			URI proxyURI = URI.createURI("../" + collection.getName() + "/" + dbObject.get(MongoURIHandlerImpl.ID_KEY) + "#/");
+			URI proxyURI = URI.createURI("../" + collection.getName() + "/" + dbObject.get(Keywords.ID_KEY) + "#/");
 			((InternalEObject) eObject).eSetProxyURI(uriHandler.resolve(proxyURI));
 			return eObject;
 		}
@@ -126,9 +131,10 @@ public class EObjectBuilder
 		return eObject;
 	}
 
+	@Override
 	public URI buildURI(DBCollection collection, DBObject object)
 	{
-		URI uri = URI.createURI("../" + collection.getName() + "/" + object.get(MongoURIHandlerImpl.ID_KEY));
+		URI uri = URI.createURI("../" + collection.getName() + "/" + object.get(Keywords.ID_KEY));
 		return uriHandler.resolve(uri);
 	}
 
@@ -173,7 +179,7 @@ public class EObjectBuilder
 	 */
 	protected void buildAttributeArray(EObject eObject, EAttribute attribute, Object values)
 	{
-		if (!MongoURIHandlerImpl.isNativeType(attribute.getEAttributeType()))
+		if (!MongoUtils.isNativeType(attribute.getEAttributeType()))
 		{
 			@SuppressWarnings("unchecked")
 			List<Object> eValues = (List<Object>) values;
@@ -212,7 +218,7 @@ public class EObjectBuilder
 	 */
 	protected void buildExtransicID(DBObject dbObject, Resource resource, EObject eObject)
 	{
-		String id = (String) dbObject.get(MongoURIHandlerImpl.EXTRINSIC_ID_KEY);
+		String id = (String) dbObject.get(Keywords.EXTRINSIC_ID_KEY);
 
 		if (id != null && resource instanceof XMLResource)
 			((XMLResource) resource).setID(eObject, id);
@@ -321,7 +327,7 @@ public class EObjectBuilder
 
 		// Build an EMF reference from the data in MongoDB.
 
-		String proxy = (String) dbReference.get(MongoURIHandlerImpl.PROXY_KEY);
+		String proxy = (String) dbReference.get(Keywords.PROXY_KEY);
 
 		if (proxy == null)
 			return buildEObject(collection, dbReference, resource, false);
@@ -341,7 +347,7 @@ public class EObjectBuilder
 	protected EObject buildProxy(DBCollection collection, DBObject dbReference, ResourceSet resourceSet, boolean referenceResolvesProxies)
 	{
 		EObject eObject;
-		URI proxyURI = URI.createURI((String) dbReference.get(MongoURIHandlerImpl.PROXY_KEY));
+		URI proxyURI = URI.createURI((String) dbReference.get(Keywords.PROXY_KEY));
 		URI resolvedProxyURI = uriHandler.resolve(proxyURI);
 
 		if (!referenceResolvesProxies)
@@ -371,7 +377,7 @@ public class EObjectBuilder
 
 				if (referenceCollection != null)
 				{
-					DBObject referenceDBObject = new BasicDBObject(MongoURIHandlerImpl.ID_KEY, new ObjectId(proxyURI.lastSegment()));
+					DBObject referenceDBObject = new BasicDBObject(Keywords.ID_KEY, new ObjectId(proxyURI.lastSegment()));
 					DBObject referencedDBObject = referenceCollection.findOne(referenceDBObject);
 
 					if (referencedDBObject != null)
@@ -400,7 +406,7 @@ public class EObjectBuilder
 	{
 		Object convertedValue = dbValue;
 
-		if (!MongoURIHandlerImpl.isNativeType(eDataType))
+		if (!MongoUtils.isNativeType(eDataType))
 		{
 			// Types not native to MongoDB are stored as strings and must be converted to the proper object type by EMF
 
@@ -435,7 +441,7 @@ public class EObjectBuilder
 	 */
 	protected EObject createEObject(ResourceSet resourceSet, DBObject dbObject)
 	{
-		String eClassURI = (String) dbObject.get(MongoURIHandlerImpl.ECLASS_KEY);
+		String eClassURI = (String) dbObject.get(Keywords.ECLASS_KEY);
 		EClass eClass = getEClass(resourceSet, eClassURI);
 		return EcoreUtil.create(eClass);
 	}
@@ -469,7 +475,7 @@ public class EObjectBuilder
 		return (EClass) resourceSet.getEObject(URI.createURI(eClassURI), true);
 	}
 
-	private IConverterService converterService;
+	private ConverterService converterService;
 	private XMLResource.URIHandler uriHandler;
 	private Map<String, EClass> eClassCache;
 	private boolean includeAttributesForProxyReferences;

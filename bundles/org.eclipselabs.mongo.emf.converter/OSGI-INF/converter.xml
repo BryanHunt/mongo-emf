@@ -2,6 +2,6 @@
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="org.eclipselabs.mongo.emf.converter">
    <implementation class="org.eclipselabs.mongo.emf.converter.DefaultConverterService"/>
    <service>
-      <provide interface="org.eclipselabs.mongo.emf.IConverterService"/>
+      <provide interface="org.eclipselabs.mongo.emf.ConverterService"/>
    </service>
 </scr:component>

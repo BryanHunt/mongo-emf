@@ -7,6 +7,6 @@ Bundle-Vendor: EclipseLabs
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.emf.ecore,
  org.eclipse.emf.ecore.util,
- org.eclipselabs.mongo.emf
+ org.eclipselabs.emf.mongodb
 Service-Component: OSGI-INF/converter.xml
 Bundle-ActivationPolicy: lazy

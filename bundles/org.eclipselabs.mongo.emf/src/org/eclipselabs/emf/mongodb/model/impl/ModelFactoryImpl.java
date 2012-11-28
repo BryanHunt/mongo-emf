@@ -1,6 +1,6 @@
 /**
  */
-package org.eclipselabs.mongo.emf.model.impl;
+package org.eclipselabs.emf.mongodb.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -8,9 +8,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.eclipselabs.mongo.emf.model.ModelFactory;
-import org.eclipselabs.mongo.emf.model.ModelPackage;
-import org.eclipselabs.mongo.emf.model.MongoCursor;
+import org.eclipselabs.emf.mongodb.model.ModelFactory;
+import org.eclipselabs.emf.mongodb.model.ModelPackage;
+import org.eclipselabs.emf.mongodb.model.MongoCursor;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,7 +30,7 @@ public class ModelFactoryImpl extends EFactoryImpl implements ModelFactory
 	{
 		try
 		{
-			ModelFactory theModelFactory = (ModelFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipselabs.org/mongo/emf/model"); 
+			ModelFactory theModelFactory = (ModelFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.eclipselabs.org/emf/mongodb/model"); 
 			if (theModelFactory != null)
 			{
 				return theModelFactory;

@@ -1,6 +1,6 @@
 /**
  */
-package org.eclipselabs.mongo.emf.model;
+package org.eclipselabs.emf.mongodb.model;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EPackage;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * @see org.eclipselabs.mongo.emf.model.ModelFactory
+ * @see org.eclipselabs.emf.mongodb.model.ModelFactory
  * @model kind="package"
  * @generated
  */
@@ -38,7 +38,7 @@ public interface ModelPackage extends EPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://www.eclipselabs.org/mongo/emf/model";
+	String eNS_URI = "http://www.eclipselabs.org/emf/mongodb/model";
 
 	/**
 	 * The package namespace name.
@@ -46,7 +46,7 @@ public interface ModelPackage extends EPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "org.eclipselabs.mongo.emf.model";
+	String eNS_PREFIX = "org.eclipselabs.emf.mongodb.model";
 
 	/**
 	 * The singleton instance of the package.
@@ -54,14 +54,14 @@ public interface ModelPackage extends EPackage
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	ModelPackage eINSTANCE = org.eclipselabs.mongo.emf.model.impl.ModelPackageImpl.init();
+	ModelPackage eINSTANCE = org.eclipselabs.emf.mongodb.model.impl.ModelPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipselabs.mongo.emf.model.impl.MongoCursorImpl <em>Mongo Cursor</em>}' class.
+	 * The meta object id for the '{@link org.eclipselabs.emf.mongodb.model.impl.MongoCursorImpl <em>Mongo Cursor</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipselabs.mongo.emf.model.impl.MongoCursorImpl
-	 * @see org.eclipselabs.mongo.emf.model.impl.ModelPackageImpl#getMongoCursor()
+	 * @see org.eclipselabs.emf.mongodb.model.impl.MongoCursorImpl
+	 * @see org.eclipselabs.emf.mongodb.model.impl.ModelPackageImpl#getMongoCursor()
 	 * @generated
 	 */
 	int MONGO_CURSOR = 0;
@@ -71,7 +71,7 @@ public interface ModelPackage extends EPackage
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see java.lang.Iterable<EObject>
-	 * @see org.eclipselabs.mongo.emf.model.impl.ModelPackageImpl#getIterable()
+	 * @see org.eclipselabs.emf.mongodb.model.impl.ModelPackageImpl#getIterable()
 	 * @generated
 	 */
 	int ITERABLE = 1;
@@ -126,7 +126,7 @@ public interface ModelPackage extends EPackage
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see com.mongodb.DBCursor
-	 * @see org.eclipselabs.mongo.emf.model.impl.ModelPackageImpl#getDBCursor()
+	 * @see org.eclipselabs.emf.mongodb.model.impl.ModelPackageImpl#getDBCursor()
 	 * @generated
 	 */
 	int DB_CURSOR = 2;
@@ -135,8 +135,8 @@ public interface ModelPackage extends EPackage
 	 * The meta object id for the '<em>EObject Builder</em>' data type.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.eclipselabs.mongo.emf.builders.EObjectBuilder
-	 * @see org.eclipselabs.mongo.emf.model.impl.ModelPackageImpl#getEObjectBuilder()
+	 * @see org.eclipselabs.emf.mongodb.EObjectBuilder
+	 * @see org.eclipselabs.emf.mongodb.model.impl.ModelPackageImpl#getEObjectBuilder()
 	 * @generated
 	 */
 	int EOBJECT_BUILDER = 3;
@@ -146,50 +146,50 @@ public interface ModelPackage extends EPackage
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see com.mongodb.DBCollection
-	 * @see org.eclipselabs.mongo.emf.model.impl.ModelPackageImpl#getDBCollection()
+	 * @see org.eclipselabs.emf.mongodb.model.impl.ModelPackageImpl#getDBCollection()
 	 * @generated
 	 */
 	int DB_COLLECTION = 4;
 
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipselabs.mongo.emf.model.MongoCursor <em>Mongo Cursor</em>}'.
+	 * Returns the meta object for class '{@link org.eclipselabs.emf.mongodb.model.MongoCursor <em>Mongo Cursor</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Mongo Cursor</em>'.
-	 * @see org.eclipselabs.mongo.emf.model.MongoCursor
+	 * @see org.eclipselabs.emf.mongodb.model.MongoCursor
 	 * @generated
 	 */
 	EClass getMongoCursor();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.model.MongoCursor#getDbCursor <em>Db Cursor</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.emf.mongodb.model.MongoCursor#getDbCursor <em>Db Cursor</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Db Cursor</em>'.
-	 * @see org.eclipselabs.mongo.emf.model.MongoCursor#getDbCursor()
+	 * @see org.eclipselabs.emf.mongodb.model.MongoCursor#getDbCursor()
 	 * @see #getMongoCursor()
 	 * @generated
 	 */
 	EAttribute getMongoCursor_DbCursor();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.model.MongoCursor#getObjectBuilder <em>Object Builder</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.emf.mongodb.model.MongoCursor#getObjectBuilder <em>Object Builder</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Object Builder</em>'.
-	 * @see org.eclipselabs.mongo.emf.model.MongoCursor#getObjectBuilder()
+	 * @see org.eclipselabs.emf.mongodb.model.MongoCursor#getObjectBuilder()
 	 * @see #getMongoCursor()
 	 * @generated
 	 */
 	EAttribute getMongoCursor_ObjectBuilder();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.eclipselabs.mongo.emf.model.MongoCursor#getDbCollection <em>Db Collection</em>}'.
+	 * Returns the meta object for the attribute '{@link org.eclipselabs.emf.mongodb.model.MongoCursor#getDbCollection <em>Db Collection</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Db Collection</em>'.
-	 * @see org.eclipselabs.mongo.emf.model.MongoCursor#getDbCollection()
+	 * @see org.eclipselabs.emf.mongodb.model.MongoCursor#getDbCollection()
 	 * @see #getMongoCursor()
 	 * @generated
 	 */
@@ -218,12 +218,12 @@ public interface ModelPackage extends EPackage
 	EDataType getDBCursor();
 
 	/**
-	 * Returns the meta object for data type '{@link org.eclipselabs.mongo.emf.builders.EObjectBuilder <em>EObject Builder</em>}'.
+	 * Returns the meta object for data type '{@link org.eclipselabs.emf.mongodb.EObjectBuilder <em>EObject Builder</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for data type '<em>EObject Builder</em>'.
-	 * @see org.eclipselabs.mongo.emf.builders.EObjectBuilder
-	 * @model instanceClass="org.eclipselabs.mongo.emf.EObjectBuilder" serializeable="false"
+	 * @see org.eclipselabs.emf.mongodb.EObjectBuilder
+	 * @model instanceClass="org.eclipselabs.emf.mongodb.EObjectBuilder" serializeable="false"
 	 * @generated
 	 */
 	EDataType getEObjectBuilder();
@@ -263,11 +263,11 @@ public interface ModelPackage extends EPackage
 	interface Literals
 	{
 		/**
-		 * The meta object literal for the '{@link org.eclipselabs.mongo.emf.model.impl.MongoCursorImpl <em>Mongo Cursor</em>}' class.
+		 * The meta object literal for the '{@link org.eclipselabs.emf.mongodb.model.impl.MongoCursorImpl <em>Mongo Cursor</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipselabs.mongo.emf.model.impl.MongoCursorImpl
-		 * @see org.eclipselabs.mongo.emf.model.impl.ModelPackageImpl#getMongoCursor()
+		 * @see org.eclipselabs.emf.mongodb.model.impl.MongoCursorImpl
+		 * @see org.eclipselabs.emf.mongodb.model.impl.ModelPackageImpl#getMongoCursor()
 		 * @generated
 		 */
 		EClass MONGO_CURSOR = eINSTANCE.getMongoCursor();
@@ -301,7 +301,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see java.lang.Iterable<EObject>
-		 * @see org.eclipselabs.mongo.emf.model.impl.ModelPackageImpl#getIterable()
+		 * @see org.eclipselabs.emf.mongodb.model.impl.ModelPackageImpl#getIterable()
 		 * @generated
 		 */
 		EClass ITERABLE = eINSTANCE.getIterable();
@@ -311,7 +311,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see com.mongodb.DBCursor
-		 * @see org.eclipselabs.mongo.emf.model.impl.ModelPackageImpl#getDBCursor()
+		 * @see org.eclipselabs.emf.mongodb.model.impl.ModelPackageImpl#getDBCursor()
 		 * @generated
 		 */
 		EDataType DB_CURSOR = eINSTANCE.getDBCursor();
@@ -320,8 +320,8 @@ public interface ModelPackage extends EPackage
 		 * The meta object literal for the '<em>EObject Builder</em>' data type.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.eclipselabs.mongo.emf.builders.EObjectBuilder
-		 * @see org.eclipselabs.mongo.emf.model.impl.ModelPackageImpl#getEObjectBuilder()
+		 * @see org.eclipselabs.emf.mongodb.EObjectBuilder
+		 * @see org.eclipselabs.emf.mongodb.model.impl.ModelPackageImpl#getEObjectBuilder()
 		 * @generated
 		 */
 		EDataType EOBJECT_BUILDER = eINSTANCE.getEObjectBuilder();
@@ -331,7 +331,7 @@ public interface ModelPackage extends EPackage
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @see com.mongodb.DBCollection
-		 * @see org.eclipselabs.mongo.emf.model.impl.ModelPackageImpl#getDBCollection()
+		 * @see org.eclipselabs.emf.mongodb.model.impl.ModelPackageImpl#getDBCollection()
 		 * @generated
 		 */
 		EDataType DB_COLLECTION = eINSTANCE.getDBCollection();

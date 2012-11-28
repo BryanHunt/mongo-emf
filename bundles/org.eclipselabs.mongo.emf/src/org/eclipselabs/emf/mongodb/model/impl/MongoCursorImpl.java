@@ -1,7 +1,7 @@
 /**
  */
 
-package org.eclipselabs.mongo.emf.model.impl;
+package org.eclipselabs.emf.mongodb.model.impl;
 
 import java.util.Iterator;
 
@@ -12,9 +12,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipselabs.mongo.emf.EObjectBuilder;
-import org.eclipselabs.mongo.emf.model.ModelPackage;
-import org.eclipselabs.mongo.emf.model.MongoCursor;
+import org.eclipselabs.emf.mongodb.EObjectBuilder;
+import org.eclipselabs.emf.mongodb.model.ModelPackage;
+import org.eclipselabs.emf.mongodb.model.MongoCursor;
 
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -27,12 +27,12 @@ import com.mongodb.DBObject;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.eclipselabs.mongo.emf.model.impl.MongoCursorImpl#getDbCursor <em>Db Cursor</em>}</li>
- * <li>{@link org.eclipselabs.mongo.emf.model.impl.MongoCursorImpl#getObjectBuilder <em>Object Builder</em>}</li>
- * <li>{@link org.eclipselabs.mongo.emf.model.impl.MongoCursorImpl#getDbCollection <em>Db Collection</em>}</li>
+ *   <li>{@link org.eclipselabs.emf.mongodb.model.impl.MongoCursorImpl#getDbCursor <em>Db Cursor</em>}</li>
+ *   <li>{@link org.eclipselabs.emf.mongodb.model.impl.MongoCursorImpl#getObjectBuilder <em>Object Builder</em>}</li>
+ *   <li>{@link org.eclipselabs.emf.mongodb.model.impl.MongoCursorImpl#getDbCollection <em>Db Collection</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class MongoCursorImpl extends EObjectImpl implements MongoCursor
@@ -41,7 +41,6 @@ public class MongoCursorImpl extends EObjectImpl implements MongoCursor
 	 * The default value of the '{@link #getDbCursor() <em>Db Cursor</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getDbCursor()
 	 * @generated
 	 * @ordered
@@ -52,7 +51,6 @@ public class MongoCursorImpl extends EObjectImpl implements MongoCursor
 	 * The cached value of the '{@link #getDbCursor() <em>Db Cursor</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getDbCursor()
 	 * @generated
 	 * @ordered
@@ -63,7 +61,6 @@ public class MongoCursorImpl extends EObjectImpl implements MongoCursor
 	 * The default value of the '{@link #getObjectBuilder() <em>Object Builder</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getObjectBuilder()
 	 * @generated
 	 * @ordered
@@ -74,7 +71,6 @@ public class MongoCursorImpl extends EObjectImpl implements MongoCursor
 	 * The cached value of the '{@link #getObjectBuilder() <em>Object Builder</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getObjectBuilder()
 	 * @generated
 	 * @ordered
@@ -85,7 +81,6 @@ public class MongoCursorImpl extends EObjectImpl implements MongoCursor
 	 * The default value of the '{@link #getDbCollection() <em>Db Collection</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getDbCollection()
 	 * @generated
 	 * @ordered
@@ -96,7 +91,6 @@ public class MongoCursorImpl extends EObjectImpl implements MongoCursor
 	 * The cached value of the '{@link #getDbCollection() <em>Db Collection</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @see #getDbCollection()
 	 * @generated
 	 * @ordered
@@ -106,7 +100,6 @@ public class MongoCursorImpl extends EObjectImpl implements MongoCursor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	protected MongoCursorImpl()
@@ -117,7 +110,6 @@ public class MongoCursorImpl extends EObjectImpl implements MongoCursor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -129,7 +121,6 @@ public class MongoCursorImpl extends EObjectImpl implements MongoCursor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public DBCursor getDbCursor()
@@ -140,7 +131,6 @@ public class MongoCursorImpl extends EObjectImpl implements MongoCursor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setDbCursor(DBCursor newDbCursor)
@@ -154,7 +144,6 @@ public class MongoCursorImpl extends EObjectImpl implements MongoCursor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public EObjectBuilder getObjectBuilder()
@@ -165,7 +154,6 @@ public class MongoCursorImpl extends EObjectImpl implements MongoCursor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setObjectBuilder(EObjectBuilder newObjectBuilder)
@@ -179,7 +167,6 @@ public class MongoCursorImpl extends EObjectImpl implements MongoCursor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public DBCollection getDbCollection()
@@ -190,7 +177,6 @@ public class MongoCursorImpl extends EObjectImpl implements MongoCursor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	public void setDbCollection(DBCollection newDbCollection)
@@ -234,7 +220,6 @@ public class MongoCursorImpl extends EObjectImpl implements MongoCursor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -255,7 +240,6 @@ public class MongoCursorImpl extends EObjectImpl implements MongoCursor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -264,13 +248,13 @@ public class MongoCursorImpl extends EObjectImpl implements MongoCursor
 		switch (featureID)
 		{
 			case ModelPackage.MONGO_CURSOR__DB_CURSOR:
-				setDbCursor((DBCursor) newValue);
+				setDbCursor((DBCursor)newValue);
 				return;
 			case ModelPackage.MONGO_CURSOR__OBJECT_BUILDER:
-				setObjectBuilder((EObjectBuilder) newValue);
+				setObjectBuilder((EObjectBuilder)newValue);
 				return;
 			case ModelPackage.MONGO_CURSOR__DB_COLLECTION:
-				setDbCollection((DBCollection) newValue);
+				setDbCollection((DBCollection)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -279,7 +263,6 @@ public class MongoCursorImpl extends EObjectImpl implements MongoCursor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -303,7 +286,6 @@ public class MongoCursorImpl extends EObjectImpl implements MongoCursor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
@@ -324,14 +306,12 @@ public class MongoCursorImpl extends EObjectImpl implements MongoCursor
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * 
 	 * @generated
 	 */
 	@Override
 	public String toString()
 	{
-		if (eIsProxy())
-			return super.toString();
+		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (dbCursor: ");

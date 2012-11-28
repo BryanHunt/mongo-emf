@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="org.eclipselabs.mongo.emf.query.simple">
-   <implementation class="org.eclipselabs.mongo.emf.query.simple.QueryEngine"/>
+   <implementation class="org.eclipselabs.mongo.emf.query.simple.SimpleQueryEngine"/>
    <service>
-      <provide interface="org.eclipselabs.mongo.emf.IQueryEngine"/>
+      <provide interface="org.eclipselabs.mongo.emf.QueryEngine"/>
    </service>
 </scr:component>

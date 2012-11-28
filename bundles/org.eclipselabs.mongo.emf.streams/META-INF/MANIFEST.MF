@@ -14,10 +14,10 @@ Import-Package: com.mongodb,
  org.eclipse.emf.ecore.util,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.emf.ecore.xmi.impl,
- org.eclipselabs.emongo,
- org.eclipselabs.mongo.emf,
  org.eclipselabs.emf.ext,
- org.eclipselabs.mongo.emf.model
+ org.eclipselabs.emf.mongodb,
+ org.eclipselabs.emf.mongodb.model,
+ org.eclipselabs.emongo
 Service-Component: OSGI-INF/stream_factory.xml
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: EclipseLabs

@@ -14,8 +14,8 @@ package org.eclipselabs.mongo.emf.converter;
 import java.util.LinkedList;
 
 import org.eclipse.emf.ecore.EDataType;
-import org.eclipselabs.mongo.emf.IConverterService;
-import org.eclipselabs.mongo.emf.IValueConverter;
+import org.eclipselabs.emf.mongodb.ConverterService;
+import org.eclipselabs.emf.mongodb.ValueConverter;
 
 /**
  * This class is thread safe
@@ -23,16 +23,16 @@ import org.eclipselabs.mongo.emf.IValueConverter;
  * @author bhunt
  * 
  */
-public class DefaultConverterService implements IConverterService
+public class DefaultConverterService implements ConverterService
 {
 	public DefaultConverterService()
 	{
-		this.converters = new LinkedList<IValueConverter>();
+		this.converters = new LinkedList<ValueConverter>();
 		converters.add(new DefaultConverter());
 	}
 
 	@Override
-	public synchronized void addConverter(IValueConverter converter)
+	public synchronized void addConverter(ValueConverter converter)
 	{
 		// The converter must be added at the beginning of the list so that the default converter is considered last
 
@@ -40,9 +40,9 @@ public class DefaultConverterService implements IConverterService
 	}
 
 	@Override
-	public synchronized IValueConverter getConverter(EDataType eDataType)
+	public synchronized ValueConverter getConverter(EDataType eDataType)
 	{
-		for (IValueConverter converter : converters)
+		for (ValueConverter converter : converters)
 		{
 			if (converter.isConverterForType(eDataType))
 				return converter;
@@ -54,10 +54,10 @@ public class DefaultConverterService implements IConverterService
 	}
 
 	@Override
-	public synchronized void removeConverter(IValueConverter converter)
+	public synchronized void removeConverter(ValueConverter converter)
 	{
 		converters.remove(converter);
 	}
 
-	private LinkedList<IValueConverter> converters;
+	private LinkedList<ValueConverter> converters;
 }

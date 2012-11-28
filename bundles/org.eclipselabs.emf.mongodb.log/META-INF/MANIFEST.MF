@@ -7,8 +7,8 @@ Bundle-Vendor: EclipseLabs
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.emf.common.util,
  org.eclipse.emf.ecore.resource,
- org.eclipselabs.emf.log,
- org.eclipselabs.mongo.emf,
  org.eclipselabs.emf.ext,
+ org.eclipselabs.emf.log,
+ org.eclipselabs.emf.mongodb,
  org.osgi.service.log;version="1.3.0"
 Service-Component: OSGI-INF/services/log.xml

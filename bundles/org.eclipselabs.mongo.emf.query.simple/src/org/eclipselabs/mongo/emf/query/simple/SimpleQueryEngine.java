@@ -16,14 +16,14 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.eclipse.emf.common.util.URI;
+import org.eclipselabs.emf.mongodb.Keywords;
+import org.eclipselabs.emf.mongodb.MongoQuery;
+import org.eclipselabs.emf.mongodb.QueryEngine;
 import org.eclipselabs.emf.query.BinaryOperation;
 import org.eclipselabs.emf.query.Expression;
 import org.eclipselabs.emf.query.Literal;
 import org.eclipselabs.emf.query.util.ExpressionBuilder;
 import org.eclipselabs.emf.query.util.QuerySwitch;
-import org.eclipselabs.mongo.emf.IQueryEngine;
-import org.eclipselabs.mongo.emf.MongoQuery;
-import org.eclipselabs.mongo.emf.MongoURIHandlerImpl;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -33,7 +33,7 @@ import com.mongodb.QueryOperators;
  * @author merks
  * 
  */
-public class QueryEngine implements IQueryEngine
+public class SimpleQueryEngine implements QueryEngine
 {
 
 	@Override
@@ -66,7 +66,7 @@ public class QueryEngine implements IQueryEngine
 						Expression rightOperand = binaryOperation.getRightOperand();
 						String property = ExpressionBuilder.toString(leftOperand);
 
-						if (MongoURIHandlerImpl.ID_KEY.equals(property))
+						if (Keywords.ID_KEY.equals(property))
 						{
 							dbObject.put(property, new ObjectId(((Literal) rightOperand).getLiteralValue()));
 						}

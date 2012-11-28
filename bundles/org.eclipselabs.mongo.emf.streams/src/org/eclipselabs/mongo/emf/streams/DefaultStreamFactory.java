@@ -18,13 +18,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipselabs.emf.mongodb.ConverterService;
+import org.eclipselabs.emf.mongodb.DBObjectBuilderFactory;
+import org.eclipselabs.emf.mongodb.EObjectBuilderFactory;
+import org.eclipselabs.emf.mongodb.InputStreamFactory;
+import org.eclipselabs.emf.mongodb.OutputStreamFactory;
+import org.eclipselabs.emf.mongodb.QueryEngine;
 import org.eclipselabs.emongo.MongoIdFactory;
-import org.eclipselabs.mongo.emf.IConverterService;
-import org.eclipselabs.mongo.emf.IDBObjectBuilderFactory;
-import org.eclipselabs.mongo.emf.IEObjectBuilderFactory;
-import org.eclipselabs.mongo.emf.IInputStreamFactory;
-import org.eclipselabs.mongo.emf.IOutputStreamFactory;
-import org.eclipselabs.mongo.emf.IQueryEngine;
 
 import com.mongodb.DBCollection;
 
@@ -32,7 +32,7 @@ import com.mongodb.DBCollection;
  * @author bhunt
  * 
  */
-public class DefaultStreamFactory implements IInputStreamFactory, IOutputStreamFactory
+public class DefaultStreamFactory implements InputStreamFactory, OutputStreamFactory
 {
 	@Override
 	public OutputStream createOutputStream(URI uri, Map<?, ?> options, DBCollection collection, Map<Object, Object> response)
@@ -46,22 +46,22 @@ public class DefaultStreamFactory implements IInputStreamFactory, IOutputStreamF
 		return new MongoInputStream(converterService, eObjectBuilderFactory, queryEngine, collection, uri, options, response);
 	}
 
-	public void bindConverterService(IConverterService converterService)
+	public void bindConverterService(ConverterService converterService)
 	{
 		this.converterService = converterService;
 	}
 
-	public void bindDBObjectBuilderFactory(IDBObjectBuilderFactory dbObjectBuilderFactory)
+	public void bindDBObjectBuilderFactory(DBObjectBuilderFactory dbObjectBuilderFactory)
 	{
 		this.dbObjectBuilderFactory = dbObjectBuilderFactory;
 	}
 
-	public void bindEObjectBuilderFactory(IEObjectBuilderFactory eObjectBuilderFactory)
+	public void bindEObjectBuilderFactory(EObjectBuilderFactory eObjectBuilderFactory)
 	{
 		this.eObjectBuilderFactory = eObjectBuilderFactory;
 	}
 
-	public void bindQueryEngine(IQueryEngine queryEngine)
+	public void bindQueryEngine(QueryEngine queryEngine)
 	{
 		this.queryEngine = queryEngine;
 	}
@@ -82,9 +82,9 @@ public class DefaultStreamFactory implements IInputStreamFactory, IOutputStreamF
 		idFactories.remove(uri);
 	}
 
-	private IDBObjectBuilderFactory dbObjectBuilderFactory;
-	private IEObjectBuilderFactory eObjectBuilderFactory;
-	private IQueryEngine queryEngine;
-	private IConverterService converterService;
+	private DBObjectBuilderFactory dbObjectBuilderFactory;
+	private EObjectBuilderFactory eObjectBuilderFactory;
+	private QueryEngine queryEngine;
+	private ConverterService converterService;
 	private volatile Map<String, MongoIdFactory> idFactories;
 }

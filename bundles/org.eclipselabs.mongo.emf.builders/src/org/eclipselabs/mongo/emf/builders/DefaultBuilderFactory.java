@@ -15,27 +15,27 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.xmi.XMLResource.URIHandler;
-import org.eclipselabs.mongo.emf.DBObjectBuilder;
-import org.eclipselabs.mongo.emf.EObjectBuilder;
-import org.eclipselabs.mongo.emf.IConverterService;
-import org.eclipselabs.mongo.emf.IDBObjectBuilderFactory;
-import org.eclipselabs.mongo.emf.IEObjectBuilderFactory;
+import org.eclipselabs.emf.mongodb.ConverterService;
+import org.eclipselabs.emf.mongodb.DBObjectBuilder;
+import org.eclipselabs.emf.mongodb.DBObjectBuilderFactory;
+import org.eclipselabs.emf.mongodb.EObjectBuilder;
+import org.eclipselabs.emf.mongodb.EObjectBuilderFactory;
 
 /**
  * @author bhunt
  * 
  */
-public class DefaultBuilderFactory implements IEObjectBuilderFactory, IDBObjectBuilderFactory
+public class DefaultBuilderFactory implements EObjectBuilderFactory, DBObjectBuilderFactory
 {
 	@Override
-	public DBObjectBuilder createBuilder(IConverterService converterService, URIHandler uriHandler, boolean serializeDefaultAttributeValues)
+	public DBObjectBuilder createBuilder(ConverterService converterService, URIHandler uriHandler, boolean serializeDefaultAttributeValues)
 	{
-		return new DBObjectBuilder(converterService, uriHandler, serializeDefaultAttributeValues);
+		return new DBObjectBuilderImpl(converterService, uriHandler, serializeDefaultAttributeValues);
 	}
 
 	@Override
-	public EObjectBuilder createObjectBuilder(IConverterService converterService, URIHandler uriHandler, boolean includeAttributesForProxyReferences, Map<String, EClass> eClassCache)
+	public EObjectBuilder createObjectBuilder(ConverterService converterService, URIHandler uriHandler, boolean includeAttributesForProxyReferences, Map<String, EClass> eClassCache)
 	{
-		return new EObjectBuilder(converterService, uriHandler, includeAttributesForProxyReferences, eClassCache);
+		return new EObjectBuilderImpl(converterService, uriHandler, includeAttributesForProxyReferences, eClassCache);
 	}
 }
