@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-import org.eclipselabs.emongo.MongoProvider;
+import org.eclipselabs.emongo.MongoClientProvider;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -31,7 +31,7 @@ public class ReplicaSetConfigurator extends BaseConfigurator
 		Configuration config = configurationAdmin.createFactoryConfiguration("org.eclipselabs.mongo.provider", null);
 
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
-		properties.put(MongoProvider.PROP_URI, "mongodb://localhost:27022, mongodb://localhost:27023, mongodb://localhost:27024");
+		properties.put(MongoClientProvider.PROP_URI, "mongodb://localhost:27022, mongodb://localhost:27023, mongodb://localhost:27024");
 		properties.put("type", "replicaSet");
 
 		config.update(properties);
