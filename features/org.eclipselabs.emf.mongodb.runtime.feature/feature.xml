@@ -41,4 +41,8 @@
          id="org.eclipselabs.emf.mongodb.streams.feature"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipselabs.emf.mongodb.core.feature"
+         version="0.0.0"/>
+
 </feature>

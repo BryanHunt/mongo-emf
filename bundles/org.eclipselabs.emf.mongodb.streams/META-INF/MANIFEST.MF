@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Mongo EMF Default Stream Support
 Bundle-SymbolicName: org.eclipselabs.emf.mongodb.streams
-Bundle-Version: 0.7.1.qualifier
+Bundle-Version: 0.8.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: com.mongodb,
  com.mongodb.util,
