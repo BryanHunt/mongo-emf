@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipselabs.mongo.emf.freemarker.feature"
-      label="Mongo EMF FreeMarker Support"
-      version="0.7.1.qualifier"
+      id="org.eclipselabs.emf.mongodb.query.simple.feature"
+      label="MongoEMF Query Engine"
+      version="0.8.0.qualifier"
       provider-name="EclipseLabs"
       license-feature="org.eclipselabs.mongo.emf.feature">
 
    <description url="https://github.com/BryanHunt/mongo-emf/wiki">
-      MongoEMF Freemarker support
+      MongoEMF query engine.
    </description>
 
-   <copyright>
+   <copyright url="http://www.example.com/copyright">
       Copyright (C) 2010 Bryan Hunt &amp; Ed Merks.  All rights reserved.
    </copyright>
 
@@ -19,15 +19,22 @@
    </license>
 
    <requires>
-      <import plugin="org.freemarker"/>
       <import plugin="org.eclipse.emf.common"/>
       <import plugin="org.eclipse.emf.ecore"/>
-      <import plugin="org.eclipselabs.emf.query.simple"/>
-      <import plugin="org.eclipselabs.mongo.emf"/>
+      <import plugin="org.mongodb.mongo-java-driver"/>
+      <import plugin="org.eclipse.osgi"/>
+      <import plugin="org.eclipselabs.emf.mongodb.core"/>
    </requires>
 
    <plugin
-         id="org.eclipselabs.mongo.emf.freemarker"
+         id="org.eclipselabs.emf.query.simple"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipselabs.emf.mongodb.query.simple"
          download-size="0"
          install-size="0"
          version="0.0.0"

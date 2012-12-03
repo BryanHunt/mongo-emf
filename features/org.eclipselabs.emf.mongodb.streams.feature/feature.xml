@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipselabs.mongo.emf.streams.feature"
+      id="org.eclipselabs.emf.mongodb.streams.feature"
       label="MongoEMF DefaultStreams"
-      version="0.7.1.qualifier"
+      version="0.8.0.qualifier"
       provider-name="EclipseLabs">
 
    <description url="http://www.example.com/description">
@@ -18,17 +18,17 @@
    </license>
 
    <requires>
+      <import plugin="org.mongodb.mongo-java-driver"/>
       <import plugin="org.eclipse.emf.common"/>
       <import plugin="org.eclipse.emf.ecore"/>
       <import plugin="org.eclipse.emf.ecore.xmi"/>
-      <import plugin="org.eclipselabs.mongo.emf"/>
-      <import plugin="org.mongodb.mongo-java-driver"/>
-      <import plugin="org.eclipselabs.mongo"/>
-      <import plugin="org.eclipselabs.mongo.emf.ext"/>
+      <import plugin="org.eclipselabs.emf.ext.core"/>
+      <import plugin="org.eclipselabs.emf.mongodb.core"/>
+      <import plugin="org.eclipselabs.emongo.core"/>
    </requires>
 
    <plugin
-         id="org.eclipselabs.mongo.emf.streams"
+         id="org.eclipselabs.emf.mongodb.streams"
          download-size="0"
          install-size="0"
          version="0.0.0"

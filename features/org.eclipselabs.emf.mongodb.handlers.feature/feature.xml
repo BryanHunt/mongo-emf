@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipselabs.emf.mongodb.log.feature"
-      label="MongoEMF OSGi Logging Extension"
+      id="org.eclipselabs.emf.mongodb.handlers.feature"
+      label="MongoEMF URI Handlers"
       version="0.8.0.qualifier"
-      provider-name="EclipseLabs"
-      license-feature="org.eclipselabs.mongo.emf.feature">
+      provider-name="EclipseLabs">
 
-   <description url="https://github.com/BryanHunt/mongo-emf/wiki">
-      Supplies an OSGi LogListener that will write the OSGi log to MongoDB as an EMF model.
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
    </description>
 
-   <copyright>
-      Copyright (C) 2010 Bryan Hunt.  All rights reserved.
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
    </copyright>
 
    <license url="http://www.example.com/license">
@@ -19,16 +18,16 @@
    </license>
 
    <requires>
+      <import plugin="org.mongodb.mongo-java-driver"/>
       <import plugin="org.eclipse.emf.common"/>
       <import plugin="org.eclipse.emf.ecore"/>
-      <import plugin="org.eclipse.osgi"/>
       <import plugin="org.eclipselabs.emf.ext.core"/>
-      <import plugin="org.eclipselabs.emf.log.core"/>
       <import plugin="org.eclipselabs.emf.mongodb.core"/>
+      <import plugin="org.eclipselabs.emongo.core"/>
    </requires>
 
    <plugin
-         id="org.eclipselabs.emf.mongodb.log"
+         id="org.eclipselabs.emf.mongodb.handlers"
          download-size="0"
          install-size="0"
          version="0.0.0"

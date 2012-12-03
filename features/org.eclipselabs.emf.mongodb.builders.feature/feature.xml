@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipselabs.mongo.emf.core.feature"
-      label="MongoEMF Core Runtime"
-      version="0.7.1.qualifier"
+      id="org.eclipselabs.emf.mongodb.builders.feature"
+      label="MongoEMF Default Builders"
+      version="0.8.0.qualifier"
       provider-name="EclipseLabs">
 
    <description url="http://www.example.com/description">
@@ -18,36 +18,15 @@
    </license>
 
    <requires>
-      <import plugin="org.eclipse.emf.common"/>
       <import plugin="org.eclipse.emf.ecore"/>
       <import plugin="org.eclipse.emf.ecore.xmi"/>
-      <import plugin="org.eclipse.osgi"/>
       <import plugin="org.mongodb.mongo-java-driver"/>
+      <import plugin="org.eclipse.emf.common"/>
+      <import plugin="org.eclipselabs.emf.mongodb.core"/>
    </requires>
 
    <plugin
-         id="org.eclipselabs.mongo"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipselabs.mongo.emf"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipselabs.mongo.emf.converter"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipselabs.mongo.emf.ext"
+         id="org.eclipselabs.emf.mongodb.builders"
          download-size="0"
          install-size="0"
          version="0.0.0"
