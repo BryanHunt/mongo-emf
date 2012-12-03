@@ -2,5 +2,5 @@
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" activate="activate" configuration-policy="require" deactivate="deactivate" immediate="true" name="org.eclipselabs.emf.mongodb.log">
    <implementation class="org.eclipselabs.emf.mongodb.log.MongoDbLogListener"/>
    <reference bind="bindLogReaderService" cardinality="1..1" interface="org.osgi.service.log.LogReaderService" name="LogReaderService" policy="static"/>
-   <reference bind="bindResourceSetFactory" cardinality="1..1" interface="org.eclipselabs.mongo.emf.ext.IResourceSetFactory" name="IResourceSetFactory" policy="static"/>
+   <reference bind="bindResourceSetFactory" cardinality="1..1" interface="org.eclipselabs.emf.ext.ResourceSetFactory" name="ResourceSetFactory" policy="static"/>
 </scr:component>

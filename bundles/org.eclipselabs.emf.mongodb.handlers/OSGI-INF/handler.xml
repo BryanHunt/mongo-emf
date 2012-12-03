@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="org.eclipselabs.emf.mongodb.handlers.MongoURIHandlerProvider">
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="org.eclipselabs.emf.mongodb.handlers.mongoURIHandlerProvider">
    <implementation class="org.eclipselabs.emf.mongodb.handlers.MongoURIHandlerProvider"/>
-   <reference bind="bindInputStreamFactory" cardinality="1..1" interface="org.eclipselabs.mongo.emf.InputStreamFactory" name="InputStreamFactory" policy="static"/>
-   <reference bind="bindOutputStreamFactory" cardinality="1..1" interface="org.eclipselabs.mongo.emf.OutputStreamFactory" name="OutputStreamFactory" policy="static"/>
+   <reference bind="bindInputStreamFactory" cardinality="1..1" interface="org.eclipselabs.emf.mongodb.InputStreamFactory" name="InputStreamFactory" policy="static"/>
+   <reference bind="bindOutputStreamFactory" cardinality="1..1" interface="org.eclipselabs.emf.mongodb.OutputStreamFactory" name="OutputStreamFactory" policy="static"/>
    <service>
       <provide interface="org.eclipselabs.emf.ext.UriHandlerProvider"/>
    </service>
