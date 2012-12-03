@@ -13,7 +13,7 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
             uri="http://code.google.com/a/eclipselabs.org/p/mongo-emf/examples/model"
-            class="org.eclipselabs.emf.mongo.examples.model.ModelPackage"
+            class="org.eclipselabs.emf.mongodb.examples.model.ModelPackage"
             genModel="model/model.genmodel"/>
    </extension>
 

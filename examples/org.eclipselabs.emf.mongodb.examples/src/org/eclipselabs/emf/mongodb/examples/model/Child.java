@@ -9,7 +9,7 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.emf.mongo.examples.model;
+package org.eclipselabs.emf.mongodb.examples.model;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -25,11 +25,11 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipselabs.emf.mongo.examples.model.Child#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipselabs.emf.mongodb.examples.model.Child#getName <em>Name</em>}</li>
  * </ul>
  * </p>
  * 
- * @see org.eclipselabs.emf.mongo.examples.model.ModelPackage#getChild()
+ * @see org.eclipselabs.emf.mongodb.examples.model.ModelPackage#getChild()
  * @model kind="class"
  * @generated
  */
@@ -91,7 +91,7 @@ public class Child extends EObjectImpl implements EObject
 	 * 
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
-	 * @see org.eclipselabs.emf.mongo.examples.model.ModelPackage#getChild_Name()
+	 * @see org.eclipselabs.emf.mongodb.examples.model.ModelPackage#getChild_Name()
 	 * @model
 	 * @generated
 	 */
@@ -101,7 +101,7 @@ public class Child extends EObjectImpl implements EObject
 	}
 
 	/**
-	 * Sets the value of the '{@link org.eclipselabs.emf.mongo.examples.model.Child#getName
+	 * Sets the value of the '{@link org.eclipselabs.emf.mongodb.examples.model.Child#getName
 	 * <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

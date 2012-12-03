@@ -9,15 +9,15 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.emf.mongo.examples.model.util;
+package org.eclipselabs.emf.mongodb.examples.model.util;
 
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipselabs.emf.mongo.examples.model.Child;
-import org.eclipselabs.emf.mongo.examples.model.ModelPackage;
-import org.eclipselabs.emf.mongo.examples.model.Parent;
+import org.eclipselabs.emf.mongodb.examples.model.Child;
+import org.eclipselabs.emf.mongodb.examples.model.ModelPackage;
+import org.eclipselabs.emf.mongodb.examples.model.Parent;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,7 +30,7 @@ import org.eclipselabs.emf.mongo.examples.model.Parent;
  * which is the result of the switch.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipselabs.emf.mongo.examples.model.ModelPackage
+ * @see org.eclipselabs.emf.mongodb.examples.model.ModelPackage
  * @generated
  */
 public class ModelSwitch<T>

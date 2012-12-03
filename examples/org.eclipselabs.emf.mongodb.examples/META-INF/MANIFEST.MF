@@ -1,14 +1,14 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
-Bundle-SymbolicName: org.eclipselabs.mongo.emf.examples;singleton:=true
+Bundle-SymbolicName: org.eclipselabs.emf.mongodb.examples;singleton:=true
 Bundle-Version: 0.7.1.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.eclipselabs.emf.mongo.examples.model,
- org.eclipselabs.emf.mongo.examples.model.util
+Export-Package: org.eclipselabs.emf.mongodb.examples.model,
+ org.eclipselabs.emf.mongodb.examples.model.util
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.emf.common.notify,
  org.eclipse.emf.common.notify.impl,

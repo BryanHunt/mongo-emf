@@ -9,7 +9,7 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.emf.mongo.examples.model;
+package org.eclipselabs.emf.mongodb.examples.model;
 
 import java.util.Collection;
 
@@ -29,12 +29,12 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  * <p>
  * The following features are supported:
  * <ul>
- * <li>{@link org.eclipselabs.emf.mongo.examples.model.Parent#getName <em>Name</em>}</li>
- * <li>{@link org.eclipselabs.emf.mongo.examples.model.Parent#getChildren <em>Children</em>}</li>
+ * <li>{@link org.eclipselabs.emf.mongodb.examples.model.Parent#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipselabs.emf.mongodb.examples.model.Parent#getChildren <em>Children</em>}</li>
  * </ul>
  * </p>
  * 
- * @see org.eclipselabs.emf.mongo.examples.model.ModelPackage#getParent()
+ * @see org.eclipselabs.emf.mongodb.examples.model.ModelPackage#getParent()
  * @model kind="class"
  * @generated
  */
@@ -107,7 +107,7 @@ public class Parent extends EObjectImpl implements EObject
 	 * 
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
-	 * @see org.eclipselabs.emf.mongo.examples.model.ModelPackage#getParent_Name()
+	 * @see org.eclipselabs.emf.mongodb.examples.model.ModelPackage#getParent_Name()
 	 * @model
 	 * @generated
 	 */
@@ -117,7 +117,7 @@ public class Parent extends EObjectImpl implements EObject
 	}
 
 	/**
-	 * Sets the value of the '{@link org.eclipselabs.emf.mongo.examples.model.Parent#getName
+	 * Sets the value of the '{@link org.eclipselabs.emf.mongodb.examples.model.Parent#getName
 	 * <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -136,7 +136,7 @@ public class Parent extends EObjectImpl implements EObject
 
 	/**
 	 * Returns the value of the '<em><b>Children</b></em>' reference list.
-	 * The list contents are of type {@link org.eclipselabs.emf.mongo.examples.model.Child}.
+	 * The list contents are of type {@link org.eclipselabs.emf.mongodb.examples.model.Child}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Children</em>' reference list isn't clear, there really should be
@@ -145,7 +145,7 @@ public class Parent extends EObjectImpl implements EObject
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the value of the '<em>Children</em>' reference list.
-	 * @see org.eclipselabs.emf.mongo.examples.model.ModelPackage#getParent_Children()
+	 * @see org.eclipselabs.emf.mongodb.examples.model.ModelPackage#getParent_Children()
 	 * @model
 	 * @generated
 	 */

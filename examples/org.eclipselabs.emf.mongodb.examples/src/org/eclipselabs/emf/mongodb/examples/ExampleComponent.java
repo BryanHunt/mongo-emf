@@ -9,7 +9,7 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.emf.mongo.examples;
+package org.eclipselabs.emf.mongodb.examples;
 
 import java.io.IOException;
 
@@ -17,9 +17,9 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipselabs.emf.ext.ResourceSetFactory;
-import org.eclipselabs.emf.mongo.examples.model.Child;
-import org.eclipselabs.emf.mongo.examples.model.ModelFactory;
-import org.eclipselabs.emf.mongo.examples.model.Parent;
+import org.eclipselabs.emf.mongodb.examples.model.Child;
+import org.eclipselabs.emf.mongodb.examples.model.ModelFactory;
+import org.eclipselabs.emf.mongodb.examples.model.Parent;
 
 /**
  * @author bhunt

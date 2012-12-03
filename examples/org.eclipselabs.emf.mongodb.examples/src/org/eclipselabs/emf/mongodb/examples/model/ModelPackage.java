@@ -9,7 +9,7 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.emf.mongo.examples.model;
+package org.eclipselabs.emf.mongodb.examples.model;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  * </ul>
  * <!-- end-user-doc -->
  * 
- * @see org.eclipselabs.emf.mongo.examples.model.ModelFactory
+ * @see org.eclipselabs.emf.mongodb.examples.model.ModelFactory
  * @model kind="package"
  * @generated
  */
@@ -69,16 +69,16 @@ public class ModelPackage extends EPackageImpl
 	 * 
 	 * @generated
 	 */
-	public static final ModelPackage eINSTANCE = org.eclipselabs.emf.mongo.examples.model.ModelPackage.init();
+	public static final ModelPackage eINSTANCE = org.eclipselabs.emf.mongodb.examples.model.ModelPackage.init();
 
 	/**
-	 * The meta object id for the '{@link org.eclipselabs.emf.mongo.examples.model.Parent
+	 * The meta object id for the '{@link org.eclipselabs.emf.mongodb.examples.model.Parent
 	 * <em>Parent</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @see org.eclipselabs.emf.mongo.examples.model.Parent
-	 * @see org.eclipselabs.emf.mongo.examples.model.ModelPackage#getParent()
+	 * @see org.eclipselabs.emf.mongodb.examples.model.Parent
+	 * @see org.eclipselabs.emf.mongodb.examples.model.ModelPackage#getParent()
 	 * @generated
 	 */
 	public static final int PARENT = 0;
@@ -114,13 +114,13 @@ public class ModelPackage extends EPackageImpl
 	public static final int PARENT_FEATURE_COUNT = 2;
 
 	/**
-	 * The meta object id for the '{@link org.eclipselabs.emf.mongo.examples.model.Child
+	 * The meta object id for the '{@link org.eclipselabs.emf.mongodb.examples.model.Child
 	 * <em>Child</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
-	 * @see org.eclipselabs.emf.mongo.examples.model.Child
-	 * @see org.eclipselabs.emf.mongo.examples.model.ModelPackage#getChild()
+	 * @see org.eclipselabs.emf.mongodb.examples.model.Child
+	 * @see org.eclipselabs.emf.mongodb.examples.model.ModelPackage#getChild()
 	 * @generated
 	 */
 	public static final int CHILD = 1;
@@ -171,7 +171,7 @@ public class ModelPackage extends EPackageImpl
 	 * if one already exists. <!-- begin-user-doc --> <!-- end-user-doc -->
 	 * 
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see org.eclipselabs.emf.mongo.examples.model.ModelPackage#eNS_URI
+	 * @see org.eclipselabs.emf.mongodb.examples.model.ModelPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
@@ -227,13 +227,13 @@ public class ModelPackage extends EPackageImpl
 	}
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipselabs.emf.mongo.examples.model.Parent
+	 * Returns the meta object for class '{@link org.eclipselabs.emf.mongodb.examples.model.Parent
 	 * <em>Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for class '<em>Parent</em>'.
-	 * @see org.eclipselabs.emf.mongo.examples.model.Parent
+	 * @see org.eclipselabs.emf.mongodb.examples.model.Parent
 	 * @generated
 	 */
 	public EClass getParent()
@@ -243,12 +243,12 @@ public class ModelPackage extends EPackageImpl
 
 	/**
 	 * Returns the meta object for the attribute '
-	 * {@link org.eclipselabs.emf.mongo.examples.model.Parent#getName <em>Name</em>}'.
+	 * {@link org.eclipselabs.emf.mongodb.examples.model.Parent#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.eclipselabs.emf.mongo.examples.model.Parent#getName()
+	 * @see org.eclipselabs.emf.mongodb.examples.model.Parent#getName()
 	 * @see #getParent()
 	 * @generated
 	 */
@@ -259,12 +259,12 @@ public class ModelPackage extends EPackageImpl
 
 	/**
 	 * Returns the meta object for the reference list '
-	 * {@link org.eclipselabs.emf.mongo.examples.model.Parent#getChildren <em>Children</em>}'.
+	 * {@link org.eclipselabs.emf.mongodb.examples.model.Parent#getChildren <em>Children</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for the reference list '<em>Children</em>'.
-	 * @see org.eclipselabs.emf.mongo.examples.model.Parent#getChildren()
+	 * @see org.eclipselabs.emf.mongodb.examples.model.Parent#getChildren()
 	 * @see #getParent()
 	 * @generated
 	 */
@@ -274,13 +274,13 @@ public class ModelPackage extends EPackageImpl
 	}
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipselabs.emf.mongo.examples.model.Child
+	 * Returns the meta object for class '{@link org.eclipselabs.emf.mongodb.examples.model.Child
 	 * <em>Child</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for class '<em>Child</em>'.
-	 * @see org.eclipselabs.emf.mongo.examples.model.Child
+	 * @see org.eclipselabs.emf.mongodb.examples.model.Child
 	 * @generated
 	 */
 	public EClass getChild()
@@ -290,12 +290,12 @@ public class ModelPackage extends EPackageImpl
 
 	/**
 	 * Returns the meta object for the attribute '
-	 * {@link org.eclipselabs.emf.mongo.examples.model.Child#getName <em>Name</em>}'.
+	 * {@link org.eclipselabs.emf.mongodb.examples.model.Child#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.eclipselabs.emf.mongo.examples.model.Child#getName()
+	 * @see org.eclipselabs.emf.mongodb.examples.model.Child#getName()
 	 * @see #getChild()
 	 * @generated
 	 */
@@ -411,13 +411,13 @@ public class ModelPackage extends EPackageImpl
 	public interface Literals
 	{
 		/**
-		 * The meta object literal for the '{@link org.eclipselabs.emf.mongo.examples.model.Parent
+		 * The meta object literal for the '{@link org.eclipselabs.emf.mongodb.examples.model.Parent
 		 * <em>Parent</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
-		 * @see org.eclipselabs.emf.mongo.examples.model.Parent
-		 * @see org.eclipselabs.emf.mongo.examples.model.ModelPackage#getParent()
+		 * @see org.eclipselabs.emf.mongodb.examples.model.Parent
+		 * @see org.eclipselabs.emf.mongodb.examples.model.ModelPackage#getParent()
 		 * @generated
 		 */
 		public static final EClass PARENT = eINSTANCE.getParent();
@@ -441,13 +441,13 @@ public class ModelPackage extends EPackageImpl
 		public static final EReference PARENT__CHILDREN = eINSTANCE.getParent_Children();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipselabs.emf.mongo.examples.model.Child
+		 * The meta object literal for the '{@link org.eclipselabs.emf.mongodb.examples.model.Child
 		 * <em>Child</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * 
-		 * @see org.eclipselabs.emf.mongo.examples.model.Child
-		 * @see org.eclipselabs.emf.mongo.examples.model.ModelPackage#getChild()
+		 * @see org.eclipselabs.emf.mongodb.examples.model.Child
+		 * @see org.eclipselabs.emf.mongodb.examples.model.ModelPackage#getChild()
 		 * @generated
 		 */
 		public static final EClass CHILD = eINSTANCE.getChild();

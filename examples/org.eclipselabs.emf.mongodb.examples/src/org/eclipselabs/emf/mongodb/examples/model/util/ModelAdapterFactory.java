@@ -9,15 +9,15 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.emf.mongo.examples.model.util;
+package org.eclipselabs.emf.mongodb.examples.model.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipselabs.emf.mongo.examples.model.Child;
-import org.eclipselabs.emf.mongo.examples.model.ModelPackage;
-import org.eclipselabs.emf.mongo.examples.model.Parent;
+import org.eclipselabs.emf.mongodb.examples.model.Child;
+import org.eclipselabs.emf.mongodb.examples.model.ModelPackage;
+import org.eclipselabs.emf.mongodb.examples.model.Parent;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,7 +25,7 @@ import org.eclipselabs.emf.mongo.examples.model.Parent;
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipselabs.emf.mongo.examples.model.ModelPackage
+ * @see org.eclipselabs.emf.mongodb.examples.model.ModelPackage
  * @generated
  */
 public class ModelAdapterFactory extends AdapterFactoryImpl
@@ -123,14 +123,14 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 
 	/**
 	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipselabs.emf.mongo.examples.model.Parent <em>Parent</em>}'.
+	 * {@link org.eclipselabs.emf.mongodb.examples.model.Parent <em>Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipselabs.emf.mongo.examples.model.Parent
+	 * @see org.eclipselabs.emf.mongodb.examples.model.Parent
 	 * @generated
 	 */
 	public Adapter createParentAdapter()
@@ -140,14 +140,14 @@ public class ModelAdapterFactory extends AdapterFactoryImpl
 
 	/**
 	 * Creates a new adapter for an object of class '
-	 * {@link org.eclipselabs.emf.mongo.examples.model.Child <em>Child</em>}'.
+	 * {@link org.eclipselabs.emf.mongodb.examples.model.Child <em>Child</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * 
 	 * @return the new adapter.
-	 * @see org.eclipselabs.emf.mongo.examples.model.Child
+	 * @see org.eclipselabs.emf.mongodb.examples.model.Child
 	 * @generated
 	 */
 	public Adapter createChildAdapter()

@@ -9,7 +9,7 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.emf.mongo.examples.model;
+package org.eclipselabs.emf.mongodb.examples.model;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
  * 
- * @see org.eclipselabs.emf.mongo.examples.model.ModelPackage
+ * @see org.eclipselabs.emf.mongodb.examples.model.ModelPackage
  * @generated
  */
 public class ModelFactory extends EFactoryImpl
