@@ -15,10 +15,10 @@
 <repository location="http://www.jnario.org/updates/snapshot/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.hamcrest.feature.feature.group" version="1.3.0.201212021914"/>
-<unit id="org.junit.feature.feature.group" version="4.11.0.201212021914"/>
-<unit id="org.mockito.feature.feature.group" version="1.9.5.201212021914"/>
-<unit id="org.mongodb.feature.feature.group" version="2.9.3.201212021914"/>
+<unit id="org.hamcrest.feature.feature.group" version="1.3.0.201212101902"/>
+<unit id="org.junit.feature.feature.group" version="4.11.0.201212101902"/>
+<unit id="org.mockito.feature.feature.group" version="1.9.5.201212101902"/>
+<unit id="org.mongodb.feature.feature.group" version="2.9.3.201212101902"/>
 <repository location="http://bryanhunt.github.com/3rd-party-libs"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
@@ -32,7 +32,7 @@
 <repository location="http://bryanhunt.github.com/eUnit/releases/1.0.0"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipselabs.emf.ext.sdk.feature.feature.group" version="1.0.0.201212031050"/>
+<unit id="org.eclipselabs.emf.ext.sdk.feature.feature.group" version="1.0.0.201212101958"/>
 <repository location="http://bryanhunt.github.com/emf-ext/releases/1.0.0"/>
 </location>
 </locations>

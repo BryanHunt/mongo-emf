@@ -18,19 +18,13 @@
    </license>
 
    <requires>
+      <import plugin="org.mongodb.mongo-java-driver"/>
       <import plugin="org.eclipse.emf.common"/>
       <import plugin="org.eclipse.emf.ecore"/>
-      <import plugin="org.mongodb.mongo-java-driver"/>
-      <import plugin="org.eclipse.osgi"/>
       <import plugin="org.eclipselabs.emf.mongodb.core"/>
+      <import plugin="org.eclipse.osgi"/>
+      <import plugin="org.eclipselabs.emf.query.simple"/>
    </requires>
-
-   <plugin
-         id="org.eclipselabs.emf.query.simple"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
 
    <plugin
          id="org.eclipselabs.emf.mongodb.query.simple"
