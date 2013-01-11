@@ -13,3 +13,4 @@ Import-Package: com.mongodb;version="2.9.3.RELEASE",
  org.eclipselabs.emf.mongodb,
  org.eclipselabs.emongo
 Service-Component: OSGI-INF/handler.xml
+Bundle-ActivationPolicy: lazy
