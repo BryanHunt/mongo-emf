@@ -106,10 +106,10 @@ public class MongoOutputStream extends ByteArrayOutputStream implements URIConve
 
 		builder = builderFactory.createBuilder(converterService, uriHandler, serializeDefaultAttributeValues);
 
-		if (resource.getContents().size() == 1)
-			saveSingleObject(id);
-		else
+		if (resource.getContents().size() > 1 || resource.getContents() instanceof ECollection)
 			saveMultipleObjects();
+		else
+			saveSingleObject(id);
 	}
 
 	@Override
@@ -120,7 +120,13 @@ public class MongoOutputStream extends ByteArrayOutputStream implements URIConve
 
 	private void saveMultipleObjects() throws IOException
 	{
-		EList<EObject> contents = resource.getContents();
+		EList<EObject> contents = null;
+
+		if (resource.getContents() instanceof ECollection)
+			contents = ((ECollection) resource.getContents()).getValues();
+		else
+			contents = resource.getContents();
+
 		ArrayList<DBObject> dbObjects = new ArrayList<DBObject>(contents.size());
 		long timeStamp = System.currentTimeMillis();
 		response.put(URIConverter.RESPONSE_TIME_STAMP_PROPERTY, timeStamp);
