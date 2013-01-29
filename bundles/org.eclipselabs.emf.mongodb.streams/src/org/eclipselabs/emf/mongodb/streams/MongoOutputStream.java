@@ -170,8 +170,8 @@ public class MongoOutputStream extends ByteArrayOutputStream implements URIConve
 			values.addUnique(internalEObject);
 		}
 
-		contents.clear();
-		contents.add(eCollection);
+		resource.getContents().clear();
+		resource.getContents().add(eCollection);
 	}
 
 	private void saveSingleObject(Object id) throws IOException
