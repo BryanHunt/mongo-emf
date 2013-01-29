@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Bryan Hunt.
+ * Copyright (c) 2011 Bryan Hunt.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -20,10 +20,12 @@ import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
- * @author bhunt
+ * This class was introduced because the replica test needs to set up a replica set
+ * instead of a single database.
  * 
+ * @author bhunt
  */
-public class ReplicaSetConfigurator extends BaseConfigurator
+public class MongoConfigurator extends BaseConfigurator
 {
 	@Override
 	protected void configureMongoProvider(ConfigurationAdmin configurationAdmin) throws IOException
@@ -31,10 +33,9 @@ public class ReplicaSetConfigurator extends BaseConfigurator
 		Configuration config = configurationAdmin.createFactoryConfiguration("org.eclipselabs.emongo.clientProvider", null);
 
 		Dictionary<String, Object> properties = new Hashtable<String, Object>();
-		properties.put(MongoClientProvider.PROP_URI, "mongodb://localhost:27022, mongodb://localhost:27023, mongodb://localhost:27024");
-		properties.put("type", "replicaSet");
 
-		// TODO resolve testing a replica set
-// config.update(properties);
+		properties.put(MongoClientProvider.PROP_URI, "mongodb://localhost");
+		properties.put("type", "mongo");
+		config.update(properties);
 	}
 }

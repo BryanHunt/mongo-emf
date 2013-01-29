@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipselabs.emf.ext.ECollection;
+import org.eclipselabs.emf.ext.EReferenceCollection;
 import org.eclipselabs.emf.ext.ExtFactory;
 import org.eclipselabs.emf.mongodb.ConverterService;
 import org.eclipselabs.emf.mongodb.EObjectBuilder;
@@ -137,7 +137,7 @@ public class MongoInputStream extends InputStream implements URIConverter.Loadab
 			}
 			else
 			{
-				ECollection eCollection = ExtFactory.eINSTANCE.createECollection();
+				EReferenceCollection eCollection = ExtFactory.eINSTANCE.createEReferenceCollection();
 				InternalEList<EObject> values = (InternalEList<EObject>) eCollection.getValues();
 
 				for (DBObject dbObject : resultCursor)

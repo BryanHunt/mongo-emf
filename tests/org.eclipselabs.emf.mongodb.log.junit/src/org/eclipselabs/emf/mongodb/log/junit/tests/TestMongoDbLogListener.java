@@ -22,9 +22,9 @@ import java.util.Collection;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipselabs.emf.ext.ResourceSetFactory;
-import org.eclipselabs.emf.ext.junit.util.EChecker;
 import org.eclipselabs.emf.log.LogEntry;
 import org.eclipselabs.emf.log.LogLevel;
+import org.eclipselabs.emf.mongodb.log.junit.support.EChecker;
 import org.eclipselabs.emf.mongodb.log.junit.support.ILogServiceConfigurator;
 import org.eclipselabs.emongo.junit.util.MongoDatabase;
 import org.eclipselabs.eunit.junit.utils.ServiceTestHarness;
