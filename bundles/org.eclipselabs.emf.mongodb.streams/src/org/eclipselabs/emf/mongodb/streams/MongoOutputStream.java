@@ -123,8 +123,8 @@ public class MongoOutputStream extends ByteArrayOutputStream implements URIConve
 	{
 		EList<EObject> contents = null;
 
-		if (resource.getContents() instanceof ECollection)
-			contents = ((ECollection) resource.getContents()).getValues();
+		if (resource.getContents().get(0) instanceof ECollection)
+			contents = ((ECollection) resource.getContents().get(0)).getValues();
 		else
 			contents = resource.getContents();
 
