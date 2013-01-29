@@ -107,7 +107,7 @@ public class MongoOutputStream extends ByteArrayOutputStream implements URIConve
 
 		builder = builderFactory.createBuilder(converterService, uriHandler, serializeDefaultAttributeValues);
 
-		if (resource.getContents().size() > 1 || resource.getContents() instanceof ECollection)
+		if (resource.getContents().size() > 1 || resource.getContents().get(0) instanceof ECollection)
 			saveMultipleObjects();
 		else
 			saveSingleObject(id);
