@@ -42,7 +42,6 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
-import org.eclipselabs.emf.ext.ECollection;
 import org.eclipselabs.emf.mongodb.MongoUtils;
 import org.eclipselabs.emf.mongodb.Options;
 import org.eclipselabs.emf.mongodb.junit.model.ETypes;
@@ -52,6 +51,7 @@ import org.eclipselabs.emf.mongodb.junit.model.PrimaryObject;
 import org.eclipselabs.emf.mongodb.junit.model.TargetObject;
 import org.eclipselabs.emf.mongodb.junit.support.EChecker;
 import org.eclipselabs.emf.mongodb.junit.support.TestHarness;
+import org.eclipselabs.emodeling.ECollection;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -590,7 +590,8 @@ public class TestMongoEmfBasics extends TestHarness
 	{
 		// Simply for coverage
 		// FIXME put this back in
-//		new MongoURIHandlerImpl().createInputStream(URI.createURI("mongodb://localhost/junit/junit/id"), Collections.emptyMap()).read();
+// new MongoURIHandlerImpl().createInputStream(URI.createURI("mongodb://localhost/junit/junit/id"),
+// Collections.emptyMap()).read();
 	}
 
 	protected void activate()

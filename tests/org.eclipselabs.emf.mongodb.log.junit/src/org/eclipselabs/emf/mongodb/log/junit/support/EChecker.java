@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipselabs.emf.ext.ECollection;
+import org.eclipselabs.emodeling.ECollection;
 
 /**
  * This class provides a set of utility functions that may be useful when unit testing.

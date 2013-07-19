@@ -22,7 +22,7 @@ import org.eclipselabs.emf.mongodb.InputStreamFactory;
 import org.eclipselabs.emf.mongodb.Keywords;
 import org.eclipselabs.emf.mongodb.MongoUtils;
 import org.eclipselabs.emf.mongodb.OutputStreamFactory;
-import org.eclipselabs.emongo.DatabaseLocator;
+import org.eclipselabs.emongo.MongoDatabaseProvider;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -56,10 +56,10 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 	 * @param inputStreamFactory an instance of the input stream factory service
 	 * @param outputStreamFactory an instance of the output stream factory service
 	 */
-	public MongoURIHandlerImpl(DatabaseLocator databaseLocator, InputStreamFactory inputStreamFactory, OutputStreamFactory outputStreamFactory)
+	public MongoURIHandlerImpl(Map<String, MongoDatabaseProvider> mongoDatabaseProviders, InputStreamFactory inputStreamFactory, OutputStreamFactory outputStreamFactory)
 	{
 
-		this.databaseLocator = databaseLocator;
+		this.mongoDatabaseProviders = mongoDatabaseProviders;
 		this.inputStreamFactory = inputStreamFactory;
 		this.outputStreamFactory = outputStreamFactory;
 	}
@@ -114,7 +114,8 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 	}
 
 	/**
-	 * This function locates the MongoDB collection instance corresponding to the collection identifier extracted from the URI. The URI path must have exactly 3 segments and be of the form
+	 * This function locates the MongoDB collection instance corresponding to the collection
+	 * identifier extracted from the URI. The URI path must have exactly 3 segments and be of the form
 	 * mongodb://host:[port]/database/collection/{id} where id is optional.
 	 * 
 	 * @param uri the MongoDB collection identifier
@@ -130,7 +131,7 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 		if (uri.segmentCount() != 3)
 			throw new IOException("The URI is not of the form 'mongodb:/database/collection/{id}");
 
-		DB database = databaseLocator.getDatabase(uri.toString());
+		DB database = mongoDatabaseProviders.get(uri.trimSegments(2).toString()).getDB();
 
 		if (database == null)
 			throw new IOException("Database is not available");
@@ -138,16 +139,16 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 		DBCollection dbCollection = database.getCollection(uri.segment(1));
 
 // FIXME uncomment the 4 lines below when MongoDB properly supports tagged reads
-//		@SuppressWarnings("unchecked")
-//		Map<String, String> tags = (Map<String, String>) options.get(OPTION_TAGGED_READ_PREFERENCE);
+// @SuppressWarnings("unchecked")
+// Map<String, String> tags = (Map<String, String>) options.get(OPTION_TAGGED_READ_PREFERENCE);
 
-//		if (tags != null)
-//			dbCollection.setReadPreference(new ReadPreference.TaggedReadPreference(tags));
+// if (tags != null)
+// dbCollection.setReadPreference(new ReadPreference.TaggedReadPreference(tags));
 
 		return dbCollection;
 	}
 
-	private DatabaseLocator databaseLocator;
+	private Map<String, MongoDatabaseProvider> mongoDatabaseProviders;
 	private InputStreamFactory inputStreamFactory;
 	private OutputStreamFactory outputStreamFactory;
 }

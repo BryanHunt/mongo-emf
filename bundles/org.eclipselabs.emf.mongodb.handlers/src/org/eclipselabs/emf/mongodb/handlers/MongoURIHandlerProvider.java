@@ -11,11 +11,14 @@
 
 package org.eclipselabs.emf.mongodb.handlers;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.eclipse.emf.ecore.resource.URIHandler;
-import org.eclipselabs.emf.ext.UriHandlerProvider;
 import org.eclipselabs.emf.mongodb.InputStreamFactory;
 import org.eclipselabs.emf.mongodb.OutputStreamFactory;
-import org.eclipselabs.emongo.DatabaseLocator;
+import org.eclipselabs.emodeling.UriHandlerProvider;
+import org.eclipselabs.emongo.MongoDatabaseProvider;
 
 /**
  * @author bhunt
@@ -27,14 +30,19 @@ public class MongoURIHandlerProvider implements UriHandlerProvider
 	public synchronized URIHandler getURIHandler()
 	{
 		if (uriHandler == null)
-			uriHandler = new MongoURIHandlerImpl(databseLocator, inputStreamFactory, outputStreamFactory);
+			uriHandler = new MongoURIHandlerImpl(mongoDatabaseProviders, inputStreamFactory, outputStreamFactory);
 
 		return uriHandler;
 	}
 
-	public void bindDatabaseLocator(DatabaseLocator mongoLocator)
+	public void bindDatabaseLocator(MongoDatabaseProvider mongoDatabaseProvider)
 	{
-		this.databseLocator = mongoLocator;
+		mongoDatabaseProviders.put(mongoDatabaseProvider.getURI(), mongoDatabaseProvider);
+	}
+
+	public void unbindDatabaseLocator(MongoDatabaseProvider mongoDatabaseProvider)
+	{
+		mongoDatabaseProviders.remove(mongoDatabaseProvider.getURI());
 	}
 
 	public void bindInputStreamFactory(InputStreamFactory inputStreamFactory)
@@ -48,7 +56,7 @@ public class MongoURIHandlerProvider implements UriHandlerProvider
 	}
 
 	private MongoURIHandlerImpl uriHandler;
-	private DatabaseLocator databseLocator;
+	private Map<String, MongoDatabaseProvider> mongoDatabaseProviders = new ConcurrentHashMap<String, MongoDatabaseProvider>();
 	private InputStreamFactory inputStreamFactory;
 	private OutputStreamFactory outputStreamFactory;
 }

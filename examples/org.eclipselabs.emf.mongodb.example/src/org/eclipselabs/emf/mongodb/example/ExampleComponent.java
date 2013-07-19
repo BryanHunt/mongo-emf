@@ -16,10 +16,10 @@ import java.io.IOException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipselabs.emf.ext.ResourceSetFactory;
 import org.eclipselabs.emf.mongodb.example.model.Child;
 import org.eclipselabs.emf.mongodb.example.model.ModelFactory;
 import org.eclipselabs.emf.mongodb.example.model.Parent;
+import org.eclipselabs.emodeling.ResourceSetFactory;
 
 /**
  * @author bhunt

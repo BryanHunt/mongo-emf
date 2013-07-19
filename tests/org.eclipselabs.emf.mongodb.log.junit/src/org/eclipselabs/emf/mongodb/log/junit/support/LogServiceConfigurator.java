@@ -14,7 +14,7 @@ package org.eclipselabs.emf.mongodb.log.junit.support;
 import java.io.IOException;
 import java.util.Hashtable;
 
-import org.eclipselabs.emf.log.LogLevel;
+import org.eclipselabs.emodeling.log.LogLevel;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 

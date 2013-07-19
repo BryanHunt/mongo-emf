@@ -21,13 +21,14 @@ import java.io.IOException;
 import java.util.Collection;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipselabs.emf.ext.ResourceSetFactory;
-import org.eclipselabs.emf.log.LogEntry;
-import org.eclipselabs.emf.log.LogLevel;
 import org.eclipselabs.emf.mongodb.log.junit.support.EChecker;
 import org.eclipselabs.emf.mongodb.log.junit.support.ILogServiceConfigurator;
+import org.eclipselabs.emodeling.ResourceSetFactory;
+import org.eclipselabs.emodeling.log.LogEntry;
+import org.eclipselabs.emodeling.log.LogLevel;
 import org.eclipselabs.emongo.junit.util.MongoDatabase;
-import org.eclipselabs.eunit.junit.utils.ServiceTestHarness;
+import org.eclipselabs.eunit.junit.utils.ServiceLocator;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.osgi.service.log.LogService;
@@ -36,10 +37,27 @@ import org.osgi.service.log.LogService;
  * @author bhunt
  * 
  */
-public class TestMongoDbLogListener extends ServiceTestHarness
+public class TestMongoDbLogListener
 {
 	@Rule
 	public static final MongoDatabase DB = new MongoDatabase();
+
+	@Rule
+	public static final ServiceLocator<LogService> logServiceLocator = new ServiceLocator<LogService>(LogService.class);
+
+	@Rule
+	public static final ServiceLocator<ILogServiceConfigurator> logServiceConfiguratorLocator = new ServiceLocator<ILogServiceConfigurator>(ILogServiceConfigurator.class);
+
+	@Rule
+	public static final ServiceLocator<ResourceSetFactory> resourceSetFactoryLocator = new ServiceLocator<ResourceSetFactory>(ResourceSetFactory.class);
+
+	@BeforeClass
+	public void globalSetUp()
+	{
+		osgiLogService = logServiceLocator.getService();
+		resourceSetFactory = resourceSetFactoryLocator.getService();
+		logServiceConfigurator = logServiceConfiguratorLocator.getService();
+	}
 
 	@Test
 	public void testLogDebug() throws InterruptedException, IOException
@@ -104,21 +122,6 @@ public class TestMongoDbLogListener extends ServiceTestHarness
 		Thread.sleep(100);
 		LogEntry logEntry = EChecker.getObject(createResourceSet(), "junit", DB_LOGS);
 		assertThat(logEntry, is(nullValue()));
-	}
-
-	void bindLogService(LogService logService)
-	{
-		osgiLogService = logService;
-	}
-
-	void bindLogServiceConfigurator(ILogServiceConfigurator service)
-	{
-		logServiceConfigurator = service;
-	}
-
-	void bindResourceSetFactory(ResourceSetFactory factory)
-	{
-		resourceSetFactory = factory;
 	}
 
 	private ResourceSet createResourceSet()

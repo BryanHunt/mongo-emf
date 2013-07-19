@@ -1,39 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?>
-
-<target name="Mongo" sequenceNumber="125">
+<?pde version="3.8"?><target name="Mongo" sequenceNumber="128">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.pde.feature.group" version="3.8.1.v20120814-104528-7c7vFixFFt6Zr5aC6KM6LGWSd"/>
-<unit id="org.eclipse.emf.sdk.feature.group" version="2.8.1.v20120917-0436"/>
-<unit id="org.eclipse.equinox.sdk.feature.group" version="3.8.0.v20120522-1841-7M7fA78g5_y-g-jtHxcd5k8q8lFR"/>
-<unit id="org.eclipse.xtext.runtime.feature.group" version="2.3.1.v201208210947"/>
-<repository location="http://download.eclipse.org/releases/juno"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.jnario.feature.group" version="0.3.0.201212290159"/>
-<repository location="http://www.jnario.org/updates/snapshot/"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.hamcrest.feature.feature.group" version="1.3.0.201212101902"/>
-<unit id="org.junit.feature.feature.group" version="4.11.0.201212101902"/>
-<unit id="org.mockito.feature.feature.group" version="1.9.5.201212101902"/>
-<unit id="org.mongodb.feature.feature.group" version="2.9.3.201212101902"/>
+<unit id="org.hamcrest.feature.feature.group" version="1.3.0.201306111021"/>
+<unit id="org.junit.feature.feature.group" version="4.11.0.201306111021"/>
+<unit id="org.mockito.feature.feature.group" version="1.9.5.201306111021"/>
+<unit id="org.mongodb.feature.feature.group" version="2.9.3.201306111021"/>
 <repository location="http://bryanhunt.github.com/3rd-party-libs"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipselabs.emongo.junit.feature.feature.group" version="1.0.0.201301110816"/>
-<unit id="org.eclipselabs.emongo.runtime.feature.feature.group" version="1.0.0.201301110816"/>
-<unit id="org.eclipselabs.emongo.sdk.feature.feature.group" version="1.0.0.201301110816"/>
-<repository location="http://bryanhunt.github.com/eMongo/releases/1.0.0"/>
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipselabs.eunit.junit.utils.feature.feature.group" version="1.0.0.201301101649"/>
+<unit id="org.eclipselabs.eunit.junit.utils.feature.feature.group" version="1.0.0.201307191143"/>
 <repository location="http://bryanhunt.github.com/eUnit/releases/1.0.0"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipselabs.emf.ext.sdk.feature.feature.group" version="1.0.0.201301281620"/>
-<repository location="http://bryanhunt.github.com/emf-ext/releases/1.0.0"/>
+<unit id="org.eclipselabs.emongo.junit.feature.feature.group" version="1.0.0.201307191533"/>
+<unit id="org.eclipselabs.emongo.runtime.feature.feature.group" version="1.0.0.201307191533"/>
+<unit id="org.eclipselabs.emongo.sdk.feature.feature.group" version="1.0.0.201307191533"/>
+<repository location="http://bryanhunt.github.com/eMongo/releases/1.0.0"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipselabs.emodeling.sdk.feature.feature.group" version="1.0.0.201307191250"/>
+<repository location="http://bryanhunt.github.com/eModeling/releases/1.0.0"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.emf.ecore.xcore.sdk.feature.group" version="1.1.0.v20130612-0809"/>
+<repository location="http://download.eclipse.org/releases/kepler"/>
 </location>
 </locations>
 </target>

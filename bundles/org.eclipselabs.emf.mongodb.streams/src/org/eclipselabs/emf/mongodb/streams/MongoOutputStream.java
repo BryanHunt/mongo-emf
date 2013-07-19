@@ -25,15 +25,15 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.xmi.XMLResource;
-import org.eclipselabs.emf.ext.ECollection;
-import org.eclipselabs.emf.ext.EReferenceCollection;
-import org.eclipselabs.emf.ext.ExtFactory;
 import org.eclipselabs.emf.mongodb.ConverterService;
 import org.eclipselabs.emf.mongodb.DBObjectBuilder;
 import org.eclipselabs.emf.mongodb.DBObjectBuilderFactory;
 import org.eclipselabs.emf.mongodb.Keywords;
 import org.eclipselabs.emf.mongodb.MongoUtils;
 import org.eclipselabs.emf.mongodb.Options;
+import org.eclipselabs.emodeling.ECollection;
+import org.eclipselabs.emodeling.EReferenceCollection;
+import org.eclipselabs.emodeling.EmodelingFactory;
 import org.eclipselabs.emongo.MongoIdFactory;
 
 import com.mongodb.DBCollection;
@@ -159,7 +159,7 @@ public class MongoOutputStream extends ByteArrayOutputStream implements URIConve
 
 		URI baseURI = resource.getURI().trimSegments(1);
 		InternalEObject[] eObjects = contents.toArray(new InternalEObject[contents.size()]);
-		EReferenceCollection eCollection = ExtFactory.eINSTANCE.createEReferenceCollection();
+		EReferenceCollection eCollection = EmodelingFactory.eINSTANCE.createEReferenceCollection();
 		InternalEList<EObject> values = (InternalEList<EObject>) eCollection.getValues();
 
 		for (int i = 0; i < dbObjects.size(); i++)

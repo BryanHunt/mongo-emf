@@ -21,11 +21,11 @@ import java.util.Map;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipselabs.emf.ext.ResourceSetFactory;
-import org.eclipselabs.emf.log.LogEntry;
-import org.eclipselabs.emf.log.LogFactory;
-import org.eclipselabs.emf.log.LogLevel;
 import org.eclipselabs.emf.mongodb.Options;
+import org.eclipselabs.emodeling.ResourceSetFactory;
+import org.eclipselabs.emodeling.log.LogEntry;
+import org.eclipselabs.emodeling.log.LogFactory;
+import org.eclipselabs.emodeling.log.LogLevel;
 import org.osgi.service.log.LogListener;
 import org.osgi.service.log.LogReaderService;
 

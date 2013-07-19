@@ -13,15 +13,13 @@ package org.eclipselabs.emf.mongodb.log.junit.support;
 
 import java.io.IOException;
 
-import org.eclipselabs.emf.log.LogLevel;
+import org.eclipselabs.emodeling.log.LogLevel;
 
 /**
  * @author bhunt
- *
+ * 
  */
 public interface ILogServiceConfigurator
 {
-
 	public void setLogLevel(LogLevel logLevel) throws IOException;
-
 }
