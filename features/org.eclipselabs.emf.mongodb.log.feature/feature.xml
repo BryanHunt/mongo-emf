@@ -20,10 +20,10 @@
    <requires>
       <import plugin="org.eclipse.emf.common"/>
       <import plugin="org.eclipse.emf.ecore"/>
-      <import plugin="org.eclipse.osgi"/>
-      <import plugin="org.eclipselabs.emf.ext.core"/>
-      <import plugin="org.eclipselabs.emf.log.core"/>
       <import plugin="org.eclipselabs.emf.mongodb.core"/>
+      <import plugin="org.eclipse.osgi"/>
+      <import plugin="org.eclipselabs.emodeling.api"/>
+      <import plugin="org.eclipselabs.emodeling.log.core"/>
    </requires>
 
    <plugin

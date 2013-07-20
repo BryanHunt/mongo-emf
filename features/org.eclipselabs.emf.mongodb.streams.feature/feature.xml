@@ -22,9 +22,9 @@
       <import plugin="org.eclipse.emf.common"/>
       <import plugin="org.eclipse.emf.ecore"/>
       <import plugin="org.eclipse.emf.ecore.xmi"/>
-      <import plugin="org.eclipselabs.emf.ext.core"/>
       <import plugin="org.eclipselabs.emf.mongodb.core"/>
-      <import plugin="org.eclipselabs.emongo.core"/>
+      <import plugin="org.eclipselabs.emodeling.api"/>
+      <import plugin="org.eclipselabs.emongo.api"/>
    </requires>
 
    <plugin
