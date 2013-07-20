@@ -41,7 +41,6 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import com.mongodb.util.JSON;
 
 /**
  * @author bhunt
@@ -91,27 +90,10 @@ public class MongoInputStream extends InputStream implements URIConverter.Loadab
 
 		if (uri.query() != null)
 		{
-			MongoQuery mongoQuery = null;
-			String decodedQuery = URI.decode(uri.query());
+			if (queryEngine == null)
+				throw new IOException("The query engine was not found");
 
-			if (decodedQuery.startsWith("{"))
-			{
-
-				DBObject query = (DBObject) JSON.parse(decodedQuery);
-				mongoQuery = ModelFactory.eINSTANCE.createMongoQuery();
-				mongoQuery.setFilter((DBObject) query.get("filter"));
-				mongoQuery.setProjection((DBObject) query.get("projection"));
-				mongoQuery.setSort((DBObject) query.get("sort"));
-				mongoQuery.setLimit((Integer) query.get("limit"));
-			}
-			else
-			{
-				if (queryEngine == null)
-					throw new IOException("The query engine was not found");
-
-				mongoQuery = queryEngine.buildDBObjectQuery(uri);
-			}
-
+			MongoQuery mongoQuery = queryEngine.buildDBObjectQuery(uri);
 			DBCursor resultCursor = null;
 
 			if (mongoQuery.getProjection() == null)
