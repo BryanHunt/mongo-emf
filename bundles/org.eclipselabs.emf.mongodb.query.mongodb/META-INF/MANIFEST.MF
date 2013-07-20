@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: MongoEMF Native Query Support
+Bundle-SymbolicName: org.eclipselabs.emf.mongodb.query.mongodb
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: EclipseLabs
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Import-Package: com.mongodb;version="2.11.1.RELEASE",
+ com.mongodb.util;version="2.11.1.RELEASE",
+ org.bson;version="2.11.1.RELEASE",
+ org.eclipse.emf.common.util,
+ org.eclipse.emf.ecore.impl,
+ org.eclipselabs.emf.mongodb,
+ org.eclipselabs.emf.mongodb.model
+Service-Component: OSGI-INF/query.xml
