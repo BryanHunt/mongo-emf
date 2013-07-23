@@ -74,10 +74,10 @@ public interface Options
 	 * 
 	 * <code>
 	 * ReadPreference readPreference = ReadPreference.primaryPreferred(new BasicDbObject("datacenter", "Austin"));
-	 * resourceSet.getLoadOptions().put(Options.OPTION_TAGGED_READ_PREFERENCE, readPreference);
+	 * resourceSet.getLoadOptions().put(Options.OPTION_READ_PREFERENCE, readPreference);
 	 * </code>
 	 * 
 	 * Value type: ReadPreference
 	 */
-	String OPTION_TAGGED_READ_PREFERENCE = "TAGGED_READ_PREFERENCE";
+	String OPTION_READ_PREFERENCE = "READ_PREFERENCE";
 }

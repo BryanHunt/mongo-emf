@@ -145,7 +145,7 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 
 		DBCollection dbCollection = database.getCollection(uri.segment(1));
 
-		ReadPreference readPreference = (ReadPreference) options.get(Options.OPTION_TAGGED_READ_PREFERENCE);
+		ReadPreference readPreference = (ReadPreference) options.get(Options.OPTION_READ_PREFERENCE);
 
 		if (readPreference != null)
 			dbCollection.setReadPreference(readPreference);
