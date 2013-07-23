@@ -21,12 +21,14 @@ import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
 import org.eclipselabs.emf.mongodb.InputStreamFactory;
 import org.eclipselabs.emf.mongodb.Keywords;
 import org.eclipselabs.emf.mongodb.MongoUtils;
+import org.eclipselabs.emf.mongodb.Options;
 import org.eclipselabs.emf.mongodb.OutputStreamFactory;
 import org.eclipselabs.emongo.MongoDatabaseProvider;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
+import com.mongodb.ReadPreference;
 
 /**
  * This EMF URI handler interfaces to MongoDB. This URI handler can handle URIs with the "mongodb"
@@ -131,19 +133,22 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 		if (uri.segmentCount() != 3)
 			throw new IOException("The URI is not of the form 'mongodb:/database/collection/{id}");
 
-		DB database = mongoDatabaseProviders.get(uri.trimSegments(2).toString()).getDB();
+		MongoDatabaseProvider mongoDatabaseProvider = mongoDatabaseProviders.get(uri.trimQuery().trimSegments(2).toString());
+
+		if (mongoDatabaseProvider == null)
+			throw new IOException("Database is not available");
+
+		DB database = mongoDatabaseProvider.getDB();
 
 		if (database == null)
 			throw new IOException("Database is not available");
 
 		DBCollection dbCollection = database.getCollection(uri.segment(1));
 
-// FIXME uncomment the 4 lines below when MongoDB properly supports tagged reads
-// @SuppressWarnings("unchecked")
-// Map<String, String> tags = (Map<String, String>) options.get(OPTION_TAGGED_READ_PREFERENCE);
+		ReadPreference readPreference = (ReadPreference) options.get(Options.OPTION_TAGGED_READ_PREFERENCE);
 
-// if (tags != null)
-// dbCollection.setReadPreference(new ReadPreference.TaggedReadPreference(tags));
+		if (readPreference != null)
+			dbCollection.setReadPreference(readPreference);
 
 		return dbCollection;
 	}
