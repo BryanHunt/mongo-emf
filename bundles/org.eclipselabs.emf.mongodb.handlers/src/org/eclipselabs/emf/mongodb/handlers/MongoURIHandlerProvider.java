@@ -35,7 +35,7 @@ public class MongoURIHandlerProvider implements UriHandlerProvider
 		return uriHandler;
 	}
 
-	public void bindDatabaseLocator(MongoDatabaseProvider mongoDatabaseProvider)
+	public void bindMongoDatabaseProvider(MongoDatabaseProvider mongoDatabaseProvider)
 	{
 		mongoDatabaseProviders.put(mongoDatabaseProvider.getURI(), mongoDatabaseProvider);
 	}

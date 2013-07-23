@@ -4,7 +4,7 @@
    <reference bind="bindInputStreamFactory" cardinality="1..1" interface="org.eclipselabs.emf.mongodb.InputStreamFactory" name="InputStreamFactory" policy="static"/>
    <reference bind="bindOutputStreamFactory" cardinality="1..1" interface="org.eclipselabs.emf.mongodb.OutputStreamFactory" name="OutputStreamFactory" policy="static"/>
    <service>
-      <provide interface="org.eclipselabs.emf.ext.UriHandlerProvider"/>
+      <provide interface="org.eclipselabs.emodeling.UriHandlerProvider"/>
    </service>
-   <reference bind="bindDatabaseLocator" cardinality="1..1" interface="org.eclipselabs.emongo.DatabaseLocator" name="DatabaseLocator" policy="static"/>
+   <reference bind="bindMongoDatabaseProvider" cardinality="1..1" interface="org.eclipselabs.emongo.MongoDatabaseProvider" name="MongoDatabaseProvider" policy="static"/>
 </scr:component>

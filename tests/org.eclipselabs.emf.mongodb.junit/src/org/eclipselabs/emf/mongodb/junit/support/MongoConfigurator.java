@@ -37,5 +37,11 @@ public class MongoConfigurator extends BaseConfigurator
 		properties.put(MongoClientProvider.PROP_URI, "mongodb://localhost");
 		properties.put("type", "mongo");
 		config.update(properties);
+
+		config = configurationAdmin.createFactoryConfiguration("org.eclipselabs.emongo.databaseConfigurationProvider", null);
+		properties = new Hashtable<String, Object>();
+		properties.put("uri", "mongodb://localhost/junit");
+		properties.put("alias", "junit");
+		config.update(properties);
 	}
 }
