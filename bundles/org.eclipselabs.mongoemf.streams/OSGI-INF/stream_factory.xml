@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="org.eclipselabs.mongoemf.streams.factory">
+   <implementation class="org.eclipselabs.mongoemf.streams.DefaultStreamFactory"/>
+   <service>
+      <provide interface="org.eclipselabs.mongoemf.InputStreamFactory"/>
+      <provide interface="org.eclipselabs.mongoemf.OutputStreamFactory"/>
+   </service>
+   <reference bind="bindQueryEngine" cardinality="1..1" interface="org.eclipselabs.mongoemf.QueryEngine" name="IQueryEngine" policy="static"/>
+   <reference bind="bindDBObjectBuilderFactory" cardinality="1..1" interface="org.eclipselabs.mongoemf.DBObjectBuilderFactory" name="DBObjectBuilderFactory" policy="static"/>
+   <reference bind="bindEObjectBuilderFactory" cardinality="1..1" interface="org.eclipselabs.mongoemf.EObjectBuilderFactory" name="EObjectBuilderFactory" policy="static"/>
+   <reference bind="bindConverterService" cardinality="1..1" interface="org.eclipselabs.mongoemf.ConverterService" name="ConverterService" policy="static"/>
+   <reference bind="bindMongoIdFactory" cardinality="0..n" interface="org.eclipselabs.emongo.MongoIdFactory" name="MongoIdFactory" policy="dynamic" unbind="unbindMongoIdFactory"/>
+</scr:component>

@@ -1,0 +1,14 @@
+@GenModel(suppressInterfaces="true", containmentProxies="true")
+package org.eclipselabs.mongoemf.example.model
+
+class Parent
+{
+	String name
+	contains Child[] children
+}
+
+class Child
+{
+	String name
+	int age
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="org.eclipselabs.mongoemf.converter">
+   <implementation class="org.eclipselabs.mongoemf.converter.DefaultConverterService"/>
+   <service>
+      <provide interface="org.eclipselabs.mongoemf.ConverterService"/>
+   </service>
+</scr:component>

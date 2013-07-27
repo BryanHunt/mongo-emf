@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclipselabs.mongoemf.runtime.feature"
+      label="MongoEMF Runtime"
+      version="0.8.0.qualifier"
+      provider-name="EclipseLabs">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <includes
+         id="org.eclipselabs.mongoemf.builders.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipselabs.mongoemf.converter.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipselabs.mongoemf.handlers.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipselabs.mongoemf.log.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipselabs.mongoemf.query.simple.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipselabs.mongoemf.streams.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipselabs.mongoemf.core.feature"
+         version="0.0.0"/>
+
+</feature>

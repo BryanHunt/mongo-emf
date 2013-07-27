@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Mongo EMF Default Object Builders
+Bundle-SymbolicName: org.eclipselabs.mongoemf.builders
+Bundle-Version: 0.8.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: com.mongodb;version="2.9.3.RELEASE",
+ org.bson;version="2.9.3.RELEASE",
+ org.bson.types;version="2.9.3.RELEASE",
+ org.eclipse.emf.common.util,
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.ecore.resource,
+ org.eclipse.emf.ecore.util,
+ org.eclipse.emf.ecore.xmi,
+ org.eclipselabs.mongoemf
+Bundle-ActivationPolicy: lazy
+Service-Component: OSGI-INF/builder_factory.xml
