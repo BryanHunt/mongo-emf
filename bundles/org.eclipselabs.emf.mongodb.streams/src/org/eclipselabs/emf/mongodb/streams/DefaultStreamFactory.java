@@ -14,7 +14,6 @@ package org.eclipselabs.emf.mongodb.streams;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
@@ -66,20 +65,17 @@ public class DefaultStreamFactory implements InputStreamFactory, OutputStreamFac
 		this.queryEngine = queryEngine;
 	}
 
-	public synchronized void bindMongoIdFactory(MongoIdFactory mongoIdFactory, @SuppressWarnings("rawtypes") Map properties)
+	public synchronized void bindMongoIdFactory(MongoIdFactory mongoIdFactory)
 	{
-		String uri = (String) properties.get(MongoIdFactory.PROP_URI);
-
-		if (idFactories == null)
-			idFactories = new HashMap<String, MongoIdFactory>();
-
-		idFactories.put(uri, mongoIdFactory);
+		idFactories.put(mongoIdFactory.getCollectionURI(), mongoIdFactory);
 	}
 
-	public void unbindMongoIdFactory(MongoIdFactory mongoIdFactory, @SuppressWarnings("rawtypes") Map properties)
+	public void unbindMongoIdFactory(MongoIdFactory mongoIdFactory)
 	{
-		String uri = (String) properties.get(MongoIdFactory.PROP_URI);
-		idFactories.remove(uri);
+		MongoIdFactory target = idFactories.get(mongoIdFactory.getCollectionURI());
+
+		if (mongoIdFactory == target)
+			idFactories.remove(mongoIdFactory.getCollectionURI());
 	}
 
 	private DBObjectBuilderFactory dbObjectBuilderFactory;

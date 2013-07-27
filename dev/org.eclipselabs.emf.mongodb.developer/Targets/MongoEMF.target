@@ -13,9 +13,9 @@
 <repository location="http://bryanhunt.github.com/eUnit/releases/1.0.0"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipselabs.emongo.junit.feature.feature.group" version="1.0.0.201307262124"/>
-<unit id="org.eclipselabs.emongo.runtime.feature.feature.group" version="1.0.0.201307262124"/>
-<unit id="org.eclipselabs.emongo.sdk.feature.feature.group" version="1.0.0.201307262124"/>
+<unit id="org.eclipselabs.emongo.junit.feature.feature.group" version="1.0.0.201307262144"/>
+<unit id="org.eclipselabs.emongo.runtime.feature.feature.group" version="1.0.0.201307262144"/>
+<unit id="org.eclipselabs.emongo.sdk.feature.feature.group" version="1.0.0.201307262144"/>
 <repository location="http://bryanhunt.github.com/eMongo/releases/1.0.0"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
