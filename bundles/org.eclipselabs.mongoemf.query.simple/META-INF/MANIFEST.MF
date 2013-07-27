@@ -12,8 +12,8 @@ Import-Package: com.mongodb,
  org.eclipse.emf.ecore,
  org.eclipse.emf.ecore.util,
  org.eclipselabs.mongoemf.model,
- org.eclipselabs.emf.query,
- org.eclipselabs.emf.query.util,
+ org.eclipselabs.emodeling.query,
+ org.eclipselabs.emodeling.query.util,
  org.eclipselabs.mongoemf,
  org.osgi.framework;version="1.3.0"
 Service-Component: OSGI-INF/query.xml

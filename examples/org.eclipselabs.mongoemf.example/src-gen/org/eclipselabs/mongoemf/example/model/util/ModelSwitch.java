@@ -4,10 +4,10 @@ package org.eclipselabs.mongoemf.example.model.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+
 import org.eclipse.emf.ecore.util.Switch;
-import org.eclipselabs.mongoemf.example.model.Child;
-import org.eclipselabs.mongoemf.example.model.ModelPackage;
-import org.eclipselabs.mongoemf.example.model.Parent;
+
+import org.eclipselabs.mongoemf.example.model.*;
 
 /**
  * <!-- begin-user-doc -->

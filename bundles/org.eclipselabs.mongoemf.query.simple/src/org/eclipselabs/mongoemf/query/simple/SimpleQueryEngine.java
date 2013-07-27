@@ -16,11 +16,11 @@ import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.eclipse.emf.common.util.URI;
-import org.eclipselabs.emf.query.BinaryOperation;
-import org.eclipselabs.emf.query.Expression;
-import org.eclipselabs.emf.query.Literal;
-import org.eclipselabs.emf.query.util.ExpressionBuilder;
-import org.eclipselabs.emf.query.util.QuerySwitch;
+import org.eclipselabs.emodeling.query.BinaryOperation;
+import org.eclipselabs.emodeling.query.Expression;
+import org.eclipselabs.emodeling.query.Literal;
+import org.eclipselabs.emodeling.query.util.ExpressionBuilder;
+import org.eclipselabs.emodeling.query.util.QuerySwitch;
 import org.eclipselabs.mongoemf.Keywords;
 import org.eclipselabs.mongoemf.QueryEngine;
 import org.eclipselabs.mongoemf.model.ModelFactory;
