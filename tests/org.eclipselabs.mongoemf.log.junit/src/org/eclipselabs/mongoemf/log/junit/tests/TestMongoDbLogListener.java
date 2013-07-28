@@ -19,18 +19,22 @@ import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipselabs.emodeling.ResourceSetFactory;
 import org.eclipselabs.emodeling.log.LogEntry;
 import org.eclipselabs.emodeling.log.LogLevel;
+import org.eclipselabs.emongo.MongoClientProvider;
 import org.eclipselabs.emongo.junit.util.MongoDatabase;
 import org.eclipselabs.eunit.junit.utils.ServiceLocator;
 import org.eclipselabs.mongoemf.log.junit.support.EChecker;
-import org.eclipselabs.mongoemf.log.junit.support.ILogServiceConfigurator;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.log.LogService;
 
 /**
@@ -40,29 +44,50 @@ import org.osgi.service.log.LogService;
 public class TestMongoDbLogListener
 {
 	@Rule
-	public static final MongoDatabase DB = new MongoDatabase();
+	public MongoDatabase DB = new MongoDatabase();
 
 	@Rule
-	public static final ServiceLocator<LogService> logServiceLocator = new ServiceLocator<LogService>(LogService.class);
+	public ServiceLocator<LogService> logServiceLocator = new ServiceLocator<LogService>(LogService.class);
 
 	@Rule
-	public static final ServiceLocator<ILogServiceConfigurator> logServiceConfiguratorLocator = new ServiceLocator<ILogServiceConfigurator>(ILogServiceConfigurator.class);
+	public ServiceLocator<ResourceSetFactory> resourceSetFactoryLocator = new ServiceLocator<ResourceSetFactory>(ResourceSetFactory.class);
 
 	@Rule
-	public static final ServiceLocator<ResourceSetFactory> resourceSetFactoryLocator = new ServiceLocator<ResourceSetFactory>(ResourceSetFactory.class);
+	public ServiceLocator<ConfigurationAdmin> configurationAdminLocator = new ServiceLocator<ConfigurationAdmin>(ConfigurationAdmin.class);
 
-	@BeforeClass
-	public void globalSetUp()
+	private static final String DB_LOGS = "logs";
+	private LogService osgiLogService;
+	private ResourceSetFactory resourceSetFactory;
+	private ConfigurationAdmin configurationAdmin;
+
+	@Before
+	public void setUp() throws IOException
 	{
 		osgiLogService = logServiceLocator.getService();
 		resourceSetFactory = resourceSetFactoryLocator.getService();
-		logServiceConfigurator = logServiceConfiguratorLocator.getService();
+		configurationAdmin = configurationAdminLocator.getService();
+
+		Configuration config = configurationAdmin.createFactoryConfiguration("org.eclipselabs.emongo.clientProvider", null);
+
+		Dictionary<String, Object> properties = new Hashtable<String, Object>();
+
+		properties.put(MongoClientProvider.PROP_CLIENT_ID, "junit");
+		properties.put(MongoClientProvider.PROP_URI, "mongodb://localhost");
+		properties.put("type", "mongo");
+		config.update(properties);
+
+		config = configurationAdmin.createFactoryConfiguration("org.eclipselabs.emongo.databaseConfigurationProvider", null);
+		properties = new Hashtable<String, Object>();
+		properties.put("client_id", "junit");
+		properties.put("alias", "junit");
+		properties.put("database", "junit");
+		config.update(properties);
 	}
 
 	@Test
 	public void testLogDebug() throws InterruptedException, IOException
 	{
-		logServiceConfigurator.setLogLevel(LogLevel.DEBUG);
+		setLogLevel(LogLevel.DEBUG);
 		Thread.sleep(100);
 		osgiLogService.log(LogService.LOG_DEBUG, "debug");
 		Thread.sleep(200);
@@ -80,10 +105,10 @@ public class TestMongoDbLogListener
 	@Test
 	public void testLogError() throws InterruptedException, IOException
 	{
-		logServiceConfigurator.setLogLevel(LogLevel.ERROR);
+		setLogLevel(LogLevel.ERROR);
 		Thread.sleep(100);
 		osgiLogService.log(LogService.LOG_ERROR, "error");
-		Thread.sleep(100);
+		Thread.sleep(200);
 		LogEntry logEntry = EChecker.getObject(createResourceSet(), "junit", DB_LOGS);
 		assertThat(logEntry, is(notNullValue()));
 		assertThat(logEntry.getMessage(), is("error"));
@@ -92,10 +117,10 @@ public class TestMongoDbLogListener
 	@Test
 	public void testLogInfo() throws InterruptedException, IOException
 	{
-		logServiceConfigurator.setLogLevel(LogLevel.INFO);
+		setLogLevel(LogLevel.INFO);
 		Thread.sleep(100);
 		osgiLogService.log(LogService.LOG_INFO, "info");
-		Thread.sleep(100);
+		Thread.sleep(200);
 		LogEntry logEntry = EChecker.getObject(createResourceSet(), "junit", DB_LOGS);
 		assertThat(logEntry, is(notNullValue()));
 		assertThat(logEntry.getMessage(), is("info"));
@@ -104,10 +129,10 @@ public class TestMongoDbLogListener
 	@Test
 	public void testLogWarning() throws InterruptedException, IOException
 	{
-		logServiceConfigurator.setLogLevel(LogLevel.WARNING);
+		setLogLevel(LogLevel.WARNING);
 		Thread.sleep(100);
 		osgiLogService.log(LogService.LOG_ERROR, "warning");
-		Thread.sleep(100);
+		Thread.sleep(200);
 		LogEntry logEntry = EChecker.getObject(createResourceSet(), "junit", DB_LOGS);
 		assertThat(logEntry, is(notNullValue()));
 		assertThat(logEntry.getMessage(), is("warning"));
@@ -116,10 +141,10 @@ public class TestMongoDbLogListener
 	@Test
 	public void testLogFilteredEntry() throws InterruptedException, IOException
 	{
-		logServiceConfigurator.setLogLevel(LogLevel.ERROR);
+		setLogLevel(LogLevel.ERROR);
 		Thread.sleep(100);
 		osgiLogService.log(LogService.LOG_WARNING, "error");
-		Thread.sleep(100);
+		Thread.sleep(200);
 		LogEntry logEntry = EChecker.getObject(createResourceSet(), "junit", DB_LOGS);
 		assertThat(logEntry, is(nullValue()));
 	}
@@ -129,8 +154,12 @@ public class TestMongoDbLogListener
 		return resourceSetFactory.createResourceSet();
 	}
 
-	private static final String DB_LOGS = "logs";
-	private static LogService osgiLogService;
-	private static ResourceSetFactory resourceSetFactory;
-	private static ILogServiceConfigurator logServiceConfigurator;
+	private void setLogLevel(LogLevel logLevel) throws IOException
+	{
+		Configuration configuration = configurationAdmin.getConfiguration("org.eclipselabs.mongoemf.log", null);
+		Hashtable<String, Object> properties = new Hashtable<String, Object>();
+		properties.put("uri", "mongodb://localhost/junit/logs/");
+		properties.put("logLevel", logLevel.getValue());
+		configuration.update(properties);
+	}
 }

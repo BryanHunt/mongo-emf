@@ -9,7 +9,7 @@
  *    Bryan Hunt - initial API and implementation
  *******************************************************************************/
 
-package org.eclipselabs.mongoemf.junit.support;
+package org.eclipselabs.mongoemf.log.junit.support;
 
 import java.io.IOException;
 import java.util.Dictionary;

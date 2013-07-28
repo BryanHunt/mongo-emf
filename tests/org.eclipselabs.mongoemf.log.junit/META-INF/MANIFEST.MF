@@ -9,10 +9,11 @@ Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.emf.common.util,
  org.eclipse.emf.ecore,
  org.eclipse.emf.ecore.resource,
- org.eclipselabs.emodeling.query,
  org.eclipselabs.emodeling,
  org.eclipselabs.emodeling.junit.util,
  org.eclipselabs.emodeling.log,
+ org.eclipselabs.emodeling.query,
+ org.eclipselabs.emongo,
  org.eclipselabs.emongo.junit.util,
  org.eclipselabs.eunit.junit.utils,
  org.eclipselabs.mongoemf,
@@ -24,5 +25,4 @@ Import-Package: org.eclipse.emf.common.util,
  org.osgi.service.cm;version="1.3.0",
  org.osgi.service.log,
  org.osgi.util.tracker
-Service-Component: OSGI-INF/log.xml,
- OSGI-INF/config.xml
+Service-Component: OSGI-INF/local_config.xml

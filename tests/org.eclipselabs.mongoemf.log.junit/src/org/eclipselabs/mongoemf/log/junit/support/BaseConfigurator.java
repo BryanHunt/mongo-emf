@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 Bryan Hunt.
+ * Copyright (c) 2011 Bryan Hunt.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,13 +13,18 @@ package org.eclipselabs.mongoemf.log.junit.support;
 
 import java.io.IOException;
 
-import org.eclipselabs.emodeling.log.LogLevel;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author bhunt
  * 
  */
-public interface ILogServiceConfigurator
+public abstract class BaseConfigurator
 {
-	public void setLogLevel(LogLevel logLevel) throws IOException;
+	protected abstract void configureMongoProvider(ConfigurationAdmin configurationAdmin) throws IOException;
+
+	void bindConfigurationAdmin(ConfigurationAdmin configurationAdmin) throws IOException
+	{
+		configureMongoProvider(configurationAdmin);
+	}
 }
