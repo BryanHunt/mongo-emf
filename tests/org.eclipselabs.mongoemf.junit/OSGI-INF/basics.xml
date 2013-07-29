@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="org.eclipselabs.mongoemf.junit.basics">
-   <implementation class="org.eclipselabs.mongoemf.junit.tests.TestMongoEmfBasics"/>
-   <reference bind="bindResourceSetFactory" cardinality="1..1" interface="org.eclipselabs.emodeling.ResourceSetFactory" name="ResourceSetFactory" policy="static"/>
-   <reference cardinality="1..1" interface="org.eclipselabs.emongo.MongoClientProvider" name="MongoClientProvider" policy="static" target="(type=mongo)"/>
-</scr:component>

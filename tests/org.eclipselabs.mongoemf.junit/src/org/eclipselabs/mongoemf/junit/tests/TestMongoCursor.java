@@ -34,7 +34,6 @@ import org.eclipselabs.mongoemf.junit.model.TargetObject;
 import org.eclipselabs.mongoemf.junit.support.TestHarness;
 import org.eclipselabs.mongoemf.model.MongoCursor;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -43,17 +42,7 @@ import org.junit.Test;
  */
 public class TestMongoCursor extends TestHarness
 {
-	@BeforeClass
-	public static void waitForServices() throws InterruptedException
-	{
-		synchronized (lock)
-		{
-			if (!initialized)
-				lock.wait(60000);
-
-			assertTrue("Timed out waiting for services to be bound", initialized);
-		}
-	}
+	private static URI queryURI;
 
 	@Before
 	public void setUp() throws UnknownHostException
@@ -169,17 +158,4 @@ public class TestMongoCursor extends TestHarness
 		assertFalse(iterator.hasNext());
 		assertTrue(pendingTargets.isEmpty());
 	}
-
-	protected void activate()
-	{
-		synchronized (lock)
-		{
-			initialized = true;
-			lock.notifyAll();
-		}
-	}
-
-	private static boolean initialized = false;
-	private static Object lock = new Object();
-	private static URI queryURI;
 }

@@ -29,7 +29,6 @@ import org.eclipselabs.mongoemf.junit.model.PrimaryObject;
 import org.eclipselabs.mongoemf.junit.model.TargetObject;
 import org.eclipselabs.mongoemf.junit.support.EChecker;
 import org.eclipselabs.mongoemf.junit.support.TestHarness;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -38,18 +37,6 @@ import org.junit.Test;
  */
 public class TestMongoEmfAttributes extends TestHarness
 {
-	@BeforeClass
-	public static void waitForServices() throws InterruptedException
-	{
-		synchronized (lock)
-		{
-			if (!initialized)
-				lock.wait(60000);
-
-			assertTrue("Timed out waiting for services to be bound", initialized);
-		}
-	}
-
 	@Test
 	public void testTargetObjectWithSingleAttribute() throws IOException
 	{
@@ -205,16 +192,4 @@ public class TestMongoEmfAttributes extends TestHarness
 		PrimaryObject actual = EChecker.checkObject(primaryObject, excludeFeatures, createResourceSet());
 		assertThat(actual.getFeatureMapAttributeCollection().size(), is(2));
 	}
-
-	protected void activate()
-	{
-		synchronized (lock)
-		{
-			initialized = true;
-			lock.notifyAll();
-		}
-	}
-
-	private static boolean initialized = false;
-	private static Object lock = new Object();
 }

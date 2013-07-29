@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipselabs.emodeling.ResourceSetFactory;
 import org.eclipselabs.emongo.junit.util.MongoDatabase;
+import org.eclipselabs.eunit.junit.utils.ServiceLocator;
 import org.junit.Before;
 import org.junit.Rule;
 
@@ -41,6 +42,9 @@ public abstract class TestHarness
 	@Rule
 	public MongoDatabase database = new MongoDatabase();
 
+	@Rule
+	public ServiceLocator<ResourceSetFactory> resourceSetFactoryLocator = new ServiceLocator<ResourceSetFactory>(ResourceSetFactory.class);
+
 	public TestHarness()
 	{}
 
@@ -52,6 +56,7 @@ public abstract class TestHarness
 	@Before
 	public void setUp() throws UnknownHostException
 	{
+		resourceSetFactory = resourceSetFactoryLocator.getService();
 		db = database.getMongoDB();
 		assertThat(db, is(notNullValue()));
 	}
@@ -93,11 +98,6 @@ public abstract class TestHarness
 		saveObject(resourceSet, object, uri, options);
 	}
 
-	public void bindResourceSetFactory(ResourceSetFactory factory)
-	{
-		resourceSetFactory = factory;
-	}
-
 	private void saveObject(ResourceSet resourceSet, EObject object, URI uri, Map<String, Object> options) throws IOException
 	{
 		Resource resource = resourceSet.createResource(uri);
@@ -107,5 +107,5 @@ public abstract class TestHarness
 
 	private DB db;
 	private Integer port;
-	private static ResourceSetFactory resourceSetFactory;
+	private ResourceSetFactory resourceSetFactory;
 }

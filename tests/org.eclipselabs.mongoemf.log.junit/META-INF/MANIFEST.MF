@@ -25,4 +25,3 @@ Import-Package: org.eclipse.emf.common.util,
  org.osgi.service.cm;version="1.3.0",
  org.osgi.service.log,
  org.osgi.util.tracker
-Service-Component: OSGI-INF/local_config.xml

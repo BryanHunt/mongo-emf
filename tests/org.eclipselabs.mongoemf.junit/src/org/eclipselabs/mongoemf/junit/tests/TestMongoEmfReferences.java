@@ -38,7 +38,6 @@ import org.eclipselabs.mongoemf.junit.model.PrimaryObject;
 import org.eclipselabs.mongoemf.junit.model.TargetObject;
 import org.eclipselabs.mongoemf.junit.support.EChecker;
 import org.eclipselabs.mongoemf.junit.support.TestHarness;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -47,18 +46,6 @@ import org.junit.Test;
  */
 public class TestMongoEmfReferences extends TestHarness
 {
-	@BeforeClass
-	public static void waitForServices() throws InterruptedException
-	{
-		synchronized (lock)
-		{
-			if (!initialized)
-				lock.wait(60000);
-
-			assertTrue("Timed out waiting for services to be bound", initialized);
-		}
-	}
-
 	@Test
 	public void testPrimaryObject() throws IOException
 	{
@@ -465,16 +452,4 @@ public class TestMongoEmfReferences extends TestHarness
 		assertThat(((TargetObject) ((EObject) ((InternalEList<?>) primaryObject3.eGet(ModelPackage.Literals.PRIMARY_OBJECT__MULTIPLE_NON_CONTAINMENT_REFERENCE)).basicGet(0))).getSingleAttribute(),
 				is("one"));
 	}
-
-	protected void activate()
-	{
-		synchronized (lock)
-		{
-			initialized = true;
-			lock.notifyAll();
-		}
-	}
-
-	private static boolean initialized = false;
-	private static Object lock = new Object();
 }

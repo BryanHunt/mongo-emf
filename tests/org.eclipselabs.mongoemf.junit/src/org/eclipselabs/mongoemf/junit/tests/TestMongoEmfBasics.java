@@ -52,7 +52,6 @@ import org.eclipselabs.mongoemf.junit.model.PrimaryObject;
 import org.eclipselabs.mongoemf.junit.model.TargetObject;
 import org.eclipselabs.mongoemf.junit.support.EChecker;
 import org.eclipselabs.mongoemf.junit.support.TestHarness;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -67,18 +66,6 @@ public class TestMongoEmfBasics extends TestHarness
 {
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
-
-	@BeforeClass
-	public static void waitForServices() throws InterruptedException
-	{
-		synchronized (lock)
-		{
-			if (!initialized)
-				lock.wait(60000);
-
-			assertTrue("Timed out waiting for services to be bound", initialized);
-		}
-	}
 
 	@Test
 	public void testGetID() throws IOException
@@ -593,16 +580,4 @@ public class TestMongoEmfBasics extends TestHarness
 // new MongoURIHandlerImpl().createInputStream(URI.createURI("mongodb://localhost/junit/junit/id"),
 // Collections.emptyMap()).read();
 	}
-
-	protected void activate()
-	{
-		synchronized (lock)
-		{
-			initialized = true;
-			lock.notifyAll();
-		}
-	}
-
-	private static boolean initialized = false;
-	private static Object lock = new Object();
 }
