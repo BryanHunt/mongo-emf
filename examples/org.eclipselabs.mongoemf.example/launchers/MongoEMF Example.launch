@@ -5,7 +5,7 @@
 <booleanAttribute key="automaticValidate" value="false"/>
 <stringAttribute key="bootstrap" value=""/>
 <stringAttribute key="checked" value="[NONE]"/>
-<booleanAttribute key="clearConfig" value="false"/>
+<booleanAttribute key="clearConfig" value="true"/>
 <stringAttribute key="configLocation" value="${workspace_loc}/.metadata/.plugins/org.eclipse.pde.core/MongoEMF Example"/>
 <booleanAttribute key="default" value="true"/>
 <booleanAttribute key="default_auto_start" value="true"/>
@@ -13,14 +13,14 @@
 <booleanAttribute key="includeOptional" value="false"/>
 <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog -console -noExit"/>
 <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
 <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Declipse.ignoreApp=true"/>
 <stringAttribute key="pde.version" value="3.3"/>
 <booleanAttribute key="show_selected_only" value="false"/>
-<stringAttribute key="target_bundles" value="com.google.guava@default:default,org.eclipse.core.contenttype@default:default,org.eclipse.core.expressions@default:default,org.eclipse.core.filesystem@default:default,org.eclipse.core.jobs@default:default,org.eclipse.core.resources@default:default,org.eclipse.core.runtime@default:true,org.eclipse.emf.common@default:default,org.eclipse.emf.ecore.xmi@default:default,org.eclipse.emf.ecore@default:default,org.eclipse.equinox.app@default:default,org.eclipse.equinox.common@2:true,org.eclipse.equinox.ds@1:true,org.eclipse.equinox.preferences@default:default,org.eclipse.equinox.registry@default:default,org.eclipse.equinox.util@default:default,org.eclipse.osgi.services@default:default,org.eclipse.osgi@-1:true,org.eclipse.team.core@default:default,org.eclipse.xtext.xbase.lib@default:default,org.eclipselabs.emf.query.simple@default:default,org.eclipselabs.emongo.components@default:default,org.mongodb.mongo-java-driver@default:default"/>
+<stringAttribute key="target_bundles" value="com.google.guava@default:default,com.ibm.icu@default:default,javax.xml@default:default,org.apache.felix.gogo.command@default:default,org.apache.felix.gogo.runtime@default:default,org.apache.felix.gogo.shell@default:default,org.eclipse.ant.core@default:default,org.eclipse.compare.core@default:default,org.eclipse.core.contenttype@default:default,org.eclipse.core.expressions@default:default,org.eclipse.core.filesystem@default:default,org.eclipse.core.jobs@default:default,org.eclipse.core.resources@default:default,org.eclipse.core.runtime@default:true,org.eclipse.core.variables@default:default,org.eclipse.emf.common@default:default,org.eclipse.emf.ecore.xcore.lib@default:default,org.eclipse.emf.ecore.xmi@default:default,org.eclipse.emf.ecore@default:default,org.eclipse.equinox.app@default:default,org.eclipse.equinox.cm@default:default,org.eclipse.equinox.common@2:true,org.eclipse.equinox.console@default:default,org.eclipse.equinox.ds@1:true,org.eclipse.equinox.preferences@default:default,org.eclipse.equinox.registry@default:default,org.eclipse.equinox.transforms.hook@default:false,org.eclipse.equinox.util@default:default,org.eclipse.equinox.weaving.hook@default:false,org.eclipse.osgi.services@default:default,org.eclipse.osgi@-1:true,org.eclipse.team.core@default:default,org.eclipse.xtext.xbase.lib@default:default,org.eclipselabs.emodeling.api@default:default,org.eclipselabs.emodeling.components@default:default,org.eclipselabs.emongo.api@default:default,org.eclipselabs.emongo.components@default:default,org.eclipselabs.eunit.junit.utils@default:default,org.hamcrest@default:default,org.junit@default:default,org.mongodb.mongo-java-driver@default:default"/>
 <booleanAttribute key="tracing" value="false"/>
 <booleanAttribute key="useCustomFeatures" value="false"/>
 <booleanAttribute key="useDefaultConfigArea" value="true"/>
-<stringAttribute key="workspace_bundles" value="org.eclipselabs.emf.mongodb.builders@default:default,org.eclipselabs.emf.mongodb.converter@default:default,org.eclipselabs.emf.mongodb.core@default:default,org.eclipselabs.emf.mongodb.example@default:default,org.eclipselabs.emf.mongodb.handlers@default:default,org.eclipselabs.emf.mongodb.query.simple@default:default,org.eclipselabs.emf.mongodb.streams@default:default"/>
+<stringAttribute key="workspace_bundles" value="com.yourkit.api@default:default,org.eclipselabs.mongoemf.builders@default:default,org.eclipselabs.mongoemf.converter@default:default,org.eclipselabs.mongoemf.core@default:default,org.eclipselabs.mongoemf.example@default:default,org.eclipselabs.mongoemf.handlers@default:default,org.eclipselabs.mongoemf.query.mongodb@default:default,org.eclipselabs.mongoemf.streams@default:default"/>
 </launchConfiguration>
