@@ -9,13 +9,13 @@
 <repository location="http://bryanhunt.github.com/3rd-party-libs"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipselabs.eunit.junit.utils.feature.feature.group" version="1.0.0.201307191143"/>
+<unit id="org.eclipselabs.eunit.junit.utils.feature.feature.group" version="1.0.0.201308191944"/>
 <repository location="http://bryanhunt.github.com/eUnit/releases/1.0.0"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipselabs.emongo.junit.feature.feature.group" version="1.0.0.201307282013"/>
-<unit id="org.eclipselabs.emongo.runtime.feature.feature.group" version="1.0.0.201307282013"/>
-<unit id="org.eclipselabs.emongo.sdk.feature.feature.group" version="1.0.0.201307282013"/>
+<unit id="org.eclipselabs.emongo.junit.feature.feature.group" version="1.0.0.201309071633"/>
+<unit id="org.eclipselabs.emongo.runtime.feature.feature.group" version="1.0.0.201309071633"/>
+<unit id="org.eclipselabs.emongo.sdk.feature.feature.group" version="1.0.0.201309071633"/>
 <repository location="http://bryanhunt.github.com/eMongo/releases/1.0.0"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
