@@ -16,6 +16,7 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipselabs.emodeling,
  org.eclipselabs.emongo,
+ org.eclipselabs.emongo.config,
  org.osgi.service.cm;version="1.4.0"
 Service-Component: OSGI-INF/example.xml,
  OSGI-INF/config.xml
