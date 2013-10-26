@@ -23,7 +23,7 @@
       <import plugin="org.eclipse.emf.ecore"/>
       <import plugin="org.eclipselabs.mongoemf.core"/>
       <import plugin="org.eclipse.osgi"/>
-      <import plugin="org.eclipselabs.emodeling.query.simple"/>
+      <import plugin="org.eclipselabs.emodeling.query"/>
    </requires>
 
    <plugin
