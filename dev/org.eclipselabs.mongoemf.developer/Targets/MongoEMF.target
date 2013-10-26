@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="Mongo" sequenceNumber="129">
+<?pde version="3.8"?><target name="Mongo" sequenceNumber="131">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="org.hamcrest.feature.feature.group" version="1.3.0.201306111021"/>
@@ -19,12 +19,12 @@
 <repository location="http://bryanhunt.github.com/eMongo/releases/1.0.0"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipselabs.emodeling.sdk.feature.feature.group" version="1.0.0.201307280847"/>
+<unit id="org.eclipselabs.emodeling.sdk.feature.feature.group" version="1.0.0.201310252151"/>
 <repository location="http://bryanhunt.github.com/eModeling/releases/1.0.0"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.equinox.sdk.feature.group" version="3.9.0.v20130604-2047"/>
-<unit id="org.eclipse.emf.ecore.xcore.sdk.feature.group" version="1.1.0.v20130612-0809"/>
+<unit id="org.eclipse.emf.ecore.xcore.sdk.feature.group" version="1.1.1.v20130903-0948"/>
+<unit id="org.eclipse.equinox.sdk.feature.group" version="3.9.0.v20130828-0031"/>
 <repository location="http://download.eclipse.org/releases/kepler"/>
 </location>
 </locations>
