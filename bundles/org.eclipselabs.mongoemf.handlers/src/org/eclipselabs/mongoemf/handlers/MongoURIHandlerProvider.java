@@ -40,7 +40,7 @@ public class MongoURIHandlerProvider implements UriHandlerProvider
 		mongoDatabaseProviders.put(mongoDatabaseProvider.getURI(), mongoDatabaseProvider);
 	}
 
-	public void unbindDatabaseLocator(MongoDatabaseProvider mongoDatabaseProvider)
+	public void unbindMongoDatabaseProvider(MongoDatabaseProvider mongoDatabaseProvider)
 	{
 		mongoDatabaseProviders.remove(mongoDatabaseProvider.getURI());
 	}
