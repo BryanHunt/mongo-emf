@@ -24,5 +24,8 @@
    <feature url="features/org.eclipselabs.mongoemf.streams.feature_0.8.0.qualifier.jar" id="org.eclipselabs.mongoemf.streams.feature" version="0.8.0.qualifier">
       <category name="mongo-emf"/>
    </feature>
+   <feature url="features/org.eclipselabs.mongoemf.query.mongodb.feature_1.0.0.qualifier.jar" id="org.eclipselabs.mongoemf.query.mongodb.feature" version="1.0.0.qualifier">
+      <category name="mongo-emf"/>
+   </feature>
    <category-def name="mongo-emf" label="MongoEMF"/>
 </site>
