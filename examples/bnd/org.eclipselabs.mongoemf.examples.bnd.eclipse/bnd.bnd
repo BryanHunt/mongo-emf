@@ -1,0 +1,12 @@
+Private-Package: org.eclipselabs.mongoemf.examples.bnd.eclipse,\
+	org.eclipselabs.mongoemf.example.model,\
+	org.eclipselabs.mongoemf.example.model.util
+-dsannotations: *
+-buildpath: org.eclipse.osgi.services,\
+	org.eclipselabs.emongo.components,\
+	org.eclipselabs.emongo.api,\
+	org.eclipse.emf.ecore.xcore.lib,\
+	org.eclipse.xtext.xbase.lib,\
+	org.eclipselabs.emodeling.api,\
+	org.eclipse.emf.common,\
+	org.eclipse.emf.ecore

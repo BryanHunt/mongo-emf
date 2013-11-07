@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='utf-8'?>
+<repository increment='1383783626068' name='Local' xmlns='http://www.osgi.org/xmlns/repository/v1.0.0'>
+  <resource>
+    <capability namespace='osgi.identity'>
+      <attribute name='osgi.identity' value='com.google.guava'/>
+      <attribute name='type' value='osgi.bundle'/>
+      <attribute name='version' type='Version' value='12.0.0.v201212092141'/>
+    </capability>
+    <capability namespace='osgi.content'>
+      <attribute name='osgi.content' value='40954676ffe5756a71ad9ae23c6d67cfc7af8e09ca55655a6ef8920adfc40b5e'/>
+      <attribute name='url' value='com.google.guava/com.google.guava-12.0.0.jar'/>
+      <attribute name='size' type='Long' value='1922539'/>
+      <attribute name='mime' value='application/vnd.osgi.bundle'/>
+    </capability>
+    <capability namespace='osgi.wiring.bundle'>
+      <attribute name='osgi.wiring.bundle' value='com.google.guava'/>
+      <attribute name='bundle-version' type='Version' value='12.0.0.v201212092141'/>
+    </capability>
+    <capability namespace='osgi.wiring.host'>
+      <attribute name='osgi.wiring.host' value='com.google.guava'/>
+      <attribute name='bundle-version' type='Version' value='12.0.0.v201212092141'/>
+    </capability>
+    <capability namespace='osgi.wiring.package'>
+      <attribute name='osgi.wiring.package' value='com.google.common.net'/>
+      <attribute name='version' type='Version' value='12.0.0'/>
+      <attribute name='bundle-symbolic-name' value='com.google.guava'/>
+      <attribute name='bundle-version' type='Version' value='12.0.0.v201212092141'/>
+      <directive name='uses' value='com.google.common.base,javax.annotation,com.google.common.hash,com.google.common.io,com.google.common.primitives,com.google.common.collect'/>
+    </capability>
+    <capability namespace='osgi.wiring.package'>
+      <attribute name='osgi.wiring.package' value='com.google.common.collect'/>
+      <attribute name='version' type='Version' value='12.0.0'/>
+      <attribute name='bundle-symbolic-name' value='com.google.guava'/>
+      <attribute name='bundle-version' type='Version' value='12.0.0.v201212092141'/>
+      <directive name='uses' value='com.google.common.base,javax.annotation,com.google.common.primitives,com.google.common.math'/>
+    </capability>
+    <capability namespace='osgi.wiring.package'>
+      <attribute name='osgi.wiring.package' value='com.google.common.primitives'/>
+      <attribute name='version' type='Version' value='12.0.0'/>
+      <attribute name='bundle-symbolic-name' value='com.google.guava'/>
+      <attribute name='bundle-version' type='Version' value='12.0.0.v201212092141'/>
+      <directive name='uses' value='javax.annotation,com.google.common.base,sun.misc'/>
+    </capability>
+    <capability namespace='osgi.wiring.package'>
+      <attribute name='osgi.wiring.package' value='com.google.common.base'/>
+      <attribute name='version' type='Version' value='12.0.0'/>
+      <attribute name='bundle-symbolic-name' value='com.google.guava'/>
+      <attribute name='bundle-version' type='Version' value='12.0.0.v201212092141'/>
+      <directive name='uses' value='javax.annotation'/>
+    </capability>
+    <capability namespace='osgi.wiring.package'>
+      <attribute name='osgi.wiring.package' value='com.google.common.cache'/>
+      <attribute name='version' type='Version' value='12.0.0'/>
+      <attribute name='bundle-symbolic-name' value='com.google.guava'/>
+      <attribute name='bundle-version' type='Version' value='12.0.0.v201212092141'/>
+      <directive name='uses' value='com.google.common.collect,com.google.common.util.concurrent,javax.annotation,com.google.common.base,com.google.common.primitives'/>
+    </capability>
+    <capability namespace='osgi.wiring.package'>
+      <attribute name='osgi.wiring.package' value='com.google.common.eventbus'/>
+      <attribute name='version' type='Version' value='12.0.0'/>
+      <attribute name='bundle-symbolic-name' value='com.google.guava'/>
+      <attribute name='bundle-version' type='Version' value='12.0.0.v201212092141'/>
+      <directive name='uses' value='com.google.common.collect,com.google.common.base,com.google.common.cache'/>
+    </capability>
+    <capability namespace='osgi.wiring.package'>
+      <attribute name='osgi.wiring.package' value='com.google.common.util.concurrent'/>
+      <attribute name='version' type='Version' value='12.0.0'/>
+      <attribute name='bundle-symbolic-name' value='com.google.guava'/>
+      <attribute name='bundle-version' type='Version' value='12.0.0.v201212092141'/>
+      <directive name='uses' value='com.google.common.base,javax.annotation,com.google.common.collect'/>
+    </capability>
+    <capability namespace='osgi.wiring.package'>
+      <attribute name='osgi.wiring.package' value='com.google.common.hash'/>
+      <attribute name='version' type='Version' value='12.0.0'/>
+      <attribute name='bundle-symbolic-name' value='com.google.guava'/>
+      <attribute name='bundle-version' type='Version' value='12.0.0.v201212092141'/>
+      <directive name='uses' value='com.google.common.base,com.google.common.math,com.google.common.primitives,javax.annotation'/>
+    </capability>
+    <capability namespace='osgi.wiring.package'>
+      <attribute name='osgi.wiring.package' value='com.google.common.io'/>
+      <attribute name='version' type='Version' value='12.0.0'/>
+      <attribute name='bundle-symbolic-name' value='com.google.guava'/>
+      <attribute name='bundle-version' type='Version' value='12.0.0.v201212092141'/>
+      <directive name='uses' value='com.google.common.hash,com.google.common.base,javax.annotation,com.google.common.primitives'/>
+    </capability>
+    <capability namespace='osgi.wiring.package'>
+      <attribute name='osgi.wiring.package' value='com.google.common.reflect'/>
+      <attribute name='version' type='Version' value='12.0.0'/>
+      <attribute name='bundle-symbolic-name' value='com.google.guava'/>
+      <attribute name='bundle-version' type='Version' value='12.0.0.v201212092141'/>
+      <directive name='uses' value='javax.annotation,com.google.common.base,com.google.common.collect'/>
+    </capability>
+    <capability namespace='osgi.wiring.package'>
+      <attribute name='osgi.wiring.package' value='com.google.common.math'/>
+      <attribute name='version' type='Version' value='12.0.0'/>
+      <attribute name='bundle-symbolic-name' value='com.google.guava'/>
+      <attribute name='bundle-version' type='Version' value='12.0.0.v201212092141'/>
+      <directive name='uses' value='com.google.common.base,javax.annotation'/>
+    </capability>
+    <capability namespace='osgi.wiring.package'>
+      <attribute name='osgi.wiring.package' value='com.google.common.annotations'/>
+      <attribute name='version' type='Version' value='12.0.0'/>
+      <attribute name='bundle-symbolic-name' value='com.google.guava'/>
+      <attribute name='bundle-version' type='Version' value='12.0.0.v201212092141'/>
+    </capability>
+    <requirement namespace='osgi.wiring.package'>
+      <directive name='filter' value='(osgi.wiring.package=javax.annotation)'/>
+      <directive name='resolution' value='optional'/>
+    </requirement>
+    <requirement namespace='osgi.wiring.package'>
+      <directive name='filter' value='(osgi.wiring.package=sun.misc)'/>
+      <directive name='resolution' value='optional'/>
+    </requirement>
+    <requirement namespace='osgi.ee'>
+      <directive name='filter' value='(&amp;(osgi.ee=JavaSE)(version=1.6))'/>
+    </requirement>
+  </resource>
+  <resource>
+    <capability namespace='osgi.identity'>
+      <attribute name='osgi.identity' value='org.bndtools.rt.caffeine'/>
+      <attribute name='type' value='osgi.bundle'/>
+      <attribute name='version' type='Version' value='0.0.1'/>
+    </capability>
+    <capability namespace='osgi.content'>
+      <attribute name='osgi.content' value='fa94bef70a901671a03cf97dde5ffb3646505085ca3cd1b22f3e9259001f9233'/>
+      <attribute name='url' value='org.bndtools.rt.caffeine/org.bndtools.rt.caffeine-0.0.1.jar'/>
+      <attribute name='size' type='Long' value='4531'/>
+      <attribute name='mime' value='application/vnd.osgi.bundle'/>
+    </capability>
+    <capability namespace='osgi.wiring.bundle'>
+      <attribute name='osgi.wiring.bundle' value='org.bndtools.rt.caffeine'/>
+      <attribute name='bundle-version' type='Version' value='0.0.1'/>
+    </capability>
+    <capability namespace='osgi.wiring.host'>
+      <attribute name='osgi.wiring.host' value='org.bndtools.rt.caffeine'/>
+      <attribute name='bundle-version' type='Version' value='0.0.1'/>
+    </capability>
+    <requirement namespace='osgi.wiring.package'>
+      <directive name='filter' value='(&amp;(osgi.wiring.package=org.osgi.framework)(version&gt;=1.4.0)(!(version&gt;=2.0.0)))'/>
+    </requirement>
+    <requirement namespace='osgi.wiring.package'>
+      <directive name='filter' value='(&amp;(osgi.wiring.package=org.osgi.util.tracker)(version&gt;=1.4.0)(!(version&gt;=2.0.0)))'/>
+    </requirement>
+  </resource>
+</repository>
