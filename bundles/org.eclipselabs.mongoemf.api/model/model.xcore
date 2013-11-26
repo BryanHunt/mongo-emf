@@ -35,5 +35,6 @@ class MongoQuery
 	DBObject filter
 	DBObject projection
 	DBObject sort
+	Integer skip
 	Integer limit
 }

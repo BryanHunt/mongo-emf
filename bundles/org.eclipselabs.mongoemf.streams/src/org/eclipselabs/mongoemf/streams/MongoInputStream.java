@@ -101,6 +101,9 @@ public class MongoInputStream extends InputStream implements URIConverter.Loadab
 			else
 				resultCursor = collection.find(mongoQuery.getFilter(), mongoQuery.getProjection());
 
+			if (mongoQuery.getSkip() != null)
+				resultCursor.skip(mongoQuery.getSkip());
+
 			if (mongoQuery.getSort() != null)
 				resultCursor = resultCursor.sort(mongoQuery.getSort());
 
