@@ -19,7 +19,7 @@
 <repository location="http://bryanhunt.github.com/eMongo/releases/1.0.0"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipselabs.emodeling.sdk.feature.feature.group" version="1.0.0.201310252151"/>
+<unit id="org.eclipselabs.emodeling.sdk.feature.feature.group" version="1.0.0.201307280847"/>
 <repository location="http://bryanhunt.github.com/eModeling/releases/1.0.0"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
