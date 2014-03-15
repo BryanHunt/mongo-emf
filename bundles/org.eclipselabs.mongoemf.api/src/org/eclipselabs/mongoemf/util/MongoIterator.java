@@ -70,5 +70,4 @@ public class MongoIterator implements Iterator<EObject>
 	{
 		dbCursor.remove();
 	}
-
 }
