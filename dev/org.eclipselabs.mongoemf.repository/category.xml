@@ -6,9 +6,6 @@
    <feature url="features/org.eclipselabs.mongoemf.converter.feature_0.8.0.qualifier.jar" id="org.eclipselabs.mongoemf.converter.feature" version="0.8.0.qualifier">
       <category name="mongo-emf"/>
    </feature>
-   <feature url="features/org.eclipselabs.mongoemf.core.feature_0.8.0.qualifier.jar" id="org.eclipselabs.mongoemf.core.feature" version="0.8.0.qualifier">
-      <category name="mongo-emf"/>
-   </feature>
    <feature url="features/org.eclipselabs.mongoemf.handlers.feature_0.8.0.qualifier.jar" id="org.eclipselabs.mongoemf.handlers.feature" version="0.8.0.qualifier">
       <category name="mongo-emf"/>
    </feature>
@@ -25,6 +22,9 @@
       <category name="mongo-emf"/>
    </feature>
    <feature url="features/org.eclipselabs.mongoemf.query.mongodb.feature_1.0.0.qualifier.jar" id="org.eclipselabs.mongoemf.query.mongodb.feature" version="1.0.0.qualifier">
+      <category name="mongo-emf"/>
+   </feature>
+   <feature url="features/org.eclipselabs.mongoemf.api.feature_0.8.0.qualifier.jar" id="org.eclipselabs.mongoemf.api.feature" version="0.8.0.qualifier">
       <category name="mongo-emf"/>
    </feature>
    <category-def name="mongo-emf" label="MongoEMF"/>

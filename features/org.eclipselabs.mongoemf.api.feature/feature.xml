@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.eclipselabs.mongoemf.core.feature"
-      label="MongoEMF Core Runtime"
+      id="org.eclipselabs.mongoemf.api.feature"
+      label="MongoEMF API Runtime"
       version="0.8.0.qualifier"
       provider-name="EclipseLabs">
 
@@ -21,13 +21,13 @@
       <import plugin="org.eclipse.core.runtime"/>
       <import plugin="org.eclipse.emf.ecore"/>
       <import plugin="org.eclipse.xtext.xbase.lib"/>
+      <import plugin="org.eclipse.emf.ecore.xcore.lib"/>
       <import plugin="org.mongodb.mongo-java-driver"/>
       <import plugin="org.eclipse.emf.ecore.xmi"/>
-      <import plugin="org.eclipse.emf.ecore.xcore.lib"/>
    </requires>
 
    <plugin
-         id="org.eclipselabs.mongoemf.core"
+         id="org.eclipselabs.mongoemf.api"
          download-size="0"
          install-size="0"
          version="0.0.0"
