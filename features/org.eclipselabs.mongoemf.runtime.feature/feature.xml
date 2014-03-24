@@ -42,7 +42,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipselabs.mongoemf.core.feature"
+         id="org.eclipselabs.mongoemf.api.feature"
          version="0.0.0"/>
 
 </feature>
