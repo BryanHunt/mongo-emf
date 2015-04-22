@@ -133,7 +133,7 @@ public class MongoURIHandlerImpl extends URIHandlerImpl
 		if (uri.segmentCount() != 3)
 			throw new IOException("The URI is not of the form 'mongodb:/database/collection/{id}");
 
-		MongoDatabaseProvider mongoDatabaseProvider = mongoDatabaseProviders.get(uri.trimQuery().trimSegments(2).toString());
+		MongoDatabaseProvider mongoDatabaseProvider = mongoDatabaseProviders.get(uri.trimQuery().trimFragment().trimSegments(2).toString());
 
 		if (mongoDatabaseProvider == null)
 			throw new IOException("Database is not available");
