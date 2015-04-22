@@ -96,8 +96,9 @@ public class DBObjectBuilderImpl implements DBObjectBuilder
 
 		for (EReference reference : eClass.getEAllReferences())
 		{
-			if (!reference.isTransient() && eObject.eIsSet(reference))
-				buildReference(eObject, dbObject, reference);
+		  if (!reference.isTransient() && eObject.eIsSet(reference) 
+		          && !(reference.getEOpposite() != null && reference.isContainer()))
+		        buildReference(eObject, dbObject, reference);
 		}
 
 		return dbObject;
