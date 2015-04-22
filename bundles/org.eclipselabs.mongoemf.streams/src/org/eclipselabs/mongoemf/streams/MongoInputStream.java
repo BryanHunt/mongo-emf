@@ -154,7 +154,7 @@ public class MongoInputStream extends InputStream implements URIConverter.Loadab
 		// since this implementation implements URIConverter.Loadable. The loadResource()
 		// function will be called instead.
 
-		return 0;
+		return -1;
 	}
 
 	private URI uri;
